@@ -19,7 +19,8 @@
 
 #include <stdio.h>
 #include <wiringPi.h>
-#include <wiringPiI2C.h>
+#include <WiringPi/uwiringPiI2C.h>
+#include <unistd.h>
 
 int main (int argc, char *argv[])
 {
@@ -46,6 +47,7 @@ int main (int argc, char *argv[])
                         {
                                 //print data
                                 printf("data=%d\n", data);
+                                usleep(1000000);
                         }
                 }
         }
