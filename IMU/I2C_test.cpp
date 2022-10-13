@@ -2,7 +2,7 @@
 #include <fcntl.h>				//Needed for I2C port
 #include <sys/ioctl.h>			//Needed for I2C port
 #include <linux/i2c-dev.h>		//Needed for I2C 
-#include <i2c/smbus.h>
+//#include <i2c/smbus.h>
 
 	int file_i2c;
 	int length;
@@ -26,14 +26,16 @@
 		return;
 	}
 
-__u8 reg = 0x10; /* Device register to access */
-__s32 res;
-char buf[10];
+buf[0] = reg;
+  buf[1] = 0x43;
+  buf[2] = 0x65;
+  if (write(file, buf, 3) != 3) {
+    /* ERROR HANDLING: i2c transaction failed */
+  }
 
-  /* Using SMBus commands */
-  res = i2c_smbus_read_word_data(file, reg);
-  if (res < 0) {
+  /* Using I2C Read, equivalent of i2c_smbus_read_byte(file) */
+  if (read(file, buf, 1) != 1) {
     /* ERROR HANDLING: i2c transaction failed */
   } else {
-    /* res contains the read word */
+    /* buf[0] contains the read byte */
   }
