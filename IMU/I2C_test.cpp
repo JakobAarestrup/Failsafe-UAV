@@ -1,41 +1,53 @@
-#include <unistd.h>				//Needed for I2C port
-#include <fcntl.h>				//Needed for I2C port
-#include <sys/ioctl.h>			//Needed for I2C port
-#include <linux/i2c-dev.h>		//Needed for I2C 
-//#include <i2c/smbus.h>
+/*
+*i2ctest.c
+*	Raspberry Pi I2C test using wiringPi library.
+*
+*Copyright (c) Nahid Alam. <nahid.mahfuza.alam@gmail.com>
+***********************************************************
+*i2ctest is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU Lesser General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
+ *
+ *    i2ctest is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+***********************************************************
+*/
 
-	int file_i2c;
-	int length;
-	unsigned char buffer[60] = {0};
+#include <stdio.h>
+#include <wiringPi.h>
+#include <wiringPiI2C.h>
 
-	
-	//----- OPEN THE I2C BUS -----
-	char *filename = (char*)"/dev/i2c-1";
-	if ((file_i2c = open(filename, O_RDWR)) < 0)
-	{
-		//ERROR HANDLING: you can check errno to see what went wrong
-		printf("Failed to open the i2c bus");
-		return;
-	}
-	
-	int addr = 0x6a;          //<<<<<The I2C address of the slave
-	if (ioctl(file_i2c, I2C_SLAVE, addr) < 0)
-	{
-		printf("Failed to acquire bus access and/or talk to slave.\n");
-		//ERROR HANDLING; you can check errno to see what went wrong
-		return;
-	}
-
-buf[0] = reg;
-  buf[1] = 0x43;
-  buf[2] = 0x65;
-  if (write(file, buf, 3) != 3) {
-    /* ERROR HANDLING: i2c transaction failed */
-  }
-
-  /* Using I2C Read, equivalent of i2c_smbus_read_byte(file) */
-  if (read(file, buf, 1) != 1) {
-    /* ERROR HANDLING: i2c transaction failed */
-  } else {
-    /* buf[0] contains the read byte */
-  }
+int main (int argc, char *argv[])
+{
+        int fd;
+        int data;
+        wiringPiSetup () ;
+        fd=wiringPiI2CSetup (0x6a) ;  /*Use i2cdetect command to find your respective device address*/
+        if(fd==-1)
+        {
+                printf("Can't setup the I2C device\n");
+                return -1;
+        }
+        else
+        {
+                for (;;)
+                {
+                        data=wiringPiI2CRead(fd);
+                        if(data==-1)
+                        {
+                                printf("No data\n");
+                                //return -1;
+                        }
+                        else
+                        {
+                                //print data
+                                printf("data=%d\n", data);
+                        }
+                }
+        }
+        return 0;
+}
