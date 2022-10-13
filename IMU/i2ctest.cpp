@@ -19,7 +19,7 @@
 
 #include <stdio.h>
 #include <wiringPi.h>
-#include <WiringPi/uwiringPiI2C.h>
+#include <uwiringPiI2C.h>
 #include <unistd.h>
 
 int main (int argc, char *argv[])
