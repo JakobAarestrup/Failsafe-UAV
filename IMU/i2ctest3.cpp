@@ -7,11 +7,9 @@
 #include <math.h>
 #include <string.h>
 //#include <i2c/smbus.h>
+#include <linux/i2c-dev.h>
+#include <i2c/smbus.h>
 
-extern "C" {
-    #include <linux/i2c-dev.h>
-    #include <i2c/smbus.h>
-}
 
 
 #define LSM6DSOX_CHIP_ID 0x6b ///< LSM6DSOX default device id from WHOAMI
@@ -41,9 +39,9 @@ extern "C" {
 #define M_PI 3.14159265358979323846
 #define RAD_TO_DEG 57.29578
 
-void  readBlock(int file, uint8_t command, uint8_t size, uint8_t *data)
+void  readBlock(int file_i2c, uint8_t command, uint8_t size, uint8_t *data)
 {
-    int result = i2c_smbus_read_i2c_block_data(file, command, size, data);
+    int result = i2c_smbus_read_i2c_block_data(file_i2c, command, size, data);
     if (result != size)
     {
         printf("Failed to read block from I2C.");
@@ -51,18 +49,18 @@ void  readBlock(int file, uint8_t command, uint8_t size, uint8_t *data)
     }
 }
 
-void selectDevice(int file, int addr)
+void selectDevice(int file_i2c, int addr)
 {
     std::string device = "LSM";      
 
-     if (ioctl(file, I2C_SLAVE, addr) < 0) {
+     if (ioctl(file_i2c, I2C_SLAVE, addr) < 0) {
                 fprintf(stderr,
                         "Error: Could not select device  0x%02x: %s\n",
                         device, strerror(errno));
         }
 }
 
-void readACC(int  *a , int file_i2c)
+void readACC(int *a , int file_i2c)
 {
     uint8_t block[6];
     selectDevice(file_i2c,LSM6DSOX_CHIP_ID);
@@ -102,7 +100,9 @@ const int addr = LSM6DSOX_CHIP_ID;
 //     std::cout << "I2C communication successfully setup.\n";
 
 char *filename = (char*)"/dev/i2c-1";
-	if ((file_i2c = open(filename, O_RDWR)) < 0)
+file_i2c = open(filename, O_RDWR);
+
+	if (file_i2c < 0)
 	{
 		//ERROR HANDLING: you can check errno to see what went wrong
 		printf("Failed to open the i2c bus");
