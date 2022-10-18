@@ -20,3 +20,12 @@
 #define lSM6DSOX_ACC_OUT_Y_L_H 0x2b // Y2
 #define lSM6DSOX_ACC_OUT_Z_L_A 0x2c // Z1
 #define lSM6DSOX_ACC_OUT_Z_L_A 0x2d // Z2
+
+// Gyro output registers
+#define lSM6DSOX_GYR_OUT_X_L_G 0x21 // Gyro X1
+#define lSM6DSOX_GYR_OUT_X_H_G 0x23 // Gyro X2
+#define lSM6DSOX_GYR_OUT_y_L_G 0x24 // Gyro Y1
+#define lSM6DSOX_GYR_OUT_y_H_G 0x25 // Gyro Y2
+#define lSM6DSOX_GYR_OUT_z_L_G 0x26 // Gyro Z1
+#define lSM6DSOX_GYR_OUT_z_H_G 0x27 // Gyro Z2
+
