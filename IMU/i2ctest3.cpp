@@ -38,8 +38,8 @@
 
 void  readBlock(uint8_t command, uint8_t size, uint8_t *data)
 {
-    int result = i2c_smbus_read_i2c_block_data(file_i2c, command, size, data);
-    if (result != size)
+    int result = i2c_smbus_read_i2c_block_data(command, size, data);
+    if (result != size)s
     {
         printf("Failed to read block from I2C.");
         exit(1);
@@ -71,7 +71,7 @@ void readACC(int  *a , int file_i2c)
 
 void writeAccReg(uint8_t reg, uint8_t value, int file)
 {
-    selectDevice(file,LSM6DSOX_ACC);
+  selectDevice(file,LSM6DSOX_ACC);
   int result = i2c_smbus_write_byte_data(file, reg, value);
     if (result == -1)
     {
