@@ -5,6 +5,7 @@
 #include <linux/i2c-dev.h>
 #include <fcntl.h>
 #include <math.h>
+#include <string.h>
 
 
 #define LSM6DSOX_CHIP_ID 0x6b ///< LSM6DSOX default device id from WHOAMI
@@ -36,7 +37,7 @@
 
 void selectDevice(int file, int addr)
 {
-        char device[3] == "LSM";        
+    std::string device = "LSM";      
 
      if (ioctl(file, I2C_SLAVE, addr) < 0) {
                 fprintf(stderr,
