@@ -66,7 +66,7 @@ void readACC(int  *a , int file_i2c)
 {
     uint8_t block[6];
     selectDevice(file_i2c,LSM6DSOX_CHIP_ID);
-    readBlock(file_i2c,0x80 | lSM6DSOX_ACC_OUT_X_L_A, sizeof(block), block);
+    readBlock(file_i2c, 0x80 | lSM6DSOX_ACC_OUT_X_L_A, sizeof(block), block);
      
     // Combine readings for each axis.
     *a = (int16_t)(block[0] | block[1] << 8);
