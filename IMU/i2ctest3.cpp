@@ -32,8 +32,8 @@
 ///< I2C Master config; access must be enabled with  bit SHUB_REG_ACCESS
 ///< is set to '1' in FUNC_CFG_ACCESS (01h).
 
-#define M_PI = 3.14159265358979323846
-#define RAD_TO_DEG = 57.29578
+#define M_PI 3.14159265358979323846
+#define RAD_TO_DEG 57.29578
 
 void selectDevice(int file, int addr)
 {
@@ -122,4 +122,6 @@ while(1)
     usleep(1000000);
 
 }
+
+return 0;
 }
