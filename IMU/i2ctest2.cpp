@@ -3,7 +3,7 @@
 #include <chrono>
 #include <wiringPiI2C.h>
 
-#define DEVICE_ID 0x6a
+#define DEVICE_ID 0x6b
 
 #define REG_POWER_CTL   0x2D
 #define REG_DATA_X_LOW  0x32
