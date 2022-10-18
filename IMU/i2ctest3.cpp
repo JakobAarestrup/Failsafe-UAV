@@ -4,7 +4,7 @@
 #include <sys/ioctl.h>
 #include <linux/i2c-dev.h>
 #include <fcntl.h>
-#include <cmath.h>
+#include <math.h>
 
 
 #define LSM6DSOX_CHIP_ID 0x6b ///< LSM6DSOX default device id from WHOAMI
