@@ -6,6 +6,7 @@
 #include <fcntl.h>
 #include <math.h>
 #include <string.h>
+#include <i2c/smbus.h>
 
 
 #define LSM6DSOX_CHIP_ID 0x6b ///< LSM6DSOX default device id from WHOAMI
@@ -34,6 +35,16 @@
 
 #define M_PI 3.14159265358979323846
 #define RAD_TO_DEG 57.29578
+
+void  readBlock(uint8_t command, uint8_t size, uint8_t *data)
+{
+    int result = i2c_smbus_read_i2c_block_data(file_i2c, command, size, data);
+    if (result != size)
+    {
+        printf("Failed to read block from I2C.");
+        exit(1);
+    }
+}
 
 void selectDevice(int file, int addr)
 {
@@ -90,7 +101,7 @@ char *filename = (char*)"/dev/i2c-1";
 	{
 		//ERROR HANDLING: you can check errno to see what went wrong
 		printf("Failed to open the i2c bus");
-		return;
+		return 0;
 	}
 
 
