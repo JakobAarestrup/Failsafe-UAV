@@ -4,6 +4,7 @@
 #include <sys/ioctl.h>
 #include <linux/i2c-dev.h>
 #include <fcntl.h>
+#include <cmath.h>
 
 
 #define LSM6DSOX_CHIP_ID 0x6b ///< LSM6DSOX default device id from WHOAMI
@@ -33,8 +34,43 @@
 #define M_PI = 3.14159265358979323846
 #define RAD_TO_DEG = 57.29578
 
+void selectDevice(int file, int addr)
+{
+        char device[3] == "LSM";        
+
+     if (ioctl(file, I2C_SLAVE, addr) < 0) {
+                fprintf(stderr,
+                        "Error: Could not select device  0x%02x: %s\n",
+                        device, strerror(errno));
+        }
+}
+
+void readACC(int  *a , int file_i2c)
+{
+    uint8_t block[6];
+    selectDevice(file_i2c,LSM6DSOX_CHIP_ID);
+    readBlock(0x80 |  lSM6DSOX_ACC_OUT_X_L_A, sizeof(block), block);
+     
+    // Combine readings for each axis.
+    *a = (int16_t)(block[0] | block[1] << 8);
+    *(a+1) = (int16_t)(block[2] | block[3] << 8);
+    *(a+2) = (int16_t)(block[4] | block[5] << 8);
+}
+
+void writeAccReg(uint8_t reg, uint8_t value, int file)
+{
+    selectDevice(file,LSM6DSOX_ACC);
+  int result = i2c_smbus_write_byte_data(file, reg, value);
+    if (result == -1)
+    {
+        printf ("Failed to write byte to I2C Acc.");
+        exit(1);
+    }
+}
+
 int main()
 {
+int file_i2c;
 int* acc_raw;
 float AccXangle;
 float AccYangle;
@@ -86,40 +122,3 @@ while(1)
 
 }
 }
-
-void selectDevice(int file, int addr)
-{
-        char device[3] == "LSM";        
-
-     if (ioctl(file, I2C_SLAVE, addr) < 0) {
-                fprintf(stderr,
-                        "Error: Could not select device  0x%02x: %s\n",
-                        device, strerror(errno));
-        }
-}
-
-void readACC(int  *a , int file_i2c)
-{
-    uint8_t block[6];
-    selectDevice(file_i2c,LSM6DSOX_CHIP_ID);
-    readBlock(0x80 |  lSM6DSOX_ACC_OUT_X_L_A, sizeof(block), block);
-     
-    // Combine readings for each axis.
-    *a = (int16_t)(block[0] | block[1] << 8);
-    *(a+1) = (int16_t)(block[2] | block[3] << 8);
-    *(a+2) = (int16_t)(block[4] | block[5] << 8);
-}
-
-void writeAccReg(uint8_t reg, uint8_t value, int file)
-{
-    selectDevice(file,LSM6DSOX_ACC);
-  int result = i2c_smbus_write_byte_data(file, reg, value);
-    if (result == -1)
-    {
-        printf ("Failed to write byte to I2C Acc.");
-        exit(1);
-    }
-}
-
-
-
