@@ -10,7 +10,7 @@ INCLUDE = -I/usr/local/include
 CFLAGS  = $(DEBUG) -Wall $(INCLUDE) -Winline -pipe
 
 LDFLAGS = -L/usr/local/lib
-LDLIBS    = -lpthread -lm
+LDLIBS    = -cmath -lpthread -lm
 
 # Should not alter anything below this line
 ###############################################################################
