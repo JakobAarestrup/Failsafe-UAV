@@ -1,8 +1,7 @@
 #include <stdio.h>
-#include <wiringPi.h>
-#include <wiringPiI2C.h>
 #include <unistd.h>
 #include <iostream>
+#include <sys/ioctl.h>
 #include <linux/i2c-dev.h>
 
 
