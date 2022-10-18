@@ -7,9 +7,10 @@
 #include <math.h>
 #include <string.h>
 //#include <i2c/smbus.h>
-#include <linux/i2c-dev.h>
-#include <i2c/smbus.h>
-
+extern "C" {
+    #include <linux/i2c-dev.h>
+    #include <i2c/smbus.h>
+}
 
 
 #define LSM6DSOX_CHIP_ID 0x6b ///< LSM6DSOX default device id from WHOAMI
@@ -101,7 +102,6 @@ const int addr = LSM6DSOX_CHIP_ID;
 
 char *filename = (char*)"/dev/i2c-1";
 file_i2c = open(filename, O_RDWR);
-
 	if (file_i2c < 0)
 	{
 		//ERROR HANDLING: you can check errno to see what went wrong
