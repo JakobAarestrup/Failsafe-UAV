@@ -36,10 +36,10 @@
 #define M_PI 3.14159265358979323846
 #define RAD_TO_DEG 57.29578
 
-void  readBlock(uint8_t command, uint8_t size, uint8_t *data)
+void  readBlock(uint8_t file, uint8_t command, uint8_t size, uint8_t *data)
 {
-    int result = i2c_smbus_read_i2c_block_data(command, size, data);
-    if (result != size)s
+    int result = i2c_smbus_read_i2c_block_data(file,command, size, data);
+    if (result != size)
     {
         printf("Failed to read block from I2C.");
         exit(1);
