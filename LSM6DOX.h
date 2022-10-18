@@ -1,4 +1,5 @@
-#define LSM6DSOX_CHIP_ID 0x6B ///< LSM6DSOX default device id from WHOAMI
+#define LSM6DSOX_CHIP_ID_1 0x6A ///< LSM6DSOX default device id from WHOAMI
+#define LSM6DSOX_CHIP_ID_2 0x6B ///< LSM6DSOX default device id from WHOAMI
 
 #define LSM6DSOX_FUNC_CFG_ACCESS 0x1 ///< Enable embedded functions register
 #define LSM6DSOX_PIN_CTRL 0x2        ///< Pin control register
