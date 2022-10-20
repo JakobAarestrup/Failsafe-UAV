@@ -99,10 +99,20 @@ while(1)
     int ACC_Z {ReadI2C(fd, ADDR, LSM6DSOX_OUT_Z_L_A)};
 
     //Convert Accelerometer values to degrees
-    AccXangle = (float) (atan2(*(ACC_Y),*(ACC_Z))+M_PI)*RAD_TO_DEG;
-    AccYangle = (float) (atan2(*(ACC_Z),*ACC_X)+M_PI)*RAD_TO_DEG;
+    //AccXangle = (float) (atan2(*(ACC_Y),*(ACC_Z))+M_PI)*RAD_TO_DEG;
+    //AccYangle = (float) (atan2(*(ACC_Z),*ACC_X)+M_PI)*RAD_TO_DEG;
 
-    printf("x-angle: \f \n y-angle: \f \n", AccXangle, AccYangle);
+    //AccXangle = (float) (atan2(*(ACC_Y),*(ACC_Z))+M_PI)*RAD_TO_DEG;
+    //AccYangle = (float) (atan2(*(ACC_Z),*ACC_X)+M_PI)*RAD_TO_DEG;
+
+    double roll = 0.00, pitch = 0.00;
+    double x_Buff = float(ACC_X);
+    double y_Buff = float(ACC_Y);
+    double z_Buff = float(ACC_Z);
+    roll = atan2(y_Buff , z_Buff) * 57.3;
+    pitch = atan2((- x_Buff) , sqrt(y_Buff * y_Buff + z_Buff * z_Buff)) * 57.3;
+
+    printf("Roll: %f \n Pitch: %f \n", roll, pitch);
 
     //Roll = atan2(ACC_Y, ACC_Z) * 180/M_PI;
     //Pitch = atan2(-ACC_X, sqrt(ACC_Y*ACC_Y + ACC_Z*ACC_Z)) * 180/M_PI;
