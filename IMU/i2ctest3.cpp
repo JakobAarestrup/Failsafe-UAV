@@ -65,7 +65,7 @@ int ReadI2C(int fd, int ADDR, int reg)
    }
 }
 
-int ConvertACC(int x, int y, int z)
+double ConvertACC(int x, int y, int z)
 {
     double roll = 0.00, pitch = 0.00;
     double x_Buff = float(x);
@@ -105,7 +105,7 @@ while(1)
     int ACC_Y {ReadI2C(fd, LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_A)};
     int ACC_Z {ReadI2C(fd, LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_A)};
 
-    double roll, pitch = ConvertACC(ACC_X,ACC_Y,ACC_Z)
+    double roll, pitch = ConvertACC(ACC_X,ACC_Y,ACC_Z);
     printf("Roll: %f \nPitch: %f \n", roll, pitch);
 
     // Convert accelerometer data
