@@ -10,8 +10,8 @@ int main() {
     fprintf(stderr,"FAIL");
     return 1;
   }
-
-  for (;;) {
+    fprintf("SUCCESS\n");
+  while(1){
     putchar(serialGetchar(fd));
     fflush (stdout) ;
   }
