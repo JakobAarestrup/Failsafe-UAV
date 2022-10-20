@@ -57,8 +57,9 @@ void ReadI2C(int fd, int ADDR, int reg)
     else
    {
         int I2CData = (rd2 << 8) | rd1;
-        printf("rd1 is: %d and rd2 is: %d \n",rd1,rd2);
+        //printf("rd1 is: %d and rd2 is: %d \n",rd1,rd2);
         printf("Data from %d is: %d \n",ADDR, I2CData);
+        return I2CData;
    }
 }
 
@@ -74,7 +75,7 @@ const int ADDR = LSM6DSOX_ADDR2;
 const int reg1 = LSM6DSOX_CTRL1_XL;
 const int reg2 = LSM6DSOX_CTRL3_C;
 const int reg3 = LSM6DSOX_OUT_X_L_A;
-const int reg4 = LSM6DSOX_OUT_X_H_A;
+const int reg4 = LSM6DSOX_OUT_Y_L_A;
 
 printf("Adresse: %d", ADDR);
 
@@ -95,9 +96,8 @@ WriteI2C(fd, reg2, 0b01000000);
 
 while(1)
 {
-    //std::cout<<"part 1: \n"
-    ReadI2C(fd, ADDR, reg3);
-    //std::cout<<"part 2: \n"
+    int ACC_X {ReadI2C(fd, ADDR, LSM6DSOX_OUT_X_L_A)};
+    int ACC_Y {ReadI2C(fd, ADDR, LSM6DSOX_OUT_Y_L_A)};
 
     //Convert Accelerometer values to degrees
     //AccXangle = (float) (atan2(*(acc_raw+1),*(acc_raw+2))+M_PI)*RAD_TO_DEG;
