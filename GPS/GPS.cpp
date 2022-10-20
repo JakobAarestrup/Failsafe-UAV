@@ -15,5 +15,5 @@ int main() {
     putchar(serialGetchar(fd));
     fflush (stdout) ;
   }
-  retunr 0;
+  return 0;
 }
