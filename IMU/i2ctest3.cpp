@@ -69,8 +69,8 @@ int main()
 {
 //int file_i2c;
 //int* acc_raw;
-//float AccXangle;
-//float AccYangle;
+float AccXangle;
+float AccYangle;
 const int ADDR = LSM6DSOX_ADDR2;
 const int reg1 = LSM6DSOX_CTRL1_XL;
 const int reg2 = LSM6DSOX_CTRL3_C;
@@ -87,8 +87,6 @@ int fd = wiringPiI2CSetup(ADDR);
     }
     printf("Succesfully setup I2C connection.\n");
 
-// Open I2C Connection via DevADDR
-//int fd = openI2C(ADDR);
 
 // Enable accelerometer
 WriteI2C(fd, reg1, 0b10100000);
@@ -98,10 +96,14 @@ while(1)
 {
     int ACC_X {ReadI2C(fd, ADDR, LSM6DSOX_OUT_X_L_A)};
     int ACC_Y {ReadI2C(fd, ADDR, LSM6DSOX_OUT_Y_L_A)};
+    int ACC_Z {ReadI2C(fd, ADDR, LSM6DSOX_OUT_Z_L_A)};
 
     //Convert Accelerometer values to degrees
-    AccXangle = (float) (atan2(*(acc_raw+1),*(acc_raw+2))+M_PI)*RAD_TO_DEG;
-    AccYangle = (float) (atan2(*(acc_raw+2),*acc_raw)+M_PI)*RAD_TO_DEG;
+    AccXangle = (float) (atan2(*(ACC_Y),*(ACC_Z))+M_PI)*RAD_TO_DEG;
+    AccYangle = (float) (atan2(*(ACC_Z),*ACC_X)+M_PI)*RAD_TO_DEG;
+
+    Roll = atan2(ACC_Y, ACC_Z) * 180/M_PI;
+    Pitch = atan2(-ACC_X, sqrt(ACC_Y*ACC_Y + ACC_Z*ACC_Z)) * 180/M_PI;
 
 
     //Change the rotation value of the accelerometer to -/+ 180
