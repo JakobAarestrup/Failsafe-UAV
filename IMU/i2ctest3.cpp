@@ -102,8 +102,10 @@ while(1)
     AccXangle = (float) (atan2(*(ACC_Y),*(ACC_Z))+M_PI)*RAD_TO_DEG;
     AccYangle = (float) (atan2(*(ACC_Z),*ACC_X)+M_PI)*RAD_TO_DEG;
 
-    Roll = atan2(ACC_Y, ACC_Z) * 180/M_PI;
-    Pitch = atan2(-ACC_X, sqrt(ACC_Y*ACC_Y + ACC_Z*ACC_Z)) * 180/M_PI;
+    printf("x-angle: \f \n y-angle: \f \n", AccXangle, AccYangle);
+
+    //Roll = atan2(ACC_Y, ACC_Z) * 180/M_PI;
+    //Pitch = atan2(-ACC_X, sqrt(ACC_Y*ACC_Y + ACC_Z*ACC_Z)) * 180/M_PI;
 
 
     //Change the rotation value of the accelerometer to -/+ 180
