@@ -70,7 +70,7 @@ double ConvertACC(int x, int y, int z)
     struct rp
     {
     double roll = 0.00, pitch = 0.00;
-    }
+    };
     
     double x_Buff = float(x);
     double y_Buff = float(y);
