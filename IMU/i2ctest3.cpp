@@ -30,6 +30,7 @@ void openI2C(int devID)
         exit(1);
     }
     printf("Succesfully setup I2C connection.\n");
+    return result;
 }
 
 void WriteI2C(int ADDR, int reg, int data)
@@ -37,7 +38,7 @@ void WriteI2C(int ADDR, int reg, int data)
     int wd = wiringPiI2CWriteReg8(ADDR, reg, data);
     if (wd ==-1)
     {
-        printf("Failed to write to %f via I2C.", ADDR);
+        printf("Failed to write to %d via I2C.", ADDR);
         exit(1);
     }
     printf("Succesfully written to register via I2C.\n");
@@ -74,16 +75,16 @@ const int reg3 = LSM6DSOX_OUT_X_L_A;
 const int reg4 = LSM6DSOX_OUT_X_H_A;
 
 // Open I2C Connection via DevID
-openI2C(ADDR);
+int fd = openI2C(ADDR);
 
 // Enable accelerometer
-WriteI2C(ADDR, reg1, 0b10100000);
-WriteI2C(ADDR, reg2, 0b01000000);
+WriteI2C(fd, reg1, 0b10100000);
+WriteI2C(fd, reg2, 0b01000000);
 
 while(1)
 {
-    ReadI2C(ADDR, reg3);
-    ReadI2C(ADDR, reg4);
+    ReadI2C(fd, reg3);
+    ReadI2C(fd, reg4);
 
     //Convert Accelerometer values to degrees
     //AccXangle = (float) (atan2(*(acc_raw+1),*(acc_raw+2))+M_PI)*RAD_TO_DEG;
