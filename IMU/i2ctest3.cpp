@@ -27,9 +27,9 @@ void openI2C(int devID)
     if (result ==-1)
     {
         printf("Failed to establish I2C connection.");
-        return -1;
+        exit(1);
     }
-    printf("Succesfully setup I2C connection.\n")
+    printf("Succesfully setup I2C connection.\n");
 }
 
 void WriteI2C(int ADDR, int reg, int data)
@@ -38,9 +38,9 @@ void WriteI2C(int ADDR, int reg, int data)
     if (fd ==-1)
     {
         printf("Failed to write to %f via I2C.", ADDR);
-        return -1;
+        exit(1);
     }
-    printf("Succesfully written to register via I2C.\n")
+    printf("Succesfully written to register via I2C.\n");
 }
 
 void ReadI2C(int ADDR, int reg)
@@ -50,7 +50,7 @@ void ReadI2C(int ADDR, int reg)
     if (fd ==-1)
     {
         printf("Failed to read from %f via I2C.", ADDR);
-        return -1;
+        exit(1);
         
     }
     else
