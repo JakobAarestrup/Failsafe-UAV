@@ -30,7 +30,6 @@ void openI2C(int devID)
         exit(1);
     }
     printf("Succesfully setup I2C connection.\n");
-    return result;
 }
 
 void WriteI2C(int ADDR, int reg, int data)
