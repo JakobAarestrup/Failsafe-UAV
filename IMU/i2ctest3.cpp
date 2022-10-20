@@ -45,9 +45,10 @@ void WriteI2C(int ADDR, int reg, int data)
 
 void ReadI2C(int ADDR, int reg)
 {
-    int rd = wiringPiI2CReadReg8(ADDR, reg);
+    int rd1 = wiringPiI2CReadReg8(ADDR, reg);
+    int rd2 = wiringPiI2CReadReg8(ADDR, reg+1);
 
-    if (rd ==-1)
+    if (rd1 ==-1 | rd2 ==-1)
     {
         printf("Failed to read from %f via I2C.", ADDR);
         exit(1);
@@ -55,7 +56,7 @@ void ReadI2C(int ADDR, int reg)
     }
     else
    {
-        int I2CData = rd;
+        int I2CData = rd1+rd2;
         //std::cout<<"Data from: "<<ADDR<<"  is: "<<I2CData<<"\n";
         printf("Data from %d is: %d \n",ADDR, I2CData);
    }
@@ -73,6 +74,8 @@ const int reg1 = LSM6DSOX_CTRL1_XL;
 const int reg2 = LSM6DSOX_CTRL3_C;
 const int reg3 = LSM6DSOX_OUT_X_L_A;
 const int reg4 = LSM6DSOX_OUT_X_H_A;
+
+printf("Adresse: %d", ADDR);
 
 int fd = wiringPiI2CSetup(ADDR);
     if (fd ==-1)
