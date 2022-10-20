@@ -26,7 +26,7 @@ void openI2C(int devID)
     int result = wiringPiI2CSetup(devID);
     if (result >0)
     {
-        printf("Failed to read block from I2C.");
+        printf("Failed to establish I2C connection.");
         exit(1);
     }
 }
@@ -44,19 +44,18 @@ void WriteI2C(int ADDR, int reg, int data)
 void ReadI2C(int ADDR, int reg)
 {
     int fd = wiringPiI2CReadReg8(ADDR, reg);
-    int I2CData = fd;
-    std::cout<<"Data from: "<<ADDR<<I2CData<<"\n";
-    //if (fd >0)
-    //{
-        //printf("Failed to read from %f via I2C.", ADDR);
-        //exit(1);
+
+    if (fd >0)
+    {
+        printf("Failed to read from %f via I2C.", ADDR);
+        exit(1);
         
-    //}
-    //else
-   // {
-        //int I2CData = fd;
-        //std::cout<<"Data from: "<<ADDR<<I2CData<<"\n";
-   // }
+    }
+    else
+   {
+        int I2CData = fd;
+        std::cout<<"Data from: "<<ADDR<<I2CData<<"\n";
+   }
 }
 
 
