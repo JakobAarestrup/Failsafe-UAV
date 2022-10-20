@@ -29,7 +29,7 @@ void openI2C(int devID)
         printf("Failed to establish I2C connection.");
         exit(1);
     }
-    printf("Succesfully setup I2C connection.\n");
+    printf("Succesfully setup I2C connection./n");
 }
 
 void WriteI2C(int ADDR, int reg, int data)
@@ -40,7 +40,7 @@ void WriteI2C(int ADDR, int reg, int data)
         printf("Failed to write to %f via I2C.", ADDR);
         exit(1);
     }
-    printf("Succesfully written to register via I2C.\n");
+    printf("Succesfully written to register via I2C./n");
 }
 
 void ReadI2C(int ADDR, int reg)
@@ -56,7 +56,7 @@ void ReadI2C(int ADDR, int reg)
     else
    {
         int I2CData = rd;
-        std::cout<<"Data from: "<<ADDR<<I2CData<<"\n";
+        std::cout<<"Data from: "<<ADDR<<I2CData<<"/n";
    }
 }
 
