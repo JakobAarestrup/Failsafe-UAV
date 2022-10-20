@@ -95,7 +95,7 @@ WriteI2C(fd, reg2, 0b01000000);
 while(1)
 {
     //std::cout<<"part 1: \n"
-    ReadI2C(fd, ADDR, reg3,);
+    ReadI2C(fd, ADDR, reg3);
     //std::cout<<"part 2: \n"
 
     //Convert Accelerometer values to degrees
