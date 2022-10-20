@@ -34,8 +34,8 @@ void openI2C(int devID)
 
 void WriteI2C(int ADDR, int reg, int data)
 {
-    int fd = wiringPiI2CWriteReg8(ADDR, reg, data);
-    if (fd ==-1)
+    int wd = wiringPiI2CWriteReg8(ADDR, reg, data);
+    if (wd ==-1)
     {
         printf("Failed to write to %f via I2C.", ADDR);
         exit(1);
@@ -45,9 +45,9 @@ void WriteI2C(int ADDR, int reg, int data)
 
 void ReadI2C(int ADDR, int reg)
 {
-    int fd = wiringPiI2CReadReg8(ADDR, reg);
+    int rd = wiringPiI2CReadReg8(ADDR, reg);
 
-    if (fd ==-1)
+    if (rd ==-1)
     {
         printf("Failed to read from %f via I2C.", ADDR);
         exit(1);
@@ -55,7 +55,7 @@ void ReadI2C(int ADDR, int reg)
     }
     else
    {
-        int I2CData = fd;
+        int I2CData = rd;
         std::cout<<"Data from: "<<ADDR<<I2CData<<"\n";
    }
 }
