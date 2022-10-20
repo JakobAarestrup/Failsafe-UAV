@@ -18,10 +18,10 @@ extern "C" {
 
 #define M_PI 3.14159265358979323846
 #define RAD_TO_DEG 57.29578
-#define devID  1;
+//#define devID  1;
 
 
-void openI2C()
+void openI2C(int devID)
 {
     int result = wiringPiI2CSetup(devID);
     if (result >0)
@@ -70,7 +70,7 @@ const int reg3 = LSM6DSOX_OUT_X_L_A;
 const int reg4 = LSM6DSOX_OUT_X_H_A;
 
 // Open I2C Connection via DevID
-openI2C();
+openI2C(1);
 
 // Enable accelerometer
 WriteI2C(ADDR, reg1, 0b10100000);
