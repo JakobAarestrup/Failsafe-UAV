@@ -22,17 +22,17 @@ extern "C" {
 
 void openI2C()
 {
-    int result wiringPiI2CSetup(devID);
+    int result = wiringPiI2CSetup(devID);
     if (result >0)
     {
-        printf("Failed to read block from I2C.");s
+        printf("Failed to read block from I2C.");
         exit(1);
     }
 }
 
 void WriteI2C(int ADDR, int reg, int data)
 {
-    int fd wiringPiI2CWriteReg8(int ADDR, int reg, data);
+    int fd = wiringPiI2CWriteReg8(int ADDR, int reg, data);
     if (fd >0)
     {
         printf("Failed to write to %f via I2C.", ADDR);
@@ -42,7 +42,7 @@ void WriteI2C(int ADDR, int reg, int data)
 
 void ReadI2C(int ADDR, int reg)
 {
-    int fd wiringPiI2CReadReg8(int ADDR, int reg);
+    int fd = wiringPiI2CReadReg8(int ADDR, int reg);
     if (fd >0)
     {
         printf("Failed to read from %f via I2C.", ADDR);

@@ -1,5 +1,5 @@
 {
-  "C_Cpp.errorSquiggles": "Enabled",
+  "C_Cpp.errorSquiggles": "Disabled",
   "C_Cpp_Runner.msvcBatchPath": "",
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",
