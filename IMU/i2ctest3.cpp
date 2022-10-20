@@ -18,6 +18,7 @@ extern "C" {
 
 #define M_PI 3.14159265358979323846
 #define RAD_TO_DEG 57.29578
+#define devID  1;
 
 
 void openI2C()
@@ -32,7 +33,7 @@ void openI2C()
 
 void WriteI2C(int ADDR, int reg, int data)
 {
-    int fd = wiringPiI2CWriteReg8(int ADDR, int reg, data);
+    int fd = wiringPiI2CWriteReg8(ADDR, reg, data);
     if (fd >0)
     {
         printf("Failed to write to %f via I2C.", ADDR);
@@ -42,7 +43,7 @@ void WriteI2C(int ADDR, int reg, int data)
 
 void ReadI2C(int ADDR, int reg)
 {
-    int fd = wiringPiI2CReadReg8(int ADDR, int reg);
+    int fd = wiringPiI2CReadReg8(ADDR, reg);
     if (fd >0)
     {
         printf("Failed to read from %f via I2C.", ADDR);
@@ -62,7 +63,6 @@ int main()
 //int* acc_raw;
 //float AccXangle;
 //float AccYangle;
-const int devID = 1;
 const int ADDR = LSM6DSOX_ADDR2;
 const int reg1 = LSM6DSOX_CTRL1_XL;
 const int reg2 = LSM6DSOX_CTRL3_C;
