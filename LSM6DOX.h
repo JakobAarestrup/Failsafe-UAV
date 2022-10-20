@@ -1,5 +1,5 @@
-#define LSM6DSOX_CHIP_ID_1 0x6A ///< LSM6DSOX default device id from WHOAMI
-#define LSM6DSOX_CHIP_ID_2 0x6B ///< LSM6DSOX default device id from WHOAMI
+#define LSM6DSOX_ADDR1 0x6A ///< LSM6DSOX default device id from WHOAMI
+#define LSM6DSOX_ADDR2 0x6B ///< LSM6DSOX default device id from WHOAMI
 
 #define LSM6DSOX_FUNC_CFG_ACCESS 0x1    ///< Enable embedded functions register
 #define LSM6DSOX_PIN_CTRL 0x2           ///< Pin control register
@@ -17,8 +17,10 @@
 #define LSM6DSOX_INT1_CTRL 0x0D ///< Interrupt enable for data ready
 #define LSM6DSOX_INT2_CTRL 0x0E ///< Unused
 #define LSM6DSOX_CTRL1_XL 0x10  ///< Main accelerometer config register
+// Should be written 0b10100000 to for: z,y,x axis enabled , 6.66kHz data rate, 2G full scale, no LP filter.
 #define LSM6DSOX_CTRL2_G 0x11   ///< Main gyro config register
 #define LSM6DSOX_CTRL3_C 0x12   ///< Main configuration register
+// Should be written 0b01000000 to for: BDU Enable (check for MSB and LSB). All other bits in default-mode.
 #define LSM6DSOX_CTRL4_C 0x13   ///< Unused
 #define LSM6DSOX_CTRL5_C 0x14   ///< I2C Master config; access must be enabled with bit SHUB_REG_ACCESS. 
                                 ///< Is set to '1' in FUNC_CFG_ACCESS (01h).
@@ -90,7 +92,7 @@
 #define lSM6DSOX_WAKE_UP_THIS 0x5B   ///< Unused
 #define lSM6DSOX_WAKE_UP_DUR 0x5C    ///< Unused
 
-#define lSM6DSOX_FREE_FALL 0x5D    ///< Can potentially used for easy free fall detection.
+#define lSM6DSOX_FREE_FALL 0x5D    ///< Can potentially be used for easy free fall detection.
 
 #define lSM6DSOX_MD1_CFG 0x5E               ///< Unused
 #define lSM6DSOX_MD2_CFG 0x5F               ///< Unused
