@@ -43,24 +43,24 @@ void WriteI2C(int ADDR, int reg, int data)
     printf("Succesfully written to register via I2C.\n");
 }
 
-void ReadI2C(int ADDR, int reg)
+void ReadI2C(int fd, int ADDR, int reg)
 {
-    int rd1 = wiringPiI2CReadReg8(ADDR, reg);
-    int rd2 = wiringPiI2CReadReg8(ADDR, reg+1);
+    int rd1 = wiringPiI2CReadReg8(fd, reg);
+    int rd2 = wiringPiI2CReadReg8(fd, reg+1);
 
     if (rd1 ==-1 | rd2 ==-1)
     {
-        printf("Failed to read from %f via I2C.", ADDR);
+        printf("Failed to read from %d via I2C.", ADDR);
         exit(1);
         
     }
     else
    {
-        int I2CData = rd1+rd2;
-        //std::cout<<"Data from: "<<ADDR<<"  is: "<<I2CData<<"\n";
+        int I2CData = (rd2 << 16) | rd1;
         printf("Data from %d is: %d \n",ADDR, I2CData);
    }
 }
+
 
 
 int main()
@@ -95,9 +95,8 @@ WriteI2C(fd, reg2, 0b01000000);
 while(1)
 {
     //std::cout<<"part 1: \n"
-    ReadI2C(fd, reg3);
+    ReadI2C(fd, ADDR, reg3,);
     //std::cout<<"part 2: \n"
-    ReadI2C(fd, reg4);
 
     //Convert Accelerometer values to degrees
     //AccXangle = (float) (atan2(*(acc_raw+1),*(acc_raw+2))+M_PI)*RAD_TO_DEG;
