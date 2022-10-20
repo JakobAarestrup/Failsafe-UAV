@@ -51,7 +51,7 @@ void ReadI2C(int ADDR, int reg)
         //printf("Failed to read from %f via I2C.", ADDR);
         //exit(1);
         
-    }
+    //}
     //else
    // {
         //int I2CData = fd;
