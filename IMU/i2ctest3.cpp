@@ -56,7 +56,8 @@ void ReadI2C(int ADDR, int reg)
     else
    {
         int I2CData = rd;
-        std::cout<<"Data from: "<<ADDR<<"  is: "<<I2CData<<"\n";
+        //std::cout<<"Data from: "<<ADDR<<"  is: "<<I2CData<<"\n";
+        printf("Data from %d is: %d \n",ADDR, I2CData)
    }
 }
 
