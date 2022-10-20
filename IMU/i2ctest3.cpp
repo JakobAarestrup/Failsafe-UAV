@@ -16,9 +16,12 @@ extern "C" {
     #include <i2c/smbus.h>
 }
 
+#define DT 0.02         // [s/loop] loop period. 20ms
+#define AA 0.97         // complementary filter constant
+#define A_GAIN 0.0573    // [deg/LSB]
+#define G_GAIN 0.070     // [deg/s/LSB]
 #define M_PI 3.14159265358979323846
 #define RAD_TO_DEG 57.29578
-//#define devID  1;
 
 
 void openI2C(int devID)
@@ -103,7 +106,23 @@ while(1)
     int GYR_Y {ReadI2C(fd, LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_G)};
     int GYR_Z {ReadI2C(fd, LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_G)};
 
-    std::cout<<"GYR_X: "<<GYR_X<<"\n GYR_Y: "<<GYR_Y<<"\n GYR_Z: "<<GYR_Z<<"\n";
+    //Convert Gyro raw to degrees per second
+    float rate_gyr_y = 0.0;   // [deg/s]
+	float rate_gyr_x = 0.0;   // [deg/s]
+	float rate_gyr_z = 0.0;   // [deg/s]
+	rate_gyr_x = (float) GYR_X  * G_GAIN;
+	rate_gyr_y = (float) GYR_Y  * G_GAIN;
+	rate_gyr_z = (float) GYR_Z  * G_GAIN;
+
+    //Calculate the angles from the gyro
+    float gyroXangle = 0.0;
+	float gyroYangle = 0.0;
+	float gyroZangle = 0.0;
+	gyroXangle+=rate_gyr_x*DT;
+	gyroYangle+=rate_gyr_y*DT;
+	gyroZangle+=rate_gyr_z*DT;
+
+    std::cout<<"GYR_X: "<<gyroXangle<<"\nGYR_Y: "<<gyroYangle<<"\nGYR_Z: "<<gyroZangle<<"\n";
 
     usleep(1000000);
 }
