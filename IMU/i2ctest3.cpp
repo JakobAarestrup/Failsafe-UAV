@@ -112,7 +112,7 @@ while(1)
     roll = atan2(y_Buff , z_Buff) * 57.3;
     pitch = atan2((- x_Buff) , sqrt(y_Buff * y_Buff + z_Buff * z_Buff)) * 57.3;
 
-    printf("Roll: %i \n Pitch: %i \n", roll, pitch);
+    printf("Roll: %f \n Pitch: %f \n", roll, pitch);
 
     //Roll = atan2(ACC_Y, ACC_Z) * 180/M_PI;
     //Pitch = atan2(-ACC_X, sqrt(ACC_Y*ACC_Y + ACC_Z*ACC_Z)) * 180/M_PI;
