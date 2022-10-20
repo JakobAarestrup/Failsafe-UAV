@@ -57,6 +57,7 @@ void ReadI2C(int fd, int ADDR, int reg)
     else
    {
         int I2CData = (rd2 << 16) | rd1;
+        printf("rd1 is: %d and rd2 is: %d \n",rd1,rd2);
         printf("Data from %d is: %d \n",ADDR, I2CData);
    }
 }
