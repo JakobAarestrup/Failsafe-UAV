@@ -24,31 +24,33 @@ extern "C" {
 void openI2C(int devID)
 {
     int result = wiringPiI2CSetup(devID);
-    if (result >0)
+    if (result ==-1)
     {
         printf("Failed to establish I2C connection.");
-        exit(1);
+        return -1;
     }
+    printf("Succesfully setup I2C connection.\n")
 }
 
 void WriteI2C(int ADDR, int reg, int data)
 {
     int fd = wiringPiI2CWriteReg8(ADDR, reg, data);
-    if (fd >0)
+    if (fd ==-1)
     {
         printf("Failed to write to %f via I2C.", ADDR);
-        exit(1);
+        return -1;
     }
+    printf("Succesfully written to register via I2C.\n")
 }
 
 void ReadI2C(int ADDR, int reg)
 {
     int fd = wiringPiI2CReadReg8(ADDR, reg);
 
-    if (fd >0)
+    if (fd ==-1)
     {
         printf("Failed to read from %f via I2C.", ADDR);
-        exit(1);
+        return -1;
         
     }
     else
@@ -72,7 +74,7 @@ const int reg3 = LSM6DSOX_OUT_X_L_A;
 const int reg4 = LSM6DSOX_OUT_X_H_A;
 
 // Open I2C Connection via DevID
-openI2C(1);
+openI2C(ADDR);
 
 // Enable accelerometer
 WriteI2C(ADDR, reg1, 0b10100000);
