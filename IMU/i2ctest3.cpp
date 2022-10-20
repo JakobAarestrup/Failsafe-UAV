@@ -100,8 +100,8 @@ while(1)
     int ACC_Y {ReadI2C(fd, ADDR, LSM6DSOX_OUT_Y_L_A)};
 
     //Convert Accelerometer values to degrees
-    //AccXangle = (float) (atan2(*(acc_raw+1),*(acc_raw+2))+M_PI)*RAD_TO_DEG;
-    //AccYangle = (float) (atan2(*(acc_raw+2),*acc_raw)+M_PI)*RAD_TO_DEG;
+    AccXangle = (float) (atan2(*(acc_raw+1),*(acc_raw+2))+M_PI)*RAD_TO_DEG;
+    AccYangle = (float) (atan2(*(acc_raw+2),*acc_raw)+M_PI)*RAD_TO_DEG;
 
 
     //Change the rotation value of the accelerometer to -/+ 180
