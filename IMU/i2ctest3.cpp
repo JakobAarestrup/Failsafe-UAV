@@ -86,9 +86,9 @@ WriteI2C(fd, LSM6DSOX_CTRL2_G, 0b10101100);
 
 while(1)
 {
-    int ACC_X {ReadI2C(fd, ADDR, LSM6DSOX_OUT_X_L_A)};
-    int ACC_Y {ReadI2C(fd, ADDR, LSM6DSOX_OUT_Y_L_A)};
-    int ACC_Z {ReadI2C(fd, ADDR, LSM6DSOX_OUT_Z_L_A)};
+    int ACC_X {ReadI2C(fd, LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_A)};
+    int ACC_Y {ReadI2C(fd, LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_A)};
+    int ACC_Z {ReadI2C(fd, LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_A)};
 
     // Convert accelerometer data
     double roll = 0.00, pitch = 0.00;
@@ -99,9 +99,9 @@ while(1)
     pitch = atan2((- x_Buff) , sqrt(y_Buff * y_Buff + z_Buff * z_Buff)) * 57.3;
     printf("Roll: %f \n Pitch: %f \n", roll, pitch);
 
-    int GYR_X {ReadI2C(fd, ADDR, LSM6DSOX_OUT_X_L_G)};
-    int GYR_Y {ReadI2C(fd, ADDR, LSM6DSOX_OUT_Y_L_G)};
-    int GYR_Z {ReadI2C(fd, ADDR, LSM6DSOX_OUT_Z_L_G)};
+    int GYR_X {ReadI2C(fd, LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_G)};
+    int GYR_Y {ReadI2C(fd, LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_G)};
+    int GYR_Z {ReadI2C(fd, LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_G)};
 
     std::cout<<"GYR_X: "<<GYR_X<<"\n GYR_Y: "<<GYR_Y<<"\n GYR_Z: "<<GYR_Z<<"\n";
 
