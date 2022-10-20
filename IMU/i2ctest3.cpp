@@ -67,14 +67,18 @@ int ReadI2C(int fd, int ADDR, int reg)
 
 double ConvertACC(int x, int y, int z)
 {
+    struct rp
+    {
     double roll = 0.00, pitch = 0.00;
+    }
+    
     double x_Buff = float(x);
     double y_Buff = float(y);
     double z_Buff = float(z);
-    roll = atan2(y_Buff , z_Buff) * 57.3;
-    pitch = atan2((- x_Buff) , sqrt(y_Buff * y_Buff + z_Buff * z_Buff)) * 57.3;
+    rp.roll = atan2(y_Buff , z_Buff) * 57.3;
+    rp.pitch = atan2((- x_Buff) , sqrt(y_Buff * y_Buff + z_Buff * z_Buff)) * 57.3;
     
-    return {roll, pitch};
+    return rp;
 }
 
 
