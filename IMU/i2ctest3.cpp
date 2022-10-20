@@ -43,7 +43,7 @@ void WriteI2C(int ADDR, int reg, int data)
     printf("Succesfully written to register via I2C.\n");
 }
 
-void ReadI2C(int fd, int ADDR, int reg)
+int ReadI2C(int fd, int ADDR, int reg)
 {
     int rd1 = wiringPiI2CReadReg8(fd, reg);
     int rd2 = wiringPiI2CReadReg8(fd, reg+1);
