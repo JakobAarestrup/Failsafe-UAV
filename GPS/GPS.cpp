@@ -1,18 +1,18 @@
 #include <stdio.h>
-#include <wiringPi.h>
+#include <string.h>
+#include <errno.h>
+
 #include <wiringSerial.h>
- 
-int main()
-{
-    int fd;
-    if(wiringPiSetup() < 0)return 1;
-    if((fd = serialOpen("/dev/ttyAMA0",9600)) < 0)return 1;
-    printf("serial test start ...\n");
-    serialPrintf(fd,"Hello World!!!\n");
-    while(1)
-    {  
-        serialPutchar(fd,serialGetchar(fd));
-    }  
-    serialClose(fd);
-    return 0;
+
+int main() {
+  int fd;
+  if ((fd = serialOpen("/dev/ttyAMA0",9600))<0) {
+    fprintf(stderr,"FAIL");
+    return 1;
+  }
+
+  for (;;) {
+    putchar(serialGetchar(fd));
+    fflush (stdout) ;
+  }
 }
