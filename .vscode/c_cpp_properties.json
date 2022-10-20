@@ -1,34 +1,35 @@
 {
-  "configurations": [
-    {
-      "name": "windows-gcc-x64",
-      "includePath": [
-        "${workspaceFolder}/**"
-      ],
-      "defines": [
-        "_DEBUG",
-        "UNICODE",
-        "_UNICODE"
-      ],
-      "cStandard": "${default}",
-      "cppStandard": "${default}",
-      "intelliSenseMode": "${default}",
-      "compilerPath": "${default}"
-    },
-    {
-      "name": "gcc -v -E -x c++ -",
-      "includePath": [
-        "${workspaceFolder}/**"
-      ],
-      "defines": [
-        "_DEBUG",
-        "UNICODE",
-        "_UNICODE"
-      ],
-      "cStandard": "c17",
-      "cppStandard": "c++17",
-      "intelliSenseMode": "windows-msvc-x64"
-    }
-  ],
-  "version": 4
+    "configurations": [
+        {
+            "name": "windows-gcc-x64",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "cStandard": "${default}",
+            "cppStandard": "${default}",
+            "intelliSenseMode": "${default}",
+            "compilerPath": "${default}"
+        },
+        {
+            "name": "gcc -v -E -x c++ -",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-msvc-x64",
+            "configurationProvider": "ms-vscode.makefile-tools"
+        }
+    ],
+    "version": 4
 }
