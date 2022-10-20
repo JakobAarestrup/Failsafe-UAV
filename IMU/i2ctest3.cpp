@@ -57,8 +57,7 @@ int ReadI2C(int fd, int ADDR, int reg)
     else
    {
         int I2CData = (rd2 << 8) | rd1;
-        //printf("rd1 is: %d and rd2 is: %d \n",rd1,rd2);
-        printf("Data from %d is: %d \n",ADDR, I2CData);
+        //printf("Data from %d is: %d \n",ADDR, I2CData);
         return I2CData;
    }
 }
@@ -67,19 +66,9 @@ int ReadI2C(int fd, int ADDR, int reg)
 
 int main()
 {
-//int file_i2c;
-//int* acc_raw;
-float AccXangle;
-float AccYangle;
-const int ADDR = LSM6DSOX_ADDR2;
-const int reg1 = LSM6DSOX_CTRL1_XL;
-const int reg2 = LSM6DSOX_CTRL3_C;
-const int reg3 = LSM6DSOX_OUT_X_L_A;
-const int reg4 = LSM6DSOX_OUT_Y_L_A;
 
-printf("Adresse: %d", ADDR);
-
-int fd = wiringPiI2CSetup(ADDR);
+// Open I2C connection
+int fd = wiringPiI2CSetup(LSM6DSOX_ADDR2);
     if (fd ==-1)
     {
         printf("Failed to establish I2C connection.");
@@ -89,8 +78,11 @@ int fd = wiringPiI2CSetup(ADDR);
 
 
 // Enable accelerometer
-WriteI2C(fd, reg1, 0b10100000);
-WriteI2C(fd, reg2, 0b01000000);
+WriteI2C(fd, LSM6DSOX_CTRL1_XL, 0b10100000);
+WriteI2C(fd, LSM6DSOX_CTRL3_C, 0b01000000);
+
+// Enable gyro
+WriteI2C(fd, LSM6DSOX_CTRL2_G, 0b10101100);
 
 while(1)
 {
@@ -98,38 +90,21 @@ while(1)
     int ACC_Y {ReadI2C(fd, ADDR, LSM6DSOX_OUT_Y_L_A)};
     int ACC_Z {ReadI2C(fd, ADDR, LSM6DSOX_OUT_Z_L_A)};
 
-    //Convert Accelerometer values to degrees
-    //AccXangle = (float) (atan2(*(ACC_Y),*(ACC_Z))+M_PI)*RAD_TO_DEG;
-    //AccYangle = (float) (atan2(*(ACC_Z),*ACC_X)+M_PI)*RAD_TO_DEG;
-
-    //AccXangle = (float) (atan2(*(ACC_Y),*(ACC_Z))+M_PI)*RAD_TO_DEG;
-    //AccYangle = (float) (atan2(*(ACC_Z),*ACC_X)+M_PI)*RAD_TO_DEG;
-
+    // Convert accelerometer data
     double roll = 0.00, pitch = 0.00;
     double x_Buff = float(ACC_X);
     double y_Buff = float(ACC_Y);
     double z_Buff = float(ACC_Z);
     roll = atan2(y_Buff , z_Buff) * 57.3;
     pitch = atan2((- x_Buff) , sqrt(y_Buff * y_Buff + z_Buff * z_Buff)) * 57.3;
-
     printf("Roll: %f \n Pitch: %f \n", roll, pitch);
 
-    //Roll = atan2(ACC_Y, ACC_Z) * 180/M_PI;
-    //Pitch = atan2(-ACC_X, sqrt(ACC_Y*ACC_Y + ACC_Z*ACC_Z)) * 180/M_PI;
+    int GYR_X {ReadI2C(fd, ADDR, LSM6DSOX_OUT_X_L_G)};
+    int GYR_Y {ReadI2C(fd, ADDR, LSM6DSOX_OUT_Y_L_G)};
+    int GYR_Z {ReadI2C(fd, ADDR, LSM6DSOX_OUT_Z_L_G)};
 
+    std::cout<<"GYR_X: "<<GYR_X<<"\n GYR_Y: "<<GYR_Y<<"\n GYR_Z: "<<GYR_Z<<"\n";
 
-    //Change the rotation value of the accelerometer to -/+ 180
-   // if (AccXangle > 180)
-   //     {      
-   //         AccXangle -= (float)360.0;
-   //     }
-
-   // if (AccYangle > 180)
-   //     {
-   //         AccYangle -= (float)360.0;
-   //     }
-  //  printf("X-angle: %f", AccXangle);
-  //  printf("Y-angle: %f", AccYangle);
     usleep(1000000);
 }
 
