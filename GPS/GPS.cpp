@@ -5,11 +5,14 @@
 #include <wiringPi.h>
 #include <wiringSerial.h>
 
-int main ()
+int main()
 {
 	int fd,i=0;
 	fd = serialOpen("/dev/ttyAMA0", 9600);
-	if(fd < 0)  { printf("Opening serial failed.\n"); return 0; }
+	if(fd < 0)  
+    { 
+        printf("Opening serial failed.\n"); return 0; 
+    }
 
 	while(i<10)
 	{
