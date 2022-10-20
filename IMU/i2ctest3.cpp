@@ -74,8 +74,16 @@ const int reg2 = LSM6DSOX_CTRL3_C;
 const int reg3 = LSM6DSOX_OUT_X_L_A;
 const int reg4 = LSM6DSOX_OUT_X_H_A;
 
-// Open I2C Connection via DevID
-int fd = openI2C(ADDR);
+int fd = wiringPiI2CSetup(ADDR);
+    if (fd ==-1)
+    {
+        printf("Failed to establish I2C connection.");
+        exit(1);
+    }
+    printf("Succesfully setup I2C connection.\n");
+
+// Open I2C Connection via DevADDR
+//int fd = openI2C(ADDR);
 
 // Enable accelerometer
 WriteI2C(fd, reg1, 0b10100000);
