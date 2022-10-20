@@ -1,27 +1,32 @@
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
-#include <unistd.h>
 
+#include <wiringPi.h>
 #include <wiringSerial.h>
 
-int main() {
-  int fd;
+int main ()
+{
+	int fd,i=0;
+	fd= serialOpen("/dev/ttyAMA0",115200);
+	if(fd < 0)  { printf("Opening serial failed.\n"); return 0; }
 
-  if ((fd = serialOpen("/dev/ttyAMA0",9600))<0) 
-  {
-    printf("FAIL");
-    return 0;
-  }
+	while(i<10)
+	{
+		delay(500);
+		serialPutchar(fd,i);
+		i++;
 
-  printf("SUCCESS\n");
+		//printf("serialDataAvail: %d\n", serialDataAvail(fd));
 
-  while(1)
-  {
-    printf("%d\n",serialGetchar(fd));
-    fflush(stdout);
-    usleep(1000000);
-  }
+		if(serialDataAvail(fd) >= 1)
+		{
+       			printf ("->%d\n", serialGetchar(fd));
+       			fflush (stdout);
+		}
+	}
 
-  return 0;
+	printf("Serial port closing.\n");
+	serialClose(fd);
+	return 0;
 }
