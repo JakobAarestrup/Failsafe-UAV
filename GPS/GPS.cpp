@@ -19,8 +19,7 @@ int main() {
   {
     printf("%d\n",serialGetchar(fd));
     fflush(stdout);
-
-    sleep(1);
+    usleep(1000000);
   }
 
   return 0;
