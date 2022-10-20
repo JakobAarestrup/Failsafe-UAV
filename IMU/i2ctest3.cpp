@@ -7,6 +7,8 @@
 #include <string.h>
 #include "LIS3MDL.h"
 #include "LSM6DOX.h"
+#include <wiringPiI2C.h>
+#include <wiringPi.h>
 // #include <linux/i2c-dev.h>
 //#include <i2c/smbus.h>
 extern "C" {
@@ -17,103 +19,86 @@ extern "C" {
 #define M_PI 3.14159265358979323846
 #define RAD_TO_DEG 57.29578
 
-void  readBlock(int file_i2c, uint8_t command, uint8_t size, uint8_t *data)
+
+void openI2C()
 {
-    int result = i2c_smbus_read_i2c_block_data(file_i2c, command, size, data);
-    if (result != size)
+    int result wiringPiI2CSetup(devID);
+    if (result >0)
     {
-        printf("Failed to read block from I2C.");
+        printf("Failed to read block from I2C.");s
         exit(1);
     }
 }
 
-void selectDevice(int file_i2c, int addr)
+void WriteI2C(int ADDR, int reg, int data)
 {
-    std::string device = "LSM";      
-
-     if (ioctl(file_i2c, I2C_SLAVE, addr) < 0) {
-                fprintf(stderr,
-                        "Error: Could not select device  0x%02x: %s\n",
-                        device, strerror(errno));
-        }
-}
-
-void readACC(int *a , int file_i2c)
-{
-    uint8_t block[6];
-    selectDevice(file_i2c,LSM6DSOX_ADDR1);
-    readBlock(file_i2c, 0x80 | lSM6DSOX_OUT_X_L_A, sizeof(block), block);
-     
-    // Combine readings for each axis.
-    *a = (int16_t)(block[0] | block[1] << 8);
-    *(a+1) = (int16_t)(block[2] | block[3] << 8);
-    *(a+2) = (int16_t)(block[4] | block[5] << 8);
-}
-
-void writeAccReg(uint8_t reg, uint8_t value, int file)
-{
-  selectDevice(file,LSM6DSOX_ACC);
-  int result = i2c_smbus_write_byte_data(file, reg, value);
-    if (result == -1)
+    int fd wiringPiI2CWriteReg8(int ADDR, int reg, data);
+    if (fd >0)
     {
-        printf ("Failed to write byte to I2C Acc.");
+        printf("Failed to write to %f via I2C.", ADDR);
         exit(1);
     }
 }
+
+void ReadI2C(int ADDR, int reg)
+{
+    int fd wiringPiI2CReadReg8(int ADDR, int reg);
+    if (fd >0)
+    {
+        printf("Failed to read from %f via I2C.", ADDR);
+        exit(1);
+    }
+    else
+    {
+        int I2CData = fd;
+        std::cout<<"Data from: "<<ADDR<<I2CData<<"\n";
+    }
+}
+
 
 int main()
 {
-int file_i2c;
-int* acc_raw;
-float AccXangle;
-float AccYangle;
-const int addr = LSM6DSOX_ADDR2;
+//int file_i2c;
+//int* acc_raw;
+//float AccXangle;
+//float AccYangle;
+const int devID = 1;
+const int ADDR = LSM6DSOX_ADDR2;
+const int reg1 = LSM6DSOX_CTRL1_XL;
+const int reg2 = LSM6DSOX_CTRL3_C;
+const int reg3 = LSM6DSOX_OUT_X_L_A;
+const int reg4 = LSM6DSOX_OUT_X_H_A;
 
-// // Setup I2C communication
-//     int fd = wiringPiI2CSetup(LSM6DSOX_CHIP_ID);
-//     if (fd == -1) {
-//         std::cout << "Failed to init I2C communication.\n";
-//         return -1;
-//     }
-//     std::cout << "I2C communication successfully setup.\n";
+// Open I2C Connection via DevID
+openI2C();
 
-char *filename = (char*)"/dev/i2c-1";
-file_i2c = open(filename, O_RDWR);
-	if (file_i2c < 0)
-	{
-		//ERROR HANDLING: you can check errno to see what went wrong
-		printf("Failed to open the i2c bus");
-		return 0;
-	}
-
-
-// Enable accelerometer.
-writeAccReg(LSM6DSOX_CTRL1_XL, 0b10100000, file_i2c); //  z,y,x axis enabled , 6.66kHz data rate, 2G full scale, no LP filter.
-writeAccReg(LSM6DSOX_CTRL3_C, 0b01000000, file_i2c); // enable BDU (check for MSB and LSB). All other bits in default-mode.
+// Enable accelerometer
+WriteI2C(ADDR, reg1, 0b10100000);
+WriteI2C(ADDR, reg2, 0b01000000);
 
 while(1)
 {
-    readACC(acc_raw, file_i2c);
+    ReadI2C(ADDR, reg3);
+    ReadI2C(ADDR, reg4);
 
     //Convert Accelerometer values to degrees
-    AccXangle = (float) (atan2(*(acc_raw+1),*(acc_raw+2))+M_PI)*RAD_TO_DEG;
-    AccYangle = (float) (atan2(*(acc_raw+2),*acc_raw)+M_PI)*RAD_TO_DEG;
+    //AccXangle = (float) (atan2(*(acc_raw+1),*(acc_raw+2))+M_PI)*RAD_TO_DEG;
+    //AccYangle = (float) (atan2(*(acc_raw+2),*acc_raw)+M_PI)*RAD_TO_DEG;
 
 
     //Change the rotation value of the accelerometer to -/+ 180
-    if (AccXangle > 180)
-        {      
-            AccXangle -= (float)360.0;
-        }
+   // if (AccXangle > 180)
+   //     {      
+   //         AccXangle -= (float)360.0;
+   //     }
 
-    if (AccYangle > 180)
-        {
-            AccYangle -= (float)360.0;
-        }
-    printf("X-angle: %f", AccXangle);
-    printf("Y-angle: %f", AccYangle);
+   // if (AccYangle > 180)
+   //     {
+   //         AccYangle -= (float)360.0;
+   //     }
+  //  printf("X-angle: %f", AccXangle);
+  //  printf("Y-angle: %f", AccYangle);
     usleep(1000000);
-
 }
 
 return 0;

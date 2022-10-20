@@ -3,40 +3,104 @@
 #include <chrono>
 #include <wiringPiI2C.h>
 
-#define DEVICE_ID 0x6b
+void  readBlock(int file_i2c, uint8_t command, uint8_t size, uint8_t *data)
+{
+    int result = i2c_smbus_read_i2c_block_data(file_i2c, command, size, data);
+    if (result != size)
+    {
+        printf("Failed to read block from I2C.");
+        exit(1);
+    }
+}
 
-#define REG_POWER_CTL   0x2D
-#define REG_DATA_X_LOW  0x32
-#define REG_DATA_X_HIGH 0x33
-#define REG_DATA_Y_LOW  0x34
-#define REG_DATA_Y_HIGH 0x35
-#define REG_DATA_Z_LOW  0x36
-#define REG_DATA_Z_HIGH 0x37
+void selectDevice(int file_i2c, int addr)
+{
+    std::string device = "LSM";      
 
-#define LSM6DSOX_FUNC_CFG_ACCESS 0x1 ///< Enable embedded functions register
-#define LSM6DSOX_PIN_CTRL 0x2        ///< Pin control register
+     if (ioctl(file_i2c, I2C_SLAVE, addr) < 0) {
+                fprintf(stderr,
+                        "Error: Could not select device  0x%02x: %s\n",
+                        device, strerror(errno));
+        }
+}
 
-#define LSM6DSOX_INT1_CTRL 0x0D ///< Interrupt enable for data ready
-#define LSM6DSOX_CTRL1_XL 0x10  ///< Main accelerometer config register
-#define LSM6DSOX_CTRL2_G 0x11   ///< Main gyro config register
-#define LSM6DSOX_CTRL3_C 0x12   ///< Main configuration register
-#define LSM6DSOX_CTRL9_XL 0x18  ///< Includes i3c disable bit
+void readACC(int *a , int file_i2c)
+{
+    uint8_t block[6];
+    selectDevice(file_i2c,LSM6DSOX_ADDR1);
+    readBlock(file_i2c, 0x80 | lSM6DSOX_OUT_X_L_A, sizeof(block), block);
+     
+    // Combine readings for each axis.
+    *a = (int16_t)(block[0] | block[1] << 8);
+    *(a+1) = (int16_t)(block[2] | block[3] << 8);
+    *(a+2) = (int16_t)(block[4] | block[5] << 8);
+}
 
-void enableI2CMasterPullups(bool enable_pullups);
-void disableSPIMasterPullups(bool disable_pullups);
-int fd;
+void writeAccReg(uint8_t reg, uint8_t value, int file)
+{
+  selectDevice(file,LSM6DSOX_ACC);
+  int result = i2c_smbus_write_byte_data(file, reg, value);
+    if (result == -1)
+    {
+        printf ("Failed to write byte to I2C Acc.");
+        exit(1);
+    }
+}
 
 int main (int argc, char **argv)
 {
-    // Setup I2C communication
-    int fd = wiringPiI2CSetup(DEVICE_ID);
-    if (fd == -1) {
-        std::cout << "Failed to init I2C communication.\n";
-        return -1;
-    }
-    std::cout << "I2C communication successfully setup.\n";
+int file_i2c;
+int* acc_raw;
+float AccXangle;
+float AccYangle;
+const int addr = LSM6DSOX_ADDR2;
 
-    int wiringPiI2CRead(fd);
+// // Setup I2C communication
+//     int fd = wiringPiI2CSetup(LSM6DSOX_CHIP_ID);
+//     if (fd == -1) {
+//         std::cout << "Failed to init I2C communication.\n";
+//         return -1;
+//     }
+//     std::cout << "I2C communication successfully setup.\n";
 
-    return 0;
+char *filename = (char*)"/dev/i2c-1";
+file_i2c = open(filename, O_RDWR);
+	if (file_i2c < 0)
+	{
+		//ERROR HANDLING: you can check errno to see what went wrong
+		printf("Failed to open the i2c bus");
+		return 0;
+	}
+
+
+// Enable accelerometer.
+writeAccReg(LSM6DSOX_CTRL1_XL, 0b10100000, file_i2c); //  z,y,x axis enabled , 6.66kHz data rate, 2G full scale, no LP filter.
+writeAccReg(LSM6DSOX_CTRL3_C, 0b01000000, file_i2c); // enable BDU (check for MSB and LSB). All other bits in default-mode.
+
+while(1)
+{
+    readACC(acc_raw, file_i2c);
+
+    //Convert Accelerometer values to degrees
+    AccXangle = (float) (atan2(*(acc_raw+1),*(acc_raw+2))+M_PI)*RAD_TO_DEG;
+    AccYangle = (float) (atan2(*(acc_raw+2),*acc_raw)+M_PI)*RAD_TO_DEG;
+
+
+    //Change the rotation value of the accelerometer to -/+ 180
+    if (AccXangle > 180)
+        {      
+            AccXangle -= (float)360.0;
+        }
+
+    if (AccYangle > 180)
+        {
+            AccYangle -= (float)360.0;
+        }
+    printf("X-angle: %f", AccXangle);
+    printf("Y-angle: %f", AccYangle);
+    usleep(1000000);
+
+}
+
+return 0;
 }
