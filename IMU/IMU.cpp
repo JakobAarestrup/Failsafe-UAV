@@ -15,7 +15,7 @@ IMU::~IMU()
 {}
 
 
-void ConvertIMUData(int x, int y, int z, int sensor_handle)
+void IMU::ConvertIMUData(int x, int y, int z, int sensor_handle)
 {    
     if (sensor_handle == 1) // Accelerometer
     {
