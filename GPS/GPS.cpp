@@ -6,7 +6,7 @@
 
 int main() {
   int fd;
-  if ((fd = serialOpen("/dev/serial0",9600))<0) {
+  if ((fd = serialOpen('/dev/ttyS0',9600))<0) {
     fprintf(stderr,"FAIL");
     return 1;
   }
