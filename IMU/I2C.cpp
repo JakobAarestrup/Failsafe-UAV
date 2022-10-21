@@ -21,7 +21,7 @@ I2C::I2C()
 I2C::~I2C()
 {}
 
-void openI2C(int ADDR)
+void I2C::openI2C(int ADDR)
 {
     I2C_File_ = wiringPiI2CSetup(ADDR);
     if (I2C_File_ ==-1)
@@ -32,7 +32,7 @@ void openI2C(int ADDR)
     printf("Succesfully setup I2C connection.\n");
 }
 
-void WriteI2C(int reg, int data)
+void I2C::WriteI2C(int reg, int data)
 {
     Write_File_ = wiringPiI2CWriteReg8(I2C_File_, reg, data);
     if (Write_File_ ==-1)
@@ -43,7 +43,7 @@ void WriteI2C(int reg, int data)
     printf("Succesfully written to register via I2C.\n");
 }
 
-int ReadI2C(int ADDR, int reg)
+int I2C::ReadI2C(int ADDR, int reg)
 {
     int Reg_data1 = wiringPiI2CReadReg8(I2C_File_, reg);
     int Reg_data2 = wiringPiI2CReadReg8(I2C_File_, reg+1);
