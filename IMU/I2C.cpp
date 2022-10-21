@@ -23,8 +23,8 @@ I2C::~I2C()
 
 void openI2C(int ADDR)
 {
-    this->I2C_File_ = wiringPiI2CSetup(ADDR);
-    if (this->I2C_File_ ==-1)
+    I2C_File_ = wiringPiI2CSetup(ADDR);
+    if (I2C_File_ ==-1)
     {
         printf("Failed to establish I2C connection.");
         exit(1);
@@ -34,8 +34,8 @@ void openI2C(int ADDR)
 
 void WriteI2C(int reg, int data)
 {
-    this->Write_File_ = wiringPiI2CWriteReg8(this->I2C_File_, reg, data);
-    if (this->Write_File_ ==-1)
+    Write_File_ = wiringPiI2CWriteReg8(I2C_File_, reg, data);
+    if (Write_File_ ==-1)
     {
         printf("Failed to write to %d via I2C.", ADDR);
         exit(1);
@@ -45,12 +45,12 @@ void WriteI2C(int reg, int data)
 
 int ReadI2C(int ADDR, int reg)
 {
-    int Reg_data1 = wiringPiI2CReadReg8(this->I2C_File_, reg);
-    int Reg_data2 = wiringPiI2CReadReg8(this->I2C_File_, reg+1);
+    int Reg_data1 = wiringPiI2CReadReg8(I2C_File_, reg);
+    int Reg_data2 = wiringPiI2CReadReg8(I2C_File_, reg+1);
 
     if (Reg_data1 ==-1 | Reg_data2 ==-1)
     {
-        printf("Failed to read from %d via I2C.", this->ADDR);
+        printf("Failed to read from %d via I2C.", ADDR);
         exit(1);
     }
     else
