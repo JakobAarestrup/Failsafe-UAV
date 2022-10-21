@@ -65,6 +65,22 @@ int ReadI2C(int fd, int ADDR, int reg)
    }
 }
 
+double ConvertACC(int x, int y, int z)
+{
+    struct rp
+    {
+    double roll = 0.00, pitch = 0.00;
+    };
+    
+    double x_Buff = float(x);
+    double y_Buff = float(y);
+    double z_Buff = float(z);
+    //rp.roll = atan2(y_Buff , z_Buff) * 57.3;
+    //rp.pitch = atan2((- x_Buff) , sqrt(y_Buff * y_Buff + z_Buff * z_Buff)) * 57.3;
+    
+    return rp{atan2(y_Buff , z_Buff) * 57.3, atan2((- x_Buff) , sqrt(y_Buff * y_Buff + z_Buff * z_Buff)) * 57.3};
+}
+
 
 
 int main()
@@ -93,14 +109,17 @@ while(1)
     int ACC_Y {ReadI2C(fd, LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_A)};
     int ACC_Z {ReadI2C(fd, LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_A)};
 
+    double [roll, pitch] = ConvertACC(ACC_X,ACC_Y,ACC_Z);
+    printf("Roll: %f \nPitch: %f \n", roll, pitch);
+
     // Convert accelerometer data
-    double roll = 0.00, pitch = 0.00;
-    double x_Buff = float(ACC_X);
-    double y_Buff = float(ACC_Y);
-    double z_Buff = float(ACC_Z);
-    roll = atan2(y_Buff , z_Buff) * 57.3;
-    pitch = atan2((- x_Buff) , sqrt(y_Buff * y_Buff + z_Buff * z_Buff)) * 57.3;
-    printf("Roll: %f \n Pitch: %f \n", roll, pitch);
+    //double roll = 0.00, pitch = 0.00;
+    //double x_Buff = float(ACC_X);
+    //double y_Buff = float(ACC_Y);
+    //double z_Buff = float(ACC_Z);
+    //roll = atan2(y_Buff , z_Buff) * 57.3;
+    //pitch = atan2((- x_Buff) , sqrt(y_Buff * y_Buff + z_Buff * z_Buff)) * 57.3;
+    
 
     int GYR_X {ReadI2C(fd, LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_G)};
     int GYR_Y {ReadI2C(fd, LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_G)};
