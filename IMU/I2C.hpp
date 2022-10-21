@@ -1,5 +1,3 @@
-
-
 class I2C
 {
 public:

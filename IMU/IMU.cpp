@@ -1,6 +1,5 @@
-#include "I2C.h"
-#include "LIS3MDL.hpp"
-#include "LSM6DSOX.hpp"
+#includes "IMU.hpp"
+#include <math.h>
 
 #define M_PI 3.14159265358979323846
 #define RAD_TO_DEG 57.29578
@@ -8,6 +7,12 @@
 #define AA 0.97         // complementary filter constant
 #define A_GAIN 0.0573    // [deg/LSB]
 #define G_GAIN 0.070     // [deg/s/LSB]
+
+IMU::IMU()
+{}
+
+IMU::~IMU()
+{}
 
 
 double ConvertIMUData(int x, int y, int z, int sensor_handle)
