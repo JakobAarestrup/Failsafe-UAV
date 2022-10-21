@@ -7,11 +7,11 @@
 int main() {
   int fd;
   if ((fd = serialOpen("/dev/ttyAMA0",9600))<0) {
-    fprintf(stderr,"FAIL");
+    fprintf(stderr,"FAIL\n");
     return 1;
   }
   for (;;) {
-    putchar(serialGetchar(fd));
+    printf("%d",serialGetchar(fd));
     fflush (stdout) ;
   }
 }
