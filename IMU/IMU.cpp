@@ -1,6 +1,6 @@
 #include "I2C.h"
-#include "LIS3MDL.h"
-#include "LSM6DSOX.h"
+#include "LIS3MDL.hpp"
+#include "LSM6DSOX.hpp"
 
 #define M_PI 3.14159265358979323846
 #define RAD_TO_DEG 57.29578

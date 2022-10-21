@@ -10,7 +10,6 @@
 extern "C"
 {
     #include <linux/i2c-dev.h>
-    #include <i2c/smbus.h>
 }
 
 #define ACC_Config = 0b10100000;
@@ -34,9 +33,9 @@ void openI2C(int ADDR)
     printf("Succesfully setup I2C connection.\n");
 }
 
-void WriteI2C(int ADDR, int reg, int data)
+void WriteI2C(int reg, int data)
 {
-    int Write_File_ = wiringPiI2CWriteReg8(ADDR, reg, data);
+    int Write_File_ = wiringPiI2CWriteReg8(I2C_File_, reg, data);
     if (Write_File_ ==-1)
     {
         printf("Failed to write to %d via I2C.", ADDR);
@@ -45,10 +44,10 @@ void WriteI2C(int ADDR, int reg, int data)
     printf("Succesfully written to register via I2C.\n");
 }
 
-int ReadI2C(int fd, int ADDR, int reg)
+int ReadI2C(int ADDR, int reg)
 {
-    int Reg_data1 = wiringPiI2CReadReg8(fd, reg);
-    int Reg_data2 = wiringPiI2CReadReg8(fd, reg+1);
+    int Reg_data1 = wiringPiI2CReadReg8(I2C_File_, reg);
+    int Reg_data2 = wiringPiI2CReadReg8(I2C_File_, reg+1);
 
     if (Reg_data1 ==-1 | Reg_data2 ==-1)
     {
