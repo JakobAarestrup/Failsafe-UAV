@@ -32,7 +32,7 @@ void I2C::openI2C(int ADDR)
     printf("Succesfully setup I2C connection.\n");
 }
 
-void I2C::WriteI2C(int reg, int data)
+void I2C::WriteI2C(int, ADDR, int reg, int data)
 {
     Write_File_ = wiringPiI2CWriteReg8(I2C_File_, reg, data);
     if (Write_File_ ==-1)
