@@ -3,7 +3,7 @@ class IMU
 public:
     IMU();
     ~IMU();
-    double ConvertIMUData(int x, int y, int z, int sensor_handle);
+    void ConvertIMUData(int x, int y, int z, int sensor_handle);
     double roll_;
     double pitch_;
 private:
