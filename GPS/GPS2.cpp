@@ -1,12 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
-
 #include <wiringSerial.h>
 
 int main() {
   int fd;
-  if ((fd = serialOpen("/dev/ttyAMA0",9600))<0) {
+  if ((fd = serialOpen("/dev/serial0",9600))<0) {
     fprintf(stderr,"FAIL\n");
     return 1;
   }
