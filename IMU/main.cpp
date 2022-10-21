@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <iostream>
 #include "I2C.hpp"
 #include "IMU.hpp"
 #include "LIS3MDL.hpp"
@@ -7,6 +10,7 @@ int main()
 {
 
 I2C I1;
+IMU IMU2;
 
 // Open I2C connection
 I1.I2C::openI2C(LSM6DSOX_ADDR2);
@@ -21,7 +25,7 @@ I1.I2C::WriteI2C(LSM6DSOX_CTRL2_G, 0b10101100);
 // Main loop
 while(1)
 {
-    int ACC_x = I1.I2C::ReadI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_A};
+    int ACC_x = I1.I2C::ReadI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_A);
     int ACC_y = I1.I2C::ReadI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_A);
     int ACC_z = I1.I2C::ReadI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_A);
 
