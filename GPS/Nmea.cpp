@@ -4,7 +4,7 @@
 
 #include <wiringSerial.h>
 
-#include <nmea.h>
+#include "nmea.h"
 
 int main() {
   
