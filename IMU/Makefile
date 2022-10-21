@@ -15,4 +15,4 @@ LDLIBS    = -lwiringPi -lpthread -lm
 # Should not alter anything below this line
 ###############################################################################
 
-SRC     =       main.cpp                                               \
+SRC     =       main.cpp IMU.cpp I2C.cpp                                               \
