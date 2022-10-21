@@ -6,6 +6,8 @@
 int main()
 {
 
+I2C I1;
+
 // Open I2C connection
 I1.I2C::openI2C(LSM6DSOX_ADDR2);
 
