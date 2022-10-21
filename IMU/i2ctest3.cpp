@@ -24,9 +24,9 @@ extern "C" {
 #define RAD_TO_DEG 57.29578
 
 
-void openI2C(int devID)
+void openI2C(int ADDR)
 {
-    int result = wiringPiI2CSetup(devID);
+    int result = wiringPiI2CSetup(ADDR);
     if (result ==-1)
     {
         printf("Failed to establish I2C connection.");
@@ -112,13 +112,7 @@ while(1)
     double [roll, pitch] = ConvertACC(ACC_X,ACC_Y,ACC_Z);
     printf("Roll: %f \nPitch: %f \n", roll, pitch);
 
-    // Convert accelerometer data
-    //double roll = 0.00, pitch = 0.00;
-    //double x_Buff = float(ACC_X);
-    //double y_Buff = float(ACC_Y);
-    //double z_Buff = float(ACC_Z);
-    //roll = atan2(y_Buff , z_Buff) * 57.3;
-    //pitch = atan2((- x_Buff) , sqrt(y_Buff * y_Buff + z_Buff * z_Buff)) * 57.3;
+    
     
 
     int GYR_X {ReadI2C(fd, LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_G)};
