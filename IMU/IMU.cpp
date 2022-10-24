@@ -53,32 +53,32 @@ double IMU::getPitch()
     return pitch_;
 }
 
-double IMU::getGyrX()
+int IMU::getGyrX()
 {
     return gyr_Xangle_;
 }
 
-double IMU::getGyrY()
+int IMU::getGyrY()
 {
     return gyr_Yangle_;
 }
 
-double IMU::getGyrZ()
+int IMU::getGyrZ()
 {
     return gyr_Zangle_;
 }
 
-double IMU::getMagX()
+int IMU::getMagX()
 {
     return mag_X_;
 }
 
-double IMU::getMagY()
+int IMU::getMagY()
 {
     return mag_Y_;
 }
 
-double IMU::getMagZ()
+int IMU::getMagZ()
 {
     return mag_Z_;
 }

@@ -6,12 +6,12 @@ public:
     void ConvertIMUData(int x, int y, int z, int sensor_handle);
     double getRoll();
     double getPitch();
-    double getGyrX();
-    double getGyrY();
-    double getGyrZ();
-    double getMagX();
-    double getMagY();
-    double getMagZ();
+    int getGyrX();
+    int getGyrY();
+    int getGyrZ();
+    int getMagX();
+    int getMagY();
+    int getMagZ();
 private:
     int sensor_handle_;
     float gyr_Xangle_ = 0.0;
