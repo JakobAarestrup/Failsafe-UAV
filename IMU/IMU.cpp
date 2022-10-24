@@ -53,17 +53,17 @@ double IMU::getPitch()
     return pitch_;
 }
 
-double IMU::getGyrX()
+float IMU::getGyrX()
 {
     return gyr_Xangle_;
 }
 
-double IMU::getGyrY()
+float IMU::getGyrY()
 {
     return gyr_Yangle_;
 }
 
-double IMU::getGyrZ()
+float IMU::getGyrZ()
 {
     return gyr_Zangle_;
 }
