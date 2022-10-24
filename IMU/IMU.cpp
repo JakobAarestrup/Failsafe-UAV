@@ -37,6 +37,10 @@ void IMU::ConvertIMUData(int x, int y, int z, int sensor_handle)
     }
     else if (sensor_handle == 3) // Magnetometer
     {
+        double x_MAG = float(x);
+        double y_MAG = float(y);
+        double z_MAG = float(z);
+
 
     }
 }
@@ -48,5 +52,35 @@ double IMU::getRoll()
 
 double IMU::getPitch()
 {
-    return this->pitch_;
+    return pitch_;
+}
+
+double IMU::getGyrX()
+{
+    return gyr_Xangle_;
+}
+
+double IMU::getGyrY()
+{
+    return gyr_Yangle_;
+}
+
+double IMU::getGyrZ()
+{
+    return gyr_Zangle_;
+}
+
+double IMU::getMagX()
+{
+    return mag_X_;
+}
+
+double IMU::getMagY()
+{
+    return mag_Y_;
+}
+
+double IMU::getMagZ()
+{
+    return mag_Z_;
 }
