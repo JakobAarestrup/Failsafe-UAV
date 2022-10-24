@@ -26,6 +26,12 @@ IMU IMU2;
 //I1.WriteI2C(LIS3MDL_ADDR_2, LIS3MDL_CTRL_REG1, 0b01011100);
 //I1.WriteI2C(LIS3MDL_ADDR_2, LIS3MDL_CTRL_REG2, 0b01100000);
 
+I1.openI2C(LIS3MDL_ADDR_2);
+
+// Enable magnetometer - 
+I1.WriteI2C(LIS3MDL_ADDR_2, LIS3MDL_CTRL_REG1, 0b00110010);
+//I1.WriteI2C(LIS3MDL_ADDR_2, LIS3MDL_CTRL_REG2, 0b01100000);
+
 // Main loop
 while(1)
 {
@@ -59,11 +65,7 @@ I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 0b10101100);
     printf("Roll: %f \nPitch: %f \n", roll, pitch); //Print accelerometer data
     printf("GYR_X: %f \nGYR_Y: %f \n GYR_Z: %f \n", GYR_X, GYR_Y, GYR_Z); //Print gyroscope data
 */
-    I1.openI2C(LIS3MDL_ADDR_2);
 
-    // Enable magnetometer - 
-    I1.WriteI2C(LIS3MDL_ADDR_2, LIS3MDL_CTRL_REG1, 0b00110010);
-    //I1.WriteI2C(LIS3MDL_ADDR_2, LIS3MDL_CTRL_REG2, 0b01100000);
 
     int MAG_x = I1.ReadI2C(LIS3MDL_ADDR_2, LIS3MDL_OUT_X_L);
     int MAG_y = I1.ReadI2C(LIS3MDL_ADDR_2, LIS3MDL_OUT_Y_L);
