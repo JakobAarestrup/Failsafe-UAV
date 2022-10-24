@@ -9,7 +9,7 @@ int main ()
 {
   int serial_port ;
   char dat;
-  if ((serial_port = serialOpen ("/dev/ttyAM0", 115200)) < 0)	/* open serial port */
+  if ((serial_port = serialOpen ("/dev/ttyAMA0", 115200)) < 0)	/* open serial port */
   {
     fprintf (stderr, "Unable to open serial device: %s\n", strerror (errno)) ;
     return 1 ;
