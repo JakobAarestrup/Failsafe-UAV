@@ -69,7 +69,7 @@ I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 0b10101100);
     int MAG_y = I1.ReadI2C(LIS3MDL_ADDR_2, LIS3MDL_OUT_Y_L);
     int MAG_z = I1.ReadI2C(LIS3MDL_ADDR_2, LIS3MDL_OUT_Z_L);
 
-    IMU2.ConvertIMUData(GYR_x, GYR_y, GYR_z, 3); //Magnometer conversion
+    IMU2.ConvertIMUData(MAG_x, MAG_y, MAG_z, 3); //Magnometer conversion
     double MAG_X = IMU2.getMagX();
     double MAG_Y = IMU2.getMagY();
     double MAG_Z = IMU2.getMagZ();
