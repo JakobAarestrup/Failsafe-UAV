@@ -55,7 +55,7 @@ int I2C::ReadI2C(int ADDR, int reg)
     }
     else
    {
-        I2CData_ = (Reg_data2 << 8) | Reg_data1;
-        return I2CData_;
+        I2C_Data_ = (Reg_data2 << 8) | Reg_data1;
+        return I2C_Data_;
    }
 }
