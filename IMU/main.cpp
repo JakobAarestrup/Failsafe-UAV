@@ -59,15 +59,15 @@ I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 0b10101100);
     printf("Roll: %f \nPitch: %f \n", roll, pitch); //Print accelerometer data
     printf("GYR_X: %f \nGYR_Y: %f \n GYR_Z: %f \n", GYR_X, GYR_Y, GYR_Z); //Print gyroscope data
 */
-    I1.openI2C(LIS3MDL_ADDR_2);
+    I1.openI2C(LIS3MDL_ADDR_1);
 
     // Enable magnetometer - 
-    I1.WriteI2C(LIS3MDL_ADDR_2, LIS3MDL_CTRL_REG1, 0b00110010);
+    I1.WriteI2C(LIS3MDL_ADDR_1, LIS3MDL_CTRL_REG1, 0b00110010);
     //I1.WriteI2C(LIS3MDL_ADDR_2, LIS3MDL_CTRL_REG2, 0b01100000);
 
-    int MAG_x = I1.ReadI2C(LIS3MDL_ADDR_2, LIS3MDL_OUT_X_L);
-    int MAG_y = I1.ReadI2C(LIS3MDL_ADDR_2, LIS3MDL_OUT_Y_L);
-    int MAG_z = I1.ReadI2C(LIS3MDL_ADDR_2, LIS3MDL_OUT_Z_L);
+    int MAG_x = I1.ReadI2C(LIS3MDL_ADDR_1, LIS3MDL_OUT_X_L);
+    int MAG_y = I1.ReadI2C(LIS3MDL_ADDR_1, LIS3MDL_OUT_Y_L);
+    int MAG_z = I1.ReadI2C(LIS3MDL_ADDR_1, LIS3MDL_OUT_Z_L);
 
     IMU2.ConvertIMUData(MAG_x, MAG_y, MAG_z, 3); //Magnometer conversion
     double MAG_X = IMU2.getMagX();
