@@ -6,9 +6,9 @@ public:
     void ConvertIMUData(int x, int y, int z, int sensor_handle);
     double getRoll();
     double getPitch();
-    int getGyrX();
-    int getGyrY();
-    int getGyrZ();
+    double getGyrX();
+    double getGyrY();
+    double getGyrZ();
     int getMagX();
     int getMagY();
     int getMagZ();
