@@ -39,15 +39,14 @@ void IMU::ConvertIMUData(int x, int y, int z, int sensor_handle)
     {
 
     }
+}
 
-void IMU::getRoll()
+double IMU::getRoll()
 {
     return this->roll_;
 }
 
-void IMU::getPitch()
+double IMU::getPitch()
 {
     return this->pitch_;
-}
-
 }
