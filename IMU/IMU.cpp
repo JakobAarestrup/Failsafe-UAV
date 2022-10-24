@@ -42,12 +42,12 @@ void IMU::ConvertIMUData(int x, int y, int z, int sensor_handle)
 
 double IMU::getRoll()
 {
-    return roll_;
+    return this->roll_;
 }
 
 double IMU::getPitch()
 {
-    return pitch_;
+    return this->pitch_;
 }
 
 }
