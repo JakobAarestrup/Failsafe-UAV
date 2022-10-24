@@ -5,6 +5,8 @@
 #include "IMU.hpp"
 #include "LIS3MDL.hpp"
 #include "LSM6DSOX.hpp"
+#include <wiringPiI2C.h>
+#include <wiringPi.h>
 
 int main()
 {
