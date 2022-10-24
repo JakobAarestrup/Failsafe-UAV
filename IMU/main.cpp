@@ -74,14 +74,14 @@ I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 0b10101100);
     int MAG_x = I1.ReadI2C(LIS3MDL_ADDR_2, LIS3MDL_OUT_X_L);
     int MAG_y = I1.ReadI2C(LIS3MDL_ADDR_2, LIS3MDL_OUT_Y_L);
     int MAG_z = I1.ReadI2C(LIS3MDL_ADDR_2, LIS3MDL_OUT_Z_L);
-    printf("MAG_x: %f \nMAG_y: %f \nMAG_z: %f \n", MAG_x, MAG_y, MAG_z); //Print mag data
+    printf("MAG_x: %d \nMAG_y: %d \nMAG_z: %d \n", MAG_x, MAG_y, MAG_z); //Print mag data
 
     IMU2.ConvertIMUData(MAG_x, MAG_y, MAG_z, 3); //Magnometer conversion
     int MAG_X = IMU2.getMagX();
     int MAG_Y = IMU2.getMagY();
     int MAG_Z = IMU2.getMagZ();
 
-    printf("MAG_X: %f \nMAG_Y: %f \nMAG_Z: %f \n", MAG_X, MAG_Y, MAG_Z); //Print mag data
+    printf("MAG_X: %d \nMAG_Y: %d \nMAG_Z: %d \n", MAG_X, MAG_Y, MAG_Z); //Print mag data
     
 
     usleep(1000000); //Small delay
