@@ -4,8 +4,8 @@ public:
     IMU();
     ~IMU();
     void ConvertIMUData(int x, int y, int z, int sensor_handle);
-    double getRoll();
-    double getPitch();
+    void getRoll();
+    void getPitch();
 private:
     int sensor_handle_;
     float gyr_Xangle_ = 0.0;
