@@ -30,6 +30,7 @@ IMU IMU2;
 while(1)
 {
     // Open I2C connection
+/*
 I1.openI2C(LSM6DSOX_ADDR2);
 
 // Enable accelerometer
@@ -57,7 +58,7 @@ I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 0b10101100);
 
     printf("Roll: %f \nPitch: %f \n", roll, pitch); //Print accelerometer data
     printf("GYR_X: %f \nGYR_Y: %f \n GYR_Z: %f \n", GYR_X, GYR_Y, GYR_Z); //Print gyroscope data
-
+*/
     I1.openI2C(LIS3MDL_ADDR_2);
 
     // Enable magnetometer - 
@@ -73,7 +74,7 @@ I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 0b10101100);
     double MAG_Y = IMU2.getMagY();
     double MAG_Z = IMU2.getMagZ();
 
-    printf("MAG_X: %f \nMAG_Y: %f \n MAG_Z: %f \n", MAG_X, MAG_Y, MAG_Z); //Print mag data
+    printf("MAG_X: %f \nMAG_Y: %f \nMAG_Z: %f \n", MAG_X, MAG_Y, MAG_Z); //Print mag data
 
     usleep(1000000); //Small delay
 }
