@@ -18,11 +18,11 @@ void IMU::ConvertIMUData(int x, int y, int z, int sensor_handle)
 {    
     if (sensor_handle == 1) // Accelerometer
     {
-        /* float x_ACC = float(x);
+        float x_ACC = float(x);
         float y_ACC = float(y);
-        float z_ACC = float(z); */
-        this->roll_ = atan2(y , z) * 57.3;
-        this->pitch_ = atan2((- x), sqrt(y * y + z * z)) * 57.3;
+        float z_ACC = float(z);
+        this->roll_ = atan2(y_ACC , z_ACC) * 57.3;
+        this->pitch_ = atan2((- x_ACC), sqrt(y_ACC * y_ACC + z_ACC * z_ACC)) * 57.3;
     }
     else if (sensor_handle == 2) // Gyroscope
     {
