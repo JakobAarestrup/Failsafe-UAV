@@ -37,9 +37,9 @@ void IMU::ConvertIMUData(int x, int y, int z, int sensor_handle)
     }
     else if (sensor_handle == 3) // Magnetometer
     {
-        double mag_X_ = float(x);
-        double mag_Y_ = float(y);
-        double mag_Z_ = float(z);
+        mag_X_ = x;
+        mag_Y_ = y;
+        mag_Z_ = z;
     }
 }
 

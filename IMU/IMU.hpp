@@ -22,7 +22,7 @@ private:
 	float rate_gyr_z_ = 0.0;   // [deg/s]
     double roll_;
     double pitch_;
-    float mag_X_ = 0.0;
-    float mag_Y_ = 0.0;
-    float mag_Z_ = 0.0;
+    int mag_X_ = 0.0;
+    int mag_Y_ = 0.0;
+    int mag_Z_ = 0.0;
 };
