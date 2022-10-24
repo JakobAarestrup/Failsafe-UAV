@@ -14,7 +14,6 @@ IMU::IMU()
 IMU::~IMU()
 {}
 
-
 void IMU::ConvertIMUData(int x, int y, int z, int sensor_handle)
 {    
     if (sensor_handle == 1) // Accelerometer
@@ -40,4 +39,15 @@ void IMU::ConvertIMUData(int x, int y, int z, int sensor_handle)
     {
 
     }
+
+double IMU::getRoll()
+{
+    return roll_;
+}
+
+double IMU::getPitch()
+{
+    return pitch_;
+}
+
 }

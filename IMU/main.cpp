@@ -30,7 +30,11 @@ while(1)
     int ACC_z = I1.ReadI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_A);
 
     IMU2.ConvertIMUData(ACC_x, ACC_y, ACC_z, 1); //Accelerometer conversion
-    printf("Roll: %f \nPitch: %f \n", IMU2.roll_, IMU2.pitch_); //Print accelerometer data
+
+    double roll = IMU2.getRoll();
+    double pitch = IMU2.getPitch();
+
+    printf("Roll: %f \nPitch: %f \n", roll, pitch); //Print accelerometer data
 
     usleep(1000000); //Small delay
 }
