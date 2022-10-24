@@ -81,7 +81,7 @@ I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 0b10101100);
     int MAG_Y = IMU2.getMagY();
     int MAG_Z = IMU2.getMagZ();
 
-    printf("MAG_X: %d       MAG_Y: %d   MAG_Z: %d \n", MAG_X, MAG_Y, MAG_Z); //Print mag data
+    printf("MAG_X: %d       MAG_Y: %d       MAG_Z: %d \n", MAG_X, MAG_Y, MAG_Z); //Print mag data
     
     usleep(1000000); //Small delay
 }
