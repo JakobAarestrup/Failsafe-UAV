@@ -2,9 +2,9 @@
 #define LIS3MDL_ADDR_2 0x1E ///< LSM6DSOX default device id from WHOAMI
 
 #define LIS3MDL_WHO_AM_I 0x0F
-#define LIS3MDL_CTRL_REG1 0x20
+#define LIS3MDL_CTRL_REG1 0x20 
 // should be written 0b01011100 to for: Temperature sensor disabled, high performance mode, 80Hz ODR, self test disabled.
-#define LIS3MDL_CTRL_REG2 0x21
+#define LIS3MDL_CTRL_REG2 0x21 
 // should be written 0b01100000 to for: +-16 gauss full-scale selection.
 #define LIS3MDL_CTRL_REG3 0x22
 #define LIS3MDL_CTRL_REG4 0x23
