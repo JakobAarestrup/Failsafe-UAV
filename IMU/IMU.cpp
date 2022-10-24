@@ -21,19 +21,19 @@ void IMU::ConvertIMUData(int x, int y, int z, int sensor_handle)
         float x_ACC = float(x);
         float y_ACC = float(y);
         float z_ACC = float(z);
-        this->roll_ = atan2(y_ACC , z_ACC) * 57.3;
-        this->pitch_ = atan2((- x_ACC), sqrt(y_ACC * y_ACC + z_ACC * z_ACC)) * 57.3;
+        roll_ = atan2(y_ACC , z_ACC) * 57.3;
+        pitch_ = atan2((- x_ACC), sqrt(y_ACC * y_ACC + z_ACC * z_ACC)) * 57.3;
     }
     else if (sensor_handle == 2) // Gyroscope
     {
-        this->rate_gyr_x_ = float(x) * G_GAIN;
-	    this->rate_gyr_y_ = float(y) * G_GAIN;
-	    this->rate_gyr_z_ = float(z) * G_GAIN;
+        rate_gyr_x_ = float(x) * G_GAIN;
+	    rate_gyr_y_ = float(y) * G_GAIN;
+	    rate_gyr_z_ = float(z) * G_GAIN;
 
         //Calculate the angles from the gyro
-	    this->gyr_Xangle_ = this->rate_gyr_x_*DT;
-	    this->gyr_Yangle_ = this->rate_gyr_y_*DT;
-	    this->gyr_Zangle_ = this->rate_gyr_z_*DT;
+	    gyr_Xangle_ = rate_gyr_x_*DT;
+	    gyr_Yangle_ = rate_gyr_y_*DT;
+	    gyr_Zangle_ = rate_gyr_z_*DT;
     }
     else if (sensor_handle == 3) // Magnetometer
     {
