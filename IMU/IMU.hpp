@@ -4,8 +4,8 @@ public:
     IMU();
     ~IMU();
     void ConvertIMUData(int x, int y, int z, int sensor_handle);
-    double getRoll();
-    double getPitch();
+    float getRoll();
+    float getPitch();
     float getGyrX();
     float getGyrY();
     float getGyrZ();
@@ -20,8 +20,8 @@ private:
     float rate_gyr_y_ = 0.0;   // [deg/s]
 	float rate_gyr_x_ = 0.0;   // [deg/s]
 	float rate_gyr_z_ = 0.0;   // [deg/s]
-    double roll_;
-    double pitch_;
+    float roll_;
+    float pitch_;
     int mag_X_;
     int mag_Y_;
     int mag_Z_;

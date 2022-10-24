@@ -54,11 +54,11 @@ I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 0b10101100);
     IMU2.ConvertIMUData(ACC_x, ACC_y, ACC_z, 1); //Accelerometer conversion
     IMU2.ConvertIMUData(GYR_x, GYR_y, GYR_z, 2); //Accelerometer conversion
 
-    double roll = IMU2.getRoll();
-    double pitch = IMU2.getPitch();
-    double GYR_X = IMU2.getGyrX();
-    double GYR_Y = IMU2.getGyrY();
-    double GYR_Z = IMU2.getGyrZ();
+    float roll = IMU2.getRoll();
+    float pitch = IMU2.getPitch();
+    float GYR_X = IMU2.getGyrX();
+    float GYR_Y = IMU2.getGyrY();
+    float GYR_Z = IMU2.getGyrZ();
 
     printf("Roll: %f    Pitch: %f \n", roll, pitch); //Print accelerometer data
     printf("GYR_X: %f   GYR_Y: %f   GYR_Z: %f \n", GYR_X, GYR_Y, GYR_Z); //Print gyroscope data
@@ -83,7 +83,6 @@ I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 0b10101100);
 
     printf("MAG_X: %d   MAG_Y: %d   MAG_Z: %d \n", MAG_X, MAG_Y, MAG_Z); //Print mag data
     
-
     usleep(1000000); //Small delay
 }
 
