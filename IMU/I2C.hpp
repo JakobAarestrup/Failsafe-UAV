@@ -7,7 +7,7 @@ public:
     int ReadI2C(int ADDR, int reg);
     ~I2C();
 private:
-    unsigned int I2C_Data_;
+    int I2C_Data_;
     int I2C_File_;
     int Write_File_;
 };
