@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
+#include <iostream>
 
 #include <wiringPi.h>
 #include <wiringSerial.h>
@@ -25,7 +26,7 @@ int main ()
   }
 
   while(1){
-	  
+	int = 0; 
 	if(serialDataAvail (serial_port) )
 	{ 
 		data = serialGetchar (serial_port);		// receive character serially
@@ -38,7 +39,7 @@ int main ()
           {
             flag++;
           }
-            if flag == 5
+            if (flag == 5)
               {
                 flag = 0;
               }
