@@ -1,27 +1,39 @@
 #include "BAR.hpp"
 #include <math.h>
 
-#define KPa 100
-#define mbar_to_bar 1000
-#define constant 1
+/*Math constants*/
+#define p_0 101325
+#define mbar_to_Pa 100
+#define T_constant 44330
+#define P_constant 1/5.255
     
-    BAR::BAR()
+    // Constructor
+    BAR::BAR() 
     {}
 
-    BAR::~BAR()
-    {}
-
-
-    void BAR::ConvertBARData(int x)
+    // Destructor
+    BAR::~BAR() 
     {
-        pressure_ = (x/mbar_to_bar)*KPa;
-        height_AMSL_ = pressure_;
-        height_AGL_ = height_AMSL_ + AGL_AMSL_diff_;
-
+        delete [] height_AGL_, height_AMSL_, initial_pressure_, initial_AMSL_, pressure_; // Delete private variables
     }
 
-
-    int BAR::getHeight()
+    //Calibrates the barometer data
+    void BAR::Calibrate_BAR(int x) 
     {
-        return height_;
+        initial_pressure_ = (x*mbar_to_Pa); // Convert mbar to Pascal
+        initial_AMSL_ = T_constant*(1-(initial_pressure_/p_0)^P_constant);//using internation barometric formula to get height
+    }
+
+    // Converts the bar data into height
+    void BAR::ConvertBARData(int x) 
+    {
+        pressure_ = (x*mbar_to_Pa); // Convert mbar to Pascal.
+        height_AMSL_ = T_constant*(1-(pressure_/p_0)^P_constant); // Using internation barometric formula to get height
+        height_AGL_ = height_AMSL_ - initial_AMSL_; // Subtract difference in height.
+    }
+
+    // Returns height above ground level
+    int BAR::getHeight() const 
+    {
+        return height_AGL_; // Return height
     }

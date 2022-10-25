@@ -16,14 +16,11 @@
 
 #define LSM6DSOX_INT1_CTRL 0x0D ///< Interrupt enable for data ready
 #define LSM6DSOX_INT2_CTRL 0x0E ///< Unused
-#define LSM6DSOX_CTRL1_XL 0x10  ///< Main accelerometer config register
-// Should be written 0b10100000 to for: z,y,x axis enabled , 6.66kHz data rate, 2G full scale, no LP filter.
+#define LSM6DSOX_CTRL1_XL 0x10  ///< Main accelerometer config register. Should be written 0b10100000 to for: z,y,x axis enabled , 6.66kHz data rate, 2G full scale, no LP filter.
 #define LSM6DSOX_CTRL2_G 0x11   ///< Main gyro config register
-#define LSM6DSOX_CTRL3_C 0x12   ///< Main configuration register
-// Should be written 0b01000000 to for: BDU Enable (check for MSB and LSB). All other bits in default-mode.
+#define LSM6DSOX_CTRL3_C 0x12   ///< Main configuration register. Should be written 0b01000000 to for: BDU Enable (check for MSB and LSB). All other bits in default-mode.
 #define LSM6DSOX_CTRL4_C 0x13   ///< Unused
-#define LSM6DSOX_CTRL5_C 0x14   ///< I2C Master config; access must be enabled with bit SHUB_REG_ACCESS. 
-                                ///< Is set to '1' in FUNC_CFG_ACCESS (01h).
+#define LSM6DSOX_CTRL5_C 0x14   ///< I2C Master config; access must be enabled with bit SHUB_REG_ACCESS. Is set to '1' in FUNC_CFG_ACCESS (01h).
 #define LSM6DSOX_CTRL6_C 0x15   ///< Unused
 #define LSM6DSOX_CTRL7_G 0x16   ///< Unused
 #define LSM6DSOX_CTRL8_XL 0x17  ///< Unused
