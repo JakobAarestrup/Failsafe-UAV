@@ -43,3 +43,4 @@ gps[i]=serialGetchar(fd);
 printf("%d",gps);
 }
 fflush(stdout);
+}
