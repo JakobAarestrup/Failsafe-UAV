@@ -29,7 +29,7 @@ void I2C::openI2C(int ADDR)
         printf("Failed to establish I2C connection.");
         exit(1);
     }
-    printf("Succesfully setup I2C connection.\n");
+    //printf("Succesfully setup I2C connection.\n");
 }
 
 void I2C::WriteI2C(int ADDR, int reg, int data)
@@ -40,7 +40,7 @@ void I2C::WriteI2C(int ADDR, int reg, int data)
         printf("Failed to write to %d via I2C.", ADDR);
         exit(1);
     }
-    printf("Succesfully written to register via I2C.\n");
+    //printf("Succesfully written to register via I2C.\n");
 }
 
 int I2C::ReadI2C(int ADDR, int reg)
@@ -55,7 +55,7 @@ int I2C::ReadI2C(int ADDR, int reg)
     }
     else
    {
-        int I2CData_ = (Reg_data2 << 8) | Reg_data1;
-        return I2CData_;
+        I2C_Data_ = (Reg_data2 << 8) | Reg_data1;
+        return I2C_Data_;
    }
 }

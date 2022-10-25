@@ -18,67 +18,67 @@ void IMU::ConvertIMUData(int x, int y, int z, int sensor_handle)
 {    
     if (sensor_handle == 1) // Accelerometer
     {
-        double x_ACC = float(x);
-        double y_ACC = float(y);
-        double z_ACC = float(z);
-        this->roll_ = atan2(y_ACC , z_ACC) * 57.3;
-        this->pitch_ = atan2((- x_ACC), sqrt(y_ACC * y_ACC + z_ACC * z_ACC)) * 57.3;
+        float x_ACC = float(x);
+        float y_ACC = float(y);
+        float z_ACC = float(z);
+        roll_ = atan2(y_ACC , z_ACC) * 57.3;
+        pitch_ = atan2((- x_ACC), sqrt(y_ACC * y_ACC + z_ACC * z_ACC)) * 57.3;
     }
     else if (sensor_handle == 2) // Gyroscope
     {
-        this->rate_gyr_x_ = float(x) * G_GAIN;
-	    this->rate_gyr_y_ = float(y) * G_GAIN;
-	    this->rate_gyr_z_ = float(z) * G_GAIN;
+        rate_gyr_x_ = float(x) * G_GAIN;
+	    rate_gyr_y_ = float(y) * G_GAIN;
+	    rate_gyr_z_ = float(z) * G_GAIN;
 
         //Calculate the angles from the gyro
-	    this->gyr_Xangle_ = this->rate_gyr_x_*DT;
-	    this->gyr_Yangle_ = this->rate_gyr_y_*DT;
-	    this->gyr_Zangle_ = this->rate_gyr_z_*DT;
+	    gyr_Xangle_ = rate_gyr_x_*DT;
+	    gyr_Yangle_ = rate_gyr_y_*DT;
+	    gyr_Zangle_ = rate_gyr_z_*DT;
     }
     else if (sensor_handle == 3) // Magnetometer
     {
-        double mag_X_ = float(x);
-        double mag_Y_ = float(y);
-        double mag_Z_ = float(z);
+        mag_X_ = x;
+        mag_Y_ = y;
+        mag_Z_ = z;
     }
 }
 
-double IMU::getRoll()
+float IMU::getRoll()
 {
     return roll_;
 }
 
-double IMU::getPitch()
+float IMU::getPitch()
 {
     return pitch_;
 }
 
-double IMU::getGyrX()
+float IMU::getGyrX()
 {
     return gyr_Xangle_;
 }
 
-double IMU::getGyrY()
+float IMU::getGyrY()
 {
     return gyr_Yangle_;
 }
 
-double IMU::getGyrZ()
+float IMU::getGyrZ()
 {
     return gyr_Zangle_;
 }
 
-double IMU::getMagX()
+int IMU::getMagX()
 {
     return mag_X_;
 }
 
-double IMU::getMagY()
+int IMU::getMagY()
 {
     return mag_Y_;
 }
 
-double IMU::getMagZ()
+int IMU::getMagZ()
 {
     return mag_Z_;
 }
