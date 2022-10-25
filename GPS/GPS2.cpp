@@ -54,13 +54,7 @@ int main ()
         gps[i]=serialGetchar(serial_port);
     }
    
-    size_t n = sizeof(gps)/sizeof(gps[0]);
- 
-    // loop through the array elements
-    for (size_t i = 0; i < n; i++) 
-    {
-      std::cout << gps[i] << ' ';
-    }
+    printf("value of b_static: %.*s\n", (int)sizeof(gps), gps);
 		//serialPutchar(serial_port, dat); // transmit character serially on port
   
     usleep(1000000);
