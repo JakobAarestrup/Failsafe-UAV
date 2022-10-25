@@ -27,12 +27,12 @@ int main ()
   }
 
   while(1){
-	int = 0; 
+	int i = 0; 
 	if(serialDataAvail (serial_port) )
 	{ 
 		data = serialGetchar (serial_port);		// receive character serially
     // kig efter GPGGA
-    if(serialGetchar(serial_port)=="G")
+    if(serialGetchar(serial_port)=='G')
     {
       for(i=0; i<6 ;i++)
       {
@@ -63,7 +63,7 @@ int main ()
     }
 		//serialPutchar(serial_port, dat); // transmit character serially on port
   
-    usleep(1000000)
+    usleep(1000000);
   }
 
 	}
