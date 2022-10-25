@@ -38,9 +38,6 @@ void GPS::readGPS(int fd, char sensor_Data) // reads GPS serial data
 {
     if(serialDataAvail(fd))
 	    { 
-            int SV;  // number of satellites
-            float lon; // longitude
-            float lat; // latitude
             char data_String[6]; // array for picking up NMEA main talker
             
             sensor_Data = serialGetchar (fd);		// receive character serially
@@ -51,18 +48,49 @@ void GPS::readGPS(int fd, char sensor_Data) // reads GPS serial data
                     longitude_ = 
                     latitude_  =
                 } */
-            printf ("%c", sensor_Data););
+            
+            printf ("%c", sensor_Data);
             fflush (stdout);
             serialPutchar(sensor_Data, fd);		// transmit character serially on port
 	    }
 }
 
-void GPS::convertData(float lon_data, float lat_data) // converts GPS serial data to degrees
+void GPS::convertData(float lon_Data, float lat_Data) // converts GPS serial data to degrees
 {
-    int lon_1 = int(lon_data);
-    int lat_1 = int(lat_data);
-    float lon_2 = 
-    float lat_2 =
+float lon_Deg = int(lon_Data)/100;
+float lat_Deg = int(lat_Data)/100; 
+
+float lon_Sec = (amount-lon_Deg*100);
+float lat_Sec = (amount2-lat_Deg*100);
+
+cout << lon_Deg <<" , " << lon_Sec << endl; // (d)dd(deg) mm.mmmm(seconds)
+cout << lat_Deg <<" , " << lat_Sec << endl; // (d)dd(deg) mm.mmmm(seconds)
+
+if (S==1 & W == 0 ) // handles negative
+{
+    latitude  = (lat_Deg  + (lat_Sec/60))*-1;
+    longitude = lon_Deg  + (lon_Sec/60);
+}
+else if (S==0 & W == 1)
+{
+    latitude_  = lat_Deg  + (lat_Sec/60);
+    longitude_ = (lon_Deg  + (lon_Sec/60))*-1;
+}
+else if(S == 1 & W == 1)
+{
+    latitude_  = (lat_Deg  + (lat_Sec/60))*-1;
+    longitude_ = (lon_Deg  + (lon_Sec/60))*-1;
+}
+else
+{
+    latitude_  = lat_Deg  + (lat_Sec/60);
+    longitude_ = lon_Deg  + (lon_Sec/60);
+}
+
+cout << latitude << ", " << longitude << endl; // decimal degrees
+
+return 0;
+
 }
 
 int GPS::getSV() const
@@ -70,7 +98,7 @@ int GPS::getSV() const
     return SV_; // returns amount of satellites
 }
 
-int GPS::getLongitude() const // returns latitude
+int GPS::getLongitude() const // returns longitude
 {
     return longitude_;
 }

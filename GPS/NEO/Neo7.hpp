@@ -23,7 +23,7 @@ class GPS
         float getLatitude()  const;    // returns latitude
         int   getSV() const;           // returns amount of satellites
     
-    private: // Cordinates from the GPS
+    private: // Coordinates from the GPS
 
         int SV_; // amount of satellites
         float longitude_; 
