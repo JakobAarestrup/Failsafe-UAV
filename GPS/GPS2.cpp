@@ -51,7 +51,7 @@ int main ()
     {
       flag=0;
         for(i=0;i<=65;i++)
-        gps[i]=serialGetchar(fd);
+        gps[i]=serialGetchar(serial_port);
     }
    
     size_t n = sizeof(gps)/sizeof(gps[0]);
