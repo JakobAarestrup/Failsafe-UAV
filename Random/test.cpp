@@ -8,8 +8,10 @@ using namespace std;
 
 int main()
 {
-float amount2 = 5610.29001;
+char gdd[] = "5610.29001";
 float amount = 01011.51425;
+
+float amount2 = atof(gdd);
 float latitude = 0;
 float longitude = 0;
 
@@ -23,7 +25,7 @@ float lon_2 = (amount-lon_1*100);
 float lat_2 = (amount2-lat_1*100);
 
 cout << lon_1 <<" , " << lon_2 << endl; // (d)dd(deg) mm.mmmm(seconds)
-cout << lat_1 <<" , " << lat_2 << endl;
+cout << lat_1 <<" , " << lat_2 << endl; // (d)dd(deg) mm.mmmm(seconds)
 
 if (S==1 & W == 0 ) // handles negative
 {
