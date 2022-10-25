@@ -28,11 +28,12 @@ int main ()
 
   while(1){
 	int i = 0; 
+  int c;
 	if(serialDataAvail (serial_port))
 	{ 
 		data = serialGetchar (serial_port);		// receive character serially
     // kig efter GPGGA
-    if(serialGetchar(serial_port)=='G')
+    if(c=serialGetchar(serial_port)==13||10)
     {
       for(i=0; i<6 ;i++)
       {
