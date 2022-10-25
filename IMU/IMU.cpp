@@ -12,7 +12,10 @@ IMU::IMU()
 {}
 
 IMU::~IMU()
-{}
+{
+    delete [] sensor_handle_,gyr_Xangle_,gyr_Yangle_, gyr_Zangle_,roll_,pitch_;
+    delete [] rate_gyr_x_,rate_gyr_y_,rate_gyr_z_,mag_X_,mag_Y_,mag_Z_;
+}
 
 void IMU::ConvertIMUData(int x, int y, int z, int sensor_handle)
 {    

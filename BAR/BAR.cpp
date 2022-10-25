@@ -11,7 +11,7 @@
 
     BAR::~BAR()
     {
-        delete [] height_AGL_, height_AMSL_, initial_pressure_, pressure_
+        delete [] height_AGL_, height_AMSL_, initial_pressure_, initial_AMSL_, pressure_;
     }
 
     void BAR::Calibrate_BAR(int x)
