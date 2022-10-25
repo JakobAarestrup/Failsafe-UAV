@@ -43,42 +43,42 @@ void IMU::ConvertIMUData(int x, int y, int z, int sensor_handle)
     }
 }
 
-float IMU::getRoll()
+float IMU::getRoll() const
 {
     return roll_;
 }
 
-float IMU::getPitch()
+float IMU::getPitch() const
 {
     return pitch_;
 }
 
-float IMU::getGyrX()
+float IMU::getGyrX() const
 {
     return gyr_Xangle_;
 }
 
-float IMU::getGyrY()
+float IMU::getGyrY() const
 {
     return gyr_Yangle_;
 }
 
-float IMU::getGyrZ()
+float IMU::getGyrZ() const
 {
     return gyr_Zangle_;
 }
 
-int IMU::getMagX()
+int IMU::getMagX() const
 {
     return mag_X_;
 }
 
-int IMU::getMagY()
+int IMU::getMagY() const
 {
     return mag_Y_;
 }
 
-int IMU::getMagZ()
+int IMU::getMagZ() const
 {
     return mag_Z_;
 }
