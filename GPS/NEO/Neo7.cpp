@@ -93,9 +93,9 @@ return 0;
 
 }
 
-int GPS::getSV() const
+int GPS::getSV() const // returns amount of satellites
 {
-    return SV_; // returns amount of satellites
+    return SV_; 
 }
 
 int GPS::getLongitude() const // returns longitude
