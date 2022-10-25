@@ -28,7 +28,7 @@ int main ()
 
   while(1){
 	int i = 0; 
-	if(serialDataAvail (serial_port) )
+	if(serialDataAvail (serial_port))
 	{ 
 		data = serialGetchar (serial_port);		// receive character serially
     // kig efter GPGGA
