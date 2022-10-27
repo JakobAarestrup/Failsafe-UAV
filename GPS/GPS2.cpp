@@ -72,12 +72,11 @@ int main ()
       char* satellites = NMEA[7];
 
       // conversion
-      float latitude_ = atof(latitude);
-      float longitude_ = atof(longitude);
-      int satellites_ = atoi(satellites);
+      float latitude_  = std::atof(latitude);
+      float longitude_ = std::atof(longitude);
+      int satellites_  = std::atoi(satellites);
 
       printf("NMEA: Latitude: %f %s Longitude: %f %s SV: %d",latitude_,Pole_NS,longitude_,Pole_WE,satellites_);
-      char* b1 = 0; // reset char*
       count = 0; // reset count
 			is_GGA_received_completely = 0;
 		}
