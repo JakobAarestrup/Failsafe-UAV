@@ -1,4 +1,4 @@
-#define MS5611_ADDRESS      0xEE
+#define MS5611_ADDRESS      0x77
 #define CMD_RESET           0x1E
 #define ADC_READ            0x00
 #define PROM_READ           0xA0
