@@ -57,21 +57,21 @@ int main ()
 				}
 		  }
 		if(is_GGA_received_completely==1){
-			printf("GGA: %s",buff);
-       char* b1 = strtok(buff,","); // first token
+			//printf("GGA: %s",buff);
+      char* b1 = strtok(buff,","); // first token
       while (b1 != NULL)
       {
           NMEA[count++] = b1; 
           b1 = strtok(NULL, ",");
           
       }
-      /*
+      
       char* latitude = NMEA[2];
       char* longitude = NMEA[4];
       char* Pole_NS = NMEA[3];
       char* Pole_WE = NMEA[5];        
       char* satellites = NMEA[7];
-
+      /*
       // conversion
       float latitude_  = atof(latitude);
       float longitude_ = atof(longitude);
