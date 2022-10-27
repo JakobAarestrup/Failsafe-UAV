@@ -76,7 +76,7 @@ int main ()
       float longitude_ = atof(longitude);
       int satellites_ = atoi(satellites);
 
-      printf("NMEA: %f %s %f %s %d",latitude_,Pole_NS,longitude_,Pole_WE,satellites_);
+      printf("NMEA: Latitude: %f %s Longitude: %f %s SV: %d",latitude_,Pole_NS,longitude_,Pole_WE,satellites_);
       char* b1 = 0;
       count = 0;
 			is_GGA_received_completely = 0;
