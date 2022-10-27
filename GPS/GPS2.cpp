@@ -82,18 +82,20 @@ int main ()
           {
           NMEA[count] = b1; 
           }
+        printf("b1: %s\n", b1);
         count++; // increment
         b1 = strtok(NULL, ",");   
       }
 
-      //char* latitude = NMEA[2];
-      //char* longitude = NMEA[4];
       char* Pole_NS = NMEA[3];
       char* Pole_WE = NMEA[5];
+
+      //conversion
       latitude_   = atof(NMEA[2]);
       longitude_  = atof(NMEA[4]);
       satellites_ = atoi(NMEA[7]);
-      printf("Pole_WE: %s\n", Pole_WE);
+
+      printf("Pole_WE: %s\n\n", Pole_WE);
       printf("NMEA: Latitude: %f %s Longitude: %f %s SV: %d\n",latitude_,Pole_NS,longitude_,Pole_WE,satellites_);
       i = 0; // reset i variable
       count = 0; 
