@@ -69,7 +69,6 @@ int main ()
           b1 = strtok(NULL, ",");
           
       }
-      
       //char* latitude = NMEA[2];
       //char* longitude = NMEA[4];
       char* Pole_NS = NMEA[3];
@@ -77,8 +76,8 @@ int main ()
       //char* satellites = NMEA[7];
       
       // conversion
-      latitude_  = atof(NMEA[2]);
-      longitude_ = atof(NMEA[4]);
+      latitude_   = atof(NMEA[2]);
+      longitude_  = atof(NMEA[4]);
       satellites_ = atoi(NMEA[7]);
       /*
       printf("NMEA: Latitude: %f %s Longitude: %f %s SV: %d",latitude_,Pole_NS,longitude_,Pole_WE,satellites_);
