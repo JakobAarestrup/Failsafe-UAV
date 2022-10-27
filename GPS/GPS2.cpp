@@ -73,9 +73,9 @@ int main ()
       //char* satellites = NMEA[7];
       
       // conversion
-      float latitude_  = atof(NMEA[2]);
-      float longitude_ = atof(NMEA[4]);
-      int satellites_  = atoi(NMEA[7]);
+      float latitude_  = (float)NMEA[2];
+      float longitude_ = (float)NMEA[4];
+      int satellites_  = (int)NMEA[7];
       /*
       printf("NMEA: Latitude: %f %s Longitude: %f %s SV: %d",latitude_,Pole_NS,longitude_,Pole_WE,satellites_);
       count = 0; // reset count */
