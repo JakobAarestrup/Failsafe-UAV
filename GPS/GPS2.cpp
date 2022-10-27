@@ -68,6 +68,8 @@ int main ()
 		  }
 		if(is_GGA_received_completely==1)
     {
+      printf("GGA: %s\n",buff);
+      sleep(1);
       char* b1 = strtok(buff,","); // first token
       for(i = 0 ; i < 15 ; i++)
       {
@@ -94,8 +96,7 @@ int main ()
       latitude_   = atof(NMEA[2]);
       longitude_  = atof(NMEA[4]);
       satellites_ = atoi(NMEA[7]);
-      printf("GGA: %s\n",buff);
-      sleep(1);
+  
       printf("NMEA: Latitude: %f %s Longitude: %f %s SV: %d\n",latitude_,Pole_NS,longitude_,Pole_WE,satellites_);
       i = 0; // reset i variable
       count = 0; 
