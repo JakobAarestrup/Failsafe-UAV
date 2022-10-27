@@ -13,6 +13,9 @@ int main ()
   unsigned char IsitGGAstring=0;
   unsigned char GGA_index=0;
   unsigned char is_GGA_received_completely = 0;
+  float latitude_  = 0;
+  float longitude_ = 0;
+  int satellites_ = 0;
   int length = 0;
   int count = 0;
   char* remaining;
@@ -70,13 +73,13 @@ int main ()
       //char* latitude = NMEA[2];
       //char* longitude = NMEA[4];
       char* Pole_NS = NMEA[3];
-      char* Pole_WE = NMEA[5];        
+      char* Pole_WE = NMEA[5];        <
       //char* satellites = NMEA[7];
       
       // conversion
-     float latitude_ = strtof(NMEA[2],NULL);
-     float longitude_ = strtof(NMEA[4],NULL);
-     long satellites_ = strtol(NMEA[7],&remaining,10);
+      latitude_  = atof(NMEA[2]);
+      longitude_ = atof(NMEA[4]);
+      satellites_ = atoi(NMEA[7]);
       /*
       printf("NMEA: Latitude: %f %s Longitude: %f %s SV: %d",latitude_,Pole_NS,longitude_,Pole_WE,satellites_);
       count = 0; // reset count */
