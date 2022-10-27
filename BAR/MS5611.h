@@ -1,6 +1,3 @@
-#ifndef MS5611_HPP
-#define MS5611_HPP
-
 extern "C"
 {
     #include <linux/i2c-dev.h>
@@ -8,6 +5,7 @@ extern "C"
 #include <math.h>
 #include <unistd.h>
 #include <string>
+#include "I2C.hpp"
 
 #define MS5611_ADDRESS_CSB_LOW  0x76
 #define MS5611_ADDRESS_CSB_HIGH 0x77
