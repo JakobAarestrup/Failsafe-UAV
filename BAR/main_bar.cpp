@@ -21,17 +21,18 @@ I1.openI2C(MS5611_ADDRESS);
 //I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL3_C, 0b01000000);
 
 // Calibrate Barometer
-int b = I1.ReadI2C_8bit(MS5611_ADDRESS, PROM_READ);
-B1.Calibrate_BAR(b);
+int BAR_data = I1.ReadI2C_8bit(MS5611_ADDRESS, PROM_READ);
+B1.Calibrate_BAR(BAR_data);
 
 // Main loop
 while(1)
 {
 
-    b = I1.ReadI2C_8bit(MS5611_ADDRESS, PROM_READ);
-    ConvertBARData(b);
+    BAR_data = I1.ReadI2C_8bit(MS5611_ADDRESS, PROM_READ);
+    printf("Raw Barometer Data: %d\n", BAR_data);
+    B1.ConvertBARData(BAR_data);
 
-    int height = getHeight();
+    int height = B1.getHeight();
     printf("Height: %d\n", height);
     
     usleep(1000000); //Small delay
