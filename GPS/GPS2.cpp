@@ -74,17 +74,16 @@ int main ()
     {
         if ( b1 == NULL)
         {
-        NMEA[count] = d1; // 0 
+        NMEA[count++] = d1; // 0 
         }
         else if (b1 == NULL & i == 3 | 5)
         {
-        NMEA[count] = d2; // N/A
+        NMEA[count++] = d2; // N/A
         }
         else
         {
-        NMEA[count] = b1; 
+        NMEA[count++] = b1; 
         }
-      count++;
       b1 = strtok(NULL, ",");   
     }
 
