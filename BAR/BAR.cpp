@@ -37,7 +37,7 @@ void BAR::ConvertBARData()
 }
 
 // Returns height above ground level
-int BAR::getHeight() const 
+int BAR::getHeight() 
 {
     Calibrate_BAR();
     ConvertBARData();

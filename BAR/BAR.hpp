@@ -5,9 +5,9 @@ class BAR
 public:
     BAR(); // Constructor
     ~BAR();// Destructor
-    void ConvertBARData(int x); // Converts the bar data into height
+    void ConvertBARData(); // Converts the bar data into height
     void Calibrate_BAR(); // Calibrates the barometer data
-    int  getHeight() const; // Returns the height above ground level
+    int  getHeight(); // Returns the height above ground level
     void initialize();
     bool testConnection();
     void refreshPressure();
