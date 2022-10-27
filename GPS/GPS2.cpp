@@ -17,6 +17,11 @@ int main ()
   float longitude_ = 0;
   int satellites_ = 0;
   int length = 0;
+  int count = 0;
+  char def_1[] = "0";
+  char def_2[] = "N/A";
+  char* d1 = def_1;
+  char* d2 = def_2;
   int i = 0;
   char* remaining;
   char* NMEA[15]; // array for ASCII tokens
@@ -62,37 +67,38 @@ int main ()
 		  }
 		if(is_GGA_received_completely==1)
     {
-			//printf("GGA: %s",buff);
       char* b1 = strtok(buff,","); // first token
-      
       for(i = 0 ; i < 15 ; i++)
-    {
-        if ( b1 == NULL)
-        {
-        NMEA[i] = '0'; 
-        }
-        else if (b1 == NULL & i == 3 | 5)
-        {
-        NMEA[i] = 'N/A'
-        }
-        else
-        {
-        NMEA[i] = b1; 
-        }
+      {
+          if ( b1 == NULL)
+          {
+          NMEA[count] = d1; // 0 
+          }
+          else if (b1 == NULL & i == 3 | 5)
+          {
+          NMEA[count] = d2; // N/A
+          }
+          else
+          {
+          NMEA[count] = b1; 
+          }
+        printf("b1: %s\n", b1);
+        count++; // increment
         b1 = strtok(NULL, ",");   
-    }
+      }
 
-      //char* latitude = NMEA[2];
-      //char* longitude = NMEA[4];
       char* Pole_NS = NMEA[3];
       char* Pole_WE = NMEA[5];
-      printf("Pole_WE %s",Pole_WE);       
+
+      //conversion
       latitude_   = atof(NMEA[2]);
       longitude_  = atof(NMEA[4]);
       satellites_ = atoi(NMEA[7]);
-      
-      printf("NMEA: Latitude: %f %s Longitude: %f %s SV: %d",latitude_,Pole_NS,longitude_,Pole_WE,satellites_);
-      i = 0; // reset i variable 
+
+      printf("Pole_WE: %s\n\n", Pole_WE);
+      printf("NMEA: Latitude: %f %s Longitude: %f %s SV: %d\n",latitude_,Pole_NS,longitude_,Pole_WE,satellites_);
+      i = 0; // reset i variable
+      count = 0; 
 			is_GGA_received_completely = 0;
 		}
 	}
