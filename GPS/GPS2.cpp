@@ -12,6 +12,7 @@ int main ()
   unsigned char IsitGGAstring=0;
   unsigned char GGA_index=0;
   unsigned char is_GGA_received_completely = 0;
+  int length = 0;
   
   if ((serial_port = serialOpen ("/dev/ttyS0", 9600)) < 0)		/* open serial port */
   {
@@ -54,7 +55,7 @@ int main ()
 		  }
 		if(is_GGA_received_completely==1){
 			printf("GGA: %s",buff);
-      lenth = sizeof(buff);
+      length = sizeof(buff);
       printf("Length: %d",lenth);
 			is_GGA_received_completely = 0;
 		}
