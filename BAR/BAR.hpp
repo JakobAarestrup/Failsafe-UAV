@@ -29,4 +29,5 @@ private:
     uint32_t D1_, D2_; // Raw measurement data
     float TEMP_; // Calculated temperature
 	float PRES_; // Calculated pressure
+    float deviation_ = 994.7; // Measured deviation
 };
