@@ -12,3 +12,4 @@ private:
     int height_AMSL_; // Height above mean sea level
     int height_AGL_; // Height above ground level
     int pressure_; // Pressure from barometer
+}

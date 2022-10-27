@@ -1,13 +1,12 @@
 #include "BAR.hpp"
 #include <math.h>
-using namespace std;
 
 /*Math constants*/
 #define p_0 101325
 #define mbar_to_Pa 100
 #define T_constant 44330
-#define P_constant 1/5.255
-    
+#define P_constant 1/5.255   
+
     // Constructor
     BAR::BAR() 
     {}
