@@ -31,7 +31,7 @@ while(1)
     BAR_data = I1.ReadI2C_8bit(MS5611_ADDRESS, PROM_READ);
     B1.ConvertBARData(BAR_data);
 
-    int height = getHeight();
+    int height = B1.getHeight();
     printf("Height: %d\n", height);
     
     usleep(1000000); //Small delay
