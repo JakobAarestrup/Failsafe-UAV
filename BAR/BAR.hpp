@@ -4,7 +4,7 @@ public:
     BAR(); // Constructor
     ~BAR();// Destructor
     void ConvertBARData(int x); // Converts the bar data into height
-    void Calibrate_BAR(int x) // Calibrates the barometer data
+    void Calibrate_BAR(int x); // Calibrates the barometer data
     int  getHeight() const; // Returns the height above ground level
 private:
     int initial_AMSL_; // Initial height above mean sea level when drone is on the ground
