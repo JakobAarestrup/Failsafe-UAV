@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <iostream>
+#include <wiringPiI2C.h>
+#include <wiringPi.h>
 #include "I2C.hpp"
 #include "BAR.hpp"
 #include "MS5611.hpp"
-#include <wiringPiI2C.h>
-#include <wiringPi.h>
 
 int main()
 {

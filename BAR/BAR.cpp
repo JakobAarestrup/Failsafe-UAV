@@ -1,5 +1,6 @@
 #include "BAR.hpp"
 #include <math.h>
+using namespace std;
 
 /*Math constants*/
 #define p_0 101325

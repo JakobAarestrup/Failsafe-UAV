@@ -11,4 +11,4 @@ private:
     int initial_pressure_;  // Initial pressure when drone is on the ground
     int height_AMSL_; // Height above mean sea level
     int height_AGL_; // Height above ground level
-    uint32_t pressure_; // Pressure from barometer
+    int pressure_; // Pressure from barometer
