@@ -82,7 +82,7 @@ int main ()
           {
           NMEA[count] = b1; 
           }
-        printf("b1: %s %d", NMEA[count], count);
+        printf("b1: %s %d \n", NMEA[count], count);
         count++; // increment
         b1 = strtok(NULL, ",");   
       }
