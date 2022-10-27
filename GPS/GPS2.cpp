@@ -58,8 +58,8 @@ int main ()
 				}
 		  }
 		if(is_GGA_received_completely==1){
-			//printf("GPGGA: %s",buff);
-      char* b1 = strtok(buff,","); // first token
+			printf("GPGGA: %s",buff);
+      /* char* b1 = strtok(buff,","); // first token
       while (b1 != NULL)
       {
           NMEA[count++] = b1; 
@@ -78,7 +78,7 @@ int main ()
       int satellites_  = atoi(satellites);
 
       printf("NMEA: Latitude: %f %s Longitude: %f %s SV: %d",latitude_,Pole_NS,longitude_,Pole_WE,satellites_);
-      count = 0; // reset count
+      count = 0; // reset count */
 			is_GGA_received_completely = 0;
 		}
 	}
