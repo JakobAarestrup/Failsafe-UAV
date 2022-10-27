@@ -25,6 +25,7 @@ BAR::~BAR()
 void BAR::Calibrate_BAR() 
 {
     initial_pressure_ = (PRES_*mbar_to_Pa)-deviation_; // Convert mbar to Pascal
+    printf("Initial pressure: %f\n", initial_pressure_);
     initial_AMSL_ = T_constant*(1-(pow(initial_pressure_/p_0,P_constant)));//using international barometric formula to get height
 }
 
@@ -32,6 +33,7 @@ void BAR::Calibrate_BAR()
 void BAR::ConvertBARData() 
 {
     pressure_ = (PRES_*mbar_to_Pa)-deviation_; // Convert mbar to Pascal.
+    printf("Pressure: %f\n", pressure_);
     height_AMSL_ = T_constant*(1-(pow(pressure_/p_0,P_constant))); // Using international barometric formula to get height
     height_AGL_ = height_AMSL_ - initial_AMSL_; // Subtract difference in height.
 }
