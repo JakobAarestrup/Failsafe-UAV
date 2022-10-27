@@ -1,7 +1,10 @@
 #ifndef MS5611_HPP
 #define MS5611_HPP
 
-#include "I2Cdev.h"
+extern "C"
+{
+    #include <linux/i2c-dev.h>
+}
 #include <math.h>
 #include <unistd.h>
 #include <string>
