@@ -42,11 +42,10 @@ void BAR::ConvertBARData()
 float BAR::getHeight() 
 {
     int calibration = 0;
-        while (calibration ==0)
+        if (calibration ==0)
         {
             Calibrate_BAR();
-            calibration = 1;         
-            break;
+            calibration = 1;
         }
     ConvertBARData();
     return height_AGL_; // Return height
