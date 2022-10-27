@@ -14,6 +14,7 @@ int main ()
   unsigned char is_GGA_received_completely = 0;
   int length = 0;
   int count = 0;
+  char* NMEA[15]; // array for ASCII tokens
 
   
   if ((serial_port = serialOpen ("/dev/ttyS0", 9600)) < 0)		/* open serial port */
@@ -57,7 +58,6 @@ int main ()
 		  }
 		if(is_GGA_received_completely==1){
 			//printf("GPGGA: %s",buff);
-      char* NMEA[15];
       char* b1 = strtok(buff,","); // first token
       while (b1 != NULL)
       {
@@ -77,8 +77,8 @@ int main ()
       int satellites_ = atoi(satellites);
 
       printf("NMEA: Latitude: %f %s Longitude: %f %s SV: %d",latitude_,Pole_NS,longitude_,Pole_WE,satellites_);
-      char* b1 = 0;
-      count = 0;
+      char* b1 = 0; // reset char*
+      count = 0; // reset count
 			is_GGA_received_completely = 0;
 		}
 	}
