@@ -14,7 +14,7 @@
     // Destructor
     BAR::~BAR() 
     {
-        delete [] height_AGL_, height_AMSL_, initial_pressure_, initial_AMSL_, pressure_; // Delete private variables
+        /*delete [] height_AGL_, height_AMSL_, initial_pressure_, initial_AMSL_, pressure_; // Delete private variables*/
     }
 
     //Calibrates the barometer data
