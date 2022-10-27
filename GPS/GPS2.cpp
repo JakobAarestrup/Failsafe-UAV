@@ -56,7 +56,7 @@ int main ()
 		if(is_GGA_received_completely==1){
 			printf("GGA: %s",buff);
       length = sizeof(buff);
-      printf("Length: %d",lenth);
+      printf("Length: %d",length);
 			is_GGA_received_completely = 0;
 		}
 	}
