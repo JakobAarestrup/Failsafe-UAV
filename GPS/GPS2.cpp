@@ -79,12 +79,12 @@ int main ()
       //char* satellites = NMEA[7];
       
       // conversion
-      latitude_   = atof(NMEA[2]);
+    /*   latitude_   = atof(NMEA[2]);
       longitude_  = atof(NMEA[4]);
-      satellites_ = atoi(NMEA[7]);
-      /*
+      satellites_ = atoi(NMEA[7]); */
+      
       printf("NMEA: Latitude: %f %s Longitude: %f %s SV: %d",latitude_,Pole_NS,longitude_,Pole_WE,satellites_);
-      count = 0; // reset count */
+      count = 0; // reset count 
 			is_GGA_received_completely = 0;
 		}
 	}
