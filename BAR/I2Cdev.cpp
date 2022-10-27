@@ -9,7 +9,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <linux/i2c-dev.h>
-#include "I2Cdev.hpp"
+#include "I2Cdev.h"
 
 /** Default constructor.
  */
