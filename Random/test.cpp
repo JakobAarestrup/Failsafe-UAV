@@ -9,6 +9,7 @@
 int main ()
 {
     int count = 0;
+    int i = 0;
     char buff[] = "GPGGA,134658.00,5106.9792,N,11402.3003,W,2,09,1.0,1048.47,M,-16.27,M,08,AAAA*60";
     char* NMEA[15];
     char*remaining;
@@ -19,7 +20,7 @@ int main ()
     char* token_2 = strtok(NULL, ","); // seventh token
     char* satellites = strtok(NULL, ","); // eight token */
     char* b1 = strtok(buff,","); // first token
-    while (b1 != NULL)
+    for(i = 0 ; i < 15 ; i++)
     {
         NMEA[count++] = b1; 
         b1 = strtok(NULL, ",");

@@ -65,12 +65,11 @@ int main ()
 			//printf("GGA: %s",buff);
       char* b1 = strtok(buff,","); // first token
       
-      while (b1 != NULL)
-      {
-          NMEA[count++] = b1; 
-          b1 = strtok(NULL, ",");
-          
-      }
+      for(i = 0 ; i < 15 ; i++)
+    {
+        NMEA[count++] = b1; 
+        b1 = strtok(NULL, ",");   
+    }
 
       //char* latitude = NMEA[2];
       //char* longitude = NMEA[4];
@@ -84,7 +83,8 @@ int main ()
       satellites_ = atoi(NMEA[7]);
       
       //printf("NMEA: Latitude: %f %s Longitude: %f %s SV: %d",latitude_,Pole_NS,longitude_,Pole_WE,satellites_);
-      count = 0; // reset count 
+      count = 0; // reset count
+      i = 0; // reset i variable 
 			is_GGA_received_completely = 0;
 		}
 	}
