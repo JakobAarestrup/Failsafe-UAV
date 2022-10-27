@@ -75,7 +75,8 @@ int main ()
       //char* latitude = NMEA[2];
       //char* longitude = NMEA[4];
       char* Pole_NS = NMEA[3];
-      char* Pole_WE = NMEA[5];       
+      char* Pole_WE = NMEA[5];
+      printf("Pole_WE %s",Pole_WE);       
       //char* satellites = NMEA[7];
       
       // conversion
