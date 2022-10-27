@@ -11,6 +11,7 @@ int main ()
     int count = 0;
     char buff[] = "GPGGA,134658.00,5106.9792,N,11402.3003,W,2,09,1.0,1048.47,M,-16.27,M,08,AAAA*60";
     char* NMEA[15];
+    char*remaining;
    /*  char* latitude = strtok(NULL, ","); // third token
     char* Pole_NS = strtok(NULL, ","); // fourth token
     char* longitude = strtok(NULL, ","); // fifth token
@@ -31,9 +32,9 @@ int main ()
     char* satellites = NMEA[7];
 
     // conversion
-    float latitude_ = std::atof(latitude);
-    float longitude_ = std::atof(longitude);
-    int satellites_ = std::atoi(satellites);
+    float latitude_ = strtof(latitude,NULL);
+    float longitude_ = strtof(longitude,NULL);
+    long satellites_ = strtol(satellites,&remaining,10);
 
     printf("NMEA: %f %s %f %s %d",latitude_,Pole_NS,longitude_,Pole_WE,satellites_);
     

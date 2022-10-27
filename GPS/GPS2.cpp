@@ -15,6 +15,7 @@ int main ()
   unsigned char is_GGA_received_completely = 0;
   int length = 0;
   int count = 0;
+  char* remaining;
   char* NMEA[15]; // array for ASCII tokens
   
   if ((serial_port = serialOpen ("/dev/ttyS0", 9600)) < 0)		/* open serial port */
@@ -73,9 +74,9 @@ int main ()
       //char* satellites = NMEA[7];
       
       // conversion
-      float latitude_  = (float)NMEA[2];
-      float longitude_ = (float)NMEA[4];
-      int satellites_  = (int)NMEA[7];
+     float latitude_ = strtof(NMEA[2],NULL);
+    float longitude_ = strtof(NMEA[4],NULL);
+    long satellites_ = strtol(NMEAR[7],&remaining,10);
       /*
       printf("NMEA: Latitude: %f %s Longitude: %f %s SV: %d",latitude_,Pole_NS,longitude_,Pole_WE,satellites_);
       count = 0; // reset count */
