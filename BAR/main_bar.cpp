@@ -29,7 +29,7 @@ while(1)
 {
 
     b = I1.ReadI2C_8bit(MS5611_ADDRESS, PROM_READ);
-    ConvertBARData(b);
+    b1.ConvertBARData(b);
 
     int height = getHeight();
     printf("Height: %d\n", height);

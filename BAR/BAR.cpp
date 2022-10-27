@@ -21,14 +21,14 @@
     void BAR::Calibrate_BAR(int x) 
     {
         initial_pressure_ = (x*mbar_to_Pa); // Convert mbar to Pascal
-        initial_AMSL_ = T_constant*(1-(initial_pressure_/p_0)^P_constant);//using international barometric formula to get height
+        initial_AMSL_ = T_constant*(1-(initial_pressure_/p_0)pow(P_constant));//using international barometric formula to get height
     }
 
     // Converts the bar data into height
     void BAR::ConvertBARData(int x) 
     {
         pressure_ = (x*mbar_to_Pa); // Convert mbar to Pascal.
-        height_AMSL_ = T_constant*(1-(pressure_/p_0)^P_constant); // Using international barometric formula to get height
+        height_AMSL_ = T_constant*(1-(pressure_/p_0)pow(P_constant)); // Using international barometric formula to get height
         height_AGL_ = height_AMSL_ - initial_AMSL_; // Subtract difference in height.
     }
 
