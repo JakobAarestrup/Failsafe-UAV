@@ -1,5 +1,5 @@
 #include "BAR.hpp"
-#include <cmath.h>
+#include <math.h>
 
 /*Math constants*/
 #define p_0 101325
