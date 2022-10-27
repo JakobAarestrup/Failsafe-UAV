@@ -7,7 +7,7 @@ public:
     ~BAR();// Destructor
     void ConvertBARData(); // Converts the bar data into height
     void Calibrate_BAR(); // Calibrates the barometer data
-    int  getHeight(); // Returns the height above ground level
+    float  getHeight(); // Returns the height above ground level
     void initialize();
     bool testConnection();
     void refreshPressure();
@@ -19,11 +19,11 @@ public:
     float getTemperature();
     float getPressure();
 private:
-    int initial_AMSL_; // Initial height above mean sea level when drone is on the ground
-    int initial_pressure_;  // Initial pressure when drone is on the ground
-    int height_AMSL_; // Height above mean sea level
-    int height_AGL_; // Height above ground level
-    int pressure_; // Pressure from barometer
+    float initial_AMSL_; // Initial height above mean sea level when drone is on the ground
+    float initial_pressure_;  // Initial pressure when drone is on the ground
+    float height_AMSL_; // Height above mean sea level
+    float height_AGL_; // Height above ground level
+    float pressure_; // Pressure from barometer
     int BAR_I2C_;
     uint16_t C1_, C2_, C3_, C4_, C5_, C6_; // Calibration data
     uint32_t D1_, D2_; // Raw measurement data
