@@ -41,6 +41,13 @@ void BAR::ConvertBARData()
 // Returns height above ground level
 float BAR::getHeight() 
 {
+    int calibration = 0;
+        while (calibration ==0)
+        {
+            barometer.Calibrate_BAR();
+            calibration = 1;         
+            break;
+        }
     ConvertBARData();
     return height_AGL_; // Return height
 }
