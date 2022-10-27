@@ -1,46 +1,69 @@
-#include<stdio.h>
-#include<errno.h>
-#include<wiringPi.h>
-#include<string.h>
-#include<wiringSerial.h>
-int main()
-{
-char gps[65];   //gps string array
-int fd,flag=0;    //handler
-char arr[]="$GPGGA";
-printf("raspberry gps programme");
-if(wiringPiSetup()<0)     //setup wiringpi
-return -1;
-else
-printf("setup is ok\n");
-if((fd=serialOpen("/dev/ttyS0",9600))<0)
-{
-fprintf(stderr,"unable to open serial device%s\n",strerror(errno));
-}
-else
-{
-printf("serial UART is Ok\n");
-}
-while(1)
-{
-int i=0;
-int c;
-if(c=serialGetchar(fd)==13||10)
-{
-for(i=0;i<6;i++)
-{
-if(serialGetchar(fd)==arr[i])
-flag++;
-}
-}
-if(flag==6)
-{
-flag=0;
-for(i=0;i<=65;i++)
-gps[i]=serialGetchar(fd);
-}
+#include <stdio.h>
+#include <string.h>
+#include <errno.h>
+#include <iostream>
+#include <unistd.h>
 
-printf("%d",gps);
-}
-fflush(stdout);
+#include <wiringPi.h>
+#include <wiringSerial.h>
+
+int main ()
+{
+  int serial_port ;
+  char data;
+  int flag = 0;
+  char gps[65];
+  char arr[]="GPGGA";
+  if ((serial_port = serialOpen ("/dev/ttyS0", 9600 )) < 0)	/* open serial port */
+  {
+    fprintf (stderr, "Unable to open serial device: %s\n", strerror (errno)) ;
+    return 1 ;
+  }
+
+  if (wiringPiSetup () == -1)					/* initializes wiringPi setup */
+  {
+    fprintf (stdout, "Unable to start wiringPi: %s\n", strerror (errno)) ;
+    return 1 ;
+  }
+
+  while(1)
+  {
+
+    int i = 0; 
+    char c;
+
+    if(serialDataAvail (serial_port))
+    { 
+      data = serialGetchar (serial_port);		// receive character serially
+      // kig efter GPGGA
+      if(c=serialGetchar(serial_port)=="G")
+      {
+        for(i=0; i<5 ;i++)
+        {
+          if(serialGetchar(serial_port)==arr[i])
+            {
+              flag++;
+            }
+              if (flag == 4)
+                {
+                  flag = 0;
+                }
+        }
+      }
+
+      if(flag==5)
+      {
+        flag=0;
+          for(i=0;i<=65;i++)
+          gps[i]=serialGetchar(serial_port);
+      }
+    
+      printf("Value of array: %.*s\n", (int)sizeof(gps), gps);
+      //serialPutchar(serial_port, dat); // transmit character serially on port
+    
+      usleep(1000000);
+    }
+
+	}
+
 }
