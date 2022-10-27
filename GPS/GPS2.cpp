@@ -75,8 +75,8 @@ int main ()
       
       // conversion
      float latitude_ = strtof(NMEA[2],NULL);
-    float longitude_ = strtof(NMEA[4],NULL);
-    long satellites_ = strtol(NMEAR[7],&remaining,10);
+     float longitude_ = strtof(NMEA[4],NULL);
+     long satellites_ = strtol(NMEA[7],&remaining,10);
       /*
       printf("NMEA: Latitude: %f %s Longitude: %f %s SV: %d",latitude_,Pole_NS,longitude_,Pole_WE,satellites_);
       count = 0; // reset count */
