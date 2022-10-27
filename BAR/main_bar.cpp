@@ -21,8 +21,8 @@ int main()
 
         barometer.calculatePressureAndTemperature();
 
-        printf("Temperature(C): %f Pressure(millibar): %f\n", 
-                barometer.getTemperature(), barometer.getPressure());
+        printf("Temperature(C): %f Height(m): %f\n", 
+                barometer.getTemperature(), barometer.getHeight());
                 
         sleep(1);
     }
