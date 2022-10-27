@@ -5,7 +5,6 @@
 #include <iostream>
 #include <unistd.h>
 
-using namespace std;
 
 int main ()
 {
@@ -32,9 +31,9 @@ int main ()
     char* satellites = NMEA[7];
 
     // conversion
-    float latitude_ = atof(latitude);
-    float longitude_ = atof(longitude);
-    int satellites_ = atoi(satellites);
+    float latitude_ = std::atof(latitude);
+    float longitude_ = std::atof(longitude);
+    int satellites_ = std::atoi(satellites);
 
     printf("NMEA: %f %s %f %s %d",latitude_,Pole_NS,longitude_,Pole_WE,satellites_);
     
