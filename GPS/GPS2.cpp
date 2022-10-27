@@ -69,17 +69,17 @@ int main ()
     {
         if ( b1 == NULL)
         {
-        NMEA[i] = '0'; 
+        NMEA[i] = "0"; 
         }
         else if (b1 == NULL & i == 3 | 5)
         {
-        NMEA[i] = 'N/A'
+        NMEA[i] = "N/A";
         }
         else
         {
         NMEA[i] = b1; 
         }
-        b1 = strtok(NULL, ",");   
+      b1 = strtok(NULL, ",");   
     }
 
       //char* latitude = NMEA[2];
