@@ -67,7 +67,7 @@ int main ()
 		  }
 		if(is_GGA_received_completely==1)
     {
-			//printf("GGA: %s",buff);
+			printf("GGA: %s",buff);
       char* b1 = strtok(buff,","); // first token
       printf("Pole_WE %c",d1);
       for(i = 0 ; i < 15 ; i++)
