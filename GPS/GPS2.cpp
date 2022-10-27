@@ -12,6 +12,7 @@ int main ()
   unsigned char IsitGGAstring=0;
   unsigned char GGA_index=0;
   unsigned char is_GGA_received_completely = 0;
+  int length = 0;
   
   if ((serial_port = serialOpen ("/dev/ttyS0", 9600)) < 0)		/* open serial port */
   {
@@ -30,15 +31,16 @@ int main ()
 		if(serialDataAvail (serial_port) )		/* check for any data available on serial port */
 		  { 
 			dat = serialGetchar(serial_port);		/* receive character serially */		
-			if(dat == '$'){
+			if(dat == '$')
+      {
 				IsitGGAstring = 0;
 				GGA_index = 0;
 			}
 			else if(IsitGGAstring ==1){
 				buff[GGA_index++] = dat;
-				if(dat=='\r')
-					is_GGA_received_completely = 1;
-				}
+          if(dat=='\r')
+            is_GGA_received_completely = 1;
+          }
 			else if(GGA_code[0]=='G' && GGA_code[1]=='G' && GGA_code[2]=='A'){
 				IsitGGAstring = 1;
 				GGA_code[0]= 0; 
@@ -53,6 +55,8 @@ int main ()
 		  }
 		if(is_GGA_received_completely==1){
 			printf("GGA: %s",buff);
+      length = sizeof(buff);
+      printf("Length: %d",lenth);
 			is_GGA_received_completely = 0;
 		}
 	}
