@@ -1,7 +1,8 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-
+#include <iostream>
 #include <wiringPi.h>
 #include <wiringSerial.h>
 
@@ -12,7 +13,14 @@ int main ()
   unsigned char IsitGGAstring=0;
   unsigned char GGA_index=0;
   unsigned char is_GGA_received_completely = 0;
+  float latitude_  = 0;
+  float longitude_ = 0;
+  int satellites_ = 0;
   int length = 0;
+  int count = 0;
+  int i = 0;
+  char* remaining;
+  char* NMEA[15]; // array for ASCII tokens
   
   if ((serial_port = serialOpen ("/dev/ttyS0", 9600)) < 0)		/* open serial port */
   {
@@ -53,10 +61,32 @@ int main ()
 				GGA_code[2] = dat;
 				}
 		  }
-		if(is_GGA_received_completely==1){
-			printf("GGA: %s",buff);
-      length = sizeof(buff);
-      printf("Length: %d",length);
+		if(is_GGA_received_completely==1)
+    {
+			//printf("GGA: %s",buff);
+      char* b1 = strtok(buff,","); // first token
+      
+      for(i = 0 ; i < 15 ; i++)
+    {
+        NMEA[count++] = b1; 
+        b1 = strtok(NULL, ",");   
+    }
+
+      //char* latitude = NMEA[2];
+      //char* longitude = NMEA[4];
+      char* Pole_NS = NMEA[3];
+      char* Pole_WE = NMEA[5];
+      printf("Pole_WE %s",Pole_WE);       
+      //char* satellites = NMEA[7];
+      
+      // conversion
+      /* latitude_   = atof(NMEA[2]);
+      longitude_  = atof(NMEA[4]);
+      satellites_ = atoi(NMEA[7]); */
+      
+      //printf("NMEA: Latitude: %f %s Longitude: %f %s SV: %d",latitude_,Pole_NS,longitude_,Pole_WE,satellites_);
+      count = 0; // reset count
+      i = 0; // reset i variable 
 			is_GGA_received_completely = 0;
 		}
 	}
