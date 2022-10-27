@@ -18,8 +18,8 @@ int main ()
   int satellites_ = 0;
   int length = 0;
   int count = 0;
-  char *def_1 = "0";
-  char *def_2 = "N/A";
+  char *def_1[] = "0";
+  char *def_2[] = "N/A";
   int i = 0;
   char* remaining;
   char* NMEA[15]; // array for ASCII tokens
