@@ -29,6 +29,7 @@ while(1)
 {
 
     BAR_data = I1.ReadI2C_8bit(MS5611_ADDRESS, PROM_READ);
+    printf("Raw Barometer Data: %d\n", BAR_data);
     B1.ConvertBARData(BAR_data);
 
     int height = B1.getHeight();
