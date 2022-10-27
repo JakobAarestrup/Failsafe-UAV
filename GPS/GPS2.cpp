@@ -36,7 +36,7 @@ int main ()
     { 
       data = serialGetchar (serial_port);		// receive character serially
       // kig efter GPGGA
-      if(c=serialGetchar(serial_port)=="G")
+      if(c=serialGetchar(serial_port)=='G')
       {
         for(i=0; i<5 ;i++)
         {

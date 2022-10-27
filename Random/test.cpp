@@ -9,9 +9,9 @@ using namespace std;
 int main()
 {
 
-char c = "G";
-int c = int(c);
-cout << latitude << endl; // decimal degrees
+char c = 'G';
+int ca = (int)c;
+cout << ca << endl; // decimal degrees
 return 0;
 }
 
