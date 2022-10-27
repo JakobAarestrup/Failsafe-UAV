@@ -69,11 +69,11 @@ int main ()
     {
         if ( b1 == NULL)
         {
-        NMEA[i] = "0"; 
+        NMEA[i] == "0"; 
         }
         else if (b1 == NULL & i == 3 | 5)
         {
-        NMEA[i] = "N/A";
+        NMEA[i] == "N/A";
         }
         else
         {
