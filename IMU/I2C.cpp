@@ -49,7 +49,7 @@ void I2C::WriteI2C(int ADDR, int reg, int data)
 }
 
 // Read from i2c device register
-int I2C::ReadI2C(int ADDR, int reg)
+int I2C::ReadI2C_16bit(int ADDR, int reg)
 {
     int Reg_data1 = wiringPiI2CReadReg8(I2C_File_, reg); // Read first register
     int Reg_data2 = wiringPiI2CReadReg8(I2C_File_, reg+1); // Read second register
@@ -63,5 +63,21 @@ int I2C::ReadI2C(int ADDR, int reg)
    {
         I2C_Data_ = (Reg_data2 << 8) | Reg_data1; // Bitshift registers together
         return I2C_Data_; // Return i2c data
+   }
+}
+
+// Read from i2c device register
+int I2C::ReadI2C_8bit(int ADDR, int reg)
+{
+    int Reg_data_ = wiringPiI2CReadReg8(I2C_File_, reg); // Read first register
+
+    if (Reg_data_ ==-1) // Check read errors
+    {
+        printf("Failed to read from %d via I2C.", ADDR); // Read error
+        exit(1);
+    }
+    else
+   {
+        return Reg_data_; // Return i2c data
    }
 }
