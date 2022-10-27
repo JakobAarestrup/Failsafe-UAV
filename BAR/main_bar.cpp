@@ -1,42 +1,31 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <iostream>
-#include <wiringPiI2C.h>
-#include <wiringPi.h>
 #include "I2C.hpp"
 #include "BAR.hpp"
 #include "MS5611.hpp"
+#include <unistd.h>
+#include <stdio.h>
 
 int main()
 {
+    BAR barometer;
 
-I2C I1;
-BAR B1;
+    barometer.initialize();
 
-// Open I2C connection
-I1.openI2C(MS5611_ADDRESS);
+    while (true) {
+        barometer.refreshPressure();
+        usleep(10000); // Waiting for pressure data ready
+        barometer.readPressure();
 
-// Enable Barometer
-//I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL1_XL, 0b10100000);
-//I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL3_C, 0b01000000);
+        barometer.refreshTemperature();
+        usleep(10000); // Waiting for temperature data ready
+        barometer.readTemperature();
 
-// Calibrate Barometer
-int BAR_data = I1.ReadI2C_8bit(MS5611_ADDRESS, PROM_READ);
-B1.Calibrate_BAR(BAR_data);
+        barometer.calculatePressureAndTemperature();
 
-// Main loop
-while(1)
-{
+        printf("Temperature(C): %f Pressure(millibar): %f\n", 
+                barometer.getTemperature(), barometer.getPressure());
+                
+        sleep(1);
+    }
 
-    BAR_data = I1.ReadI2C_8bit(MS5611_ADDRESS, PROM_READ);
-    printf("Raw Barometer Data: %d\n", BAR_data);
-    B1.ConvertBARData(BAR_data);
-
-    int height = B1.getHeight();
-    printf("Height: %d\n", height);
-    
-    usleep(1000000); //Small delay
-}
-
-return 0;
+    return 0;
 }
