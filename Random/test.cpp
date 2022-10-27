@@ -24,6 +24,7 @@ int main ()
     {
         NMEA[count++] = b1; 
         b1 = strtok(NULL, ",");
+        printf("hej");
         
     }
     char* latitude = NMEA[2];
