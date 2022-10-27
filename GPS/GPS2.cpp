@@ -13,7 +13,7 @@ int main ()
   char data;
   int flag = 0;
   char gps[65];
-  char arr[]="GPGGA";
+  char arr[]={'G','P','G','G','A','\0'};
   if ((serial_port = serialOpen ("/dev/ttyS0", 9600 )) < 0)	/* open serial port */
   {
     fprintf (stderr, "Unable to open serial device: %s\n", strerror (errno)) ;
@@ -38,20 +38,20 @@ int main ()
       // kig efter GPGGA
       if(c=serialGetchar(serial_port)=='G')
       {
-        for(i=0; i<5 ;i++)
+        for(i=0; i<6 ;i++)
         {
           if(serialGetchar(serial_port)==arr[i])
             {
               flag++;
             }
-              if (flag == 4)
+              if (flag == 5)
                 {
                   flag = 0;
                 }
         }
       }
 
-      if(flag==5)
+      if(flag==6)
       {
         flag=0;
           for(i=0;i<=65;i++)
