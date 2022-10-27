@@ -69,7 +69,7 @@ int main ()
     {
 			//printf("GGA: %s",buff);
       char* b1 = strtok(buff,","); // first token
-      printf("Pole_WE %s",d1);
+      printf("Pole_WE %c",d1);
       for(i = 0 ; i < 15 ; i++)
       {
           if ( b1 == NULL)
