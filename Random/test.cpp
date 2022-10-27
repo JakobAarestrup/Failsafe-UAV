@@ -8,7 +8,14 @@ using namespace std;
 
 int main()
 {
-char gdd[] = "5610.29001";
+
+char c = 'G';
+int ca = (int)c;
+cout << ca << endl; // decimal degrees
+return 0;
+}
+
+/* char gdd[] = "5610.29001";
 float amount = 01011.51425;
 
 float amount2 = atof(gdd);
@@ -50,8 +57,4 @@ else
 
 cout << latitude << ", " << longitude << endl; // decimal degrees
 
-return 0;
-
-}
-
-
+return 0; */
