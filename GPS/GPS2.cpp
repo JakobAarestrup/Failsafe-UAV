@@ -94,6 +94,7 @@ int main ()
       longitude_  = atof(NMEA[4]);
       satellites_ = atoi(NMEA[7]);
       printf("GGA: %s\n",buff);
+      usleep(1000000);
       printf("NMEA: Latitude: %f %s Longitude: %f %s SV: %d\n",latitude_,Pole_NS,longitude_,Pole_WE,satellites_);
       i = 0; // reset i variable
       count = 0; 
