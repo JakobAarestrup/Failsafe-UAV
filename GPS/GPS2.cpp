@@ -74,7 +74,7 @@ int main ()
           {
           NMEA[count] = d1; // 0 
           }
-          else if (b1 == NULL & count = 3 || 5)
+          else if (b1 == NULL & count = 3 | 5)
           {
           NMEA[count] = d2; // N/A
           }
