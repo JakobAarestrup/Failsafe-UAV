@@ -72,9 +72,9 @@ int main ()
       char* satellites = NMEA[7];
 
       // conversion
-      float latitude_  = std::atof(latitude);
-      float longitude_ = std::atof(longitude);
-      int satellites_  = std::atoi(satellites);
+      float latitude_  = std::stof(latitude);
+      float longitude_ = std::stof(longitude);
+      int satellites_  = std::stoi(satellites);
 
       printf("NMEA: Latitude: %f %s Longitude: %f %s SV: %d",latitude_,Pole_NS,longitude_,Pole_WE,satellites_);
       count = 0; // reset count
