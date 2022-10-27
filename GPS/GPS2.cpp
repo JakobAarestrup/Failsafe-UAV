@@ -74,7 +74,7 @@ int main ()
           {
           NMEA[count] = d1; // 0 
           }
-          else if (b1 == NULL & count == 3 | 5)
+          else if (b1 == NULL && count == 3 || 5)
           {
           NMEA[count] = d2; // N/A
           }
@@ -94,8 +94,7 @@ int main ()
       latitude_   = atof(NMEA[2]);
       longitude_  = atof(NMEA[4]);
       satellites_ = atoi(NMEA[7]);
-
-      printf("Pole_WE: %s\n\n", Pole_WE);
+      printf("GGA: %s\n",buff);
       printf("NMEA: Latitude: %f %s Longitude: %f %s SV: %d\n",latitude_,Pole_NS,longitude_,Pole_WE,satellites_);
       i = 0; // reset i variable
       count = 0; 
