@@ -86,7 +86,7 @@ int main ()
       //char* longitude = NMEA[4];
       char* Pole_NS = NMEA[3];
       char* Pole_WE = NMEA[5];
-      printf("Pole_WE %s",Pole_WE);       
+      //printf("Pole_WE %s",Pole_WE);       
       /* latitude_   = atof(NMEA[2]);
       longitude_  = atof(NMEA[4]);
       satellites_ = atoi(NMEA[7]);
