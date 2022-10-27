@@ -18,8 +18,9 @@ int main ()
   int satellites_ = 0;
   int length = 0;
   int count = 0;
-  char *def_1 = '0';
-  char *def_2 = 'N/A';
+  char def[2] = '0','N/A'
+  char *d1 = def[1];
+  char *d2 = def[2];
   int i = 0;
   char* remaining;
   char* NMEA[15]; // array for ASCII tokens
@@ -72,11 +73,11 @@ int main ()
     {
         if ( b1 == NULL)
         {
-        NMEA[count] = def_1; 
+        NMEA[count] = d1; // 0 
         }
         else if (b1 == NULL & i == 3 | 5)
         {
-        NMEA[count] = def_2;
+        NMEA[count] = d2; // N/A
         }
         else
         {
