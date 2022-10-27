@@ -69,23 +69,23 @@ int main ()
     {
 			//printf("GGA: %s",buff);
       char* b1 = strtok(buff,","); // first token
-      
+      printf("Pole_WE %s",d1);
       for(i = 0 ; i < 15 ; i++)
-    {
-        if ( b1 == NULL)
-        {
-        NMEA[count++] = d1; // 0 
-        }
-        else if (b1 == NULL & i == 3 | 5)
-        {
-        NMEA[count++] = d2; // N/A
-        }
-        else
-        {
-        NMEA[count++] = b1; 
-        }
-      b1 = strtok(NULL, ",");   
-    }
+      {
+          if ( b1 == NULL)
+          {
+          NMEA[count++] = d1; // 0 
+          }
+          else if (b1 == NULL & i == 3 | 5)
+          {
+          NMEA[count++] = d2; // N/A
+          }
+          else
+          {
+          NMEA[count++] = b1; 
+          }
+        b1 = strtok(NULL, ",");   
+      }
 
       //char* latitude = NMEA[2];
       //char* longitude = NMEA[4];
