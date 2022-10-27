@@ -57,7 +57,7 @@ int main ()
 				}
 		  }
 		if(is_GGA_received_completely==1){
-			//printf("GGA: %s",buff);
+			printf("GGA: %s",buff);
       char* b1 = strtok(buff,","); // first token
       while (b1 != NULL)
       {
@@ -71,12 +71,12 @@ int main ()
       char* Pole_NS = NMEA[3];
       char* Pole_WE = NMEA[5];        
       char* satellites = NMEA[7];
-      /*
+      
       // conversion
       float latitude_  = atof(latitude);
       float longitude_ = atof(longitude);
       int satellites_  = atoi(satellites);
-
+      /*
       printf("NMEA: Latitude: %f %s Longitude: %f %s SV: %d",latitude_,Pole_NS,longitude_,Pole_WE,satellites_);
       count = 0; // reset count */
 			is_GGA_received_completely = 0;
