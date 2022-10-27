@@ -44,7 +44,7 @@ float BAR::getHeight()
     int calibration = 0;
         while (calibration ==0)
         {
-            barometer.Calibrate_BAR();
+            Calibrate_BAR();
             calibration = 1;         
             break;
         }
