@@ -35,6 +35,7 @@ int main()
         {
             barometer.getHeight();
             printf("Calibrating barometer..\n");
+            sleep(1);
         }
     }
 
