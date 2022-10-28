@@ -18,6 +18,7 @@ public:
     float getTemperature();
     float getPressure();
     float  getHeight(); // Returns the height above ground level
+    int getCalibration();
 private:
     float initial_AMSL_; // Initial height above mean sea level when drone is on the ground
     float initial_pressure_;  // Initial pressure when drone is on the ground
