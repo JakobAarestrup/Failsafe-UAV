@@ -33,6 +33,7 @@ int main()
         }
         else
         {
+            barometer.getHeight();
             printf("Calibrating barometer..\n");
         }
     }
