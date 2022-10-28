@@ -44,13 +44,17 @@ void BAR::ConvertBARData()
 // Returns height above ground level
 float BAR::getHeight() 
 {
+    ConvertBARData();
     if(calibration_ < 30)
     {
         Calibrate_BAR();
         calibration_++;
+        printf("Calibrating barometer..\n");
     }
-    ConvertBARData();
-    return height_AGL_; // Return height
+    else
+    {
+        return height_AGL_; // Return height
+    }   
 }
 
 // Power on and prepare for general usage. This method reads coefficients stored in PROM.
