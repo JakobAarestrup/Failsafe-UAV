@@ -29,6 +29,6 @@ private:
     uint32_t D1_, D2_; // Raw measurement data
     float TEMP_; // Calculated temperature
 	float PRES_; // Calculated pressure
-    float deviation_ = 62.2; // Measured deviation
+    float deviation_ = 0; // Measured deviation
     int calibration_ = 0; // Calibration variable for getHeight()
 };
