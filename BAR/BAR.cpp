@@ -34,7 +34,7 @@ void BAR::Calibrate_BAR()
 // Converts the bar data into height
 void BAR::ConvertBARData() 
 {
-    pressure_ = (PRES_*mbar_to_Pa)+deviation_; // Convert mbar to Pascal.
+    pressure_ = (PRES_*mbar_to_Pa); // Convert mbar to Pascal.
     
     height_AMSL_ = (T_s/T_G)*(1-pow((pressure_/p_0),T_G*(R/g)))+deviation_; // Using international barometric formula to get height
     printf("Height AMSL: %f\n", height_AMSL_);
