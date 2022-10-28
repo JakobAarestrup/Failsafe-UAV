@@ -30,4 +30,5 @@ private:
     float TEMP_; // Calculated temperature
 	float PRES_; // Calculated pressure
     float deviation_ = 0; // Measured deviation
+    int calibration_ = 0
 };
