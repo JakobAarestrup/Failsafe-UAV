@@ -6,11 +6,6 @@
 #include <string>
 
 /*Math constants*/
-#define p_0 101325
-#define mbar_to_Pa 100
-#define T_constant 44330
-#define P_constant 1/5.255
-
 #define p_0 101325 // Pressure at sea level
 #define mbar_to_Pa 100 // Conversion rate
 #define T_s 288.15 // Temperature at sea level in Kelvin
@@ -31,7 +26,6 @@ BAR::~BAR()
 //Calibrates the barometer data
 void BAR::Calibrate_BAR() 
 {
-    //usleep(5000000);
     initial_pressure_ = (PRES_*mbar_to_Pa); // Convert mbar to Pascal
     initial_AMSL_ = (T_s/T_G)*(1-pow((initial_pressure_/p_0),T_G*(R/g)))+deviation_; //using international barometric formula to get height
     printf("Initial pressure: %f\n", initial_AMSL_);
@@ -50,10 +44,10 @@ void BAR::ConvertBARData()
 // Returns height above ground level
 float BAR::getHeight() 
 {
-    if(calibration_ == 0)
+    if(calibration_ < 4)
     {
         Calibrate_BAR();
-        calibration_ = 1;
+        calibration_++;
     }
     ConvertBARData();
     return height_AGL_; // Return height
