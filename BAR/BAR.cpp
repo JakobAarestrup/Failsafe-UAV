@@ -44,7 +44,7 @@ void BAR::ConvertBARData()
 // Returns height above ground level
 float BAR::getHeight() 
 {
-    ConvertBARData();
+    
     if(calibration_ < 30)
     {
         Calibrate_BAR();
@@ -53,6 +53,7 @@ float BAR::getHeight()
     }
     else
     {
+        ConvertBARData();
         return height_AGL_; // Return height
     }   
 }
