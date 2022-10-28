@@ -9,9 +9,9 @@ int main()
     BAR barometer;
 
     barometer.initialize();
-    
 
-    while (true) {
+    while (true) 
+    {
         barometer.refreshPressure();
         usleep(10000); // Waiting for pressure data ready
         barometer.readPressure();
@@ -23,9 +23,7 @@ int main()
         barometer.calculatePressureAndTemperature();
         
 
-        printf("Temperature(C): %f Height(m): %f\n", 
-                barometer.getTemperature(), barometer.getHeight());
-                
+        printf("Temperature(C): %f Pressure(mbar): %f Height(m): %f\n", barometer.getTemperature(), barometer.getPressure(), barometer.getHeight());
         sleep(1);
     }
 
