@@ -45,7 +45,7 @@ void BAR::ConvertBARData()
 float BAR::getHeight() 
 {
     
-    if(calibration_ =< 30)
+    if(calibration_ <= 30)
     {
         Calibrate_BAR();
         calibration_++;
