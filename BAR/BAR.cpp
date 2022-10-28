@@ -31,6 +31,7 @@ BAR::~BAR()
 //Calibrates the barometer data
 void BAR::Calibrate_BAR() 
 {
+    usleep(5000000);
     initial_pressure_ = (PRES_*mbar_to_Pa); // Convert mbar to Pascal
     initial_AMSL_ = (T_s/T_G)*(1-pow((initial_pressure_/p_0),T_G*(R/g)))+deviation_; //using international barometric formula to get height
     printf("Initial pressure: %f\n", initial_AMSL_);
