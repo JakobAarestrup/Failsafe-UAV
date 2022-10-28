@@ -20,9 +20,7 @@
 
 // Constructor
 BAR::BAR() 
-{
-    // Calibration variable for getHeight()
-}
+{}
 
 // Destructor
 BAR::~BAR() 
