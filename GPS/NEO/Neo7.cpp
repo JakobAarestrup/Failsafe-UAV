@@ -82,6 +82,7 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
             GGA_code[2] = dat;
             }
         }
+
 	if(is_GGA_received_completely==1)
     {
       printf("GGA: %s\n",buff); // kan udkommenteres
@@ -117,7 +118,6 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
       longitude_  = atof(NMEA[4]);
       SV_ = atoi(NMEA[7]);
   
-      printf("NMEA: Latitude: %f %s Longitude: %f %s SV: %d\n",latitude_,Pole_NS,longitude_,Pole_WE,SV_); // kan udkommenteres
       i = 0; // reset i variable
       count = 0; // reset count variable
 	  is_GGA_received_completely = 0; // reset GGA receive flag variable
@@ -135,17 +135,17 @@ float lat_Sec = (amount2-lat_Deg*100);
 cout << lon_Deg <<" , " << lon_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
 cout << lat_Deg <<" , " << lat_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
 
-if (S==1 & W == 0 ) // handles negative
+if (NS==1 & EW == 0 ) // handles negative
 {
     latitude_  = (lat_Deg  + (lat_Sec/60))*-1;
     longitude_ = lon_Deg  + (lon_Sec/60);
 }
-else if (S==0 & W == 1)
+else if (NS==0 & EW == 1)
 {
     latitude_  = lat_Deg  + (lat_Sec/60);
     longitude_ = (lon_Deg  + (lon_Sec/60))*-1;
 }
-else if(S == 1 & W == 1)
+else if(NS == 1 & EW == 1)
 {
     latitude_  = (lat_Deg  + (lat_Sec/60))*-1;
     longitude_ = (lon_Deg  + (lon_Sec/60))*-1;
@@ -162,6 +162,8 @@ return 0;
 
 }
 
+/* GET FUNCTIONS */
+
 int GPS::getSV() const // returns amount of satellites
 {
     return SV_; 
@@ -175,4 +177,14 @@ float GPS::getLongitude() const // returns longitude
 float GPS::getLatitude() const // returns latitude
 {
     return latitude_;
+}
+
+char GPS::getEastWest const  // returns either a East pole or West pole
+{
+    return EW_;
+}
+
+char GPS::getNorthSouth const  // returns either a East pole or West pole
+{
+    return NS_;
 }
