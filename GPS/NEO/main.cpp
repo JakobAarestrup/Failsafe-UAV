@@ -31,6 +31,8 @@ int main()
   //config("CFG-CFG") // disable..
 
   //config("CFG-CFG") // set navigation rate to 10 Hz
+/* START LOGGING*/
+  sendToLogFile(); //Der er 2 måder logger alt eller logger kun når fil bliver kaldt. Det nemmeste er nok alt for at slippe for en klasse hovedpine for alt data.
 
 /* STARTING LOOP*/
   while(1)
@@ -43,7 +45,6 @@ int main()
       EW = getEastWest();       // returns either a East pole or West pole
 
       convertdata(Long, Lat, NS, EW); //converts to decimal degrees format
-      sendToLogFile(); // sends data to log file
 
       usleep(1000000); // delay 1 second
     }
