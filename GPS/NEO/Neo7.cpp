@@ -165,7 +165,7 @@ return 0;
 void GPS::sendToLogFile()
 {
    freopen( "RDSLog.txt", "w", stdout ); // https://stackoverflow.com/questions/7400418/writing-a-log-file-in-c-c
-   cout << "" << longitude_ << "," << NS_ << "," << latitude_ << "," << EW_ <<  "  Satellites: " << SV_ << endl;
+   cout << "" << longitude_ << "," << NS_ << " " << latitude_ << "," << EW_ <<  "  Satellites: " << SV_ << endl;
 }
 
 
