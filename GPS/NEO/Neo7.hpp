@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
+#include <iostream>
 
 #include <wiringPi.h>
 #include <wiringSerial.h>
@@ -18,7 +19,7 @@ class GPS
         void config(int fd, char* message, size_t length)            // configuration of the GPS
         void convertData(float lon_Data, float lat_Data);            // converts GPS data
         void readGPS(int fd, char sensor_Data, char* d1 , char* d2); // reads GPS serial data
-        void sendToLogFile(); // sends private data to a log file 
+        void startLogging(); // sends private data to a log file 
 
         int   getSV() const;         // returns amount of satellites
         float getLongitude() const;  // returns longitude

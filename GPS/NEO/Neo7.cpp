@@ -17,14 +17,14 @@ void GPS::openUART(int fd) // open UART serial port
     if ((fd = serialOpen("/dev/ttyS0", 9600)) < 0) // open serial port with set baudrate
         {
             fprintf (stderr, "Unable to open serial device: %s\n", strerror (errno)); // error handling
-            return 1 ;
+            return 1;
         }
     return fd;
 
     if (wiringPiSetup() == -1)	// initializes wiringPi setup
         {
             fprintf (stdout, "Unable to start wiringPi: %s\n", strerror (errno)); // error handling
-            return 1 ;
+            return 1;
         }
 
 }
@@ -132,8 +132,8 @@ float lat_Deg = int(lat_Data)/100;
 float lon_Sec = (amount-lon_Deg*100);
 float lat_Sec = (amount2-lat_Deg*100);
 
-cout << lon_Deg <<" , " << lon_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
-cout << lat_Deg <<" , " << lat_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
+//(cout << lon_Deg <<" , " << lon_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
+//cout << lat_Deg <<" , " << lat_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
 
 if (NS==1 & EW == 0 ) // handles negative
 {
@@ -156,16 +156,15 @@ else
     longitude_ = lon_Deg  + (lon_Sec/60);
 }
 
-cout << latitude << ", " << longitude << endl; // decimal degrees
-
-return 0;
+//cout << latitude_ << ", " << longitude_ << endl; // decimal degrees
+std::cout << "" << longitude_ << "," << NS_ << " " << latitude_ << "," << EW_ << " Satellites:" << SV_ << std::endl;
 
 }
 
-void GPS::sendToLogFile()
+void GPS::startLogging()
 {
-   freopen( "RDSLog.txt", "w", stdout ); // https://stackoverflow.com/questions/7400418/writing-a-log-file-in-c-c
-   cout << "" << longitude_ << "," << NS_ << " " << latitude_ << "," << EW_ <<  "  Satellites: " << SV_ << endl;
+   freopen("RDSLog.txt", "w", stdout); // https://stackoverflow.com/questions/7400418/writing-a-log-file-in-c-c
+   //cout << "" << longitude_ << "," << NS_ << " " << latitude_ << "," << EW_ <<  "  Satellites: " << SV_ << endl;
 }
 
 
