@@ -31,6 +31,6 @@ class GPS
         int SV_; // amount of satellites
         float longitude_; 
         float latitude_;
-        char EW_;
-        char NS_;
+        char* EW_;
+        char* NS_;
 }

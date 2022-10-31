@@ -110,17 +110,17 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
 
       }
 
-      char* Pole_NS = NMEA[3]; // behøver det her at være en pointer?
-      char* Pole_WE = NMEA[5]; // behøver det her at være en pointer?
+        NS_ = NMEA[3]; 
+        EW_ = NMEA[5]; 
 
-      //conversion
-      latitude_   = atof(NMEA[2]);
-      longitude_  = atof(NMEA[4]);
-      SV_ = atoi(NMEA[7]);
-  
-      i = 0; // reset i variable
-      count = 0; // reset count variable
-	  is_GGA_received_completely = 0; // reset GGA receive flag variable
+        //conversion
+        latitude_   = atof(NMEA[2]);
+        longitude_  = atof(NMEA[4]);
+        SV_ = atoi(NMEA[7]);
+    
+        i = 0; // reset i variable
+        count = 0; // reset count variable
+        is_GGA_received_completely = 0; // reset GGA receive flag variable
 	}
 }
 
