@@ -16,7 +16,7 @@ char dat;
 const char NMEA[] = "\xB5\x62\x06\x17\x0C\x00\x00\x23\x00\x02\x76\x00\x00\x00\x00\x00\x00\x00\xC4\xA4";
 size_t NMEA_Length = sizeof NMEA / sizeof NMEA[0]; // length of NMEA CFG Message
 
-/*RATE*/ // Measurement frequency: 10 hz, navigation frequency 10 hz 
+/*RATE*/ // Measurement frequency: 10 hz, navigation frequency 10 hz
 const char RATE[] = "\xB5\x62\x06\x08\x06\x00\x64\x00\x01\x00\x01\x00\x7A\x12"; 
 size_t RATE_Length = sizeof RATE / sizeof RATE[0]; // length of RATE CFG Message
 
@@ -33,8 +33,8 @@ int serial_port;
     /*freopen ("RDSLog.txt", "w",stdout);
     std::cout << "Hello mister log file" << std::endl;
     return 0;*/
-if ((serial_port = serialOpen ("/dev/ttyS0", 57600)) < 0)		/* open serial port */
-  {
+if ((serial_port = serialOpen ("/dev/ttyS0", 9600)) < 0)		/* open serial port */
+  { // mere baudrate ekstra https://freematics.com/forum/viewtopic.php?t=1759
     fprintf (stderr, "Unable to open serial device: %s\n", strerror (errno)) ;
     return 1 ;
   }
