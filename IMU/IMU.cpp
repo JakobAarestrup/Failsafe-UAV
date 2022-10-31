@@ -1,5 +1,8 @@
 #include "IMU.hpp"
 #include <math.h>
+#include "Fusion-main/Fusion.h"
+#include <stdbool.h>
+#include <stdio.h>
 
 /*Math constants*/
 #define M_PI 3.14159265358979323846
