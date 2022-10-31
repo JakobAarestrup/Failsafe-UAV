@@ -29,9 +29,9 @@ void GPS::openUART(int fd) // open UART serial port
 
 }
 
-void GPS::config(int fd, char message) // configuration of the GPS
+void GPS::config(int fd, char* message, size_t length) // configuration of the GPS
 {
-    serialPuts(fd, message); // sends CFG string to serial 
+    write(fd, message, length); // sends CFG string to serial 
 }
 
 void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS serial data
