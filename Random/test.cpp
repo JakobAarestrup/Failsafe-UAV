@@ -33,7 +33,7 @@ int serial_port;
     /*freopen ("RDSLog.txt", "w",stdout);
     std::cout << "Hello mister log file" << std::endl;
     return 0;*/
-if ((serial_port = serialOpen ("/dev/ttyS0", 9600)) < 0)		/* open serial port */
+if ((serial_port = serialOpen ("/dev/ttyS0", 115200)) < 0)		/* open serial port */
   {
     fprintf (stderr, "Unable to open serial device: %s\n", strerror (errno)) ;
     return 1 ;
