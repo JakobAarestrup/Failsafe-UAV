@@ -14,7 +14,7 @@ int main ()
 char dat;
 const char GLL[] = "\xB5\x62\x06\x01\x08\x00\xF0\x01\x00\x00\x00\x00\x00\x00\x00\x2A";
 size_t GLL_Length = sizeof GLL / sizeof GLL[0];
-
+printf("Length of GLL: %d\n", GLL_Length);
 int serial_port;
 
     /*freopen ("RDSLog.txt", "w",stdout);
