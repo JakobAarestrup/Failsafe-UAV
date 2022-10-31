@@ -12,13 +12,8 @@
 int main ()
 {
 char dat;
-
-const std::byte DataStream[] = 
-{
-  0xB5, 0x62, 0x06, 0x01, 0x08, 0x00, 0xF0, 0x01, 0x00, 
-  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x2A,
-};
-const int DataStreamLength = sizeof DataStream / sizeof DataStream[0];
+const char GLL[] = "\xB5\x62\x06\x01\x08\x00\xF0\x01\x00\x00\x00\x00\x00\x00\x00\x2A";
+const int GLL_Length = sizeof GLL / sizeof DataStream[0];
 
 int serial_port;
 
@@ -30,6 +25,7 @@ if ((serial_port = serialOpen ("/dev/ttyS0", 9600)) < 0)		/* open serial port */
     fprintf (stderr, "Unable to open serial device: %s\n", strerror (errno)) ;
     return 1 ;
   }
+    write(serial_port,GLL,GLL_Length)
 
 if (wiringPiSetup () == -1)							/* initializes wiringPi setup */
   {
@@ -37,7 +33,6 @@ if (wiringPiSetup () == -1)							/* initializes wiringPi setup */
     return 1 ;
   }
  
-  serial_port.write(DataStream, DataStreamLength);
 
   while(1)
   {
