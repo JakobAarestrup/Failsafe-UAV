@@ -60,39 +60,8 @@ float IMU::getPitch() const
 {
     return pitch_;
 }
-
-// Returns Gyroscope X-angle
-float IMU::getGyrX() const
+// Returns yaw
+float IMU::getYaw() const
 {
-    return gyr_Xangle_;
-}
-
-// Returns gyroscope Y-angle
-float IMU::getGyrY() const
-{
-    return gyr_Yangle_;
-}
-
-// Returns gyroscope Z-angle
-float IMU::getGyrZ() const
-{
-    return gyr_Zangle_;
-}
-
-// Returns Magnetometer X-angle
-int IMU::getMagX() const
-{
-    return mag_X_;
-}
-
-// Returns Magnetometer Y-angle
-int IMU::getMagY() const
-{
-    return mag_Y_;
-}
-
-// Returns Magnetometer Z-angle
-int IMU::getMagZ() const
-{
-    return mag_Z_;
+    return yaw_;
 }
