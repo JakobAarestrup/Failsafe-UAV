@@ -14,11 +14,11 @@ int main ()
 char dat;
 /*NMEA*/ // disable SBAS QZSS GLONASS BeiDou Galileo
 const char NMEA[] = "\xB5\x62\x06\x17\x0C\x00\x00\x23\x00\x02\x76\x00\x00\x00\x00\x00\x00\x00\xC4\xA4";
-size_t NMEA_Length = sizeof NMEA / sizeof NMEA[0]; // length of NMEA CFG Message
+size_t NMEA_Length = 21; //sizeof NMEA / sizeof NMEA[0]; // length of NMEA CFG Message
 
 /*RATE*/ // Measurement frequency: 10 hz, navigation frequency 10 hz
 const char RATE[] = "\xB5\x62\x06\x08\x06\x00\x64\x00\x01\x00\x01\x00\x7A\x12"; 
-size_t RATE_Length = sizeof RATE / sizeof RATE[0]; // length of RATE CFG Message
+size_t RATE_Length = 15; // sizeof RATE / sizeof RATE[0]; // length of RATE CFG Message
 
 /*NMEA MESSAGES*/
 const char GLL[] = "\xB5\x62\x06\x01\x08\x00\xF0\x01\x00\x00\x00\x00\x00\x00\x00\x2A"; // disable GPGLL
@@ -26,10 +26,11 @@ const char GSA[] = "\xB5\x62\x06\x01\x08\x00\xF0\x02\x00\x00\x00\x00\x00\x00\x01
 const char GSV[] = "\xB5\x62\x06\x01\x08\x00\xF0\x03\x00\x00\x00\x00\x00\x00\x02\x38"; // disable GPGSV
 const char RMC[] = "\xB5\x62\x06\x01\x08\x00\xF0\x04\x00\x00\x00\x00\x00\x00\x03\x3F"; // disable RMC
 const char VTG[] = "\xB5\x62\x06\x01\x08\x00\xF0\x05\x00\x00\x00\x00\x00\x00\x04\x46"; // disable VTG
-size_t GP_Length = sizeof GLL / sizeof GLL[0]; // length of all NMEA MESSAGES
+size_t GP_Length = 17; // sizeof GLL / sizeof GLL[0]; // length of all NMEA MESSAGES
 printf("GP_Length: %d\n", GP_Length);
 printf("NMEA_Length: %d\n", NMEA_Length);
 printf("RATE_Length: %d\n", RATE_Length);
+
 int serial_port;
 
     /*freopen ("RDSLog.txt", "w",stdout);
