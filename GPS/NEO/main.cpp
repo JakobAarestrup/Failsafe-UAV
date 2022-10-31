@@ -26,11 +26,8 @@ int main()
 
 /* CONFIGURATION */
   config(serial_port,""); // disable..
-  //config("CFG-CFG") // disable..
-  //config("CFG-CFG") // disable..
-  //config("CFG-CFG") // disable..
 
-  //config("CFG-CFG") // set navigation rate to 10 Hz
+
 /* START LOGGING*/
   sendToLogFile(); //Der er 2 måder logger alt eller logger kun når fil bliver kaldt. Det nemmeste er nok alt for at slippe for en klasse hovedpine for alt data.
 
