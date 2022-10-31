@@ -13,7 +13,7 @@ int main ()
 {
 char dat;
 const char GLL[] = "\xB5\x62\x06\x01\x08\x00\xF0\x01\x00\x00\x00\x00\x00\x00\x00\x2A";
-const int GLL_Length = sizeof GLL / sizeof DataStream[0];
+const int GLL_Length = sizeof GLL / sizeof GLL_Length[0];
 
 int serial_port;
 
