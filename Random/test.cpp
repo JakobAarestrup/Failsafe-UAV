@@ -27,8 +27,8 @@ if (wiringPiSetup () == -1)							/* initializes wiringPi setup */
     fprintf (stdout, "Unable to start wiringPi: %s\n", strerror (errno)) ;
     return 1 ;
   }
-
-serialPuts(serial_port,"\xB5\x62\x06\x01\x08\x00\xF0\x01\x00\x00\x00\x00\x00\x00\x00\x2A");
+ 
+  serialPuts(serial_port,"0xB50x620x060x010x080x000xF00x010x000x000x000x000x000x000x000x2A");
 
   while(1)
   {
