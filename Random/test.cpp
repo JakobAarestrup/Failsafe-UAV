@@ -12,6 +12,7 @@ int main ()
 {
 char dat;
 int serial_port;
+
     /*freopen ("RDSLog.txt", "w",stdout);
     std::cout << "Hello mister log file" << std::endl;
     return 0;*/
@@ -27,7 +28,7 @@ if (wiringPiSetup () == -1)							/* initializes wiringPi setup */
     return 1 ;
   }
 
-//serialPuts(serial_port,);
+serialPuts(serial_port,"\xB5\x62\x06\x01\x08\x00\xF0\x01\x00\x00\x00\x00\x00\x00\x00\x2A");
 
   while(1)
   {
