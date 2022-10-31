@@ -12,9 +12,13 @@
 int main ()
 {
 char dat;
-const char GLL[] = "\xB5\x62\x06\x01\x08\x00\xF0\x01\x00\x00\x00\x00\x00\x00\x00\x2A";
-size_t GLL_Length = sizeof GLL / sizeof GLL[0];
-printf("Length of GLL: %d\n", GLL_Length);
+const char GLL[] = "\xB5\x62\x06\x01\x08\x00\xF0\x01\x00\x00\x00\x00\x00\x00\x00\x2A"; // disable GPGLL
+const char GSA[] = "\xB5\x62\x06\x01\x08\x00\xF0\x02\x00\x00\x00\x00\x00\x00\x01\x31"; // disable GSA
+const char GSV[] = "\xB5\x62\x06\x01\x08\x00\xF0\x03\x00\x00\x00\x00\x00\x00\x02\x38"; // disable GPGSV
+const char RMC[] = "\xB5\x62\x06\x01\x08\x00\xF0\x04\x00\x00\x00\x00\x00\x00\x03\x3F"; // disable RMC
+const char VTG[] = "\xB5\x62\x06\x01\x08\x00\xF0\x05\x00\x00\x00\x00\x00\x00\x04\x46"; // disable VTG
+size_t GP_Length = sizeof GLL / sizeof GLL[0];
+
 int serial_port;
 
     /*freopen ("RDSLog.txt", "w",stdout);
@@ -25,7 +29,13 @@ if ((serial_port = serialOpen ("/dev/ttyS0", 9600)) < 0)		/* open serial port */
     fprintf (stderr, "Unable to open serial device: %s\n", strerror (errno)) ;
     return 1 ;
   }
-    write(serial_port,GLL,GLL_Length);
+  
+write(serial_port,GLL,GP_Length);
+write(serial_port,GSA,GP_Length);
+write(serial_port,GSV,GP_Length);
+write(serial_port,RMC,GP_Length);
+write(serial_port,GLL,GP_Length);
+
 
 if (wiringPiSetup () == -1)							/* initializes wiringPi setup */
   {
