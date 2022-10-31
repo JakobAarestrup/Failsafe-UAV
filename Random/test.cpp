@@ -18,7 +18,6 @@ const char GSV[] = "\xB5\x62\x06\x01\x08\x00\xF0\x03\x00\x00\x00\x00\x00\x00\x02
 const char RMC[] = "\xB5\x62\x06\x01\x08\x00\xF0\x04\x00\x00\x00\x00\x00\x00\x03\x3F"; // disable RMC
 const char VTG[] = "\xB5\x62\x06\x01\x08\x00\xF0\x05\x00\x00\x00\x00\x00\x00\x04\x46"; // disable VTG
 size_t GP_Length = sizeof GLL / sizeof GLL[0];
-size_t VTG_Length = sizeof VTG / sizeof VTG[0];
 
 int serial_port;
 
@@ -35,7 +34,7 @@ write(serial_port,GLL,GP_Length);
 write(serial_port,GSA,GP_Length);
 write(serial_port,GSV,GP_Length);
 write(serial_port,RMC,GP_Length);
-write(serial_port,GLL,VTG_Length);
+write(serial_port,VTG,GP_Length);
 
 
 if (wiringPiSetup () == -1)							/* initializes wiringPi setup */
