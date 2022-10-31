@@ -25,7 +25,7 @@ if ((serial_port = serialOpen ("/dev/ttyS0", 9600)) < 0)		/* open serial port */
     fprintf (stderr, "Unable to open serial device: %s\n", strerror (errno)) ;
     return 1 ;
   }
-    write(serial_port,GLL,GLL_Length)
+    write(serial_port,GLL,GLL_Length);
 
 if (wiringPiSetup () == -1)							/* initializes wiringPi setup */
   {
