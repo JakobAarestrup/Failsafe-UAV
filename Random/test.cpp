@@ -28,7 +28,7 @@ if (wiringPiSetup () == -1)							/* initializes wiringPi setup */
     return 1 ;
   }
  
-  serialPuts(serial_port,"B5 62 06 01 08 00 F0 01 00 00 00 00 00 00 00 2A");
+  serialPuts(serial_port,"B56206010800F001000000000000002A");
 
   while(1)
   {
