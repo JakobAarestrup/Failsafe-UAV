@@ -1,8 +1,9 @@
 #ifndef UBX_PROTOCOL_H
 #define UBX_PROTOCOL_H
 
+/*GLOBAL VARIABLES*/
 namespace UBX_protocol
-{
+{    
 /*NMEA*/ // disable SBAS QZSS GLONASS BeiDou Galileo
 inline constexpr char NMEA_CFG[] = "\xB5\x62\x06\x17\x0C\x00\x00\x23\x00\x02\x76\x00\x00\x00\x00\x00\x00\x00\xC4\xA4";
 inline constexpr size_t NMEA_CFG_Length = 21; //sizeof NMEA / sizeof NMEA[0]; // length of NMEA CFG Message

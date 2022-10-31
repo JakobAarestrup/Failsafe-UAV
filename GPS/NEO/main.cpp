@@ -49,6 +49,7 @@ int main()
 /* STARTING LOOP*/
   while(1)
     {
+      
       readGPS(serial_port, GPS_data, d1, d2); // reads NMEA message
       
       Long = getLongitude();    // returns longitude
