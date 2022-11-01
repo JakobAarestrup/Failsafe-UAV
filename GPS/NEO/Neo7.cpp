@@ -92,8 +92,8 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
             printf("\nGGA: %s\n",buff); // kan udkommenteres
             char* b1 = strtok(buff,","); // first token
             printf("b1 = %s\n",b1); //
-            strcpy(NMEA[0],&b1);
-            printf("NMEA: %c",NMEA[0]);
+            NMEA[0] = b1;
+            printf("NMEA: %s",NMEA[0]);
             for(i = 0 ; i < 15 ; i++)
             {
                 if (b1 == NULL)
