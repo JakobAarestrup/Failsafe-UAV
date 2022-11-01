@@ -52,15 +52,13 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
 
         if(serialDataAvail(fd))		/* check for any data available on serial port */
         { 
-            printf("SUP brah\n");
             sensor_Data = serialGetchar(fd);		/* receive character serially */	
-            printf("%c\n",sensor_Data);
+            printf("%c",sensor_Data);
             
             if(sensor_Data == '$') //check for start of NMEA message
                 {
                     IsitGGAstring = 0;
                     GGA_index = 0;
-                    printf("found'$'\n");
                 }
 
             else if(IsitGGAstring ==1)
@@ -70,7 +68,6 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
                     if(sensor_Data == '\r')
                         {
                             is_GGA_received_completely = 1;
-                            printf("GGA Completed\n");
                         }
                 }
 
@@ -79,8 +76,7 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
                 IsitGGAstring = 1;
                 GGA_code[0]= 0; 
                 GGA_code[0]= 0;
-                GGA_code[0]= 0;	
-                printf("Found GGA\n");	
+                GGA_code[0]= 0;		
                 }
 
             else
@@ -93,9 +89,8 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
 
         if(is_GGA_received_completely==1)
         {
-            printf("In loop yes\n");
-            //printf("GGA: %s\n",buff); // kan udkommenteres
-            //sleep(1); // samme her
+            printf("\nGGA: %s\n",buff); // kan udkommenteres
+            sleep(1); // samme her
             char* b1 = strtok(buff,","); // first token
 
             for(i = 0 ; i < 15 ; i++)
@@ -118,7 +113,6 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
                 b1 = strtok(NULL, ",");  
 
             }
-            printf("SUSSY?\n");
             NS_ = NMEA[3]; 
             EW_ = NMEA[5]; 
 
