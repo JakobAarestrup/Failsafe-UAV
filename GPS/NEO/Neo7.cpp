@@ -88,6 +88,7 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
 
 	if(is_GGA_received_completely==1)
     {
+    printf("In loop yes\negative");
       //printf("GGA: %s\n",buff); // kan udkommenteres
       //sleep(1); // samme her
       char* b1 = strtok(buff,","); // first token
