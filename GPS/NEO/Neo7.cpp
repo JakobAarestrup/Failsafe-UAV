@@ -15,7 +15,7 @@ GPS::~GPS() // destructor
 int GPS::openUART(int fd) // open UART serial port
 {
 
-    if ((fd = serialOpen("/dev/ttyS0", 4800)) < 0) // open serial port with set baudrate
+    if ((fd = serialOpen("/dev/ttyS0", 9600)) < 0) // open serial port with set baudrate
         {
             fprintf (stderr, "Unable to open serial device: %s\n", strerror (errno)); // error handling
             return 1;
@@ -113,7 +113,7 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
                 b1 = strtok(NULL, ",");  
 
             }
-            
+
             NS_ = NMEA[3]; 
             EW_ = NMEA[5]; 
 
