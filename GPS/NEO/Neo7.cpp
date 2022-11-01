@@ -113,7 +113,7 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
                 b1 = strtok(NULL, ",");  
 
             }
-
+            printf("NMEA: %s\n",NMEA);
             NS_ = NMEA[3]; 
             EW_ = NMEA[5]; 
 
