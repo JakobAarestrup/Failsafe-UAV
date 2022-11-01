@@ -59,14 +59,14 @@ int main()
     {
       
       NEO1.readGPS(serial_port, GPS_data, d1, d2); // reads NMEA message
-      
+      /*
       Long = NEO1.getLongitude();    // returns longitude
       Lat = NEO1.getLatitude();      // returns latitude
       NS = NEO1.getNorthSouth();     // returns either a north pole or south pole
       EW = NEO1.getEastWest();       // returns either a East pole or West pole
 
       NEO1.convertData(Long, Lat, NS, EW); //converts to decimal degrees format
-
+      */
       usleep(1000000); // delay 1 second
     }
 
