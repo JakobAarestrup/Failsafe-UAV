@@ -95,7 +95,8 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
 
             for(i = 0 ; i < 15 ; i++)
             {
-
+                NMEA[i] = b1;
+                printf("%c",NMEA[i]);
                 if (b1 == NULL)
                 {
                 NMEA[count] = d1; // 0
@@ -111,8 +112,9 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
                 NMEA[count] = b1; 
                 printf("HELLO ");
                 }
-                printf("count: %d", count);
+                
                 count++; // increment
+                printf("count: %d", count);
                 b1 = strtok(NULL, ",");
                 printf("b1 = %s\n",b1); 
 
