@@ -56,9 +56,9 @@ void IMU::ConvertIMUData(int x, int y, int z, int sensor_handle)
 
 void IMU::CreateIMUData(int ax, int ay, int az, int gx, int gy, int gz, int mx, int my, int mz)
 {
-    int accData[ax,ay,az];
-    int gyroData[gx,gy,gz];
-    int magData[mx,my,mz];
+    int accData{ax,ay,az};
+    int gyroData{gx,gy,gz};
+    int magData{mx,my,mz};
 }
 
 float IMU::getACCData() // Returns ACC data
