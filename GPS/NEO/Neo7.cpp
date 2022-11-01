@@ -99,17 +99,17 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
                 if (b1 == NULL)
                 {
                 NMEA[count] = d1; // 0
-                printf("HELLO IF");
+                printf("HELLO IF\n");
                 }
                 else if (b1 == NULL && count == 3 || 5)
                 {
-                printf("HELLO ELSE IF");
+                printf("HELLO ELSE IF\n");
                 NMEA[count] = d2; // N/A
                 }
                 else
                 {
                 NMEA[count] = b1; 
-                printf("HELLO");
+                printf("HELLO\n");
                 }
 
                 count++; // increment
