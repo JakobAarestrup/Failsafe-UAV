@@ -27,7 +27,7 @@ int GPS::openUART(int fd) // open UART serial port
             fprintf (stdout, "Unable to start wiringPi: %s\n", strerror (errno)); // error handling
             return 1;
         }
-        
+        printf("Hello from openUART\n");
     return fd;
 }
 
