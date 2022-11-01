@@ -4,10 +4,10 @@ public:
     IMU(); // Constructor
     ~IMU(); // Destructor
     //void ConvertIMUData(int x, int y, int z, int sensor_handle); // Convert data from IMU to usable data
-    void CreateIMUData(int ax, int ay, int az, int gx, int gy, int gz, int mx, int my, int mz)
-    float getACCData() ; // Returns ACC data
-    float getGyroData() ; // Returns Gyro data
-    float getMagData() ; // Returns Mag data
+    void CreateIMUData(int ax, int ay, int az, int gx, int gy, int gz, int mx, int my, int mz);
+    float getACCData(); // Returns ACC data
+    float getGyroData(); // Returns Gyro data
+    float getMagData(); // Returns Mag data
 private:
     /*
     int sensor_handle_; // Handle variable for ConvertIMUData for choosing sensor
