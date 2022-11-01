@@ -96,7 +96,7 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
             for(i = 0 ; i < 15 ; i++)
             {
                 NMEA[i] = b1;
-                printf("%c",NMEA[i]);
+                printf("NMEA: %c",NMEA[i]);
                 if (b1 == NULL)
                 {
                 NMEA[count] = d1; // 0
