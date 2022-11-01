@@ -1,6 +1,5 @@
 #include "IMU.hpp"
 #include <math.h>
-#include "Fusion-main/Fusion.h"
 #include <stdbool.h>
 #include <stdio.h>
 
