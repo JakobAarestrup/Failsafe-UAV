@@ -22,7 +22,7 @@ int main()
 
   float Long = 0.0, Lat = 0.0;
 
-  int serial_port = 0;
+  int serial_port;
   char* NS;
   char* EW;
 
