@@ -57,7 +57,7 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
             {
 				IsitGGAstring = 0;
 				GGA_index = 0;
-                printf("yo\n");
+                printf("found'$'\n");
 			}
 
 		else if(IsitGGAstring ==1)
@@ -67,6 +67,7 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
                 if(sensor_Data == '\r')
                     {
                         is_GGA_received_completely = 1;
+                        printf("GGA Completed\n");
                     }
             }
 
@@ -75,7 +76,8 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
             IsitGGAstring = 1;
             GGA_code[0]= 0; 
             GGA_code[0]= 0;
-            GGA_code[0]= 0;		
+            GGA_code[0]= 0;	
+            printf("Found GGA\n");	
             }
 
         else
