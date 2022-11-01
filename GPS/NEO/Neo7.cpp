@@ -92,6 +92,7 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
             printf("\nGGA: %s\n",buff); // kan udkommenteres
             sleep(1); // samme her
             char* b1 = strtok(buff,","); // first token
+            printf("b1 = %c\n",b1); //
 
             for(i = 0 ; i < 15 ; i++)
             {
