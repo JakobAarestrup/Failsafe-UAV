@@ -93,11 +93,11 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
             char* b1 = strtok(buff,","); // first token
             for(i = 0 ; i < 15 ; i++)
             {
-                if (b1 == NULL)
+                if (b1 == "(NULL)")
                 {
                 NMEA[count] = d1; // 0
                 }
-                else if (b1 == NULL && count == 3 || 5)
+                else if (b1 == "(NULL)" && count == 3 || 5)
                 {
                 NMEA[count] = d2; // N/A
                 }
