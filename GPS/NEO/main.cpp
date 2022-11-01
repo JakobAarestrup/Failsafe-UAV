@@ -46,7 +46,7 @@ int main()
   NEO1.config(serial_port, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG
 
 /* START LOGGING*/
-  startLogging(); //Der er 2 måder logger alt eller logger kun når fil bliver kaldt. Det nemmeste er nok alt for at slippe for en klasse hovedpine for alt data.
+  NEO1.startLogging(); //Der er 2 måder logger alt eller logger kun når fil bliver kaldt. Det nemmeste er nok alt for at slippe for en klasse hovedpine for alt data.
 
 /* STARTING LOOP*/
   while(1)
@@ -59,7 +59,7 @@ int main()
       NS = NEO1.getSouthNorth();     // returns either a north pole or south pole
       EW = NEO1.getEastWest();       // returns either a East pole or West pole
 
-      NEO1.convertdata(Long, Lat, NS, EW); //converts to decimal degrees format
+      NEO1.convertData(Long, Lat, NS, EW); //converts to decimal degrees format
 
       usleep(1000000); // delay 1 second
     }

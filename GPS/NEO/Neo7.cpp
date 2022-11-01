@@ -131,8 +131,8 @@ void GPS::convertData(float lon_Data, float lat_Data, char NS, char EW) // conve
 float lon_Deg = int(lon_Data)/100;
 float lat_Deg = int(lat_Data)/100; 
 
-float lon_Sec = (amount-lon_Deg*100);
-float lat_Sec = (amount2-lat_Deg*100);
+float lon_Sec = (lon_Data-lon_Deg*100);
+float lat_Sec = (lat_Data-lat_Deg*100);
 
 //(cout << lon_Deg <<" , " << lon_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
 //cout << lat_Deg <<" , " << lat_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
