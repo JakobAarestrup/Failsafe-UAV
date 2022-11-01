@@ -7,7 +7,7 @@ GPS::GPS() // default constructor
 
 GPS::~GPS(); // destructor
 {
-    delete[] longitude_, latitude_; // delete
+    //delete[] longitude_, latitude_; // delete
     printf("Destructor called\n");
 }
 

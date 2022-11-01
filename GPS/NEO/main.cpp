@@ -26,12 +26,12 @@ int main()
   
   
 /* OPEN UART */
-  int serial_port = openUart(serial_port); // opens serial port
+  serial_port = openUart(serial_port); // opens serial port
 
 /* CONFIGURATION */
   
   /*NMEA Config*/
-  config(serial_port, UBX_protocol::NMEA_CFG, UBX_protocol::NMEA_CFG_Length) ; // disable SBAS QZSS GLONASS BeiDou Galileo
+  config(serial_port, UBX_protocol::NMEA_CFG, UBX_protocol::NMEA_CFG_Length); // disable SBAS QZSS GLONASS BeiDou Galileo
   
   /*Update Rate*/
   config(serial_port, UBX_protocol::RATE, UBX_protocol::RATE_Length); // Measurement frequency: 10 hz, navigation frequency 10 hz
