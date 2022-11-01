@@ -18,7 +18,7 @@ int GPS::openUART(int fd) // open UART serial port
     if ((fd = serialOpen("/dev/ttyS0", 9600)) < 0) // open serial port with set baudrate
         {
             fprintf (stderr, "Unable to open serial device: %s\n", strerror (errno)); // error handling
-            return fd;
+            return 1;
         }
 
 
@@ -85,7 +85,7 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
             GGA_code[2] = sensor_Data;
             }
         }
-    printf("HALFWAY THERE!!\n");
+   
 
 	if(is_GGA_received_completely==1)
     {
