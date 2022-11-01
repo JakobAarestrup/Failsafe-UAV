@@ -23,7 +23,7 @@ int main()
     {
     /* char gps_string[100] = "GPGGA,,1200.201021,N,01011.51302,E,1,09,0.89,74.9,M,42.8,M,,*64";
     char *gps = gps_string; */
-    char gps_string2[100] = "GPGGA,,,,,,,,,,,,,,,";
+    char gps_string2[100] = "$GPGGA,,,,,,,,,,,,,,,";
     char *gps_2 = gps_string2; 
     start_ptr_origin = strchr(gps_2, ',');   // find start of field #1
     start_ptr = strchr(++start_ptr_origin, ','); // find start of latitude field
@@ -52,7 +52,6 @@ int main()
     end_ptr = strchr(++start_ptr, ','); // find end of field...
     *end_ptr = '\0';  // and zero terminate 
     strcpy(EW_, start_ptr);
-    
     
     start_ptr = strchr(++end_ptr, ','); // find start of satellite field
     end_ptr = strchr(++start_ptr, ','); // find end of field... 
