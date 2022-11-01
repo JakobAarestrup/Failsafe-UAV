@@ -7,7 +7,7 @@
 #include "LSM6DSOX.hpp"
 #include <wiringPiI2C.h>
 #include <wiringPi.h>
-#include "/Fusion-main/Fusion.h"
+#include "/Fusion-main/Fusion/Fusion.h"
 #include <stdbool.h>
 #include <time.h>
 
