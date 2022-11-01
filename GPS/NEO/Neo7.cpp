@@ -43,7 +43,7 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
     unsigned char IsitGGAstring=0;
     unsigned char GGA_index=0;
     unsigned char is_GGA_received_completely = 0;
-    char NMEA[16]; // array for ASCII tokens
+    char* NMEA[15]; // array for ASCII tokens
 
     int count = 0; // counter for for loop
     int i = 0; // increment for for loop
@@ -92,8 +92,8 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
             printf("\nGGA: %s\n",buff); // kan udkommenteres
             char* b1 = strtok(buff,","); // first token
             printf("b1 = %s\n",b1); //
-            NMEA[0] = b1;
-            printf("NMEA: %c",NMEA[0]);
+            NMEA[0] == b1;
+            printf("NMEA: %s",NMEA[0]);
             for(i = 0 ; i < 15 ; i++)
             {
                 NMEA[i] = b1;
