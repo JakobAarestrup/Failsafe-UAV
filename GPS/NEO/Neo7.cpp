@@ -91,16 +91,13 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
         {
             printf("\nGGA: %s\n",buff); // kan udkommenteres
             char* b1 = strtok(buff,","); // first token
-            printf("b1 = %s\n",b1); //
-            strcpy(NMEA[0],&b1);
-            printf("NMEA: %c",NMEA[0]);
             for(i = 0 ; i < 15 ; i++)
             {
-                if (b1 == NULL)
+                if (b1 == "(NULL)")
                 {
                 NMEA[count] = d1; // 0
                 }
-                else if (b1 == NULL && count == 3 || 5)
+                else if (b1 == "(NULL)" && count == 3 || 5)
                 {
                 NMEA[count] = d2; // N/A
                 }
@@ -118,7 +115,8 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
             NS_ = NMEA[3]; 
             EW_ = NMEA[5]; 
 
-            printf("%c, %c\n",NS_,EW_);
+            printf("%s, %s\n",NS_,EW_);
+            printf("NMEA: %s\n",NMEA);
 
             //conversion
             latitude_   = atof(NMEA[2]);

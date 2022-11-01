@@ -27,9 +27,6 @@ const char GSV[] = "\xB5\x62\x06\x01\x08\x00\xF0\x03\x00\x00\x00\x00\x00\x00\x02
 const char RMC[] = "\xB5\x62\x06\x01\x08\x00\xF0\x04\x00\x00\x00\x00\x00\x00\x03\x3F"; // disable RMC
 const char VTG[] = "\xB5\x62\x06\x01\x08\x00\xF0\x05\x00\x00\x00\x00\x00\x00\x04\x46"; // disable VTG
 size_t GP_Length = 17; // sizeof GLL / sizeof GLL[0]; // length of all NMEA MESSAGES
-printf("GP_Length: %d\n", GP_Length);
-printf("NMEA_Length: %d\n", NMEA_Length);
-printf("RATE_Length: %d\n", RATE_Length);
 
 int serial_port;
 
@@ -41,6 +38,12 @@ if ((serial_port = serialOpen ("/dev/ttyS0", 9600)) < 0)		/* open serial port */
     fprintf (stderr, "Unable to open serial device: %s\n", strerror (errno)) ;
     return 1 ;
   }
+  
+if (wiringPiSetup () == -1)							/* initializes wiringPi setup */
+  {
+    fprintf (stdout, "Unable to start wiringPi: %s\n", strerror (errno)) ;
+    return 1 ;
+  }
 
 write(serial_port,GLL,GP_Length);
 write(serial_port,GSA,GP_Length);
@@ -50,14 +53,6 @@ write(serial_port,VTG,GP_Length);
 
 write(serial_port,NMEA, NMEA_Length);
 write(serial_port,RATE,RATE_Length);
-
-
-
-if (wiringPiSetup () == -1)							/* initializes wiringPi setup */
-  {
-    fprintf (stdout, "Unable to start wiringPi: %s\n", strerror (errno)) ;
-    return 1 ;
-  }
  
 
   while(1)
