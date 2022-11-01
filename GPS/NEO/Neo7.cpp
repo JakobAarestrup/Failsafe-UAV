@@ -5,7 +5,7 @@ GPS::GPS() // default constructor
     printf("Constructor called \n");
 } 
 
-GPS::~GPS(); // destructor
+GPS::~GPS() // destructor
 {
     //delete[] longitude_, latitude_; // delete
     printf("Destructor called\n");
@@ -185,12 +185,12 @@ float GPS::getLatitude() const // returns latitude
     return latitude_;
 }
 
-char GPS::getEastWest const  // returns either a East pole or West pole
+char* GPS::getEastWest const  // returns either a East pole or West pole
 {
     return EW_;
 }
 
-char GPS::getNorthSouth const  // returns either a East pole or West pole
+char* GPS::getNorthSouth const  // returns either a East pole or West pole
 {
     return NS_;
 }
