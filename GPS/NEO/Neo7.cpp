@@ -1,4 +1,5 @@
 #include "Neo7.hpp"
+#include "unistd.h"
 
 GPS::GPS() // default constructor
 {
