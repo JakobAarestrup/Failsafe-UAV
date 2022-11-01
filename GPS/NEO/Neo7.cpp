@@ -92,31 +92,24 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
             printf("\nGGA: %s\n",buff); // kan udkommenteres
             char* b1 = strtok(buff,","); // first token
             printf("b1 = %s\n",b1); //
-            NMEA[0] == b1;
-            printf("NMEA: %s",NMEA[0]);
+            NMEA[0] = b1;
+            printf("NMEA: %c",NMEA[0]);
             for(i = 0 ; i < 15 ; i++)
             {
-                NMEA[i] = b1;
-                printf("Beforeloop: b1 = %s\n",b1); 
-                printf("NMEA: %c",NMEA[i]);
                 if (b1 == NULL)
                 {
                 NMEA[count] = d1; // 0
-                printf("HELLO IF ");
                 }
                 else if (b1 == NULL && count == 3 || 5)
                 {
-                printf("HELLO ELSE IF ");
                 NMEA[count] = d2; // N/A
                 }
                 else
                 {
                 NMEA[count] = b1; 
-                printf("HELLO ");
                 }
                 
                 count++; // increment
-                printf("count: %d", count);
                 b1 = strtok(NULL, ",");
                 printf("b1 = %s\n",b1); 
 
