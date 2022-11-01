@@ -107,6 +107,7 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
                 else
                 {
                 NMEA[count] = b1; 
+                printf("HELLO");
                 }
 
                 count++; // increment
