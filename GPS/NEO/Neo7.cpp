@@ -129,26 +129,26 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
 
 void GPS::convertData(float lon_Data, float lat_Data, char* NS, char* EW) // converts GPS serial data to degrees
 {
-float lon_Deg = int(lon_Data)/100;
 float lat_Deg = int(lat_Data)/100; 
+float lon_Deg = int(lon_Data)/100;
 
-float lon_Sec = (lon_Data-lon_Deg*100);
 float lat_Sec = (lat_Data-lat_Deg*100);
+float lon_Sec = (lon_Data-lon_Deg*100);
 
 //(cout << lon_Deg <<" , " << lon_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
 //cout << lat_Deg <<" , " << lat_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
 
-if (NS==1 & EW == 0 ) // handles negative
+if (NS=="S" & EW == "E" ) // handles negative
 {
     latitude_  = (lat_Deg  + (lat_Sec/60))*-1;
     longitude_ = lon_Deg  + (lon_Sec/60);
 }
-else if (NS==0 & EW == 1)
+else if (NS=="N" & EW == "W")
 {
     latitude_  = lat_Deg  + (lat_Sec/60);
     longitude_ = (lon_Deg  + (lon_Sec/60))*-1;
 }
-else if(NS == 1 & EW == 1)
+else if(NS == "S" & EW == "W")
 {
     latitude_  = (lat_Deg  + (lat_Sec/60))*-1;
     longitude_ = (lon_Deg  + (lon_Sec/60))*-1;
