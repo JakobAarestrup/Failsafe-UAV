@@ -32,7 +32,7 @@ int GPS::openUART(int fd) // open UART serial port
 
 }
 
-void GPS::config(int fd, char* message, size_t length) // configuration of the GPS
+void GPS::config(int fd, const char* message, size_t length) // configuration of the GPS
 {
     write(fd, message, length); // sends CFG string to serial 
 }

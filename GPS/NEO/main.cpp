@@ -23,7 +23,8 @@ int main()
   float Long = 0.0, Lat = 0.0;
 
   int serial_port = 0;
-  char* NS, EW;
+  char* NS;
+  char* EW;
 
   
   
