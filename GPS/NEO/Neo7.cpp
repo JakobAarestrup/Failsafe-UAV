@@ -116,6 +116,7 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
             EW_ = NMEA[5]; 
 
             printf("%s, %s\n",NS_,EW_);
+            printf("NMEA: %s\n",NMEA);
 
             //conversion
             latitude_   = atof(NMEA[2]);
