@@ -16,16 +16,18 @@ int main()
   char GPS_data;
   char def_1[] = "0";
   char def_2[] = "N/A";
-  GPS NEO1;
+
   char* d1 = def_1;
   char* d2 = def_2;
+  char* def_3[1] = {d1};
 
   float Long = 0.0, Lat = 0.0;
 
   int serial_port;
   char* NS;
   char* EW;
-
+  printf("WTF: %s\n",def_3);
+  GPS NEO1;
   
   
 /* OPEN UART */
