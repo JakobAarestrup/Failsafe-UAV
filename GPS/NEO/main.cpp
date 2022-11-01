@@ -31,6 +31,8 @@ int main()
 /* OPEN UART */
   serial_port = NEO1.openUART(serial_port);
 
+  printf("Serial port is open! \n");
+
 /* CONFIGURATION */
   
   /*NMEA Config*/
@@ -45,10 +47,13 @@ int main()
   NEO1.config(serial_port, UBX_protocol::GSV, UBX_protocol::GP_Length); // disable GPGSV
   NEO1.config(serial_port, UBX_protocol::RMC, UBX_protocol::GP_Length); // disable RMC
   NEO1.config(serial_port, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG
+  printf("Configuration is done! \n");
 
 /* START LOGGING*/
   NEO1.startLogging(); //Der er 2 måder logger alt eller logger kun når fil bliver kaldt. Det nemmeste er nok alt for at slippe for en klasse hovedpine for alt data.
+  printf("Logging initialize! \n");
 
+  printf("STARTING LOOP\n");
 /* STARTING LOOP*/
   while(1)
     {
