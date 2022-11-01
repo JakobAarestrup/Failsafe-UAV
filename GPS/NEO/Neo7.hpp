@@ -34,4 +34,4 @@ class GPS
         float latitude_;
         char* EW_;
         char* NS_;
-}
+};
