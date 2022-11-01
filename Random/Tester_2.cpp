@@ -5,62 +5,55 @@
 #include <iostream>
 #include <unistd.h>
 #include <cstddef>
+#include <windows.h>
 
+int main()
+{   
+    
+    char NS_[1];
+    char NS_s[1];
+    char EW_[1];
+    char gps_string[100] = "GPGGA,,1200.201021,N,01011.51302,E,1,09,0.89,74.9,M,42.8,M,,*64";
+    char gps_string2[100] = "GPGGA,,,,,,,,,,,,,,,";
+   
+    char *gps = gps_string;
+    char *gps_2 = gps_string2;
 
-int main ()
-{
-    char def_1[] = "0";
-    char def_2[] = "N/A";
-    //char* data = def_2;
-    char* d1 = def_1;
-    char* d2 = def_2;
+    char *start_ptr;
+    char* end_ptr; 
+    char* start_ptr_origin ;
+    double latitude , longitude;
+    int SV_;
+    int i = 5;
 
-    //char* arr[10];
-    //arr[0] = data;
-    int count = 0;
-    char buff[] = "GPGGA,,5610.29209,N,01011.51302,E,1,09,0.89,74.9,M,42.8,M,,*64";
-    int is_GGA_received_completely= 1;
-    int i = 0;
-    char* NMEA[15];
+    start_ptr_origin = strchr(gps, ',');   // find start of field #1
+    start_ptr = strchr(++start_ptr_origin, ','); // find start of field #2 - latitude
+    end_ptr = strchr(++start_ptr, ',');  // find end of field...  
+    latitude = atof(start_ptr);   // Convert char to float & store in variable
+    
+    start_ptr = strchr(++start_ptr, ',');  // find start of field #3 - NS_
+    end_ptr = strchr(++start_ptr, ','); // find end of field... 
+    *end_ptr = '\0';   // and zero terminate
+    strcpy(NS_, start_ptr);
+    
+    start_ptr += 2; // field 4
+    end_ptr = strchr(++start_ptr, ','); // find end of field...
+    *end_ptr = '\0';  // and zero terminate
+    longitude = atof(start_ptr); 
 
+    start_ptr = strchr(++end_ptr, ',');
+    --start_ptr; // find start of field #5 - EW
+    end_ptr = strchr(start_ptr, ','); // find end of field... 
+    *end_ptr = '\0';  // and zero terminate
 
-    if(is_GGA_received_completely==1)
-        {
-            printf("\nGGA: %s\n",buff); // kan udkommenteres
-            char arr[15];
-        
-            char* b1 = strchr(buff,","); // first token
-            for(i = 0 ; i < 15 ; i++)
-            {
-                NMEA[i] = b1;
-                b1 = strchr(NULL, ",");
-                printf("b1 = %s\n",b1); 
+    strcpy(EW_, start_ptr);
 
-            }
-            
-            char* NS_ = NMEA[3]; 
-            char* EW_ = NMEA[5]; 
+    start_ptr = strchr(++end_ptr, ','); // find start of field 7
+    end_ptr = strchr(++start_ptr, ','); // find end of field... 
+    *end_ptr = '\0';  // and zero terminate
+    SV_ = atoi(start_ptr); // Convert char to int & store in variable
+    
+    printf("latitude: %f %s longitude: %f %s Sattelites: %d\n", latitude, NS_, longitude, EW_, SV_);      //  Convert string to float & store in variable
 
-            printf("NS: %s, EW_%s\n",NS_,EW_); 
-            i = 0;
-            printf("NMEA:");
-            for(i = 0 ; i < 15 ; i++)
-            {
-            
-            printf(" %s",NMEA[i]);
-            }
-
-            //conversion
-            /* latitude_   = atof(NMEA[2]);
-            longitude_  = atof(NMEA[4]);
-            SV_ = atoi(NMEA[7]);
-            printf("Lat: %f Long: %f SV: %d\n",latitude_,longitude_,SV_);
-        
-            i = 0; // reset i variable
-            count = 0; // reset count variable
-            is_GGA_received_completely = 0; // reset GGA receive flag variable */
-            usleep(1000000);
-        } 
-    return 0;
-}
-
+ return 0;
+} 
