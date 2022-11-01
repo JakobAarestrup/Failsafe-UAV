@@ -123,7 +123,7 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
             latitude_   = atof(NMEA[2]);
             longitude_  = atof(NMEA[4]);
             SV_ = atoi(NMEA[7]);
-            printf("Lat: %d Long: %d SV: %d\n",latitude_,longitude_,SV_);
+            printf("Lat: %f Long: %f SV: %d\n",latitude_,longitude_,SV_);
         
             i = 0; // reset i variable
             count = 0; // reset count variable
