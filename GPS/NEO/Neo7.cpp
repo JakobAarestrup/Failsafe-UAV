@@ -127,7 +127,7 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
 	}
 }
 
-void GPS::convertData(float lon_Data, float lat_Data, char NS, char EW) // converts GPS serial data to degrees
+void GPS::convertData(float lon_Data, float lat_Data, char* NS, char* EW) // converts GPS serial data to degrees
 {
 float lon_Deg = int(lon_Data)/100;
 float lat_Deg = int(lat_Data)/100; 
