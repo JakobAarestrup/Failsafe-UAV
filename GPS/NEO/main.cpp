@@ -50,7 +50,7 @@ int main()
   printf("Configuration is done! \n");
 
 /* START LOGGING*/
-  NEO1.startLogging(); //Der er 2 måder logger alt eller logger kun når fil bliver kaldt. Det nemmeste er nok alt for at slippe for en klasse hovedpine for alt data.
+  //NEO1.startLogging(); //Der er 2 måder logger alt eller logger kun når fil bliver kaldt. Det nemmeste er nok alt for at slippe for en klasse hovedpine for alt data.
   printf("Logging initialize! \n");
 
   printf("STARTING LOOP\n");
