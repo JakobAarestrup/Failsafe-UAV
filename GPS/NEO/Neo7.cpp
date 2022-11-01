@@ -57,6 +57,7 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
             {
 				IsitGGAstring = 0;
 				GGA_index = 0;
+                printf("yo\n");
 			}
 
 		else if(IsitGGAstring ==1)
