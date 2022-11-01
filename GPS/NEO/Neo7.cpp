@@ -50,7 +50,7 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
 
     if(serialDataAvail(fd))		/* check for any data available on serial port */
 		{ 
-
+        printf("SUP brah\n");
         sensor_Data = serialGetchar(fd);		/* receive character serially */	
 
         if(sensor_Data == '$') //check for start of NMEA message
