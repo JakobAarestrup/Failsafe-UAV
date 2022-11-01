@@ -27,7 +27,7 @@ int main()
   int serial_port;
   char* NS;
   char* EW;
-  printf("WTF: %c",def_3[1]);
+  printf("WTF: %c",def_3[0]);
   
   
 /* OPEN UART */
