@@ -29,7 +29,7 @@ int main()
   
   
 /* OPEN UART */
-  serial_port = NEO1.openUART(serial_port););
+  serial_port = NEO1.openUART(serial_port);
 
 /* CONFIGURATION */
   
