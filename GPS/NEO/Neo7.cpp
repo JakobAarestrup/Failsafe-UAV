@@ -39,7 +39,7 @@ void GPS::config(int fd, const char* message, size_t length) // configuration of
 void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS serial data
 {
     /*VARIABLES*/
-    char dat, buff[100], GGA_code[3];
+    char buff[100], GGA_code[3];
     unsigned char IsitGGAstring=0;
     unsigned char GGA_index=0;
     unsigned char is_GGA_received_completely = 0;
