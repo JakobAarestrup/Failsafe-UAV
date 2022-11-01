@@ -11,7 +11,7 @@ GPS::~GPS() // destructor
     printf("Destructor called\n");
 }
 
-void GPS::openUART(int fd) // open UART serial port
+int GPS::openUART(int fd) // open UART serial port
 {
 
     if ((fd = serialOpen("/dev/ttyS0", 9600)) < 0) // open serial port with set baudrate
@@ -19,6 +19,7 @@ void GPS::openUART(int fd) // open UART serial port
             fprintf (stderr, "Unable to open serial device: %s\n", strerror (errno)); // error handling
             return 1;
         }
+
     return fd;
 
     if (wiringPiSetup() == -1)	// initializes wiringPi setup
@@ -26,6 +27,7 @@ void GPS::openUART(int fd) // open UART serial port
             fprintf (stdout, "Unable to start wiringPi: %s\n", strerror (errno)); // error handling
             return 1;
         }
+    return fd;
 
 }
 

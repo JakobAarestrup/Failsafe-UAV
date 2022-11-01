@@ -23,23 +23,12 @@ int main()
   float Long = 0.0, Lat = 0.0;
 
   int serial_port = 0;
-  int NS = 0, EW = 0;
+  char* NS, EW;
 
   
   
 /* OPEN UART */
-if ((serial_port = serialOpen ("/dev/ttyS0", 9600)) < 0)		/* open serial port */
-  { // mere baudrate ekstra https://freematics.com/forum/viewtopic.php?t=1759
-    fprintf (stderr, "Unable to open serial device: %s\n", strerror (errno)) ;
-    return 1 ;
-  }
-
-if (wiringPiSetup () == -1)							/* initializes wiringPi setup */
-  {
-    fprintf (stdout, "Unable to start wiringPi: %s\n", strerror (errno)) ;
-    return 1 ;
-  }
- 
+  serial_port = NEO1.openUART(serial_port););
 
 /* CONFIGURATION */
   
