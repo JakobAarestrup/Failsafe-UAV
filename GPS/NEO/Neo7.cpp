@@ -138,17 +138,17 @@ printf("EW:%s\n",EW_);
 //(cout << lon_Deg <<" , " << lon_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
 //cout << lat_Deg <<" , " << lat_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
 
-if (NS == "S" & EW == "E" ) // handles negative
+if (NS[0] == "S" & EW[0] == "E" ) // handles negative
 {
     latitude_  = (lat_Deg  + (lat_Sec/60))*-1;
     longitude_ = lon_Deg  + (lon_Sec/60);
 }
-else if (NS == "N" & EW == "W")
+else if (NS[0] == "N" & EW[0] == "W")
 {
     latitude_  = lat_Deg  + (lat_Sec/60);
     longitude_ = (lon_Deg  + (lon_Sec/60))*-1;
 }
-else if(NS == "S" & EW == "W")
+else if(NS[0] == "S" & EW[0] == "W")
 {
     latitude_  = (lat_Deg  + (lat_Sec/60))*-1;
     longitude_ = (lon_Deg  + (lon_Sec/60))*-1;
@@ -188,14 +188,18 @@ double GPS::getLatitude() const // returns latitude
     return latitude_;
 }
 
-char* GPS::getEastWest(char* EW) // returns either a East pole or West pole
+char GPS::getEastWest(char EW[]) // returns either a East pole or West pole
 {
     strcpy(EW,EW_);
+    printf("EW_: %s" EW_);
+    printf("EW:%s" EW);
     return EW;
 }
 
-char* GPS::getNorthSouth(char* NS) // returns either a East pole or West pole
+char GPS::getNorthSouth(char NS[]) // returns either a East pole or West pole
 {
     strcpy(NS,NS_);
-    retunr NS;    
+    printf("NS_: %s\n" NS_);
+    printf("NS: %s\n" NS);
+    return NS;    
 }

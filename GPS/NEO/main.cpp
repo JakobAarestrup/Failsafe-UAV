@@ -66,7 +66,7 @@ int main()
       NS = NEO1.getNorthSouth(NS);     // returns either a north pole or south pole
       EW = NEO1.getEastWest(EW);       // returns either a East pole or West pole
 
-      NEO1.convertData(Long, Lat, NS, EW); //converts to decimal degrees format
+      //NEO1.convertData(Long, Lat, NS, EW); //converts to decimal degrees format
       
       usleep(1000000); // delay 1 second
     }
