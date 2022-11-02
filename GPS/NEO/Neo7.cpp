@@ -134,6 +134,7 @@ double lat_Sec = (lat_Data-lat_Deg*100);
 double lon_Sec = (lon_Data-lon_Deg*100);
 printf("NS:%s\n",NS_);
 printf("EW:%s\n",EW_);
+EW_ = "E";
 
 //(cout << lon_Deg <<" , " << lon_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
 //cout << lat_Deg <<" , " << lat_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
@@ -158,7 +159,6 @@ else
 {
     latitude_  = lat_Deg  + (lat_Sec/60);
     longitude_ = lon_Deg  + (lon_Sec/60);
-    printf("SUP\n");
 }
 
 //cout << latitude_ << ", " << longitude_ << endl; // decimal degrees
