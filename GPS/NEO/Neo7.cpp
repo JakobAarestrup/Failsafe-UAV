@@ -158,7 +158,7 @@ else
 }
 
 //cout << latitude_ << ", " << longitude_ << endl; // decimal degrees
-std::cout << "" << longitude_ << "," << NS_ << " " << latitude_ << "," << EW_ << " Satellites:" << SV_ << std::endl;
+std::cout << "" << latitude_ << "," << NS_[1] << " " << longitude_[1] << "," << EW_ << " Satellites:" << SV_ << std::endl;
 }
 
 void GPS::startLogging()
