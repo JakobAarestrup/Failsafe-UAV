@@ -30,8 +30,8 @@ class GPS
     private: // Coordinates from the GPS
 
         int SV_; // amount of satellites
-        float longitude_; 
-        float latitude_;
-        char* EW_;
-        char* NS_;
+        double longitude_; 
+        double latitude_;
+        char EW_[1];
+        char NS_[1];
 };
