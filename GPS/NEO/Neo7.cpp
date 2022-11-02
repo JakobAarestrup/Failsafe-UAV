@@ -190,10 +190,10 @@ double GPS::getLatitude() const // returns latitude
 
 char* GPS::getEastWest(char* EW) // returns either a East pole or West pole
 {
-    strcpy(EW[1],EW_);
+    strcpy(EW,EW_);
 }
 
 char* GPS::getNorthSouth(char* NS) // returns either a East pole or West pole
 {
-    strcpy(NS[1],NS_);
+    strcpy(NS,NS_);
 }
