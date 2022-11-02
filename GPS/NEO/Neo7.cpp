@@ -134,15 +134,18 @@ double lon_Sec = (lon_Data-lon_Deg*100);
 
 //(cout << lon_Deg <<" , " << lon_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
 //cout << lat_Deg <<" , " << lat_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
-if(strcmp(NS,"N") == 1 | strcmp(NS,"S") == 1) 
+
+if(strcmp(NS,"\0") == 1 | strcmp(NS,"\0") == 1) 
 {
 std::cout << "NS returned N/A. Skipping conversion..." << std::endl;
 //std::cout << "" << latitude_ << "," << NS_[1] << " " << longitude_ << "," << EW_[1] << " Satellites:" << SV_ << std::endl;
 }
+
 else if(strcmp(EW,"E") == 1 | strcmp(NS,"W") == 1)
 {
 std::cout << "EW retuned N/A. Skipping conversion..." << std::endl;    
 }
+
 else
 {
     if (strcmp(NS,"S") == 0 & strcmp(EW, "E") == 0 ) // handles negative
@@ -199,23 +202,19 @@ double GPS::getLatitude() const // returns latitude
 
 void GPS::getNorthSouth(char NS[]) // returns either a East pole or West pole
 {
-    printf("%s\n",NS_);
     int strLength = strlen(NS_); //finds length of the array
     for (int i = 0; i < strLength; i++) {
         NS[i] = NS_[strLength-1-i]; //copies UserInput in reverse to TempInput
     }
     NS[strLength] = '\0'; //adds NULL character at end
-    printf("NS:%s\n",NS);
 }
 
 void GPS::getEastWest(char EW[]) // returns either a East pole or West pole
 {
-    printf("%s\n",EW_);
     int strLength = strlen(EW_); //finds length of the array
     for (int i = 0; i < strLength; i++) {
         EW[i] = EW_[strLength-1-i]; //copies UserInput in reverse to TempInput
     }
     EW[strLength] = '\0'; //adds NULL character at end
-    printf("EW:%s\n",EW);
 }
 
