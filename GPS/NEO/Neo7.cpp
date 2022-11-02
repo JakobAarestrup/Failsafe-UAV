@@ -147,6 +147,7 @@ else if (strcmp(NS,"N") == 0 & strcmp(EW, "W") == 0)
 
     latitude_  = lat_Deg  + (lat_Sec/60);
     longitude_ = (lon_Deg  + (lon_Sec/60))*-1;
+    printf("HELLO\n");
 }
 else if (strcmp(NS,"S") == 0 & strcmp(EW, "W") == 0)
 {
