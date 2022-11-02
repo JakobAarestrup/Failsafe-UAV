@@ -117,7 +117,7 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
         *end_ptr = '\0';  // and zero terminate
         SV_ = atoi(start_ptr); // Convert char to int & store in variable
         
-        printf("latitude: %f %s longitude: %f %s Satelites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
+        printf("latitude: %f ,%s longitude: %f ,%s Satelites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
         break;
         }
     }            
@@ -134,7 +134,8 @@ double lon_Sec = (lon_Data-lon_Deg*100);
 
 //(cout << lon_Deg <<" , " << lon_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
 //cout << lat_Deg <<" , " << lat_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
-
+printf("NS:%s\n",NS);
+printf("EW:%s\n",EW);
 if(strcmp(NS,"\0") == 1 | strcmp(NS,"\0") == 1) 
 {
 std::cout << "NS returned N/A. Skipping conversion..." << std::endl;
