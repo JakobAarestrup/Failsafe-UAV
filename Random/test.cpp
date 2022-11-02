@@ -1,71 +1,19 @@
+
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
-#include <assert.h>
-#include <iostream>
-#include <unistd.h>
-#include <wiringPi.h>
-#include <wiringSerial.h>
 #include <cstddef>
-
-
-int main ()
+#include <unistd.h>
+#include <iostream>
+int main()
 {
-char dat;
-/*NMEA*/ // disable SBAS QZSS GLONASS BeiDou Galileo
-const char NMEA[] = "\xB5\x62\x06\x17\x0C\x00\x00\x23\x00\x02\x76\x00\x00\x00\x00\x00\x00\x00\xC4\xA4";
-size_t NMEA_Length = 21; //sizeof NMEA / sizeof NMEA[0]; // length of NMEA CFG Message
+double lat_Data = 5610.50098;
+double lon_Data = 01010.08142;
+double lat_Deg = double(int(lat_Data))/100; // (d)dd(deg)
+double lon_Deg = double(int(lon_Data))/100; // (d)dd(deg)
 
-/*RATE*/ // Measurement frequency: 10 hz, navigation frequency 10 hz
-const char RATE[] = "\xB5\x62\x06\x08\x06\x00\x64\x00\x01\x00\x01\x00\x7A\x12"; 
-size_t RATE_Length = 15; // sizeof RATE / sizeof RATE[0]; // length of RATE CFG Message
-
-/*NMEA MESSAGES*/
-const char GLL[] = "\xB5\x62\x06\x01\x08\x00\xF0\x01\x00\x00\x00\x00\x00\x00\x00\x2A"; // disable GPGLL
-const char GSA[] = "\xB5\x62\x06\x01\x08\x00\xF0\x02\x00\x00\x00\x00\x00\x00\x01\x31"; // disable GSA
-const char GSV[] = "\xB5\x62\x06\x01\x08\x00\xF0\x03\x00\x00\x00\x00\x00\x00\x02\x38"; // disable GPGSV
-const char RMC[] = "\xB5\x62\x06\x01\x08\x00\xF0\x04\x00\x00\x00\x00\x00\x00\x03\x3F"; // disable RMC
-const char VTG[] = "\xB5\x62\x06\x01\x08\x00\xF0\x05\x00\x00\x00\x00\x00\x00\x04\x46"; // disable VTG
-size_t GP_Length = 17; // sizeof GLL / sizeof GLL[0]; // length of all NMEA MESSAGES
-
-int serial_port;
-
-    /*freopen ("RDSLog.txt", "w",stdout);
-    std::cout << "Hello mister log file" << std::endl;
-    return 0;*/
-if ((serial_port = serialOpen ("/dev/ttyS0", 9600)) < 0)		/* open serial port */
-  { // mere baudrate ekstra https://freematics.com/forum/viewtopic.php?t=1759
-    fprintf (stderr, "Unable to open serial device: %s\n", strerror (errno)) ;
-    return 1 ;
-  }
-  
-if (wiringPiSetup () == -1)							/* initializes wiringPi setup */
-  {
-    fprintf (stdout, "Unable to start wiringPi: %s\n", strerror (errno)) ;
-    return 1 ;
-  }
-
-write(serial_port,GLL,GP_Length);
-write(serial_port,GSA,GP_Length);
-write(serial_port,GSV,GP_Length);
-write(serial_port,RMC,GP_Length);
-write(serial_port,VTG,GP_Length);
-
-write(serial_port,NMEA, NMEA_Length);
-write(serial_port,RATE,RATE_Length);
- 
-
-  while(1)
-  {
-	  
-		if(serialDataAvail(serial_port))		/* check for any data available on serial port */
-		  { 
-			dat = serialGetchar(serial_port); /* receive character serially */
-            printf("%c",dat);
-            fflush(stdout);
-          }
-
-  }
-    return 0;
+double lat_Sec = (lat_Data-lat_Deg*100); // mm.mmmm(minutes)
+double lon_Sec = (lon_Data-lon_Deg*100); // mm.mmmm(minutes)
+printf("lat_Deg: %lf, lat_Sec: %lf, lon_Deg: %lf, lon_Sec: %lf", lat_Deg, lat_Sec, lon_Deg, lon_Sec);
+return 0;
 }
-
