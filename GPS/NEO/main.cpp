@@ -23,8 +23,8 @@ int main()
   float Long = 0.0, Lat = 0.0;
 
   int serial_port;
-  char* NS;
-  char* EW;
+  char* NS[1];
+  char* EW[1];
   
   GPS NEO1;
   
@@ -63,10 +63,10 @@ int main()
       
       Long = NEO1.getLongitude();    // returns longitude
       Lat = NEO1.getLatitude();      // returns latitude
-      NS = NEO1.getNorthSouth();     // returns either a north pole or south pole
-      EW = NEO1.getEastWest();       // returns either a East pole or West pole
+      NS[1] = NEO1.getNorthSouth();     // returns either a north pole or south pole
+      EW[1] = NEO1.getEastWest();       // returns either a East pole or West pole
 
-      NEO1.convertData(Long, Lat, NS, EW); //converts to decimal degrees format
+      //NEO1.convertData(Long, Lat, NS, EW); //converts to decimal degrees format
       
       usleep(1000000); // delay 1 second
     }

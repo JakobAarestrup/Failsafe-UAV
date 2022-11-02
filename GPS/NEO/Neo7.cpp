@@ -43,10 +43,9 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
     unsigned char IsitGGAstring=0;
     unsigned char GGA_index=0;
     unsigned char is_GGA_received_completely = 0;
-    char* NMEA[12]; // array for ASCII tokens
-
-    int count = 0; // counter for for loop
-    int i = 0; // increment for for loop
+    char NS_[1];
+    char EW_[1];
+    char *start_ptr, *end_ptr, *start_ptr_origin, *jump_ptr;
     while(1)
     {
 
@@ -89,61 +88,59 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
 
         if(is_GGA_received_completely==1)
         {
-            printf("\nGGA: %s\n",buff); // kan udkommenteres
-            char* b1 = strtok(buff,","); // first token
-            for(i = 0 ; i < 11 ; i++)
-            {
-                if (b1 == NULL)
-                {
-                NMEA[count] = d1; // 0
-                }
-                else if (b1 == NULL && count == 3 || 5)
-                {
-                NMEA[count] = d2; // N/A
-                }
-                else
-                {
-                NMEA[count] = b1; 
-                }
-                
-                count++; // increment
-                b1 = strtok(NULL, ",");
-                printf("b1 = %s\n",b1); 
-
-            }
-            //printf("NMEA: %s\n",NMEA);
-            NS_ = NMEA[3]; 
-            EW_ = NMEA[5]; 
-
-            printf("%s, %s\n",NS_,EW_);
-            printf("NMEA: %s\n",NMEA);
-
-            //conversion
-            latitude_   = atof(NMEA[2]);
-            longitude_  = atof(NMEA[4]);
-            SV_ = atoi(NMEA[7]);
-            printf("Lat: %f Long: %f SV: %d\n",latitude_,longitude_,SV_);
+        printf("GGA:%s\n",buff);
+        char *gps = buff; 
+        start_ptr_origin = strchr(gps, ',');   // find start of field #1
+        start_ptr = strchr(++start_ptr_origin, ','); // find start of latitude field
+        end_ptr = strchr(++start_ptr, ',');  // find end of field... 
+        latitude_ = atof(start_ptr);   // Convert char to float & store in variable
         
-            i = 0; // reset i variable
-            count = 0; // reset count variable
-            is_GGA_received_completely = 0; // reset GGA receive flag variable
-            break;
+        start_ptr = strchr(start_ptr+=5, ',');  // find start of pole NS field
+        end_ptr = strchr(++start_ptr, ','); // find end of field... ¨
+        //printf("end_ptr%s\n", end_ptr);
+        jump_ptr = end_ptr;
+        //printf("jump: %s", jump_ptr);
+        *end_ptr = '\0';
+        strcpy(NS_, start_ptr);
+
+        //printf(" lat: %f DDDDDDDDDD:%s\n",latitude,NS_);
+        
+        start_ptr = jump_ptr; // find start of longitude field
+        end_ptr = strchr(++start_ptr, ','); // find end of field... 
+        jump_ptr = end_ptr; 
+        *end_ptr = '\0';  // and zero terminate
+        longitude_ = atof(start_ptr); 
+
+        //printf(" lat: %f D:%s long: %f\n",latitude,NS_,longitude);
+
+        start_ptr = jump_ptr; // find start of pole EW field
+        end_ptr = strchr(++start_ptr, ','); // find end of field...
+        *end_ptr = '\0';  // and zero terminate 
+        strcpy(EW_, start_ptr);
+        
+        start_ptr = strchr(++end_ptr, ','); // find start of satellite field
+        end_ptr = strchr(++start_ptr, ','); // find end of field... 
+        *end_ptr = '\0';  // and zero terminate
+        SV_ = atoi(start_ptr); // Convert char to int & store in variable
+        
+        printf("latitude: %f %s longitude: %f %s Satelites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
+        break;
         }
     }    
 }
 
-void GPS::convertData(float lon_Data, float lat_Data, char* NS, char* EW) // converts GPS serial data to degrees
+void GPS::convertData(double lon_Data, double lat_Data, char* NS[1], char* EW[1]) // converts GPS serial data to degrees
 {
-float lat_Deg = int(lat_Data)/100; 
-float lon_Deg = int(lon_Data)/100;
+double lat_Deg = int(lat_Data)/100; 
+double lon_Deg = int(lon_Data)/100;
 
-float lat_Sec = (lat_Data-lat_Deg*100);
-float lon_Sec = (lon_Data-lon_Deg*100);
+double lat_Sec = (lat_Data-lat_Deg*100);
+double lon_Sec = (lon_Data-lon_Deg*100);
 
 //(cout << lon_Deg <<" , " << lon_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
 //cout << lat_Deg <<" , " << lat_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
 
-if (NS=="S" & EW == "E" ) // handles negative
+/* if (NS=="S" & EW == "E" ) // handles negative
 {
     latitude_  = (lat_Deg  + (lat_Sec/60))*-1;
     longitude_ = lon_Deg  + (lon_Sec/60);
@@ -166,7 +163,7 @@ else
 
 //cout << latitude_ << ", " << longitude_ << endl; // decimal degrees
 std::cout << "" << longitude_ << "," << NS_ << " " << latitude_ << "," << EW_ << " Satellites:" << SV_ << std::endl;
-
+ */
 }
 
 void GPS::startLogging()
@@ -183,22 +180,22 @@ int GPS::getSV() const // returns amount of satellites
     return SV_; 
 }
 
-float GPS::getLongitude() const // returns longitude
+double GPS::getLongitude() const // returns longitude
 {
     return longitude_;
 }
 
-float GPS::getLatitude() const // returns latitude
+double GPS::getLatitude() const // returns latitude
 {
     return latitude_;
 }
 
-char* GPS::getEastWest() const  // returns either a East pole or West pole
+char* GPS::getEastWest() // returns either a East pole or West pole
 {
     return EW_;
 }
 
-char* GPS::getNorthSouth() const  // returns either a East pole or West pole
+char* GPS::getNorthSouth() // returns either a East pole or West pole
 {
     return NS_;
 }
