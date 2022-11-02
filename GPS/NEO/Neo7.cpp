@@ -134,7 +134,7 @@ double lon_Sec = (lon_Data-lon_Deg*100);
 //(cout << lon_Deg <<" , " << lon_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
 //cout << lat_Deg <<" , " << lat_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
    
-    if(strcmp(NS,"") == 0 | strcmp(EW,"") == 0) 
+    if(strcmp(NS,"") == 0 | strcmp(EW,"") == 0) // is 1 of the arrays empty?
     {
     std::cout << "NS or EW returned N/A. Skipping conversion..." << std::endl;
     //std::cout << "" << latitude_ << "," << NS_[1] << " " << longitude_ << "," << EW_[1] << " Satellites:" << SV_ << std::endl;
