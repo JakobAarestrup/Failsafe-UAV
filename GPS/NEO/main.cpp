@@ -23,8 +23,8 @@ int main()
   float Long = 0.0, Lat = 0.0;
 
   int serial_port;
-  char* NS;
-  char* EW;
+  char NS[1];
+  char EW[1];
   
   GPS NEO1;
   
