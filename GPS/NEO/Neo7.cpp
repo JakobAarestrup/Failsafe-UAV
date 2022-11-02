@@ -194,7 +194,7 @@ char GPS::getEastWest(char EW[]) // returns either a East pole or West pole
     strncpy(EW,EW_);
     printf("EW_: %s\n", EW_);
     printf("EW:%s\n", EW);
-    return EW[];
+    return EW;
 }
 
 char GPS::getNorthSouth(char NS[]) // returns either a East pole or West pole
@@ -202,5 +202,5 @@ char GPS::getNorthSouth(char NS[]) // returns either a East pole or West pole
     strncpy(NS,NS_);
     printf("NS_: %s\n", NS_);
     printf("NS: %s\n", NS); 
-    return EW[];
+    return NS;
 }
