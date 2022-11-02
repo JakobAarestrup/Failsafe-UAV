@@ -191,14 +191,16 @@ double GPS::getLatitude() const // returns latitude
 
 char GPS::getEastWest(char EW[]) // returns either a East pole or West pole
 {
-    strcpy(EW,EW_);
-    printf("EW_: %s", EW_);
-    printf("EW:%s", EW);
+    strncpy(EW,EW_);
+    printf("EW_: %s\n", EW_);
+    printf("EW:%s\n", EW);
+    return EW[];
 }
 
 char GPS::getNorthSouth(char NS[]) // returns either a East pole or West pole
 {
-    strcpy(NS,NS_);
+    strncpy(NS,NS_);
     printf("NS_: %s\n", NS_);
     printf("NS: %s\n", NS); 
+    return EW[];
 }
