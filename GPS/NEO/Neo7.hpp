@@ -24,8 +24,8 @@ class GPS
         int   getSV() const;         // returns amount of satellites
         double getLongitude() const;  // returns longitude
         double getLatitude()  const;  // returns latitude
-        char[] getNorthSouth(char NS[]); // returns either a north pole or south pole
-        char[] getEastWest(char EW[]);   // returns either a East pole or West pole
+        char getNorthSouth(char NS[]); // returns either a north pole or south pole
+        char getEastWest(char EW[]);   // returns either a East pole or West pole
 
     private: // Coordinates from the GPS
 
