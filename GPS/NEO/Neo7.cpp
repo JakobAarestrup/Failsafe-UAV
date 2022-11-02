@@ -194,7 +194,7 @@ void GPS::getNorthSouth(char NS[]) // returns either a East pole or West pole
         NS[i] = NS_[strLength-1-i]; //copies UserInput in reverse to TempInput
     }
     NS[strLength] = '\0'; //adds NULL character at end
-    printf("%s",NS);
+    printf("NS:%s",NS);
 }
 
 void GPS::getEastWest(char EW[]) // returns either a East pole or West pole
@@ -205,6 +205,6 @@ void GPS::getEastWest(char EW[]) // returns either a East pole or West pole
         EW[i] = EW_[strLength-1-i]; //copies UserInput in reverse to TempInput
     }
     EW[strLength] = '\0'; //adds NULL character at end
-    printf("%s",EW);
+    printf("EW:%s",EW);
 }
 
