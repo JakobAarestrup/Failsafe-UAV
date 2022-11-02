@@ -22,8 +22,8 @@ class GPS
         void startLogging(); // sends private data to a log file 
 
         int   getSV() const;         // returns amount of satellites
-        float getLongitude() const;  // returns longitude
-        float getLatitude()  const;  // returns latitude
+        double getLongitude() const;  // returns longitude
+        double getLatitude()  const;  // returns latitude
         char* getNorthSouth() const; // returns either a north pole or south pole
         char* getEastWest() const;   // returns either a East pole or West pole
 
