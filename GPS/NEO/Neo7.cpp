@@ -142,12 +142,12 @@ if (NS[1]=="S" & EW[1] == "E" ) // handles negative
     latitude_  = (lat_Deg  + (lat_Sec/60))*-1;
     longitude_ = lon_Deg  + (lon_Sec/60);
 }
-else if (NS=="N" & EW == "W")
+else if (NS[1]=="N" & EW[1] == "W")
 {
     latitude_  = lat_Deg  + (lat_Sec/60);
     longitude_ = (lon_Deg  + (lon_Sec/60))*-1;
 }
-else if(NS == "S" & EW == "W")
+else if(NS[1] == "S" & EW[1] == "W")
 {
     latitude_  = (lat_Deg  + (lat_Sec/60))*-1;
     longitude_ = (lon_Deg  + (lon_Sec/60))*-1;
