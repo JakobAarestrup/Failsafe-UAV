@@ -130,13 +130,12 @@ double lon_Deg = int(lon_Data)/100;
 
 double lat_Sec = (lat_Data-lat_Deg*100);
 double lon_Sec = (lon_Data-lon_Deg*100);
-//strcpy(EW_,"W");
+strcpy(EW,"W");
+strcpy(NS,"N");
 
 //(cout << lon_Deg <<" , " << lon_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
 //cout << lat_Deg <<" , " << lat_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
-printf("NS:%s\n",NS);
-printf("EW:%s\n",EW);
-
+   
     if(strcmp(NS,"") == 0 | strcmp(EW,"") == 0) 
     {
     std::cout << "NS or EW returned N/A. Skipping conversion..." << std::endl;
