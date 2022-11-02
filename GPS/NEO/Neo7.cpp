@@ -188,12 +188,12 @@ double GPS::getLatitude() const // returns latitude
     return latitude_;
 }
 
-char GPS::getEastWest(char EW) // returns either a East pole or West pole
+char* GPS::getEastWest(char EW) // returns either a East pole or West pole
 {
     strcpy(EW,EW_);
 }
 
-char GPS::getNorthSouth(char NS) // returns either a East pole or West pole
+char* GPS::getNorthSouth(char NS) // returns either a East pole or West pole
 {
     strcpy(NS,NS_);
 }
