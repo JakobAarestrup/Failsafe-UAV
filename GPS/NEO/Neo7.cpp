@@ -130,8 +130,6 @@ double lon_Deg = int(lon_Data)/100;
 
 double lat_Sec = (lat_Data-lat_Deg*100);
 double lon_Sec = (lon_Data-lon_Deg*100);
-strcpy(EW,"W");
-strcpy(NS,"N");
 
 //(cout << lon_Deg <<" , " << lon_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
 //cout << lat_Deg <<" , " << lat_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
@@ -165,7 +163,7 @@ strcpy(NS,"N");
             latitude_  = lat_Deg  + (lat_Sec/60);
             longitude_ = lon_Deg  + (lon_Sec/60);
         }
-        std::cout << "" << latitude_ << "," << NS_[1] << " " << longitude_ << "," << EW_[1] << " Satellites:" << SV_ << std::endl;
+    std::cout << "" << latitude_ << "," << NS_[1] << " " << longitude_ << "," << EW_[1] << " Satellites:" << SV_ << std::endl;
     }
 
 //cout << latitude_ << ", " << longitude_ << endl; // decimal degrees
