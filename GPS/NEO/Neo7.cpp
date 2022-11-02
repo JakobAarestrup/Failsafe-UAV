@@ -137,7 +137,7 @@ double lon_Sec = (lon_Data-lon_Deg*100);
 //(cout << lon_Deg <<" , " << lon_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
 //cout << lat_Deg <<" , " << lat_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
 
-/* if (NS=="S" & EW == "E" ) // handles negative
+if (NS[1]=="S" & EW[1] == "E" ) // handles negative
 {
     latitude_  = (lat_Deg  + (lat_Sec/60))*-1;
     longitude_ = lon_Deg  + (lon_Sec/60);
@@ -160,7 +160,6 @@ else
 
 //cout << latitude_ << ", " << longitude_ << endl; // decimal degrees
 std::cout << "" << longitude_ << "," << NS_ << " " << latitude_ << "," << EW_ << " Satellites:" << SV_ << std::endl;
- */
 }
 
 void GPS::startLogging()
