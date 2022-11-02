@@ -125,7 +125,7 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
     }            
 }
 
-void GPS::convertData(double lon_Data, double lat_Data, char NS, char EW) // converts GPS serial data to degrees
+void GPS::convertData(double lon_Data, double lat_Data, char NS[], char EW[]) // converts GPS serial data to degrees
 {
 double lat_Deg = int(lat_Data)/100; 
 double lon_Deg = int(lon_Data)/100;
@@ -144,6 +144,7 @@ if (strcmp(NS,"S") == 0 & strcmp(EW, "E") == 0 ) // handles negative
     longitude_ = lon_Deg  + (lon_Sec/60);
 }
 else if (strcmp(NS,"N") == 0 & strcmp(EW, "W") == 0)
+{
 
     latitude_  = lat_Deg  + (lat_Sec/60);
     longitude_ = (lon_Deg  + (lon_Sec/60))*-1;
