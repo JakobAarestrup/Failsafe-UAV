@@ -125,7 +125,7 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
     }            
 }
 
-void GPS::convertData(double lon_Data, double lat_Data, char NS, char EW) // converts GPS serial data to degrees
+void GPS::convertData(double lon_Data, double lat_Data, char* NS, char* EW) // converts GPS serial data to degrees
 {
 double lat_Deg = int(lat_Data)/100; 
 double lon_Deg = int(lon_Data)/100;
@@ -138,17 +138,17 @@ printf("EW:%s\n",EW_);
 //(cout << lon_Deg <<" , " << lon_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
 //cout << lat_Deg <<" , " << lat_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
 
-if (NS == "S" & EW == "E" ) // handles negative
+if (NS[1] == "S" & EW[1] == "E" ) // handles negative
 {
     latitude_  = (lat_Deg  + (lat_Sec/60))*-1;
     longitude_ = lon_Deg  + (lon_Sec/60);
 }
-else if (NS == "N" & EW == "W")
+else if (NS[1] == "N" & EW[1] == "W")
 {
     latitude_  = lat_Deg  + (lat_Sec/60);
     longitude_ = (lon_Deg  + (lon_Sec/60))*-1;
 }
-else if(NS == "S" & EW == "W")
+else if(NS[1] == "S" & EW[1] == "W")
 {
     latitude_  = (lat_Deg  + (lat_Sec/60))*-1;
     longitude_ = (lon_Deg  + (lon_Sec/60))*-1;
@@ -190,10 +190,10 @@ double GPS::getLatitude() const // returns latitude
 
 char* GPS::getEastWest(char EW) // returns either a East pole or West pole
 {
-    strcpy(EW,EW_);
+    strcpy(EW[1],EW_);
 }
 
 char* GPS::getNorthSouth(char NS) // returns either a East pole or West pole
 {
-    strcpy(NS,NS_);
+    strcpy(NS[1],NS_);
 }
