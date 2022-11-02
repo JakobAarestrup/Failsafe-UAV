@@ -189,9 +189,20 @@ double GPS::getLatitude() const // returns latitude
     return latitude_;
 }
 
+void GPS::getNorthSouth(char NS[]) // returns either a East pole or West pole
+{
+    printf("%s\n",NS_);
+    int strLength = strlen(NS_); //finds length of the array
+    for (int i = 0; i < strLength; i++) {
+        NS[i] = NS_[strLength-1-i]; //copies UserInput in reverse to TempInput
+    }
+    NS[strLength] = '\0'; //adds NULL character at end
+    printf("%s",NS);
+}
+
 void GPS::getEastWest(char EW[]) // returns either a East pole or West pole
 {
-    printf("%s\n",EW_)
+    printf("%s\n",EW_);
     int strLength = strlen(EW_); //finds length of the array
     for (int i = 0; i < strLength; i++) {
         EW[i] = EW_[strLength-1-i]; //copies UserInput in reverse to TempInput
@@ -200,13 +211,3 @@ void GPS::getEastWest(char EW[]) // returns either a East pole or West pole
     printf("%s",EW);
 }
 
-void GPS::getNorthSouth(char NS[]) // returns either a East pole or West pole
-{
-    printf("%s\n",NS_)
-    int strLength = strlen(NS_); //finds length of the array
-    for (int i = 0; i < strLength; i++) {
-        NS[i] = NS_[strLength-1-i]; //copies UserInput in reverse to TempInput
-    }
-    NS[strLength] = '\0'; //adds NULL character at end
-    printf("%s",NS);
-}
