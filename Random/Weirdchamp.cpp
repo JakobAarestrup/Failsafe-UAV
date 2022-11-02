@@ -19,23 +19,20 @@ int main()
     double latitude, longitude;
     int SV_;
     int i = 0;
-    for(i = 0; i <100 ; i++)
+    for(i = 0; i <5 ; i++)
     {
-    /* char gps_string[100] = "GPGGA,,1200.201021,N,01011.51302,E,1,09,0.89,74.9,M,42.8,M,,*64";
+    /* char gps_string[100] = "GPGGA,12121001,1200.201021,N,01011.51302,E,1,09,0.89,74.9,M,42.8,M,,*64";
     char *gps = gps_string; */
-    183251.20,,,,,0,00,99.99,,,,,,*68*68;
-    char gps_string2[100] = "$GPGGA,,,,,,,,,,,,,,,";
-    char *gps_2 = gps_string2; 
-    start_ptr_origin = strchr(gps_2, ',');   // find start of field #1
-    start_ptr = strchr(++start_ptr_origin, ','); // find start of latitude field
+    char gps_string2[100] = "183251.10,,,,,0,00,99.99,,,,,,*62*62";
+    char *gps_2 = gps_string2;
+
+    start_ptr = strchr(gps_2, ','); // find start of latitude field
     end_ptr = strchr(++start_ptr, ',');  // find end of field... 
     latitude = atof(start_ptr);   // Convert char to float & store in variable
     
-    start_ptr = strchr(start_ptr+=5, ',');  // find start of pole NS field
+    start_ptr = strchr(start_ptr, ',');  // find start of pole NS field
     end_ptr = strchr(++start_ptr, ','); // find end of field... ¨
-    //printf("end_ptr%s\n", end_ptr);
     jump_ptr = end_ptr;
-    //printf("jump: %s", jump_ptr);
     *end_ptr = '\0';
     strcpy(NS_, start_ptr);
 

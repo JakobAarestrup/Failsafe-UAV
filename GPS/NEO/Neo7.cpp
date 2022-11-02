@@ -90,16 +90,13 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
         {
         printf("GGA:%s\n",buff);
         char *gps = buff; 
-        start_ptr_origin = strchr(gps, ',');   // find start of field #1
-        start_ptr = strchr(++start_ptr_origin, ','); // find start of latitude field
+        start_ptr = strchr(gps, ','); // find start of latitude field
         end_ptr = strchr(++start_ptr, ',');  // find end of field... 
         latitude_ = atof(start_ptr);   // Convert char to float & store in variable
         
-        start_ptr = strchr(start_ptr+=5, ',');  // find start of pole NS field
+        start_ptr = strchr(start_ptr, ',');  // find start of pole NS field
         end_ptr = strchr(++start_ptr, ','); // find end of field... ¨
-        //printf("end_ptr%s\n", end_ptr);
         jump_ptr = end_ptr;
-        //printf("jump: %s", jump_ptr);
         *end_ptr = '\0';
         strcpy(NS_, start_ptr);
 
@@ -124,8 +121,6 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
         SV_ = atoi(start_ptr); // Convert char to int & store in variable
         
         printf("latitude: %f %s longitude: %f %s Satelites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
-        break;
-        }
     }    
 }
 
