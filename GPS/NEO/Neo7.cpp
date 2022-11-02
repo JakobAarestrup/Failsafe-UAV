@@ -46,9 +46,6 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
     char NS_[1];
     char EW_[1];
     char *start_ptr, *end_ptr, *start_ptr_origin, *jump_ptr;
-
-    int count = 0; // counter for for loop
-    int i = 0; // increment for for loop
     while(1)
     {
 
@@ -126,6 +123,7 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
         SV_ = atoi(start_ptr); // Convert char to int & store in variable
         
         printf("latitude: %f %s longitude: %f %s Satelites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
+        break;
         }
     }    
 }
