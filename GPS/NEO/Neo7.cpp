@@ -117,7 +117,7 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
         *end_ptr = '\0';  // and zero terminate
         SV_ = atoi(start_ptr); // Convert char to int & store in variable
         
-        printf("latitude: %f ,%s longitude: %f ,%s Satelites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
+        printf("latitude: %f ,%s longitude: %f ,%s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
         break;
         }
     }            
