@@ -121,7 +121,9 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
         SV_ = atoi(start_ptr); // Convert char to int & store in variable
         
         printf("latitude: %f %s longitude: %f %s Satelites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
-    }    
+        break;
+        } 
+    }       
 }
 
 void GPS::convertData(double lon_Data, double lat_Data, char* NS[1], char* EW[1]) // converts GPS serial data to degrees
