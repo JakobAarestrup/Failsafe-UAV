@@ -132,7 +132,8 @@ double lon_Deg = int(lon_Data)/100;
 
 double lat_Sec = (lat_Data-lat_Deg*100);
 double lon_Sec = (lon_Data-lon_Deg*100);
-printf("%s",EW_);
+printf("NS:%s\n",NS_);
+printf("EW:%s\n",EW_);
 
 //(cout << lon_Deg <<" , " << lon_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
 //cout << lat_Deg <<" , " << lat_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
