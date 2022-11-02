@@ -136,43 +136,44 @@ double lon_Sec = (lon_Data-lon_Deg*100);
 //cout << lat_Deg <<" , " << lat_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
 printf("NS:%s\n",NS);
 printf("EW:%s\n",EW);
-if(strcmp(NS,"\0") == 1 | strcmp(NS,"\0") == 1) 
-{
-std::cout << "NS returned N/A. Skipping conversion..." << std::endl;
-//std::cout << "" << latitude_ << "," << NS_[1] << " " << longitude_ << "," << EW_[1] << " Satellites:" << SV_ << std::endl;
-}
 
-else if(strcmp(EW,"E") == 1 | strcmp(NS,"W") == 1)
-{
-std::cout << "EW retuned N/A. Skipping conversion..." << std::endl;    
-}
+    if(strcmp(NS,"") == 0 | strcmp(NS,"") == 0) 
+    {
+    std::cout << "NS returned N/A. Skipping conversion..." << std::endl;
+    //std::cout << "" << latitude_ << "," << NS_[1] << " " << longitude_ << "," << EW_[1] << " Satellites:" << SV_ << std::endl;
+    }
 
-else
-{
-    if (strcmp(NS,"S") == 0 & strcmp(EW, "E") == 0 ) // handles negative
+    else if(strcmp(EW,"") == 0 | strcmp(NS,"") == 0)
     {
-        latitude_  = (lat_Deg  + (lat_Sec/60))*-1;
-        longitude_ = lon_Deg  + (lon_Sec/60);
+    std::cout << "EW retuned N/A. Skipping conversion..." << std::endl;    
     }
-    else if (strcmp(NS,"N") == 0 & strcmp(EW, "W") == 0)
-    {
 
-        latitude_  = lat_Deg  + (lat_Sec/60);
-        longitude_ = (lon_Deg  + (lon_Sec/60))*-1;
-        printf("HELLO\n");
-    }
-    else if (strcmp(NS,"S") == 0 & strcmp(EW, "W") == 0)
-    {
-        latitude_  = (lat_Deg  + (lat_Sec/60))*-1;
-        longitude_ = (lon_Deg  + (lon_Sec/60))*-1;
-    }
     else
     {
-        latitude_  = lat_Deg  + (lat_Sec/60);
-        longitude_ = lon_Deg  + (lon_Sec/60);
+        if (strcmp(NS,"S") == 0 & strcmp(EW, "E") == 0 ) // handles negative
+        {
+            latitude_  = (lat_Deg  + (lat_Sec/60))*-1;
+            longitude_ = lon_Deg  + (lon_Sec/60);
+        }
+        else if (strcmp(NS,"N") == 0 & strcmp(EW, "W") == 0)
+        {
+
+            latitude_  = lat_Deg  + (lat_Sec/60);
+            longitude_ = (lon_Deg  + (lon_Sec/60))*-1;
+            printf("HELLO\n");
+        }
+        else if (strcmp(NS,"S") == 0 & strcmp(EW, "W") == 0)
+        {
+            latitude_  = (lat_Deg  + (lat_Sec/60))*-1;
+            longitude_ = (lon_Deg  + (lon_Sec/60))*-1;
+        }
+        else
+        {
+            latitude_  = lat_Deg  + (lat_Sec/60);
+            longitude_ = lon_Deg  + (lon_Sec/60);
+        }
+        std::cout << "" << latitude_ << "," << NS_[1] << " " << longitude_ << "," << EW_[1] << " Satellites:" << SV_ << std::endl;
     }
-std::cout << "" << latitude_ << "," << NS_[1] << " " << longitude_ << "," << EW_[1] << " Satellites:" << SV_ << std::endl;
-}
 
 //cout << latitude_ << ", " << longitude_ << endl; // decimal degrees
 }
