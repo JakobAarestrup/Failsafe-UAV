@@ -39,10 +39,10 @@ void GPS::config(int fd, const char* message, size_t length) // configuration of
 void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS serial data
 {
     /*VARIABLES*/
-    char buff[100], GGA_code[3];
-    unsigned char IsitGGAstring=0;
-    unsigned char GGA_index=0;
-    unsigned char is_GGA_received_completely = 0;
+    char buff[100], GGA_Check[3];
+    unsigned char GGA_Flag=0;
+    unsigned char GGA_Index=0;
+    unsigned char GGA_Received = 0;
     char *start_ptr, *end_ptr, *start_ptr_origin, *jump_ptr;
     while(1)
     {
@@ -53,37 +53,37 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
             
             if(sensor_Data == '$') //check for start of NMEA message
             {
-                IsitGGAstring = 0;
-                GGA_index = 0;
+                GGA_Flag = 0;
+                GGA_Index = 0;
             }
 
-            else if(IsitGGAstring ==1)
+            else if(GGA_Flag ==1)
             {
-                buff[GGA_index++] = sensor_Data;
+                buff[GGA_Index++] = sensor_Data;
 
                 if(sensor_Data == '\r')
                 {
-                    is_GGA_received_completely = 1;
+                    GGA_Received = 1;
                 }
             }
 
-            else if(GGA_code[0] =='G' && GGA_code[1] =='G' && GGA_code[2] =='A')
+            else if(GGA_Check[0] =='G' && GGA_Check[1] =='G' && GGA_Check[2] =='A')
             {
-                IsitGGAstring = 1;
-                GGA_code[0]= 0; 
-                GGA_code[0]= 0;
-                GGA_code[0]= 0;		
+                GGA_Flag = 1;
+                GGA_Check[0]= 0; 
+                GGA_Check[0]= 0;
+                GGA_Check[0]= 0;		
             }
 
             else
             {
-                GGA_code[0] = GGA_code[1];
-                GGA_code[1] = GGA_code[2];
-                GGA_code[2] = sensor_Data;
+                GGA_Check[0] = GGA_Check[1];
+                GGA_Check[1] = GGA_Check[2];
+                GGA_Check[2] = sensor_Data;
             }
         }
 
-        if(is_GGA_received_completely==1)
+        if(GGA_Received==1)
         {
             printf("GGA:%s\n",buff);
             char *gps = buff; 
