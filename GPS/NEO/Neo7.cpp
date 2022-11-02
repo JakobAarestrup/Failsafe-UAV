@@ -88,6 +88,7 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
 
         if(is_GGA_received_completely==1)
         {
+        printf("GGA:%s\n",buff);
         char *gps = buff; 
         start_ptr_origin = strchr(gps, ',');   // find start of field #1
         start_ptr = strchr(++start_ptr_origin, ','); // find start of latitude field
