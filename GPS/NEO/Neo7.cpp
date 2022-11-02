@@ -137,17 +137,11 @@ double lon_Sec = (lon_Data-lon_Deg*100);
 printf("NS:%s\n",NS);
 printf("EW:%s\n",EW);
 
-    if(strcmp(NS,"") == 0 | strcmp(NS,"") == 0) 
+    if(strcmp(NS,"") == 0 | strcmp(EW,"") == 0) 
     {
-    std::cout << "NS returned N/A. Skipping conversion..." << std::endl;
+    std::cout << "NS or EW returned N/A. Skipping conversion..." << std::endl;
     //std::cout << "" << latitude_ << "," << NS_[1] << " " << longitude_ << "," << EW_[1] << " Satellites:" << SV_ << std::endl;
     }
-
-    else if(strcmp(EW,"") == 0 | strcmp(NS,"") == 0)
-    {
-    std::cout << "EW retuned N/A. Skipping conversion..." << std::endl;    
-    }
-
     else
     {
         if (strcmp(NS,"S") == 0 & strcmp(EW, "E") == 0 ) // handles negative
