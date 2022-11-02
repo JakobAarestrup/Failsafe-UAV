@@ -52,73 +52,73 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
             printf("%c",sensor_Data);
             
             if(sensor_Data == '$') //check for start of NMEA message
-                {
-                    IsitGGAstring = 0;
-                    GGA_index = 0;
-                }
+            {
+                IsitGGAstring = 0;
+                GGA_index = 0;
+            }
 
             else if(IsitGGAstring ==1)
-                {
-                    buff[GGA_index++] = sensor_Data;
+            {
+                buff[GGA_index++] = sensor_Data;
 
-                    if(sensor_Data == '\r')
-                        {
-                            is_GGA_received_completely = 1;
-                        }
+                if(sensor_Data == '\r')
+                {
+                    is_GGA_received_completely = 1;
                 }
+            }
 
             else if(GGA_code[0] =='G' && GGA_code[1] =='G' && GGA_code[2] =='A')
-                {
+            {
                 IsitGGAstring = 1;
                 GGA_code[0]= 0; 
                 GGA_code[0]= 0;
                 GGA_code[0]= 0;		
-                }
+            }
 
             else
-                {
+            {
                 GGA_code[0] = GGA_code[1];
                 GGA_code[1] = GGA_code[2];
                 GGA_code[2] = sensor_Data;
-                }
+            }
         }
 
         if(is_GGA_received_completely==1)
         {
-        printf("GGA:%s\n",buff);
-        char *gps = buff; 
-        start_ptr = strchr(gps, ','); // find start of latitude field
-        end_ptr = strchr(++start_ptr, ',');  // find end of field... 
-        latitude_ = atof(start_ptr);   // Convert char to float & store in variable
-        
-        start_ptr = strchr(start_ptr, ',');  // find start of pole NS field
-        end_ptr = strchr(++start_ptr, ','); // find end of field... ¨
-        jump_ptr = end_ptr;
-        *end_ptr = '\0';
-        strcpy(NS_, start_ptr);
+            printf("GGA:%s\n",buff);
+            char *gps = buff; 
+            start_ptr = strchr(gps, ','); // find start of latitude field
+            end_ptr = strchr(++start_ptr, ',');  // find end of field... 
+            latitude_ = atof(start_ptr);   // Convert char to float & store in variable
+            
+            start_ptr = strchr(start_ptr, ',');  // find start of pole NS field
+            end_ptr = strchr(++start_ptr, ','); // find end of field... ¨
+            jump_ptr = end_ptr;
+            *end_ptr = '\0';
+            strcpy(NS_, start_ptr);
 
-        //printf(" lat: %f DDDDDDDDDD:%s\n",latitude,NS_);
-        
-        start_ptr = jump_ptr; // find start of longitude field
-        end_ptr = strchr(++start_ptr, ','); // find end of field... 
-        jump_ptr = end_ptr; 
-        *end_ptr = '\0';  // and zero terminate
-        longitude_ = atof(start_ptr); 
+            //printf(" lat: %f DDDDDDDDDD:%s\n",latitude,NS_);
+            
+            start_ptr = jump_ptr; // find start of longitude field
+            end_ptr = strchr(++start_ptr, ','); // find end of field... 
+            jump_ptr = end_ptr; 
+            *end_ptr = '\0';  // and zero terminate
+            longitude_ = atof(start_ptr); 
 
-        //printf(" lat: %f D:%s long: %f\n",latitude,NS_,longitude);
+            //printf(" lat: %f D:%s long: %f\n",latitude,NS_,longitude);
 
-        start_ptr = jump_ptr; // find start of pole EW field
-        end_ptr = strchr(++start_ptr, ','); // find end of field...
-        *end_ptr = '\0';  // and zero terminate 
-        strcpy(EW_, start_ptr);
-        
-        start_ptr = strchr(++end_ptr, ','); // find start of satellite field
-        end_ptr = strchr(++start_ptr, ','); // find end of field... 
-        *end_ptr = '\0';  // and zero terminate
-        SV_ = atoi(start_ptr); // Convert char to int & store in variable
-        
-        printf("latitude: %f ,%s longitude: %f ,%s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
-        break;
+            start_ptr = jump_ptr; // find start of pole EW field
+            end_ptr = strchr(++start_ptr, ','); // find end of field...
+            *end_ptr = '\0';  // and zero terminate 
+            strcpy(EW_, start_ptr);
+            
+            start_ptr = strchr(++end_ptr, ','); // find start of satellite field
+            end_ptr = strchr(++start_ptr, ','); // find end of field... 
+            *end_ptr = '\0';  // and zero terminate
+            SV_ = atoi(start_ptr); // Convert char to int & store in variable
+            
+            printf("latitude: %f ,%s longitude: %f ,%s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
+            break;
         }
     }            
 }
@@ -135,7 +135,7 @@ void GPS::convertData(double lon_Data, double lat_Data, char NS[], char EW[]) //
         {
             std::cout << "NS or EW returned N/A. Skipping conversion..." << std::endl;
         }
-        
+
         else
         {
             if (strcmp(NS,"S") == 0 & strcmp(EW, "E") == 0 ) // handles negative
