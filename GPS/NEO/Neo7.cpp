@@ -134,10 +134,17 @@ double lon_Sec = (lon_Data-lon_Deg*100);
 
 //(cout << lon_Deg <<" , " << lon_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
 //cout << lat_Deg <<" , " << lat_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
-if(strcmp(NS,"S") == 0 | strcmp(EW, "E") == 0) 
+if(strcmp(NS,"N") == 1 | strcmp(NS, "S") == 1) 
 {
-    /* code */
-
+std::cout << "NS returned N/A. Skipping conversion..." << std::endl;
+//std::cout << "" << latitude_ << "," << NS_[1] << " " << longitude_ << "," << EW_[1] << " Satellites:" << SV_ << std::endl;
+}
+else if(EW,"E") == 1 | strcmp(NS, "W") == 1)
+{
+std::cout << "EW retuned N/A. Skipping conversion..." << std::endl;    
+}
+else
+{
     if (strcmp(NS,"S") == 0 & strcmp(EW, "E") == 0 ) // handles negative
     {
         latitude_  = (lat_Deg  + (lat_Sec/60))*-1;
@@ -160,10 +167,10 @@ if(strcmp(NS,"S") == 0 | strcmp(EW, "E") == 0)
         latitude_  = lat_Deg  + (lat_Sec/60);
         longitude_ = lon_Deg  + (lon_Sec/60);
     }
+std::cout << "" << latitude_ << "," << NS_[1] << " " << longitude_ << "," << EW_[1] << " Satellites:" << SV_ << std::endl;
 }
 
 //cout << latitude_ << ", " << longitude_ << endl; // decimal degrees
-std::cout << "" << latitude_ << "," << NS_[1] << " " << longitude_ << "," << EW_[1] << " Satellites:" << SV_ << std::endl;
 }
 
 void GPS::startLogging()
