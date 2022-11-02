@@ -138,17 +138,17 @@ printf("EW:%s\n",EW_);
 //(cout << lon_Deg <<" , " << lon_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
 //cout << lat_Deg <<" , " << lat_Sec << endl; // (d)dd(deg) mm.mmmm(minutes)
 
-if (NS[1] == "S" & EW[1] == "E" ) // handles negative
+if (NS == "S" & EW == "E" ) // handles negative
 {
     latitude_  = (lat_Deg  + (lat_Sec/60))*-1;
     longitude_ = lon_Deg  + (lon_Sec/60);
 }
-else if (NS[1] == "N" & EW[1] == "W")
+else if (NS == "N" & EW == "W")
 {
     latitude_  = lat_Deg  + (lat_Sec/60);
     longitude_ = (lon_Deg  + (lon_Sec/60))*-1;
 }
-else if(NS[1] == "S" & EW[1] == "W")
+else if(NS == "S" & EW == "W")
 {
     latitude_  = (lat_Deg  + (lat_Sec/60))*-1;
     longitude_ = (lon_Deg  + (lon_Sec/60))*-1;
