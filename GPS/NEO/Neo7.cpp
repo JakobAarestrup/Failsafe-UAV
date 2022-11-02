@@ -43,8 +43,6 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
     unsigned char IsitGGAstring=0;
     unsigned char GGA_index=0;
     unsigned char is_GGA_received_completely = 0;
-    char NS_[1];
-    char EW_[1];
     char *start_ptr, *end_ptr, *start_ptr_origin, *jump_ptr;
     while(1)
     {
