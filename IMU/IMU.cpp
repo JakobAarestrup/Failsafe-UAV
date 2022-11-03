@@ -43,7 +43,10 @@ void IMU::ConvertGyroData(int gY, int gX, int gZ)
 
 }
 
-void IMU::ConvertMagData(int mY, int mX, int mZ);
+void IMU::ConvertMagData(int mY, int mX, int mZ)
+{
+    
+}
 
 float IMU::getACCData() // Returns ACC data
 {
