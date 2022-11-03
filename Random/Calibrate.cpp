@@ -28,11 +28,15 @@ float gZdps = (gZ*G_Sensitivity)/1000;
 
 float A = sqrt(pow(aXg,2)+ pow(aYg,2) + pow(aZg,2)); // force on object
 printf("A: %f\n",A);
-float XL_xdeg = acos((aXg/A))/(pi/180);
+/* float XL_xdeg = acos((aXg/A))/(pi/180);
 float XL_ydeg = acos((aYg/A))/(pi/180);
-float XL_zdeg = acos((aZg/A))/(pi/180);
-float XL_anlge = (float)(atan2(aXg,aYg))/(pi/180);
-printf("Tangens: %f\n", XL_anlge);
+float XL_zdeg = acos((aZg/A))/(pi/180);  */
+
+double XL_X =(atan2(-aZg,-aXg)/(pi/180))+180;
+double XL_Y = (atan2(-aZg,-aYg)/(pi/180))+180;
+double XL_Z = 180-(atan2(-aYg,-aZg)/(pi/180));
+
+printf("Vinkel_X: %f Vinkel_Y: %f, Vinkel_Z: %f\n", XL_X,XL_Y,XL_Z);
 
 float mgXdps = (mgX*MG_Sensitivity)/1000;
 float mgYdps = (mgY*MG_Sensitivity)/1000;
@@ -40,7 +44,7 @@ float mgZdps = (mgZ*MG_Sensitivity)/1000;
 //magnetometer G unit aka mm/s so have to divide by 1000 again.
 
 printf("aX = %f g, aY = %f g, aZ = %f g\n", aXg, aYg, aZg);
-printf("aX = %f g, aY = %f g, aZ = %lf g\n", XL_xdeg, XL_ydeg, XL_zdeg);
+//printf("aX = %f deg, aY = %f deg, aZ = %lf deg\n", XL_xdeg, XL_ydeg, XL_zdeg);
 printf("gX = %f dps, gY = %f dps, aZ = %f dps\n", gXdps, gYdps, gZdps);
 printf("mX = %f m/s, mY = %f m/s, mZ = %f m/s\n", gXdps, gYdps, gZdps);
 return 0;
