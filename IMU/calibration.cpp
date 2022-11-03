@@ -39,13 +39,13 @@ while(1)
 {
     float status = I1.ReadI2C_8bit(LSM6DSOX_ADDR2,LSM6DSOX_STATUS_REG);
 
-    if(status = 0x01 || status = 0x02 || status = 0x07)
+    if(status == 0x01 || status == 0x02 || status == 0x07)
     {
         float ax = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_A);
         float ay = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_A);
         float az = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_A);
     }
-    else if (status = 0x02 || status = 0x03 || status = 0x07)
+    else if (status == 0x02 || status == 0x03 || status == 0x07)
     {
         float gx = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_G);
         float gy = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_G);
