@@ -26,7 +26,6 @@ I2.openI2C(LIS3MDL_ADDR_1);
 I1.WriteI2C(LSM6DSOX_ADDR1, LSM6DSOX_INT1_CTRL, 0b00000011); // Enable gyroscope and accelerometer data interrupt
 I1.WriteI2C(LSM6DSOX_ADDR1, LSM6DSOX_CTRL2_G, 0b011000000); // Gyro = 416 Hz (High-Performance mode)
 I1.WriteI2C(LSM6DSOX_ADDR1, LSM6DSOX_CTRL1_XL, 0b011000000); // Acc = 416 Hz (High-Performance mode)
-I1.WriteI2C(LSM6DSOX_ADDR1, LSM6DSOX_CTRL4_C, 0b00000000); // Acc = 416 Hz (High-Performance mode)
 //I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL3_C, 0b01000000);
 
 // Enable magnetometer
@@ -47,6 +46,10 @@ while(1)
         float ay = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_A);
         float az = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_A);
         printf("AccX: %f AccY: %f AccZ: %f\n", ax, ay, az);
+        float gx = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_X_L_G);
+        float gy = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_G);
+        float gz = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_G);
+        printf("GyroX: %f GyroY: %f GyroZ: %f\n", gx,gy,gz);
     }
     else if (status == 0x02 || status == 0x03 || status == 0x07 || status == 0x06)
     {
