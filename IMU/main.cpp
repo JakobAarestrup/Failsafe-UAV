@@ -18,11 +18,7 @@ int main()
 
 I2C I1;
 I2C I2;
-IMU IMU2;
 FusionAhrs ahrs;
-int accData[3];
-int gyrData[3];
-int magData[3];
 
 // Open I2C connection
 I1.openI2C(LSM6DSOX_ADDR2);
@@ -53,11 +49,6 @@ while(1)
     int mx = I2.ReadI2C_16bit(LIS3MDL_ADDR_2, LIS3MDL_OUT_X_L);
     int my = I2.ReadI2C_16bit(LIS3MDL_ADDR_2, LIS3MDL_OUT_Y_L);
     int mz = I2.ReadI2C_16bit(LIS3MDL_ADDR_2, LIS3MDL_OUT_Z_L);
-
-    //IMU2.CreateIMUData(ax, ay, az,gx, gy, gz, mx, my, mz);
-    //accData = IMU2.getACCData();
-    //gyrData = IMU2.getGYRData();
-    //magData = IMU2.getMAGData();
 
     // Define calibration (replace with actual calibration data)
     const FusionMatrix gyroscopeMisalignment = {1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f};
@@ -90,9 +81,9 @@ while(1)
 
         // Acquire latest sensor data
         const clock_t timestamp = clock(); // replace this with actual gyroscope timestamp
-        FusionVector gyroscope = {0.0f, 0.0f, 0.0f}; // replace this with actual gyroscope data in degrees/s
-        FusionVector accelerometer = {0.0f, 0.0f, 1.0f}; // replace this with actual accelerometer data in g
-        FusionVector magnetometer = {1.0f, 0.0f, 0.0f}; // replace this with actual magnetometer data in arbitrary units
+        FusionVector accelerometer = {ax, ay, az}; // replace this with actual accelerometer data in g
+        FusionVector gyroscope = {gx, gy, gz}; // replace this with actual gyroscope data in degrees/s
+        FusionVector magnetometer = {mx, my, mz}; // replace this with actual magnetometer data in arbitrary units
 
         // Apply calibration
         gyroscope = FusionCalibrationInertial(gyroscope, gyroscopeMisalignment, gyroscopeSensitivity, gyroscopeOffset);
@@ -118,14 +109,6 @@ while(1)
                euler.angle.roll, euler.angle.pitch, euler.angle.yaw,
                earth.axis.x, earth.axis.y, earth.axis.z);
     }
-
-    //printf("Roll: %f    Pitch: %f \n", roll, pitch); //Print accelerometer data
-    //printf("GYR_X: %f   GYR_Y: %f   GYR_Z: %f \n", GYR_X, GYR_Y, GYR_Z); //Print gyroscope data
-    //printf("MAG_x: %d \nMAG_y: %d \nMAG_z: %d \n", MAG_x, MAG_y, MAG_z); //Print mag data
-    //printf("MAG_X: %d       MAG_Y: %d       MAG_Z: %d \n", MAG_X, MAG_Y, MAG_Z); //Print mag data
-    
-    //usleep(1000000); //Small delay
-
     return 0;
 }
 }
