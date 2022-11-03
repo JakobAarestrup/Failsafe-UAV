@@ -48,10 +48,10 @@ void IMU::ConvertMagData(int mY, int mX, int mZ)
     
 }
 
-float IMU::getACCData() // Returns ACC data
+/* float IMU::getACCData() // Returns ACC data
 {
     return accData;
-}
+} */
 
 float IMU::getGyroData() // Returns Gyro data
 {
