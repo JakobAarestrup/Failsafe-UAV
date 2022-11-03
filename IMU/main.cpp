@@ -24,12 +24,10 @@ FusionAhrs ahrs;
 I1.openI2C(LSM6DSOX_ADDR2);
 I2.openI2C(LIS3MDL_ADDR_2);
 
-// Enable accelerometer
+// Enable accelerometer and gyroscope
 I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL1_XL, 0b10100000);
 I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL3_C, 0b01000000);
-
-// Enable gyro
-I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 0b10101100);
+I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 0b10101100); 
 
 // Enable magnetometer - 
 I2.WriteI2C(LIS3MDL_ADDR_2, LIS3MDL_CTRL_REG1, 0b01110000);// OM = 11 (ultra-high-performance mode for X and Y); DO = 100 (10 Hz ODR)
@@ -56,7 +54,7 @@ while(1)
     const FusionVector gyroscopeOffset = {0.0f, 0.0f, 0.0f};
     const FusionMatrix accelerometerMisalignment = {1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f};
     const FusionVector accelerometerSensitivity = {1.0f, 1.0f, 1.0f};
-    const FusionVector accelerometerOffset = {0.0f, 0.0f, 0.0f};
+    const FusionVector accelerometerOffset = {65300.0f, 65500.0f, 16850f};
     const FusionMatrix softIronMatrix = {1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f};
     const FusionVector hardIronOffset = {0.0f, 0.0f, 0.0f};
 
