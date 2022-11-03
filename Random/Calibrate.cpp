@@ -9,7 +9,7 @@
 
 int main()
 {
-float aX = 65272 -65536, aY = 65494-65536, aZ = 16808;
+int aX = 78, aY = -429.000000, aZ = 16356;
 float aXg = (aX*0.061)/1000; // 0.061 sensitivity at +/-2g result in g
 float aYg = (aY*0.061)/1000; // 
 float aZg = (aZ*0.061)/1000;
