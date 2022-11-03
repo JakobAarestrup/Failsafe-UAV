@@ -20,7 +20,6 @@ I2C I2;
 IMU IMU1;
 
 int startInt;
-//FusionAhrs ahrs;
 
 // Open I2C connection
 I1.openI2C(LSM6DSOX_ADDR1);
@@ -38,7 +37,6 @@ I2.WriteI2C(LIS3MDL_ADDR_1, LIS3MDL_CTRL_REG1, 0b01110000);// OM = 11 (ultra-hig
 I2.WriteI2C(LIS3MDL_ADDR_1, LIS3MDL_CTRL_REG2, 0b00000000);// FS = 00 (+/- 4 gauss full scale)
 I2.WriteI2C(LIS3MDL_ADDR_1, LIS3MDL_CTRL_REG3, 0b00000000);// MD = 00 (continuous-conversion mode)
 I2.WriteI2C(LIS3MDL_ADDR_1, LIS3MDL_CTRL_REG4, 0b00001100);// OMZ = 11 (ultra-high-performance mode for Z)
-
 
 // Main loop
 while(mymillis() - startInt < 20)

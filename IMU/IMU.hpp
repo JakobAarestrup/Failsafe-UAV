@@ -3,9 +3,14 @@ class IMU
 public:
     IMU(); // Constructor
     ~IMU(); // Destructor
+<<<<<<< HEAD
     int ConvertACCData(int aY, int aX, int aZ);
     void ConvertGyroData(int gY, int gX, int gZ);
     void ConvertMagData(int mY, int mX, int mZ);
+=======
+    void ConvertIMUData(int x, int y, int z, int sensor_handle); // Convert data from IMU to usable data
+    void FilterIMUData(float ax, float ay, float az, float gx, float gy, float gz, float mx, float my, float, float mz); // Put IMU data through complimentary filter
+>>>>>>> 888e9f7d30842553e7a748e7046f0153b545a794
     float getACCData(); // Returns ACC data
     float getGyroData(); // Returns Gyro data
     float getMagData(); // Returns Mag data
