@@ -46,10 +46,6 @@ while(1)
         float ay = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_A);
         float az = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_A);
         printf("AccX: %f AccY: %f AccZ: %f\n", ax, ay, az);
-        float gx = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_X_L_G);
-        float gy = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_G);
-        float gz = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_G);
-        printf("GyroX: %f GyroY: %f GyroZ: %f\n", gx,gy,gz);
     }
     else if (status == 0x02 || status == 0x03 || status == 0x07 || status == 0x06)
     {
