@@ -44,20 +44,22 @@ while(1)
         float ax = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_A);
         float ay = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_A);
         float az = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_A);
+        printf("AccX: %f AccY: %f AccZ: %f\n", ax, ay, az);
     }
     else if (status == 0x02 || status == 0x03 || status == 0x07)
     {
         float gx = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_G);
         float gy = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_G);
         float gz = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_G);
+        printf("GyroX: %f GyroY: %f GyroZ: %f\n", gx,gy,gz);
     }
 
     float mx = I2.ReadI2C_16bit(LIS3MDL_ADDR_2, LIS3MDL_OUT_X_L);
     float my = I2.ReadI2C_16bit(LIS3MDL_ADDR_2, LIS3MDL_OUT_Y_L);
     float mz = I2.ReadI2C_16bit(LIS3MDL_ADDR_2, LIS3MDL_OUT_Z_L);
 
-    printf("AccX: %f AccY: %f AccZ: %f\n", ax, ay, az);
-    printf("GyroX: %f GyroY: %f GyroZ: %f\n", gx,gy,gz);
+    
+    
     //printf("MagX: %f MagY: %f MagZ: %f\n", mx, my, mz);
     usleep(1000000);
 }
