@@ -50,6 +50,7 @@ while(1)
 
     printf("GyroX: %f GyroY: %f GyroZ: %f\n", gx,gy,gz);
 
+    usleep(1000000);
 }
 return 0;
 }
