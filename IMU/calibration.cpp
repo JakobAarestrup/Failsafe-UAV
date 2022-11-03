@@ -24,10 +24,10 @@ I2.openI2C(LIS3MDL_ADDR_1);
 
 // Enable accelerometer and gyroscope
 I1.WriteI2C(LSM6DSOX_ADDR1, LSM6DSOX_INT1_CTRL, 0b00000011); // Enable gyroscope and accelerometer data interrupt
-I1.WriteI2C(LSM6DSOX_ADDR1, LSM6DSOX_CTRL2_G, 0b011000000); // Gyro = 416 Hz (High-Performance mode)
+I1.WriteI2C(LSM6DSOX_ADDR1, LSM6DSOX_CTRL2_G, 0b10011100); // Gyro = 416 Hz (High-Performance mode)
 I1.WriteI2C(LSM6DSOX_ADDR1, LSM6DSOX_CTRL1_XL, 0b011000000); // Acc = 416 Hz (High-Performance mode)
-I1.WriteI2C(LSM6DSOX_ADDR1, LSM6DSOX_CTRL4_C, 0b00000000); // Acc = 416 Hz (High-Performance mode)
-//I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL3_C, 0b01000000);
+I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL3_C, 0b01000000); // Enable BDU
+I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL7_G, 0b10000000); // Enable High-Performance mode for Gyro
 
 // Enable magnetometer
 I2.WriteI2C(LIS3MDL_ADDR_1, LIS3MDL_CTRL_REG1, 0b01110000);// OM = 11 (ultra-high-performance mode for X and Y); DO = 100 (10 Hz ODR)
@@ -38,31 +38,20 @@ I2.WriteI2C(LIS3MDL_ADDR_1, LIS3MDL_CTRL_REG4, 0b00001100);// OMZ = 11 (ultra-hi
 // Main loop
 while(1)
 {
-    float status = I1.ReadI2C_8bit(LSM6DSOX_ADDR1,LSM6DSOX_STATUS_REG);
-    printf("Status is: %f\n",status);
-
-    if(status == 0x01 || status == 0x02 || status == 0x07 || status == 0x05)
-    {
-        float ax = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_X_L_A);
-        float ay = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_A);
-        float az = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_A);
-        printf("AccX: %f AccY: %f AccZ: %f\n", ax, ay, az);
-    }
-    else if (status == 0x02 || status == 0x03 || status == 0x07 || status == 0x06)
-    {
-        float gx = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_X_L_G);
-        float gy = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_G);
-        float gz = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_G);
-        printf("GyroX: %f GyroY: %f GyroZ: %f\n", gx,gy,gz);
-    }
-
+    float ax = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_X_L_A);
+    float ay = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_A);
+    float az = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_A);
+    float gx = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_X_L_G);
+    float gy = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_G);
+    float gz = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_G);
     float mx = I2.ReadI2C_16bit(LIS3MDL_ADDR_1, LIS3MDL_OUT_X_L);
     float my = I2.ReadI2C_16bit(LIS3MDL_ADDR_1, LIS3MDL_OUT_Y_L);
     float mz = I2.ReadI2C_16bit(LIS3MDL_ADDR_1, LIS3MDL_OUT_Z_L);
 
     
-    
-    //printf("MagX: %f MagY: %f MagZ: %f\n", mx, my, mz);
+    printf("AccX: %f AccY: %f AccZ: %f\n", ax, ay, az);
+    printf("GyroX: %f GyroY: %f GyroZ: %f\n", gx,gy,gz);
+    printf("MagX: %f MagY: %f MagZ: %f\n", mx, my, mz);
     usleep(1000000);
 }
 return 0;
