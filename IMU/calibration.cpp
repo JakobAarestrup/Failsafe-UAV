@@ -38,6 +38,7 @@ I2.WriteI2C(LIS3MDL_ADDR_2, LIS3MDL_CTRL_REG4, 0b00001100);// OMZ = 11 (ultra-hi
 while(1)
 {
     float status = I1.ReadI2C_8bit(LSM6DSOX_ADDR2,LSM6DSOX_STATUS_REG);
+    printf("Status is: %f\n",status);
 
     if(status == 0x01 || status == 0x02 || status == 0x07)
     {
