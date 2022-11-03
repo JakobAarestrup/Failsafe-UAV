@@ -3,7 +3,9 @@ class IMU
 public:
     IMU(); // Constructor
     ~IMU(); // Destructor
-    //void ConvertIMUData(int x, int y, int z, int sensor_handle); // Convert data from IMU to usable data
+    int ConvertACCData(int aY, int aX, int aZ);
+    void ConvertGyroData(int gY, int gX, int gZ);
+    void ConvertMagData(int mY, int mX, int mZ);
     float getACCData(); // Returns ACC data
     float getGyroData(); // Returns Gyro data
     float getMagData(); // Returns Mag data
@@ -25,7 +27,8 @@ private:
     int mag_Y_; // Magnetometer Y-axis
     int mag_Z_; // Magnetometer Z-axis
     */
-    float accData; // Accelerometer data
+    float acc_X_; // Accelerometer X-axis
+    float acc_Y_; // Accelerometer Y-axis
     float gyroData; // Gyroscope data
     float magData; // Magnetometer data
 };

@@ -21,38 +21,29 @@ IMU::~IMU()
     //delete [] sensor_handle_,gyr_Xangle_,gyr_Yangle_, gyr_Zangle_,roll_,pitch_; // Delete private variables
     //delete [] rate_gyr_x_,rate_gyr_y_,rate_gyr_z_,mag_X_,mag_Y_,mag_Z_; // Delete private variables
 }
+void IMU::ConvertACCData(int aY, int aX, int aZ)
+{
 
-/*
-// Convert data from IMU to usable data
-void IMU::ConvertIMUData(int x, int y, int z, int sensor_handle)
-{    
-    if (sensor_handle == 1) // Accelerometer sensor handle
-    {
-        float x_ACC = float(x); // Convert x to float
-        float y_ACC = float(y); // Convert y to float
-        float z_ACC = float(z); // Convert z to float
-        roll_ = atan2(y_ACC , z_ACC) * RAD_TO_DEG; // Calculate roll angle
-        pitch_ = atan2((- x_ACC), sqrt(y_ACC * y_ACC + z_ACC * z_ACC)) * RAD_TO_DEG; // Calculate pitch angle
-    }
-    else if (sensor_handle == 2) // Gyroscope sensor handle
-    {
-        rate_gyr_x_ = float(x) * G_GAIN; // Convert x to float and multiply by gain
-	    rate_gyr_y_ = float(y) * G_GAIN; // Convert y to float and multiply by gain
-	    rate_gyr_z_ = float(z) * G_GAIN; // Convert z to float and multiply by gain
+float XL_Sensitivity = 0.061; // +/-2g
+double pi = 3.14159265358979;
 
-        //Calculate the angles from the gyro
-	    gyr_Xangle_ = rate_gyr_x_*DT;
-	    gyr_Yangle_ = rate_gyr_y_*DT;
-	    gyr_Zangle_ = rate_gyr_z_*DT;
-    }
-    else if (sensor_handle == 3) // Magnetometer sensor handle
-    {
-        mag_X_ = x;
-        mag_Y_ = y;
-        mag_Z_ = z;
-    }
+float aXg = (aX*XL_Sensitivity)/1000; // value in g
+float aYg = (aY*XL_Sensitivity)/1000; // value in g
+float aZg = (aZ*XL_Sensitivity)/1000; // value in g
+
+float A = aXg^2+ aYg^2 + aZg^2; // force on object
+float XL_xdeg = arccos(aXg/A)*(pi/180);
+float XL_ydeg = arccos(aYg/A)*(pi/180);
+printf("Converted - X: %f, Y: %f",XL_xdeg,XL_ydeg);
+
 }
-*/
+
+void IMU::ConvertGyroData(int gY, int gX, int gZ)
+{
+
+}
+
+void IMU::ConvertMagData(int mY, int mX, int mZ);
 
 float IMU::getACCData() // Returns ACC data
 {

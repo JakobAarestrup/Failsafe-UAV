@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <iostream>
 #include "I2C.hpp"
+#include "IMU.hpp"
 #include "LIS3MDL.hpp"
 #include "LSM6DSOX.hpp"
 #include <wiringPiI2C.h>
@@ -16,6 +17,8 @@ int main()
 
 I2C I1;
 I2C I2;
+IMU IMU1;
+
 int startInt;
 //FusionAhrs ahrs;
 
@@ -50,9 +53,9 @@ while(mymillis() - startInt < 20)
     float mx = I2.ReadI2C_16bit(LIS3MDL_ADDR_1, LIS3MDL_OUT_X_L);
     float my = I2.ReadI2C_16bit(LIS3MDL_ADDR_1, LIS3MDL_OUT_Y_L);
     float mz = I2.ReadI2C_16bit(LIS3MDL_ADDR_1, LIS3MDL_OUT_Z_L);
-
     
     printf("AccX: %f AccY: %f AccZ: %f\n", ax, ay, az);
+    IMU1.ConvertACCData(ax, ay, az);
     printf("GyroX: %f GyroY: %f GyroZ: %f\n", gx,gy,gz);
     printf("MagX: %f MagY: %f MagZ: %f\n", mx, my, mz);
     usleep(1000000);
