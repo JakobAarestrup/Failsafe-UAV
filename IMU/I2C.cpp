@@ -61,8 +61,8 @@ int I2C::ReadI2C_16bit(int ADDR, int reg)
     }
     else
     {  
-        int I2C_Data_ = (Reg_data1 | Reg_data2 << 8);
-        if(I2C_Data_ < 0x8000) // Bitshift registers together
+        int I2C_Data_ = (Reg_data1 | Reg_data2 << 8); // Bitshift registers together
+        if(I2C_Data_ < 0x8000) 
         {
 
         }
