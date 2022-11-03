@@ -32,8 +32,8 @@ float aYg = (aY*XL_Sensitivity)/1000; // value in g
 float aZg = (aZ*XL_Sensitivity)/1000; // value in g
 
 float A = pow(aXg,2)+ pow(aYg,2) + pow(aZg,2); // force on object
-float XL_xdeg = acos(aXg/A)*(pi/180);
-float XL_ydeg = acos(aYg/A)*(pi/180);
+float XL_xdeg = acos(aXg/A);//*(pi/180);
+float XL_ydeg = acos(aYg/A);//*(pi/180);
 printf("Converted - X: %f, Y: %f\n",XL_xdeg,XL_ydeg);
 
 }
