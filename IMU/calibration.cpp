@@ -9,7 +9,7 @@
 #include <wiringPi.h>
 #include <stdbool.h>
 #include <time.h>
-#include "Kalmann.cpp"
+//#include "Kalman.cpp"
 
 //#define SAMPLE_RATE (100) // replace this with actual sample rate
 
@@ -19,7 +19,7 @@ int main()
 I2C I1;
 I2C I2;
 IMU IMU1;
-Kalman k1;
+//Kalman k1;
 
 int startInt;
 
@@ -41,9 +41,9 @@ I2.WriteI2C(LIS3MDL_ADDR_1, LIS3MDL_CTRL_REG3, 0b00000000);// MD = 00 (continuou
 I2.WriteI2C(LIS3MDL_ADDR_1, LIS3MDL_CTRL_REG4, 0b00001100);// OMZ = 11 (ultra-high-performance mode for Z)
 
 // Main loop
-while(k1.mymillis() - startInt < 20)
+while(1)//k1.mymillis() - startInt < 20
 {
-    startInt = mymillis();
+    //startInt = mymillis();
     float ax = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_X_L_A);
     float ay = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_A);
     float az = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_A);
