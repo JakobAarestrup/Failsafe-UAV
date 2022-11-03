@@ -23,7 +23,7 @@ I2C::I2C()
 // Destructor
 I2C::~I2C()
 {
-    delete [] I2C_Data_,I2C_File_,Write_File_; // Delete private variables
+    //delete [] I2C_Data_,I2C_File_,Write_File_; // Delete private variables
 }
 
 // Open i2c communication
