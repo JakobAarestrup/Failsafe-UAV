@@ -38,23 +38,14 @@ I2.WriteI2C(LIS3MDL_ADDR_1, LIS3MDL_CTRL_REG4, 0b00001100);// OMZ = 11 (ultra-hi
 // Main loop
 while(1)
 {
-    float status = I1.ReadI2C_8bit(LSM6DSOX_ADDR1,LSM6DSOX_STATUS_REG);
-    printf("Status is: %f\n",status);
-
-    if(status == 0x01 || status == 0x02 || status == 0x07 || status == 0x05)
-    {
-        float ax = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_X_L_A);
-        float ay = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_A);
-        float az = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_A);
-        printf("AccX: %f AccY: %f AccZ: %f\n", ax, ay, az);
-    }
-    else if (status == 0x02 || status == 0x03 || status == 0x07 || status == 0x06)
-    {
-        float gx = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_X_L_G);
-        float gy = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_G);
-        float gz = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_G);
-        printf("GyroX: %f GyroY: %f GyroZ: %f\n", gx,gy,gz);
-    }
+    float ax = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_X_L_A);
+    float ay = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_A);
+    float az = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_A);
+    float gx = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_X_L_G);
+    float gy = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_G);
+    float gz = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_G);
+    printf("AccX: %f AccY: %f AccZ: %f\n", ax, ay, az);
+    printf("GyroX: %f GyroY: %f GyroZ: %f\n", gx,gy,gz);
 
     float mx = I2.ReadI2C_16bit(LIS3MDL_ADDR_1, LIS3MDL_OUT_X_L);
     float my = I2.ReadI2C_16bit(LIS3MDL_ADDR_1, LIS3MDL_OUT_Y_L);
