@@ -16,6 +16,7 @@ int main()
 
 I2C I1;
 I2C I2;
+int startInt;
 //FusionAhrs ahrs;
 
 // Open I2C connection
@@ -35,9 +36,11 @@ I2.WriteI2C(LIS3MDL_ADDR_1, LIS3MDL_CTRL_REG2, 0b00000000);// FS = 00 (+/- 4 gau
 I2.WriteI2C(LIS3MDL_ADDR_1, LIS3MDL_CTRL_REG3, 0b00000000);// MD = 00 (continuous-conversion mode)
 I2.WriteI2C(LIS3MDL_ADDR_1, LIS3MDL_CTRL_REG4, 0b00001100);// OMZ = 11 (ultra-high-performance mode for Z)
 
+
 // Main loop
-while(1)
+while(mymillis() - startInt < 20)
 {
+    startInt = mymillis();
     float ax = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_X_L_A);
     float ay = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_A);
     float az = I1.ReadI2C_16bit(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_A);
