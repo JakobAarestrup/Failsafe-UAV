@@ -31,6 +31,8 @@ printf("A: %f\n",A);
 float XL_xdeg = acos((aXg/A))/(pi/180);
 float XL_ydeg = acos((aYg/A))/(pi/180);
 float XL_zdeg = acos((aZg/A))/(pi/180);
+float XL_anlge = (float)(atan2(aXg,aYg))/(pi/180);
+printf("Tangens: %f\n", XL_anlge);
 
 float mgXdps = (mgX*MG_Sensitivity)/1000;
 float mgYdps = (mgY*MG_Sensitivity)/1000;
