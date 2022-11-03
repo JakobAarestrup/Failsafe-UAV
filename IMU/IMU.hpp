@@ -3,10 +3,17 @@ class IMU
 public:
     IMU(); // Constructor
     ~IMU(); // Destructor
+<<<<<<< HEAD
     void ConvertACCData(int aY, int aX, int aZ);
     void ConvertGyroData(int gY, int gX, int gZ);
     void ConvertMagData(int mY, int mX, int mZ);
     //float getACCData(); // Returns ACC data
+=======
+    int ConvertACCData(int aY, int aX, int aZ);
+    void ConvertGyroData(int gY, int gX, int gZ);
+    void ConvertMagData(int mY, int mX, int mZ);
+    float getACCData(); // Returns ACC data
+>>>>>>> 74cfbdddf9baa57cd148544707b3b92492435658
     float getGyroData(); // Returns Gyro data
     float getMagData(); // Returns Mag data
 private:
