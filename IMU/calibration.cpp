@@ -48,7 +48,7 @@ while(1)
     float mz = I2.ReadI2C_16bit(LIS3MDL_ADDR_2, LIS3MDL_OUT_Z_L);
 
     printf("AccX: %f AccY: %f AccZ: %f\n", ax, ay, az);
-    //printf("GyroX: %f GyroY: %f GyroZ: %f\n", gx,gy,gz);
+    printf("GyroX: %f GyroY: %f GyroZ: %f\n", gx,gy,gz);
     //printf("MagX: %f MagY: %f MagZ: %f\n", mx, my, mz);
     usleep(1000000);
 }
