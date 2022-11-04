@@ -10,16 +10,13 @@
 
 int main()
 {
-int aX = 65311, aY = 64867, aZ = 16356;
-aX = aX-0xFFFF;
-aY = aY-0xFFFF;
+int aX = 420, aY = -429.000000, aZ = 16356;
 int gX = 0, gY = 0, gZ =0;
 int mgX = 0, mgY = 0, mgZ =0;
 float XL_Sensitivity = 0.061; // +/-2g
 float G_Sensitivity = 4.375; // +/- 125 dps
 float MG_Sensitivity = 0.0015; // at default full scale
 double pi = 3.14159265358979;
-double r2deg =57.29578;
 
 float aXg = (aX*XL_Sensitivity)/1000; // 0.061 sensitivity at +/-2g result in g
 float aYg = (aY*XL_Sensitivity)/1000; // 
@@ -29,15 +26,8 @@ float gXdps = (gX*G_Sensitivity)/1000;
 float gYdps = (gY*G_Sensitivity)/1000;
 float gZdps = (gZ*G_Sensitivity)/1000;
 
-float AccXangle = (atan2(-aXg,-aZg))/(pi/180)+180;
-float AccYangle = (atan2(-aYg,-aZg))/(pi/180)+180;
-float AccZangle = (float) (atan2(aXg,aYg)+pi)*r2deg;
-
-printf("ACC_X: %f, ACC_Y: %f and ACC_Z: %f\n",AccXangle,AccYangle,AccZangle);
-
-
 float A = sqrt(pow(aXg,2)+ pow(aYg,2) + pow(aZg,2)); // force on object
-//printf("A: %f\n",A);
+printf("A: %f\n",A);
 /* float XL_xdeg = acos((aXg/A))/(pi/180);
 float XL_ydeg = acos((aYg/A))/(pi/180);
 float XL_zdeg = acos((aZg/A))/(pi/180);  */
