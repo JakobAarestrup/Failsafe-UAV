@@ -32,9 +32,9 @@ printf("A: %f\n",A);
 float XL_ydeg = acos((aYg/A))/(pi/180);
 float XL_zdeg = acos((aZg/A))/(pi/180);  */
 
-double XL_X =(atan2(-aZg,-aXg)/(pi/180))+90;
-double XL_Y = (atan2(-aZg,-aYg)/(pi/180))+90;
-double XL_Z = 180-(atan2(-aYg,-aZg)/(pi/180));
+double XL_X = (atan2(-aZg,-aXg)/(pi/180))+180;
+double XL_Y = (atan2(-aYg,-aZg)/(pi/180))+180;
+double XL_Z = (atan2(-aXg,-aZg)/(pi/180))+180;
 
 printf("Vinkel_X: %f Vinkel_Y: %f, Vinkel_Z: %f\n", XL_X,XL_Y,XL_Z);
 

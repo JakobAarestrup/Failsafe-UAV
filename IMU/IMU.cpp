@@ -26,7 +26,7 @@ void IMU::ConvertACCData(int aY, int aX, int aZ)
 
 float XL_Sensitivity = 0.061; // +/-2g
 double pi = 3.14159265358979;
-
+printf("non-Converted - X: %f, Y: %f Z: %f\n",aX,aY,aZ);
 float aXg = (aX*XL_Sensitivity)/1000; // value in g
 float aYg = (aY*XL_Sensitivity)/1000; // value in g
 float aZg = (aZ*XL_Sensitivity)/1000; // value in g
