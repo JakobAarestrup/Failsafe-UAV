@@ -17,7 +17,21 @@ float XL_Sensitivity = 0.061; // +/-2g
 float G_Sensitivity = 4.375; // +/- 125 dps
 float MG_Sensitivity = 0.0015; // at default full scale
 double pi = 3.14159265358979;
-double conv = 0xFFFF/360
+double conv_Rate = 0.005493247882811;
+double sheesh = 0.005493247882811;
+printf("%lf\n",conv_Rate);
+printf("%lf\n",sheesh);
+double aXraw = aX*conv_Rate;
+
+double aYraw = aY*conv_Rate;
+//double aZraw = aZ*conv_Rate;
+
+double aXraw_off = (aX+0xFFFF)*conv_Rate;
+double aYraw_off = (aY+0xFFFF)*conv_Rate;
+//double aZraw_off = aZ*conv_Rate+0xFFFF;
+
+printf("Raw - X: %f, Y: %f \n",aXraw, aYraw);
+printf("Raw_off - X: %lf, Y: %lf \n",aXraw_off, aYraw_off);
 
 float aXg = (aX*XL_Sensitivity)/1000; // 0.061 sensitivity at +/-2g result in g
 float aYg = (aY*XL_Sensitivity)/1000; // 
