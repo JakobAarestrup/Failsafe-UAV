@@ -27,14 +27,14 @@ void IMU::ConvertACCData(int aX, int aY, int aZ)
 double pi = 3.14159265358979;
 printf("non-Converted - X: %d, Y: %d Z: %d\n",aX,aY,aZ);
 
-double XL_xdeg = (atan2(-aX,-aZ))/(pi/180)+180;
-double XL_ydeg = (atan2(-aY,-aZ)/(pi/180))+180;
+double XL_xdeg = (atan2(-aY,-aZ)/(pi/180))+180;
+double XL_ydeg = (atan2(-aX,-aZ))/(pi/180)+180;
 double XL_zdeg = 180-(atan2(-aY,-aZ)/(pi/180));
 printf("Converted - X: %f, Y: %f Z: %f\n",XL_xdeg,XL_ydeg, XL_zdeg);
 
 }
 
-void IMU::ConvertGyroData(int gY, int gX, int gZ)
+void IMU::ConvertGyroData(int gX, int gY, int gZ)
 {
         rate_gyr_x_ = (float) gX  * G_GAIN;
 		rate_gyr_y_ = (float) gY  * G_GAIN;
