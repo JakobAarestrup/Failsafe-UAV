@@ -11,7 +11,7 @@
 #include <time.h>
 #include "Kalman2.hpp"
 
-#define sample_rate (200) // replace this with actual sample rate
+//#define dt (2000) // replace this with actual sample rate
 
 int main()
 {
@@ -19,12 +19,15 @@ I2C I1;
 I2C I2;
 IMU IMU1;
 Kalman2 k1;
-int dt_new = 0;
-int dt = sample_rate;
+Kalman2 k2;
+Kalman2 k3;
+float T_old = 0;
+float dT = 2000;
 
 // Open I2C connection
 I1.openI2C(LSM6DSOX_ADDR1);
 I2.openI2C(LIS3MDL_ADDR_1);
+float T = millis();
 
 // Enable accelerometer and gyroscope
 I1.WriteI2C(LSM6DSOX_ADDR1, LSM6DSOX_INT1_CTRL, 0b00000011); // Enable gyroscope and accelerometer data interrupt
@@ -40,7 +43,10 @@ I2.WriteI2C(LIS3MDL_ADDR_1, LIS3MDL_CTRL_REG3, 0b00000000);// MD = 00 (continuou
 I2.WriteI2C(LIS3MDL_ADDR_1, LIS3MDL_CTRL_REG4, 0b00001100);// OMZ = 11 (ultra-high-performance mode for Z)
 
 //Test
-float acc_roll = 85;
+k1.setAngle(85); // roll
+k2.setAngle(80); // pitch
+k3.setAngle(75); // yaw
+float acc_roll =80;
 float acc_pitch =80;
 float gyro_roll = 90;
 float gyro_pitch = 90; 
@@ -50,9 +56,9 @@ float mag_yaw = 75;
 // Main loop
 while(1)
 {
-    if (dt - dt_new >= sample_rate)
+    if (T - T_old >= dT)
     {
-        dt_new = dt; //200ms in first run. 400 in second run etc.
+        T_old = T; //2000ms in first run. 4000 in second run etc.
 
         /*
         float ax = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_A);
@@ -79,12 +85,12 @@ while(1)
 
         
 
-        float KFRoll = k1.getAngle(acc_roll, gyro_roll, dt);
-        float KFPitch = k1.getAngle(acc_pitch, gyro_pitch, dt);
-        float KFYaw = k1.getAngle(mag_yaw, gyro_yaw, dt);
+        float KFRoll = k1.getAngle(acc_roll, gyro_roll, dT);
+        float KFPitch = k2.getAngle(acc_pitch, gyro_pitch, dT);
+        float KFYaw = k3.getAngle(mag_yaw, gyro_yaw, dT);
     
         printf("Roll: %f Pitch: %f Yaw: %f\n", KFRoll, KFPitch, KFYaw);
-        dt = 0; // Reset DT
+        
 
         if (gyro_roll == 360)
         {
@@ -118,10 +124,12 @@ while(1)
             mag_yaw = mag_yaw + 5;
             gyro_yaw = gyro_yaw + 20; 
         }
+        printf("Time passed in ms: %f\n", T);
+        T = 0; // Reset dt
     }
     else 
     {
-        dt = millis();
+        T = millis();
     }
 }
 
