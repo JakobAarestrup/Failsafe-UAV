@@ -57,7 +57,7 @@ void IMU::ConvertACCData(int aX, int aY, int aZ)
     aYf = (float(aY)*0.061)/1000;
     aZf = (float(aZ)*0.061)/1000;
 
-    double conv_rate = 90.794451450189155107;
+    double conv_rate = 90.053243980503472678;
 
     double aXc = conv_rate *aXf;
     double aYc = conv_rate *aYf;
