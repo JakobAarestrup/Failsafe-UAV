@@ -69,7 +69,7 @@ while(1)
     while(mymillis() - startofloop < (DT*1000)){
             usleep(100);
     }
-    printf("Loop Time %d\t", mymillis()- startofloop);
+    printf("Loop Time %d\n", mymillis()- startofloop);
     usleep(1000000);
 }
 return 0;
