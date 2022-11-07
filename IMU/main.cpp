@@ -89,7 +89,7 @@ while(1)
         float KFYaw = k3.getAngle(mag_yaw, gyro_yaw, dt);
     
         printf("Roll: %f Pitch: %f Yaw: %f\n", KFRoll, KFPitch, KFYaw);
-        dt = 0; // Reset DT
+        
 
         if (gyro_roll == 360)
         {
@@ -123,6 +123,8 @@ while(1)
             mag_yaw = mag_yaw + 5;
             gyro_yaw = gyro_yaw + 20; 
         }
+        printf("Time passed in ms: %f\n", dt);
+        dt = 0; // Reset dt
     }
     else 
     {
