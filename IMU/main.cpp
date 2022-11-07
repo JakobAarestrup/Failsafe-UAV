@@ -124,7 +124,7 @@ while(1)
             mag_yaw = mag_yaw + 5;
             gyro_yaw = gyro_yaw + 20; 
         }
-        printf("Time passed in ms: %f\n", dt);
+        printf("Time passed in ms: %f\n", T);
         T = 0; // Reset dt
     }
     else 
