@@ -44,7 +44,6 @@ while(1)
     if (dt - dt_new >= 200)
     {
         dt_new = dt; //200ms in first run. 400 in second run etc.
-        dt = 0; // Reset DT
         float ax = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_A);
         float ay = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_A);
         //float az = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_A);
@@ -71,6 +70,7 @@ while(1)
         float KFYaw = k1.getAngle(mag_yaw, gyro_yaw, dt);
     
         printf("Roll: %f Pitch: %f Yaw: %f\n", KFRoll, KFPitch, KFYaw);
+        dt = 0; // Reset DT
     }
     else 
     {
