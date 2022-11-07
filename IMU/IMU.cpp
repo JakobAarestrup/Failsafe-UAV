@@ -44,7 +44,8 @@ void IMU::ConvertACCData(int aX, int aY, int aZ)
     double aYf = float(aY);
     double aZf = float(aZ);
 
-  /*   double XL_xdeg = (atan2(-aY, -aZ))/(PI/180);
+   
+/*   double XL_xdeg = (atan2(-aY, -aZ))/(PI/180);
     double XL_ydeg = (atan2(-aZ, -aX))/(PI/180);
     double XL_zdeg = 180 - (atan2(-aY, -aZ) / (PI / 180)); */
 
@@ -54,11 +55,17 @@ void IMU::ConvertACCData(int aX, int aY, int aZ)
 
     aXf = (double(aX)*0.061)/1000;
     aYf = (double(aX)*0.061)/1000;
-    aZf =(double(aX)*0.061)/1000;
-
+    aZf = (double(aX)*0.061)/1000;
+    double conv_rate = 90.794451450189155107;
+    double aXc = conv_rate *aXf;
+    double aYc = conv_rate *aYf;
+    double aZc = conv_rate *aZf;
+   
     XL_Roll_ = atan2(aY, aZ) * 180 / PI;
     XL_Pitch_ = atan2(-aX, sqrt(aY * aY + aZ * aZ)) * 180 / PI;
     printf("Bias - roll: %lf, pitch: %lf\n\n", XL_Roll_, XL_Pitch_);
+    printf("Conv - X-AXIS: %lf, Y-AXIS: %lf Z-AXIS: %lf\n\n", aXc, aYc, aZc);
+
 
    /*  XL_xdeg -= (double)180.0;
     if (XL_ydeg > 90)
