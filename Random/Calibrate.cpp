@@ -10,7 +10,7 @@
 
 int main()
 {
-int aX = 64980, aY = 51960, aZ = 16500;
+int aX = 0, aY = 16300, aZ = 16500;
 int gX = 0, gY = 0, gZ =0;
 int mgX = 0, mgY = 0, mgZ =0;
 float XL_Sensitivity = 439483; // +/-2g
