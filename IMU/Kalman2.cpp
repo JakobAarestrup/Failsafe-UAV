@@ -1,12 +1,4 @@
-/* Copyright (C) 2012 Kristian Lauszus, TKJ Electronics. All rights reserved.
- This software may be distributed and modified under the terms of the GNU
- General Public License version 2 (GPL2) as published by the Free Software
- Foundation and appearing in the file GPL2.TXT included in the packaging of
- this file. Please note that GPL2 Section 2[b] requires that all works based
- on this software must also be made publicly available under the terms of
- the GPL2 ("Copyleft").
- Contact information
- -------------------
+/*-------------------
  Kristian Lauszus, TKJ Electronics
  Web      :  http://www.tkjelectronics.com
  e-mail   :  kristianl@tkjelectronics.com
@@ -14,7 +6,8 @@
 
 #include "Kalman2.hpp"
 
-Kalman2::Kalman2() {
+Kalman2::Kalman2() 
+{
     /* We will set the variables like so, these can also be tuned by the user */
     Q_angle = 0.001f;
     Q_bias = 0.003f;
@@ -30,7 +23,8 @@ Kalman2::Kalman2() {
 };
 
 // The angle should be in degrees and the rate should be in degrees per second and the delta time in seconds
-float Kalman2::getAngle(float newAngle, float newRate, float dt) {
+float Kalman2::getAngle(float newAngle, float newRate, float dt) 
+{
     // KasBot V2  -  Kalman filter module - http://www.x-firm.com/?page_id=145
     // Modified by Kristian Lauszus
     // See my blog post for more information: http://blog.tkjelectronics.dk/2012/09/a-practical-approach-to-kalman-filter-and-how-to-implement-it
