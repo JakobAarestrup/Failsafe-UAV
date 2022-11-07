@@ -32,6 +32,9 @@ float aXg = (aX*XL_Sensitivity)/1000; // value in g
 float aYg = (aY*XL_Sensitivity)/1000; // value in g
 float aZg = (aZ*XL_Sensitivity)/1000; // value in g
 
+double roll2 = atan2(aYf,aZf)*r_deg;
+double pitch2 = (atan2(-aXf,sqrt(aYf*aYf+aZf*aZf)))*r_deg;
+
 double aXraw = aX*conv_Rate; 
 double aYraw = aY*conv_Rate;
 //double aZraw = aZ*conv_Rate;
