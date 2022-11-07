@@ -70,7 +70,7 @@ void IMU::ConvertGyroData(int gX, int gY, int gZ)
 
 void IMU::ConvertMagData(int mY, int mX)
 {
-    magYaw_ = 180 * atan2(mY,mX)/PI;
+    magYaw_ = 180 * (atan2(mY,mX)/PI);
     if(magYaw_ < 0)
       magYaw_ += 360;
     printf("magYaw: %f\n\n", magYaw_);
