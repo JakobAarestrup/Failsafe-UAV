@@ -53,7 +53,7 @@ double XL_xdeg = (atan2(-aX,-aZ))/(pi/180)+180;
 double XL_ydeg = (atan2(-aY,-aZ)/(pi/180))+180;
 double XL_zdeg = 180-(atan2(-aYg,-aZg)/(pi/180));
 
-printf("roll: %f pitch: %lf, ",roll,pitch);
+//printf("roll: %f pitch: %lf, ",roll,pitch);
 printf("Converted - X: %f, Y: %f Z: %f\n",XL_xdeg,XL_ydeg, XL_zdeg);
 
 }
