@@ -12,7 +12,7 @@
 #include <time.h>
 //#include "Kalman.cpp"
 
-#define DT 2         // [s/loop] loop period. 20ms (2s)
+#define DT 0.02         // [s/loop] loop period. 20ms (2s)
 
 int mymillis()
 {
