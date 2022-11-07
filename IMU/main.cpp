@@ -11,7 +11,7 @@
 #include <time.h>
 #include "Kalman2.hpp"
 
-//#define dt (200) // replace this with actual sample rate
+#define sample_rate (200) // replace this with actual sample rate
 
 int main()
 {
@@ -20,7 +20,7 @@ I2C I2;
 IMU IMU1;
 Kalman2 k1;
 int dt_new = 0;
-int dt = 200;
+int dt = sample_rate;
 
 // Open I2C connection
 I1.openI2C(LSM6DSOX_ADDR1);
@@ -50,7 +50,7 @@ float mag_yaw = 90;
 // Main loop
 while(1)
 {
-    if (dt - dt_new >= 200)
+    if (dt - dt_new >= sample_rate)
     {
         dt_new = dt; //200ms in first run. 400 in second run etc.
 
@@ -85,12 +85,39 @@ while(1)
     
         printf("Roll: %f Pitch: %f Yaw: %f\n", KFRoll, KFPitch, KFYaw);
         dt = 0; // Reset DT
-        acc_roll = acc_roll + 10;
-        acc_pitch = acc_pitch + 15;
-        gyro_roll = gyro_roll + 5;
-        gyro_pitch = gyro_pitch + 5; 
-        gyro_yaw = gyro_yaw + 5; 
-        mag_yaw = mag_yaw + 20;
+
+        if (acc_roll == 360)
+        {
+            acc_roll = 0;
+            gyro_roll = 0;
+        }
+        else
+        {
+            acc_roll = acc_roll + 5;
+            gyro_roll = gyro_roll + 10;
+        }
+
+        if (acc_pitch == 360)
+        {
+            acc_pitch = 0;
+            gyro_pitch = 0;
+        }
+        else
+        {
+            acc_pitch = acc_pitch + 5;
+            gyro_pitch = gyro_pitch + 15;
+        }
+            
+        if (mag_yaw == 360)
+        {
+            mag_yaw = 0;
+            gyro_yaw = 0;
+        }
+        else
+        {
+            mag_yaw = mag_yaw + 5;
+            gyro_yaw = gyro_yaw + 20; 
+        }
     }
     else 
     {
