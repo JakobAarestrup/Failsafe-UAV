@@ -36,9 +36,15 @@ printf("Converted - X: %f, Y: %f Z: %f\n",XL_xdeg,XL_ydeg, XL_zdeg);
 
 void IMU::ConvertGyroData(int gY, int gX, int gZ)
 {
-        rate_gyr_x = (float) gX  * G_GAIN;
-		rate_gyr_y = (float) gY  * G_GAIN;
-		rate_gyr_z = (float) gZ  * G_GAIN;   
+        rate_gyr_x_ = (float) gX  * G_GAIN;
+		rate_gyr_y_ = (float) gY  * G_GAIN;
+		rate_gyr_z_ = (float) gZ  * G_GAIN;  
+        printf("GyroX: %f, GyroY: %f, GyroZ: %f\n", rate_gyr_x_, rate_gyr_y_,rate_gyr_z_); 
+        gyroXangle_+=rate_gyr_x_*DT;
+		gyroYangle_+=rate_gyr_y_*DT;
+		gyroZangle_+=rate_gyr_z_*DT;
+        printf("GyroXangle: %f, GyroYangle: %f, GyroZangle: %f\n", gyroXangle_, gyroYangle_,gyroZangle_); 
+
 }
 
 void IMU::ConvertMagData(int mY, int mX, int mZ)

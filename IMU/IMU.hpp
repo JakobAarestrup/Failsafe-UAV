@@ -10,17 +10,19 @@ public:
     float getMagData();
     float getGyroData(); // Returns Gyro data
 /* 	float gyr_Zangle_ = 0.0; // Gyroscope Z-angle
-    float rate_gyr_y_ = 0.0;   // Gyroscope X-angle in deg/s
-	float rate_gyr_x_ = 0.0;   // Gyroscope Y-angle in deg/s
-	float rate_gyr_z_ = 0.0;   // Gyroscope Z-angle in deg/s
+    
     int acc_X_; // Accelerometer X-axis
     int acc_Y_; // Accelerometer Y-axis
     int acc_Z_; // Accelerometer Z-axis
     int gyro_Y_; // Gyroscope Y-axis
     int gyro_Z_; // Gyroscope Z-axis
-    int mag_X_; // Magnetometer X-axis
-    int mag_Y_; // Magnetometer Y-axis
-    int mag_Z_; // Magnetometer Z-axis */
+    */
+    float rate_gyr_y_ = 0.0;   // Gyroscope X-angle in deg/s
+	float rate_gyr_x_ = 0.0;   // Gyroscope Y-angle in deg/s
+	float rate_gyr_z_ = 0.0;   // Gyroscope Z-angle in deg/s
+    float gyroXangle = 0.0; // Gy
+	float gyroYangle = 0.0; // Gy
+	float gyroZangle = 0.0;
     float acc_X_; // Accelerometer X-axis
     float acc_Y_; // Accelerometer Y-axis
     float gyroData; // Gyroscope data
