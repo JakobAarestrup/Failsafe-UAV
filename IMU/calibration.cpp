@@ -70,6 +70,7 @@ while(1)
             usleep(100);
     }
     printf("Loop Time %d\t", mymillis()- startofloop);
+    usleep(1000000);
 }
 return 0;
 }
