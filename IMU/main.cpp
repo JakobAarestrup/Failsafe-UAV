@@ -21,8 +21,8 @@ IMU IMU1;
 Kalman2 k1;
 Kalman2 k2;
 Kalman2 k3;
-int dt_new = 0;
-int dt = sample_rate;
+float dt_new = 0;
+float dt = sample_rate;
 
 // Open I2C connection
 I1.openI2C(LSM6DSOX_ADDR1);
