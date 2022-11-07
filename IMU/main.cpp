@@ -85,9 +85,9 @@ while(1)
 
         
 
-        float KFRoll = k1.getAngle(acc_roll, gyro_roll, dt);
-        float KFPitch = k2.getAngle(acc_pitch, gyro_pitch, dt);
-        float KFYaw = k3.getAngle(mag_yaw, gyro_yaw, dt);
+        float KFRoll = k1.getAngle(acc_roll, gyro_roll, dT);
+        float KFPitch = k2.getAngle(acc_pitch, gyro_pitch, dT);
+        float KFYaw = k3.getAngle(mag_yaw, gyro_yaw, dT);
     
         printf("Roll: %f Pitch: %f Yaw: %f\n", KFRoll, KFPitch, KFYaw);
         
