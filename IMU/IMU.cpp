@@ -26,15 +26,27 @@ void IMU::ConvertACCData(int aY, int aX, int aZ)
 
 float XL_Sensitivity = 0.061; // +/-2g
 double pi = 3.14159265358979;
+double conv_Rate = 24/4369;
 
 float aXg = (aX*XL_Sensitivity)/1000; // value in g
 float aYg = (aY*XL_Sensitivity)/1000; // value in g
 float aZg = (aZ*XL_Sensitivity)/1000; // value in g
 
+double aXraw = aX*conv_Rate; 
+double aYraw = aY*conv_Rate;
+//double aZraw = aZ*conv_Rate;
+
+double aXraw_off = aX*conv_Rate+0xFFFF; 
+double aYraw_off = aY*conv_Rate+0xFFFF;
+//double aZraw_off = aZ*conv_Rate+0xFFFF;
+
+printf("Converted - X: %f, Y: %f \n",aXraw, aYraw);
+printf("Converted - X: %f, Y: %f \n",aXraw_off, aYraw_off);
 float A = sqrt(pow(aXg,2)+ pow(aYg,2) + pow(aZg,2)); // force on object
 double XL_xdeg =(atan2(-aZg,-aXg)/(pi/180))+180;
 double XL_ydeg = (atan2(-aZg,-aYg)/(pi/180))+180;
 double XL_zdeg = 180-(atan2(-aYg,-aZg)/(pi/180));
+
 printf("Converted - X: %f, Y: %f Z: %f\n",XL_xdeg,XL_ydeg, XL_zdeg);
 
 }

@@ -17,6 +17,7 @@ float XL_Sensitivity = 0.061; // +/-2g
 float G_Sensitivity = 4.375; // +/- 125 dps
 float MG_Sensitivity = 0.0015; // at default full scale
 double pi = 3.14159265358979;
+double conv = 0xFFFF/360
 
 float aXg = (aX*XL_Sensitivity)/1000; // 0.061 sensitivity at +/-2g result in g
 float aYg = (aY*XL_Sensitivity)/1000; // 
