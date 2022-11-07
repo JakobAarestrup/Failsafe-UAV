@@ -11,7 +11,7 @@
 #include <time.h>
 #include "Kalman2.hpp"
 
-#define sample_rate (2000) // replace this with actual sample rate
+//#define dt (2000) // replace this with actual sample rate
 
 int main()
 {
@@ -21,12 +21,13 @@ IMU IMU1;
 Kalman2 k1;
 Kalman2 k2;
 Kalman2 k3;
-float dt_new = 0;
+float T_old = 0;
+float dT = 2000;
 
 // Open I2C connection
 I1.openI2C(LSM6DSOX_ADDR1);
 I2.openI2C(LIS3MDL_ADDR_1);
-float dt = millis();
+float T = millis();
 
 // Enable accelerometer and gyroscope
 I1.WriteI2C(LSM6DSOX_ADDR1, LSM6DSOX_INT1_CTRL, 0b00000011); // Enable gyroscope and accelerometer data interrupt
@@ -55,9 +56,9 @@ float mag_yaw = 75;
 // Main loop
 while(1)
 {
-    if (dt - dt_new >= sample_rate)
+    if (T - T_old >= dT)
     {
-        dt_new = dt; //2000ms in first run. 4000 in second run etc.
+        T_old = T; //2000ms in first run. 4000 in second run etc.
 
         /*
         float ax = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_A);
@@ -124,11 +125,11 @@ while(1)
             gyro_yaw = gyro_yaw + 20; 
         }
         printf("Time passed in ms: %f\n", dt);
-        dt = 0; // Reset dt
+        T = 0; // Reset dt
     }
     else 
     {
-        dt = millis();
+        T = millis();
     }
 }
 
