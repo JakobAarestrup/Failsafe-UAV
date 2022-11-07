@@ -59,10 +59,10 @@ void IMU::ConvertMagData(int mY, int mX, int mZ)
 
 float IMU::getGyroData() // Returns Gyro data
 {
-    return gyroData;
+    return gyroYangle_;
 }
 
 float IMU::getMagData() // Returns Mag data
 {
-    return magData;
+    return gyroXangle_;
 }
