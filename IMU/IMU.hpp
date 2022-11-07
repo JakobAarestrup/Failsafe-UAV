@@ -20,11 +20,9 @@ public:
     float rate_gyr_y_ = 0.0;   // Gyroscope X-angle in deg/s
 	float rate_gyr_x_ = 0.0;   // Gyroscope Y-angle in deg/s
 	float rate_gyr_z_ = 0.0;   // Gyroscope Z-angle in deg/s
-    float gyroXangle = 0.0; // Gy
-	float gyroYangle = 0.0; // Gy
-	float gyroZangle = 0.0;
+    float gyroXangle_ = 0.0; // Gy
+	float gyroYangle_ = 0.0; // Gy
+	float gyroZangle_ = 0.0;
     float acc_X_; // Accelerometer X-axis
     float acc_Y_; // Accelerometer Y-axis
-    float gyroData; // Gyroscope data
-    float magData; // Magnetometer data
 };
