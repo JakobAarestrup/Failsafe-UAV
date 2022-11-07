@@ -41,8 +41,8 @@ void IMU::ConvertACCData(int aX, int aY, int aZ)
     }
     
 
-    double XL_xdeg = (atan2(-aY, -aZ))/(PI/180)+180;
-    double XL_ydeg = (atan2(-aZ, -aX))/(PI/180)+180;
+    double XL_xdeg = (atan2(-aY, -aZ))/(PI/180);
+    double XL_ydeg = (atan2(-aZ, -aX))/(PI/180);
     double XL_zdeg = 180 - (atan2(-aY, -aZ) / (PI / 180));
 
    /*  XL_xdeg -= (double)180.0;
@@ -71,6 +71,8 @@ void IMU::ConvertGyroData(int gX, int gY, int gZ)
 void IMU::ConvertMagData(int mY, int mX)
 {
     magYaw_ = 180 * atan2(mY,mX)/PI;
+    if(magYaw_ < 0)
+      magYaw_ += 360;
     printf("magYaw: %f", magYaw_);
 }
 

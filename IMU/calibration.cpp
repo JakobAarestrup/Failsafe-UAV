@@ -67,11 +67,11 @@ while(1)
     IMU1.ConvertGyroData(gx,gy,gz);
     IMU1.ConvertMagData(mx,my);
 
-    while(mymillis() - startofloop < (DT*1000)){
+  /*   while(mymillis() - startofloop < (DT*1000)){
             usleep(100);
     }
-    printf("Loop Time %d\n", mymillis()- startofloop);
-    usleep(1000000);
+    printf("Loop Time %d\n", mymillis()- startofloop); */
+    usleep(500000);
 }
 return 0;
 }
