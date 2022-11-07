@@ -40,6 +40,9 @@ void IMU::ConvertACCData(int aX, int aY, int aZ)
         aZ = aZ - 0xFFFF;
     }
      */
+    double aX = float(aX);
+    double aY = float(aY);
+    double aZ = float(aZ);
 
   /*   double XL_xdeg = (atan2(-aY, -aZ))/(PI/180);
     double XL_ydeg = (atan2(-aZ, -aX))/(PI/180);
