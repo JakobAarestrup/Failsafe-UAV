@@ -72,7 +72,8 @@ int I2C::ReadI2C_16bit(int ADDR, int reg)
         }
 
         return I2C_Data_; // Return i2c data
-    }
+    }   
+    return I2C_Data_; // Return i2c data
 }
 
 // Read from i2c device register
