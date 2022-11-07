@@ -1,9 +1,3 @@
-/*-------------------
- Kristian Lauszus, TKJ Electronics
- Web      :  http://www.tkjelectronics.com
- e-mail   :  kristianl@tkjelectronics.com
- */
-
 #include "Kalman2.hpp"
 
 Kalman2::Kalman2() 
@@ -11,7 +5,7 @@ Kalman2::Kalman2()
     /* We will set the variables like so, these can also be tuned by the user */
     Q_angle = 0.001f;
     Q_bias = 0.003f;
-    R_measure = 0.03f;
+    R_measure = 0.03f;s
 
     angle = 0.0f; // Reset the angle
     bias = 0.0f; // Reset bias
@@ -23,12 +17,8 @@ Kalman2::Kalman2()
 };
 
 // The angle should be in degrees and the rate should be in degrees per second and the delta time in seconds
-float Kalman2::getAngle(float newAngle, float newRate, float dt) 
+float Kalman2::getAngle(float newAngle, float newRate, float dt)
 {
-    // KasBot V2  -  Kalman filter module - http://www.x-firm.com/?page_id=145
-    // Modified by Kristian Lauszus
-    // See my blog post for more information: http://blog.tkjelectronics.dk/2012/09/a-practical-approach-to-kalman-filter-and-how-to-implement-it
-
     // Discrete Kalman filter time update equations - Time Update ("Predict")
     // Update xhat - Project the state ahead
     /* Step 1 */
