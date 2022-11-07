@@ -38,12 +38,22 @@ I2.WriteI2C(LIS3MDL_ADDR_2, LIS3MDL_CTRL_REG2, 0b00000000);// FS = 00 (+/- 4 gau
 I2.WriteI2C(LIS3MDL_ADDR_2, LIS3MDL_CTRL_REG3, 0b00000000);// MD = 00 (continuous-conversion mode)
 I2.WriteI2C(LIS3MDL_ADDR_2, LIS3MDL_CTRL_REG4, 0b00001100);// OMZ = 11 (ultra-high-performance mode for Z)
 
+//Test
+float acc_roll = 90;
+float acc_pitch = 90;
+float gyro_roll = 90;
+float gyro_pitch = 90; 
+float gyro_yaw = 90; 
+float mag_yaw = 90;
+
 // Main loop
 while(1)
 {
     if (dt - dt_new >= 200)
     {
         dt_new = dt; //200ms in first run. 400 in second run etc.
+
+        /*
         float ax = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_A);
         float ay = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_A);
         //float az = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_A);
@@ -64,6 +74,9 @@ while(1)
         float gyro_pitch = IMU1.ConvertGYROData(gy);
         float gyro_yaw = IMU1.ConvertGYROData(gz);
         float mag_yaw = IMU1.ConvertMAGData(mz);
+        */
+
+        
 
         float KFRoll = k1.getAngle(acc_roll, gyro_roll, dt);
         float KFPitch = k1.getAngle(acc_pitch, gyro_pitch, dt);
@@ -71,6 +84,12 @@ while(1)
     
         printf("Roll: %f Pitch: %f Yaw: %f\n", KFRoll, KFPitch, KFYaw);
         dt = 0; // Reset DT
+        acc_roll = acc_roll + 10;
+        acc_pitch = acc_pitch + 15;
+        gyro_roll = gyro_roll + 5;
+        gyro_pitch = gyro_pitch + 5; 
+        gyro_yaw = gyro_yaw + 5; 
+        mag_yaw = mag_yaw + 20;
     }
     else 
     {
