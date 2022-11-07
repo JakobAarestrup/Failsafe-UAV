@@ -9,7 +9,7 @@
 #include <wiringPi.h>
 #include <stdbool.h>
 #include <time.h>
-#include "Kalman2.cpp"
+#include "Kalman2.hpp"
 
 //#define dt (200) // replace this with actual sample rate
 
