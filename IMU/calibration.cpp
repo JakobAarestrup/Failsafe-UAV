@@ -65,6 +65,7 @@ while(1)
     
     IMU1.ConvertACCData(ax, ay, az);
     IMU1.ConvertGyroData(gx,gy,gz);
+    //IMU1.ConvertMagData(mx,my);
 
     while(mymillis() - startofloop < (DT*1000)){
             usleep(100);

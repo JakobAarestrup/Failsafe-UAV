@@ -73,8 +73,10 @@ void IMU::ConvertGyroData(int gX, int gY, int gZ)
     printf("GyroXangle: %f, GyroYangle: %f, GyroZangle: %f\n", gyroXangle_, gyroYangle_, gyroZangle_);
 }
 
-void IMU::ConvertMagData(int mY, int mX, int mZ)
+void IMU::ConvertMagData(int mY, int mX)
 {
+    magYaw_ = 180 * atan2(mY,mX)/PI;
+    printf("magYaw: %f", magYaw_);
 }
 
 /* float IMU::getACCData() // Returns ACC data

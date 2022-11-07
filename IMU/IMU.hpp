@@ -5,7 +5,7 @@ public:
     ~IMU(); // Destructor
     void ConvertACCData(int aX, int aY, int aZ);
     void ConvertGyroData(int gX, int gY, int gZ);
-    void ConvertMagData(int mX, int mY, int mZ);
+    void ConvertMagData(int mX, int mY);
     //float getACCData(); // Returns ACC data
     float getMagData();
     float getGyroData(); // Returns Gyro data
@@ -17,6 +17,7 @@ public:
     int gyro_Y_; // Gyroscope Y-axis
     int gyro_Z_; // Gyroscope Z-axis
     */
+    float magYaw_ = 0.0;
     float rate_gyr_y_ = 0.0;   // Gyroscope X-angle in deg/s
 	float rate_gyr_x_ = 0.0;   // Gyroscope Y-angle in deg/s
 	float rate_gyr_z_ = 0.0;   // Gyroscope Z-angle in deg/s
