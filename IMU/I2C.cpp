@@ -74,6 +74,7 @@ int I2C::ReadI2C_16bit(int ADDR, int reg)
         return I2C_Data_; // Return i2c data
     }  */ 
     int I2C_Data_ = (Reg_data1 | Reg_data2 << 8); 
+    printf("I2C_Data: %d\n", I2C_Data_);
     return I2C_Data_; // Return i2c data
 }
 
