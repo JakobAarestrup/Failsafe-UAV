@@ -19,6 +19,8 @@ I2C I1;
 I2C I2;
 IMU IMU1;
 Kalman2 k1;
+Kalman2 k2;
+Kalman2 k3;
 int dt_new = 0;
 int dt = sample_rate;
 
@@ -40,7 +42,10 @@ I2.WriteI2C(LIS3MDL_ADDR_1, LIS3MDL_CTRL_REG3, 0b00000000);// MD = 00 (continuou
 I2.WriteI2C(LIS3MDL_ADDR_1, LIS3MDL_CTRL_REG4, 0b00001100);// OMZ = 11 (ultra-high-performance mode for Z)
 
 //Test
-float acc_roll = 85;
+k1.setAngle(85); // roll
+k2.setAngle(80); // pitch
+k3.setAngle(75); // yaw
+float acc_roll =80;
 float acc_pitch =80;
 float gyro_roll = 90;
 float gyro_pitch = 90; 
@@ -80,8 +85,8 @@ while(1)
         
 
         float KFRoll = k1.getAngle(acc_roll, gyro_roll, dt);
-        float KFPitch = k1.getAngle(acc_pitch, gyro_pitch, dt);
-        float KFYaw = k1.getAngle(mag_yaw, gyro_yaw, dt);
+        float KFPitch = k2.getAngle(acc_pitch, gyro_pitch, dt);
+        float KFYaw = k3.getAngle(mag_yaw, gyro_yaw, dt);
     
         printf("Roll: %f Pitch: %f Yaw: %f\n", KFRoll, KFPitch, KFYaw);
         dt = 0; // Reset DT
