@@ -36,12 +36,12 @@ double aXraw = aX*conv_Rate;
 double aYraw = aY*conv_Rate;
 //double aZraw = aZ*conv_Rate;
 
-double aXraw_off = aX*conv_Rate+0xFFFF; 
-double aYraw_off = aY*conv_Rate+0xFFFF;
+double aXraw_off = (aX+0xFFFF)*conv_Rate; 
+double aYraw_off = (aY+0xFFFF)*conv_Rate;
 //double aZraw_off = aZ*conv_Rate+0xFFFF;
 
-printf("Converted - X: %f, Y: %f \n",aXraw, aYraw);
-printf("Converted - X: %f, Y: %f \n",aXraw_off, aYraw_off);
+printf("Raw - X: %lf, Y: %lf \n",aXraw, aYraw);
+printf("Raw_off - X: %f, Y: %f \n",aXraw_off, aYraw_off);
 float A = sqrt(pow(aXg,2)+ pow(aYg,2) + pow(aZg,2)); // force on object
 double XL_xdeg = (atan2(-aXg,-aZg))/(pi/180)+180;
 double XL_ydeg = (atan2(-aYg,-aZg)/(pi/180))+180;
