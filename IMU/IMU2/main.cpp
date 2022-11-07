@@ -57,18 +57,12 @@ I2.WriteI2C(LIS3MDL_ADDR_1, LIS3MDL_CTRL_REG4, 0b00001100);// OMZ = 11 (ultra-hi
     FusionAhrsInitialise(&ahrs);
 
     // Set AHRS algorithm settings
-    const FusionAhrsSettings settings = 
-    {
-        .gain = 0.5f,
-        .accelerationRejection = 10.0f,
-        .magneticRejection = 20.0f,
-        .rejectionTimeout = 5 * SAMPLE_RATE, /* 5 seconds */
-    };
+    const FusionAhrsSettings settings = {0.5f, 10.0f, 20.0f, 5 * SAMPLE_RATE /* 5 seconds */};
     FusionAhrsSetSettings(&ahrs, &settings);
 
     // Main loop
-    while (true) {
-
+    while (true) 
+    {
         // Acquire latest sensor data
         float ax = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_A);
         float ay = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_A);
