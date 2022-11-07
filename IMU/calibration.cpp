@@ -8,6 +8,7 @@
 #include <wiringPiI2C.h>
 #include <wiringPi.h>
 #include <stdbool.h>
+#include <sys/time.h>
 #include <time.h>
 //#include "Kalman.cpp"
 
@@ -28,6 +29,8 @@ I2C I2;
 IMU IMU1;
 //Kalman k1;
 int startofloop  = mymillis();
+struct  timeval tvBegin, tvEnd,tvDiff;
+gettimeofday(&tvBegin, NULL);
 
 // Open I2C connection
 I1.openI2C(LSM6DSOX_ADDR2);
