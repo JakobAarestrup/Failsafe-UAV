@@ -22,11 +22,11 @@ Kalman2 k1;
 Kalman2 k2;
 Kalman2 k3;
 float dt_new = 0;
-float dt = sample_rate;
 
 // Open I2C connection
 I1.openI2C(LSM6DSOX_ADDR1);
 I2.openI2C(LIS3MDL_ADDR_1);
+float dt = millis();
 
 // Enable accelerometer and gyroscope
 I1.WriteI2C(LSM6DSOX_ADDR1, LSM6DSOX_INT1_CTRL, 0b00000011); // Enable gyroscope and accelerometer data interrupt
@@ -57,7 +57,7 @@ while(1)
 {
     if (dt - dt_new >= sample_rate)
     {
-        dt_new = dt; //200ms in first run. 400 in second run etc.
+        dt_new = dt; //2000ms in first run. 4000 in second run etc.
 
         /*
         float ax = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_A);
