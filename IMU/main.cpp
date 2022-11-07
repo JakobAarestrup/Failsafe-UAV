@@ -22,21 +22,21 @@ Kalman2 k1;
 int dt_new = 0;
 
 // Open I2C connection
-I1.openI2C(LSM6DSOX_ADDR2);
-I2.openI2C(LIS3MDL_ADDR_2);
+I1.openI2C(LSM6DSOX_ADDR1);
+I2.openI2C(LIS3MDL_ADDR_1);
 
 // Enable accelerometer and gyroscope
-I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_INT1_CTRL, 0b00000011); // Enable gyroscope and accelerometer data interrupt
-I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 0b10011100); // Gyro = 416 Hz (High-Performance mode)
-I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL1_XL, 0b011000000); // Acc = 416 Hz (High-Performance mode)
-I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL3_C, 0b01000000); // Enable BDU
-I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL7_G, 0b10000000); // Enable High-Performance mode for Gyro
+I1.WriteI2C(LSM6DSOX_ADDR1, LSM6DSOX_INT1_CTRL, 0b00000011); // Enable gyroscope and accelerometer data interrupt
+I1.WriteI2C(LSM6DSOX_ADDR1, LSM6DSOX_CTRL2_G, 0b10011100); // Gyro = 416 Hz (High-Performance mode)
+I1.WriteI2C(LSM6DSOX_ADDR1, LSM6DSOX_CTRL1_XL, 0b011000000); // Acc = 416 Hz (High-Performance mode)
+I1.WriteI2C(LSM6DSOX_ADDR1, LSM6DSOX_CTRL3_C, 0b01000000); // Enable BDU
+I1.WriteI2C(LSM6DSOX_ADDR1, LSM6DSOX_CTRL7_G, 0b10000000); // Enable High-Performance mode for Gyro
 
 // Enable magnetometer
-I2.WriteI2C(LIS3MDL_ADDR_2, LIS3MDL_CTRL_REG1, 0b01110000);// OM = 11 (ultra-high-performance mode for X and Y); DO = 100 (10 Hz ODR)
-I2.WriteI2C(LIS3MDL_ADDR_2, LIS3MDL_CTRL_REG2, 0b00000000);// FS = 00 (+/- 4 gauss full scale)
-I2.WriteI2C(LIS3MDL_ADDR_2, LIS3MDL_CTRL_REG3, 0b00000000);// MD = 00 (continuous-conversion mode)
-I2.WriteI2C(LIS3MDL_ADDR_2, LIS3MDL_CTRL_REG4, 0b00001100);// OMZ = 11 (ultra-high-performance mode for Z)
+I2.WriteI2C(LIS3MDL_ADDR_1, LIS3MDL_CTRL_REG1, 0b01110000);// OM = 11 (ultra-high-performance mode for X and Y); DO = 100 (10 Hz ODR)
+I2.WriteI2C(LIS3MDL_ADDR_1, LIS3MDL_CTRL_REG2, 0b00000000);// FS = 00 (+/- 4 gauss full scale)
+I2.WriteI2C(LIS3MDL_ADDR_1, LIS3MDL_CTRL_REG3, 0b00000000);// MD = 00 (continuous-conversion mode)
+I2.WriteI2C(LIS3MDL_ADDR_1, LIS3MDL_CTRL_REG4, 0b00001100);// OMZ = 11 (ultra-high-performance mode for Z)
 
 //Test
 float acc_roll = 90;
