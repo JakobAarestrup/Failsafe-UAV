@@ -17,13 +17,13 @@ public:
     int gyro_Y_; // Gyroscope Y-axis
     int gyro_Z_; // Gyroscope Z-axis
     */
-    float magYaw_ = 0.0;
-    float rate_gyr_y_ = 0.0;   // Gyroscope X-angle in deg/s
-	float rate_gyr_x_ = 0.0;   // Gyroscope Y-angle in deg/s
-	float rate_gyr_z_ = 0.0;   // Gyroscope Z-angle in deg/s
-    float gyroXangle_ = 0.0; // Gy
-	float gyroYangle_ = 0.0; // Gy
-	float gyroZangle_ = 0.0;
-    float acc_X_; // Accelerometer X-axis
-    float acc_Y_; // Accelerometer Y-axis
+    double magYaw_ = 0.0;
+    double rate_gyr_y_ = 0.0;   // Gyroscope X-angle in deg/s
+	double rate_gyr_x_ = 0.0;   // Gyroscope Y-angle in deg/s
+	double rate_gyr_z_ = 0.0;   // Gyroscope Z-angle in deg/s
+    double gyroXangle_ = 0.0; // Gy
+	double gyroYangle_ = 0.0; // Gy
+	double gyroZangle_ = 0.0;
+    double XL_Roll_ = 0.0; // Accelerometer X-axis
+    double XL_Pitch_ 0.0; // Accelerometer Y-axis
 };
