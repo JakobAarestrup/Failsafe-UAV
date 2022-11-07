@@ -26,8 +26,8 @@ void IMU::ConvertACCData(int aX, int aY, int aZ)
 
 printf("non-Converted - X: %d, Y: %d Z: %d\n",aX,aY,aZ);
 
-double XL_xdeg = (atan2(-aY,-aZ)+PI)*RAD_TO_DEG;
-double XL_ydeg = (atan2(-aZ,-aY)+PI)*RAD_TO_DEG;
+double XL_xdeg = (atan2(aY,aZ)+PI)*RAD_TO_DEG;
+double XL_ydeg = (atan2(aZ,aY)+PI)*RAD_TO_DEG;
 double XL_zdeg = 180-(atan2(-aY,-aZ)/(PI/180));
 /* XL_xdeg -= (double)180.0;
 		if ( XL_ydeg > 90)
@@ -39,7 +39,7 @@ if (XL_xdeg >180)
 
 XL_ydeg-=90;
 
-if (XL_ydeg >180)
+if (XL_ydeg > 180)
         XL_ydeg -= (double)360.0;
 
 
