@@ -53,10 +53,12 @@ void IMU::ConvertACCData(int aX, int aY, int aZ)
     XL_Pitch_ = atan2(-aXf, sqrt(aYf * aYf + aZf * aZf)) * 180 / PI;
     printf("Converted - roll: %lf, pitch: %lf\n\n", XL_Roll_, XL_Pitch_);
 
-    aXf = (double(aX)*0.061)/1000;
-    aYf = (double(aX)*0.061)/1000;
-    aZf = (double(aX)*0.061)/1000;
+    aXf = (float(aX)*0.061)/1000;
+    aYf = (float(aY)*0.061)/1000;
+    aZf = (float(aZ)*0.061)/1000;
+
     double conv_rate = 90.794451450189155107;
+
     double aXc = conv_rate *aXf;
     double aYc = conv_rate *aYf;
     double aZc = conv_rate *aZf;
