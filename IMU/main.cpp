@@ -11,7 +11,7 @@
 #include <time.h>
 #include "Kalman2.hpp"
 
-#define sample_rate (200) // replace this with actual sample rate
+#define sample_rate (2000) // replace this with actual sample rate
 
 int main()
 {
@@ -98,8 +98,8 @@ while(1)
         }
         else
         {
-            acc_roll = acc_roll + 5.3;
-            gyro_roll = gyro_roll + 10.2;
+            acc_roll = acc_roll + 5;
+            gyro_roll = gyro_roll + 10;
         }
 
         if (gyro_pitch == 360)
@@ -109,8 +109,8 @@ while(1)
         }
         else
         {
-            acc_pitch = acc_pitch + 5.3;
-            gyro_pitch = gyro_pitch + 15.2;
+            acc_pitch = acc_pitch + 5;
+            gyro_pitch = gyro_pitch + 15;
         }
             
         if (gyro_yaw == 360)
@@ -120,8 +120,8 @@ while(1)
         }
         else
         {
-            mag_yaw = mag_yaw + 5.3;
-            gyro_yaw = gyro_yaw + 20.2; 
+            mag_yaw = mag_yaw + 5;
+            gyro_yaw = gyro_yaw + 20; 
         }
     }
     else 
