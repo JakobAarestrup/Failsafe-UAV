@@ -56,7 +56,7 @@ void IMU::ConvertACCData(int aX, int aY, int aZ)
      if (XL_xdeg >180)
         XL_xdeg -= (double)360.0;
 */
-    printf("Converted - X: %f, Y: %f Z: %f\n", XL_xdeg, XL_ydeg, XL_zdeg);
+    printf("Converted - X: %f, Y: %f", XL_Roll_, XL_Pitch_);
 }
 
 void IMU::ConvertGyroData(int gX, int gY, int gZ)
