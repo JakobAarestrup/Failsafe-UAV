@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 // Definitions
-#define M_PI 3.14159265358979323846
+#define PI 3.14159265358979323846
 #define RAD_TO_DEG 57.29578
 #define DT 0.02         // [s/loop] loop period. 20ms
 #define AA 0.97         // complementary filter constant
@@ -24,12 +24,17 @@ IMU::~IMU()
 void IMU::ConvertACCData(int aX, int aY, int aZ)
 {
 
-double pi = 3.14159265358979;
 printf("non-Converted - X: %d, Y: %d Z: %d\n",aX,aY,aZ);
 
-double XL_xdeg = (atan2(-aY,-aZ)/(pi/180))+180;
-double XL_ydeg = (atan2(-aX,-aZ))/(pi/180)+180;
+double XL_xdeg = (atan2(-aY,-aZ))+PI)*RAD_TO_DEG;
+double XL_ydeg = (atan2(-aZ,-aY))+PI)*RAD_TO_DEG;
 double XL_zdeg = 180-(atan2(-aY,-aZ)/(pi/180));
+XL_xdeg -= (double)180.0;
+		if ( > 90)
+				XL_ydeg -= (double)270;
+		else
+			XL_ydeg += (double)90;
+
 printf("Converted - X: %f, Y: %f Z: %f\n",XL_xdeg,XL_ydeg, XL_zdeg);
 
 }
