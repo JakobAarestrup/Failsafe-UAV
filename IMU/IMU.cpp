@@ -21,46 +21,24 @@ IMU::~IMU()
     //delete [] sensor_handle_,gyr_Xangle_,gyr_Yangle_, gyr_Zangle_,roll_,pitch_; // Delete private variables
     //delete [] rate_gyr_x_,rate_gyr_y_,rate_gyr_z_,mag_X_,mag_Y_,mag_Z_; // Delete private variables
 }
-void IMU::ConvertACCData(int aY, int aX, int aZ)
+void IMU::ConvertACCData(int aX, int aY, int aZ)
 {
 
-float XL_Sensitivity = 0.01; // +/-2g
 double pi = 3.14159265358979;
-double conv_Rate = 0.005493247882811;
-double r_deg = 57.29578;
 printf("non-Converted - X: %d, Y: %d Z: %d\n",aX,aY,aZ);
-float aXg = (aX*XL_Sensitivity); // value in g
-float aYg = (aY*XL_Sensitivity); // value in g
-float aZg = (aZ*XL_Sensitivity); // value in g
-double aXf = float(aX);
-double aYf = float(aY);
-double aZf = float(aZ);
 
-double roll = atan2(aYf,aZf)*r_deg;
-double pitch = (atan2(-aXf,sqrt(aYf*aYf+aZf*aZf)))*r_deg;
-
-double aXraw = aX*conv_Rate; 
-double aYraw = aY*conv_Rate;
-//double aZraw = aZ*conv_Rate;
-
-double aXraw_off = (aX+0xFFFF)*conv_Rate; 
-double aYraw_off = (aY+0xFFFF)*conv_Rate;
-//double aZraw_off = aZ*conv_Rate+0xFFFF;
-
-/* printf("Raw - X: %lf, Y: %lf \n\n",aXraw, aYraw);
-printf("Raw_off - X: %lf, Y: %lf \n\n",aXraw_off, aYraw_off); */
 double XL_xdeg = (atan2(-aX,-aZ))/(pi/180)+180;
 double XL_ydeg = (atan2(-aY,-aZ)/(pi/180))+180;
-double XL_zdeg = 180-(atan2(-aYg,-aZg)/(pi/180));
-
-//printf("roll: %f pitch: %lf, ",roll,pitch);
+double XL_zdeg = 180-(atan2(-aY,-aZ)/(pi/180));
 printf("Converted - X: %f, Y: %f Z: %f\n",XL_xdeg,XL_ydeg, XL_zdeg);
 
 }
 
 void IMU::ConvertGyroData(int gY, int gX, int gZ)
 {
-
+        rate_gyr_x = (float) gX  * G_GAIN;
+		rate_gyr_y = (float) gY  * G_GAIN;
+		rate_gyr_z = (float) gZ  * G_GAIN;   
 }
 
 void IMU::ConvertMagData(int mY, int mX, int mZ)
