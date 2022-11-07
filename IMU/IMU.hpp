@@ -25,5 +25,5 @@ public:
 	double gyroYangle_ = 0.0; // Gy
 	double gyroZangle_ = 0.0;
     double XL_Roll_ = 0.0; // Accelerometer X-axis
-    double XL_Pitch_ 0.0; // Accelerometer Y-axis
+    double XL_Pitch_ = 0.0; // Accelerometer Y-axis
 };
