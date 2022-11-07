@@ -11,7 +11,7 @@
 #include <time.h>
 #include "Kalman2.cpp"
 
-#define dt (200) // replace this with actual sample rate
+//#define dt (200) // replace this with actual sample rate
 
 int main()
 {
@@ -20,6 +20,7 @@ I2C I2;
 IMU IMU1;
 Kalman2 k1;
 int dt_new = 0;
+int dt = 200;
 
 // Open I2C connection
 I1.openI2C(LSM6DSOX_ADDR1);
