@@ -53,7 +53,7 @@ void IMU::ConvertACCData(int aX, int aY, int aZ)
     /* if (XL_xdeg >180)
         XL_xdeg -= (double)360.0;
 */
-    XL_ydeg-=(double)90;
+    XL_xdeg-=(double)90;
 
     if (XL_ydeg > 180)
             XL_ydeg -= (double)360.0;
