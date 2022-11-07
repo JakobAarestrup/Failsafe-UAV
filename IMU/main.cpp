@@ -86,7 +86,7 @@ while(1)
         printf("Roll: %f Pitch: %f Yaw: %f\n", KFRoll, KFPitch, KFYaw);
         dt = 0; // Reset DT
 
-        if (acc_roll == 360)
+        if (gyro_roll == 360)
         {
             acc_roll = 0;
             gyro_roll = 0;
@@ -97,7 +97,7 @@ while(1)
             gyro_roll = gyro_roll + 10;
         }
 
-        if (acc_pitch == 360)
+        if (gyro_pitch == 360)
         {
             acc_pitch = 0;
             gyro_pitch = 0;
@@ -108,7 +108,7 @@ while(1)
             gyro_pitch = gyro_pitch + 15;
         }
             
-        if (mag_yaw == 360)
+        if (gyro_yaw == 360)
         {
             mag_yaw = 0;
             gyro_yaw = 0;
