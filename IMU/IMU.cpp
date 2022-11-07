@@ -35,6 +35,7 @@ float aZg = (aZ*XL_Sensitivity); // value in g
 double aXf = float(aX);
 double aYf = float(aY);
 double aZf = float(aZ);
+
 double roll = atan2(aYf,aZf)*r_deg;
 double pitch = (atan2(-aXf,sqrt(aYf*aYf+aZf*aZf)))*r_deg;
 
@@ -46,9 +47,8 @@ double aXraw_off = (aX+0xFFFF)*conv_Rate;
 double aYraw_off = (aY+0xFFFF)*conv_Rate;
 //double aZraw_off = aZ*conv_Rate+0xFFFF;
 
-printf("Raw - X: %lf, Y: %lf \n\n",aXraw, aYraw);
-printf("Raw_off - X: %lf, Y: %lf \n\n",aXraw_off, aYraw_off);
-float A = sqrt(pow(aXg,2)+ pow(aYg,2) + pow(aZg,2)); // force on object
+/* printf("Raw - X: %lf, Y: %lf \n\n",aXraw, aYraw);
+printf("Raw_off - X: %lf, Y: %lf \n\n",aXraw_off, aYraw_off); */
 double XL_xdeg = (atan2(-aX,-aZ))/(pi/180)+180;
 double XL_ydeg = (atan2(-aY,-aZ)/(pi/180))+180;
 double XL_zdeg = 180-(atan2(-aYg,-aZg)/(pi/180));
