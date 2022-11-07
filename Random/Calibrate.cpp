@@ -10,17 +10,16 @@
 
 int main()
 {
-int aX = 50000, aY = -429.000000, aZ = 16356;
+int aX = 64980, aY = 51960, aZ = 16500;
 int gX = 0, gY = 0, gZ =0;
 int mgX = 0, mgY = 0, mgZ =0;
-float XL_Sensitivity = 0.061; // +/-2g
+float XL_Sensitivity = 439483; // +/-2g
 float G_Sensitivity = 4.375; // +/- 125 dps
 float MG_Sensitivity = 0.0015; // at default full scale
+double r_deg = 57.29578;
 double pi = 3.14159265358979;
 double conv_Rate = 0.005493247882811;
 double sheesh = 0.005493247882811;
-printf("%lf\n",conv_Rate);
-printf("%lf\n",sheesh);
 double aXraw = aX*conv_Rate;
 
 double aYraw = aY*conv_Rate;
@@ -35,7 +34,10 @@ printf("Raw_off - X: %lf, Y: %lf \n",aXraw_off, aYraw_off);
 
 float aXg = (aX*XL_Sensitivity)/1000; // 0.061 sensitivity at +/-2g result in g
 float aYg = (aY*XL_Sensitivity)/1000; // 
-float aZg = (aZ*XL_Sensitivity)/1000;
+float aZg = (aZ*XL_Sensitivity)/1000; // 0.061 sensitivity at +/-2);
+double aXf = float(aX);
+double aYf = float(aY);
+double aZf = float(aZ);
 
 float gXdps = (gX*G_Sensitivity)/1000;
 float gYdps = (gY*G_Sensitivity)/1000;
@@ -47,11 +49,20 @@ printf("A: %f\n",A);
 float XL_ydeg = acos((aYg/A))/(pi/180);
 float XL_zdeg = acos((aZg/A))/(pi/180);  */
 
-double XL_X = (atan2(-aZg,-aXg)/(pi/180))+180;
-double XL_Y = (atan2(-aYg,-aZg)/(pi/180))+180;
-double XL_Z = (atan2(-aXg,-aZg)/(pi/180))+180;
+double XL_X = (atan2(-aZ,-aX)/(pi/180));
+double XL_Y = (atan2(-aY,-aZ)/(pi/180));
 
-printf("Vinkel_X: %f Vinkel_Y: %f, Vinkel_Z: %f\n", XL_X,XL_Y,XL_Z);
+double roll = (atan2(-aYf,-aZf)/(pi/180));
+double pitch = (atan2(aXf,-sqrt(aYf*aYf+aZf*aZf))/(pi/180));
+
+double roll2 = atan2(aYf,aZf)*r_deg;
+double pitch2 = (atan2(-aXf,sqrt(aYf*aYf+aZf*aZf)))*r_deg;
+
+printf("Vinkel_X: %f Vinkel_Y: %f, Vinkel_Z: %f\n", XL_X,XL_Y);
+
+printf("roll: %f pitch: %lf, ",roll,pitch);
+printf("roll: %f pitch: %lf, ",roll2,pitch2);
+
 
 float mgXdps = (mgX*MG_Sensitivity)/1000;
 float mgYdps = (mgY*MG_Sensitivity)/1000;
