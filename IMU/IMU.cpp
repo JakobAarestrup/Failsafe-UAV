@@ -27,10 +27,16 @@ void IMU::ConvertACCData(int aY, int aX, int aZ)
 float XL_Sensitivity = 0.01; // +/-2g
 double pi = 3.14159265358979;
 double conv_Rate = 0.005493247882811;
+double r_deg = 57.29578;
 printf("non-Converted - X: %d, Y: %d Z: %d\n",aX,aY,aZ);
 float aXg = (aX*XL_Sensitivity); // value in g
 float aYg = (aY*XL_Sensitivity); // value in g
 float aZg = (aZ*XL_Sensitivity); // value in g
+double aXf = float(aX);
+double aYf = float(aY);
+double aZf = float(aZ);
+double roll = atan2(aYf,aZf)*r_deg;
+double pitch = (atan2(-aXf,sqrt(aYf*aYf+aZf*aZf)))*r_deg;
 
 double aXraw = aX*conv_Rate; 
 double aYraw = aY*conv_Rate;
@@ -43,10 +49,11 @@ double aYraw_off = (aY+0xFFFF)*conv_Rate;
 printf("Raw - X: %lf, Y: %lf \n\n",aXraw, aYraw);
 printf("Raw_off - X: %lf, Y: %lf \n\n",aXraw_off, aYraw_off);
 float A = sqrt(pow(aXg,2)+ pow(aYg,2) + pow(aZg,2)); // force on object
-double XL_xdeg = (atan2(-aXg,-aZg))/(pi/180);//+180;
-double XL_ydeg = (atan2(-aYg,-aZg)/(pi/180));//+180;
+double XL_xdeg = (atan2(-aX,-aZ))/(pi/180)+180;
+double XL_ydeg = (atan2(-aY,-aZ)/(pi/180))+180;
 double XL_zdeg = 180-(atan2(-aYg,-aZg)/(pi/180));
 
+printf("roll: %f pitch: %lf, ",roll,pitch);
 printf("Converted - X: %f, Y: %f Z: %f\n",XL_xdeg,XL_ydeg, XL_zdeg);
 
 }
