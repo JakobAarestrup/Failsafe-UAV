@@ -10,14 +10,14 @@
 #include <stdbool.h>
 #include <time.h>
 //#include "Fusion.h"
-extern "C" {
+
 #include "FusionAhrs.h"
 #include "FusionAxes.h"
 #include "FusionCalibration.h"
 #include "FusionCompass.h"
 #include "FusionMath.h"
 #include "FusionOffset.h"
-}
+
 
 #define SAMPLE_RATE (2000) // replace this with actual sample rate
 
