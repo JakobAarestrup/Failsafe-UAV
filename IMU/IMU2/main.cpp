@@ -9,14 +9,7 @@
 #include <wiringPi.h>
 #include <stdbool.h>
 #include <time.h>
-//#include "Fusion.h"
-
-#include "FusionAhrs.h"
-#include "FusionAxes.h"
-#include "FusionCalibration.h"
-#include "FusionCompass.h"
-#include "FusionMath.h"
-#include "FusionOffset.h"
+#include "Fusion.h"
 
 
 #define SAMPLE_RATE (2000) // replace this with actual sample rate
