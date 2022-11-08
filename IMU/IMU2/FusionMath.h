@@ -23,8 +23,7 @@
 typedef union {
     float array[3];
 
-    struct 
-    {
+    struct {
         float x;
         float y;
         float z;
@@ -34,8 +33,7 @@ typedef union {
 /**
  * @brief Quaternion.
  */
-typedef union 
-{
+typedef union {
     float array[4];
 
     struct {
@@ -53,8 +51,7 @@ typedef union
 typedef union {
     float array[3][3];
 
-    struct 
-    {
+    struct {
         float xx;
         float xy;
         float xz;
@@ -71,12 +68,10 @@ typedef union {
  * @brief Euler angles.  Roll, pitch, and yaw correspond to rotations around
  * X, Y, and Z respectively.
  */
-typedef union 
-{
+typedef union {
     float array[3];
 
-    struct 
-    {
+    struct {
         float roll;
         float pitch;
         float yaw;
