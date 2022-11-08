@@ -115,9 +115,10 @@ void FusionAhrsUpdate(FusionAhrs *const ahrs, const FusionVector gyroscope, cons
 
     // Calculate direction of gravity indicated by algorithm
     const FusionVector halfGravity = {
-            axis.x = Q.x * Q.z - Q.w * Q.y,
-            axis.y = Q.y * Q.z + Q.w * Q.x,
-            axis.z = Q.w * Q.w - 0.5f + Q.z * Q.z,
+            .axis{.x=Q.x * Q.z - Q.w * Q.y, .y=Q.y * Q.z + Q.w * Q.x, .z=Q.w * Q.w - 0.5f + Q.z * Q.z}
+           // .axis.x = Q.x * Q.z - Q.w * Q.y,
+           // .axis.y = Q.y * Q.z + Q.w * Q.x,
+           // .axis.z = Q.w * Q.w - 0.5f + Q.z * Q.z,
     }; // third column of transposed rotation matrix scaled by 0.5
 
     // Calculate accelerometer feedback
