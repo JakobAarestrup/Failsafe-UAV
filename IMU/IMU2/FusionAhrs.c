@@ -345,10 +345,11 @@ void FusionAhrsSetHeading(FusionAhrs *const ahrs, const float heading) {
     const float yaw = atan2f(Q.w * Q.z + Q.x * Q.y, 0.5f - Q.y * Q.y - Q.z * Q.z);
     const float halfYawMinusHeading = 0.5f * (yaw - FusionDegreesToRadians(heading));
     const FusionQuaternion rotation = {
-            .element.w = cosf(halfYawMinusHeading),
-            .element.x = 0.0f,
-            .element.y = 0.0f,
-            .element.z = -1.0f * sinf(halfYawMinusHeading),
+            .element{.w=cosf(halfYawMinusHeading), .x=0.0f, .y=0.0f, .z=-1.0f * sinf(halfYawMinusHeading)}
+            //.element.w = cosf(halfYawMinusHeading),
+            //.element.x = 0.0f,
+            //.element.y = 0.0f,
+            //.element.z = -1.0f * sinf(halfYawMinusHeading),
     };
     ahrs->quaternion = FusionQuaternionMultiply(rotation, ahrs->quaternion);
 #undef Q
