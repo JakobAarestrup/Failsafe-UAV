@@ -123,13 +123,13 @@ void GPS::readGPS(int fd, char sensor_Data, char* d1 , char* d2) // reads GPS se
     }            
 }
 
-void GPS::convertData(double lon_Data, double lat_Data, char NS[], char EW[]) // converts GPS serial data to degrees
+void GPS::convertData(double lon_Data, double lat_Data, char NS[], char EW[]) // converts GPS serial data to decimal degrees
 {
     double lat_Deg = int(lat_Data)/100; // (d)dd(deg)
     double lon_Deg = int(lon_Data)/100; // (d)dd(deg)
 
-    double lat_Sec = (lat_Data-lat_Deg*100); // mm.mmmm(minutes)
-    double lon_Sec = (lon_Data-lon_Deg*100); // mm.mmmm(minutes)
+    double lat_Sec = (lat_Data-lat_Deg*100)/60; // mm.mmmm(minutes) / 60 = seconds
+    double lon_Sec = (lon_Data-lon_Deg*100)/60; // mm.mmmm(minutes) / 60 = seconds
    
         if(strcmp(NS,"") == 0 | strcmp(EW,"") == 0) // is 1 of the arrays empty?
         {
@@ -140,25 +140,25 @@ void GPS::convertData(double lon_Data, double lat_Data, char NS[], char EW[]) //
         {
             if (strcmp(NS,"S") == 0 & strcmp(EW, "E") == 0 ) // handles negative
             {
-                latitude_  = (lat_Deg  + (lat_Sec/60))*-1;
-                longitude_ = lon_Deg  + (lon_Sec/60);
+                latitude_  = (lat_Deg  + lat_Sec)*-1;
+                longitude_ = lon_Deg  + lon_Sec;
             }
             else if (strcmp(NS,"N") == 0 & strcmp(EW, "W") == 0)
             {
 
-                latitude_  = lat_Deg  + (lat_Sec/60);
-                longitude_ = (lon_Deg  + (lon_Sec/60))*-1;
+                latitude_  = lat_Deg  + (lat_Sec);
+                longitude_ = lon_Deg  + (lon_Sec)*-1;
                 printf("HELLO\n");
             }
             else if (strcmp(NS,"S") == 0 & strcmp(EW, "W") == 0)
             {
-                latitude_  = (lat_Deg  + (lat_Sec/60))*-1;
-                longitude_ = (lon_Deg  + (lon_Sec/60))*-1;
+                latitude_  = lat_Deg  + (lat_Sec)*-1;
+                longitude_ = lon_Deg  + (lon_Sec)*-1;
             }
             else
             {
-                latitude_  = lat_Deg  + (lat_Sec/60);
-                longitude_ = lon_Deg  + (lon_Sec/60);
+                latitude_  = lat_Deg  + lat_Sec;
+                longitude_ = lon_Deg  + lon_Sec;
             }
 
         std::cout << "" << latitude_ << "," << NS_[1] << " " << longitude_ << "," << EW_[1] << " Satellites:" << SV_ << std::endl;
