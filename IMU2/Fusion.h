@@ -10,21 +10,12 @@
 
 //------------------------------------------------------------------------------
 // Includes
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "FusionAhrs.h"
 #include "FusionAxes.h"
 #include "FusionCalibration.h"
 #include "FusionCompass.h"
 #include "FusionMath.h"
 #include "FusionOffset.h"
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif
 //------------------------------------------------------------------------------

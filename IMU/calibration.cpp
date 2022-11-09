@@ -8,10 +8,18 @@
 #include <wiringPiI2C.h>
 #include <wiringPi.h>
 #include <stdbool.h>
+#include <sys/time.h>
 #include <time.h>
 //#include "Kalman.cpp"
 
-//#define SAMPLE_RATE (100) // replace this with actual sample rate
+#define DT 0.02         // [s/loop] loop period. 20ms (2s)
+
+int mymillis()
+{
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec) * 1000 + (tv.tv_usec)/1000;
+}
 
 int main()
 {
@@ -20,8 +28,9 @@ I2C I1;
 I2C I2;
 IMU IMU1;
 //Kalman k1;
-
-int startInt;
+int startofloop  = mymillis();
+struct  timeval tvBegin, tvEnd,tvDiff;
+gettimeofday(&tvBegin, NULL);
 
 // Open I2C connection
 I1.openI2C(LSM6DSOX_ADDR2);
@@ -41,7 +50,7 @@ I2.WriteI2C(LIS3MDL_ADDR_2, LIS3MDL_CTRL_REG3, 0b00000000);// MD = 00 (continuou
 I2.WriteI2C(LIS3MDL_ADDR_2, LIS3MDL_CTRL_REG4, 0b00001100);// OMZ = 11 (ultra-high-performance mode for Z)
 
 // Main loop
-while(1)//k1.mymillis() - startInt < 20
+while(1)
 {
     //startInt = mymillis();
     float ax = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_A);
@@ -55,10 +64,14 @@ while(1)//k1.mymillis() - startInt < 20
     float mz = I2.ReadI2C_16bit(LIS3MDL_ADDR_2, LIS3MDL_OUT_Z_L);
     
     IMU1.ConvertACCData(ax, ay, az);
-    //printf("AccX: %f AccY: %f AccZ: %f\n", ax, ay, az);
-    //printf("GyroX: %f GyroY: %f GyroZ: %f\n", gx,gy,gz);
-    //printf("MagX: %f MagY: %f MagZ: %f\n", mx, my, mz);
-    usleep(1000000);
+    IMU1.ConvertGyroData(gx,gy,gz);
+    IMU1.ConvertMagData(mx,my);
+
+  /*   while(mymillis() - startofloop < (DT*1000)){
+            usleep(100);
+    }
+    printf("Loop Time %d\n", mymillis()- startofloop); */
+    usleep(500000);
 }
 return 0;
 }

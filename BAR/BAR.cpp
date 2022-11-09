@@ -1,9 +1,4 @@
 #include "BAR.hpp"
-#include "MS5611.hpp"
-#include <math.h>
-#include "I2Cdev.h"
-#include <unistd.h>
-#include <string>
 
 /*Math constants*/
 #define p_0 101325 // Pressure at sea level
@@ -14,7 +9,7 @@
 #define g 9.807 // Gravitational constant in m/s^2
 
 // Constructor
-BAR::BAR() 
+BAR::BAR()
 {}
 
 // Destructor
@@ -24,17 +19,17 @@ BAR::~BAR()
  }
 
 //Calibrates the barometer data
-void BAR::Calibrate_BAR() 
+void BAR::calibrate_BAR() 
 {
-    initial_pressure_ = (PRES_*mbar_to_Pa); // Convert mbar to Pascal
+    initial_pressure_ = (pres_*mbar_to_Pa); // Convert mbar to Pascal
     initial_AMSL_ = (T_s/T_G)*(1-pow((initial_pressure_/p_0),T_G*(R/g)))+deviation_; //using international barometric formula to get height
     //printf("Initial AMSL: %f\n", initial_AMSL_);
 }
 
 // Converts the bar data into height
-void BAR::ConvertBARData() 
+void BAR::convertBARData() 
 {
-    pressure_ = (PRES_*mbar_to_Pa); // Convert mbar to Pascal.
+    pressure_ = (pres_*mbar_to_Pa); // Convert mbar to Pascal.
     
     height_AMSL_ = (T_s/T_G)*(1-pow((pressure_/p_0),T_G*(R/g)))+deviation_; // Using international barometric formula to get height
     //printf("Height AMSL: %f\n", height_AMSL_);
@@ -46,10 +41,10 @@ float BAR::getHeight()
 {    
     if(calibration_ <= 29)
     {
-        Calibrate_BAR();
+        calibrate_BAR();
         calibration_++;
     }
-        ConvertBARData();
+        convertBARData();
         return height_AGL_; // Return height
 }
 
@@ -122,37 +117,37 @@ void BAR::readTemperature()
 void BAR::calculatePressureAndTemperature() 
 {
     float dT = D2_ - C5_ * pow(2, 8);
-    TEMP_ = (2000 + ((dT * C6_) / pow(2, 23)));
+    temp_ = (2000 + ((dT * C6_) / pow(2, 23)));
     float OFF = C2_ * pow(2, 16) + (C4_ * dT) / pow(2, 7);
     float SENS = C1_ * pow(2, 15) + (C3_ * dT) / pow(2, 8);
 
     float T2, OFF2, SENS2;
 
-    if (TEMP_ >= 2000)
+    if (temp_ >= 2000)
     {
         T2 = 0;
         OFF2 = 0;
         SENS2 = 0;
     }
-    if (TEMP_ < 2000)
+    if (temp_ < 2000)
     {
         T2 = dT * dT / pow(2, 31);
-        OFF2 = 5 * pow(TEMP_ - 2000, 2) / 2;
+        OFF2 = 5 * pow(temp_ - 2000, 2) / 2;
         SENS2 = OFF2 / 2;
     }
-    if (TEMP_ < -1500)
+    if (temp_ < -1500)
     {
-        OFF2 = OFF2 + 7 * pow(TEMP_ + 1500, 2);
-        SENS2 = SENS2 + 11 * pow(TEMP_ + 1500, 2) / 2;
+        OFF2 = OFF2 + 7 * pow(temp_ + 1500, 2);
+        SENS2 = SENS2 + 11 * pow(temp_ + 1500, 2) / 2;
     }
 
-    TEMP_ = TEMP_ - T2;
+    temp_ = temp_ - T2;
     OFF = OFF - OFF2;
     SENS = SENS - SENS2;
 
     // Final calculations
-    PRES_ = ((D1_ * SENS) / pow(2, 21) - OFF) / pow(2, 15) / 100;
-    TEMP_ = TEMP_ / 100;
+    pres_ = ((D1_ * SENS) / pow(2, 21) - OFF) / pow(2, 15) / 100;
+    temp_ = temp_ / 100;
 }
 
 /** Perform pressure and temperature reading and calculation at once.
@@ -171,14 +166,16 @@ void BAR::update()
     calculatePressureAndTemperature();
 }
 
+/*
 // Get calculated temperature value. Return Temperature in degrees of Celsius
 float BAR::getTemperature() 
 {
-    return TEMP_;
+    return pres_;
 }
 
 // Get calculated pressure value. Return Pressure in millibars
 float BAR::getPressure() 
 {
-	return PRES_;
+	return pres_;
 }
+*/
