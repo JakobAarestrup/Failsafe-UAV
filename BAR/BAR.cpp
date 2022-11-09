@@ -14,7 +14,7 @@
 #define g 9.807 // Gravitational constant in m/s^2
 
 // Constructor
-BAR::BAR() 
+BAR::BAR()
 {}
 
 // Destructor
