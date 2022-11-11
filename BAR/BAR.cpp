@@ -1,4 +1,5 @@
 #include "BAR.hpp"
+#include "I2C_v2.hpp"
 
 /*Math constants*/
 #define p_0 101325 // Pressure at sea level
