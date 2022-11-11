@@ -6,6 +6,7 @@
 #include <fcntl.h>
 #include "LIS3MDL.hpp"
 #include "LSM6DSOX.hpp"
+#include "I2Cdev.h"
 extern "C"
 {
     #include <linux/i2c-dev.h>
