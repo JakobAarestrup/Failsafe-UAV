@@ -60,7 +60,7 @@ void I2C::WriteI2C(int ADDR, int reg, int length, int data)
 // Read from i2c device register
 float I2C::ReadI2C(int ADDR, int reg, int length, int HandleI2C)
 {
-    if(HandleI2C_ == 3) // 24-bit read likely from the Barometer
+    if(HandleI2C == 3) // 24-bit read likely from the Barometer
     {
         uint8_t buffer[3];
         I2Cdev::readBytes(ADDR, reg, length, buffer);
