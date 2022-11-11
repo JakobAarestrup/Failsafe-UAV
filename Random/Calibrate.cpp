@@ -52,7 +52,7 @@ float XL_zdeg = acos((aZg/A))/(pi/180);  */
 double XL_X = (atan2(-aZ,-aX)/(pi/180));
 double XL_Y = (atan2(-aY,-aZ)/(pi/180));
 
-double roll = (atan2(-aYf,-aZf)/(pi/180));
+double roll =  (atan2(-aYf,-aZf)/(pi/180));
 double pitch = (atan2(aXf,-sqrt(aYf*aYf+aZf*aZf))/(pi/180));
 
 double roll2 = atan2(aYf,aZf)*r_deg;
