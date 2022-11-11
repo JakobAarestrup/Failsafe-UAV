@@ -31,7 +31,7 @@ void IMU::ConvertACCData(int aX, int aY, int aZ)
 
     printf("non-Converted - X: %d, Y: %d Z: %d\n", aX, aY, aZ);
 
-  if(aX > 0x8000) 
+/*   if(aX > 0x8000) 
     {
         aX = aX - 0xFFFF;
     }
@@ -43,7 +43,7 @@ void IMU::ConvertACCData(int aX, int aY, int aZ)
     else if (aZ > 0x8000)
     {
         aZ = aZ - 0xFFFF;
-    }
+    } */
     
     printf("after if.. - X: %d, Y: %d Z: %d\n", aX, aY, aZ);
 
