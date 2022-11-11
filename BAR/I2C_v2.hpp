@@ -8,6 +8,6 @@ public:
     float ReadI2C(int ADDR, int reg, int length, int HandleI2C); // Read from I2C device register
 private:
     float I2CData_; // I2C device data
-    float Buffer1_;
-    float Buffer2_;
+    int Buffer1_;
+    int Buffer2_;
 };
