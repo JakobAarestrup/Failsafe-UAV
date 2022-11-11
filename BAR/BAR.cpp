@@ -34,7 +34,7 @@ void BAR::ConvertToAGL()
 // Returns height above ground level
 float BAR::GetHeight() 
 {    
-    if(calibration_ <= 29)
+    if(calibration_ <= 30)
     {
         InitialAMSL();
         calibration_++;
