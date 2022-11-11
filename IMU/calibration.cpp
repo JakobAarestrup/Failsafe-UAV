@@ -52,26 +52,25 @@ I2.WriteI2C(LIS3MDL_ADDR2, LIS3MDL_CTRL_REG4, 0b00001100);// OMZ = 11 (ultra-hig
 // Main loop
 while(1)
 {
-    //startInt = mymillis();
+    startofloop = mymillis();
     float ax = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_A);
     float ay = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_A);
     float az = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_A);
     float gx = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_G);
     float gy = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_G);
     float gz = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_G);
-    float mx = I2.ReadI2C_16bit(LIS3MDL_ADDR2, LIS3MDL_OUT_X_L);
+   /*  float mx = I2.ReadI2C_16bit(LIS3MDL_ADDR2, LIS3MDL_OUT_X_L);
     float my = I2.ReadI2C_16bit(LIS3MDL_ADDR2, LIS3MDL_OUT_Y_L);
-    float mz = I2.ReadI2C_16bit(LIS3MDL_ADDR2, LIS3MDL_OUT_Z_L);
+    float mz = I2.ReadI2C_16bit(LIS3MDL_ADDR2, LIS3MDL_OUT_Z_L); */
     
     IMU1.ConvertACCData(ax, ay, az);
     IMU1.ConvertGyroData(gx,gy,gz);
-    IMU1.ConvertMagData(mx,my);
+    //IMU1.ConvertMagData(mx,my);
 
-  /*   while(mymillis() - startofloop < (DT*1000)){
+  while(mymillis() - startofloop < 20){
             usleep(100);
     }
-    printf("Loop Time %d\n", mymillis()- startofloop); */
-    usleep(1000000);
+    printf("Loop Time %d\n", mymillis()- startofloop);
 }
 return 0;
 }
