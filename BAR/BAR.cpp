@@ -9,6 +9,8 @@
 #define T_G 0.0065 // Temperature gradient in K/m
 #define g 9.807 // Gravitational constant in m/s^2
 
+I2C B1;
+
 // Constructor
 BAR::BAR()
 {}
@@ -54,17 +56,17 @@ void BAR::CalibrateBAR()
 {
     // Reading 6 calibration data values
     //uint8_t buff[2];
-    C1_ = I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C1, 2, 2);
+    C1_ = B1.ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C1, 2, 2);
     //C1_ = buff[0]<<8 | buff[1];
-    C2_ = I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C2, 2, 2);
+    C2_ = B1.ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C2, 2, 2);
     //C2_ = buff[0]<<8 | buff[1];
-    C3_ = I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C3, 2, 2);
+    C3_ = B1.ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C3, 2, 2);
     //C3_ = buff[0]<<8 | buff[1];
-    C4_ = I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C4, 2, 2);
+    C4_ = B1.ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C4, 2, 2);
     //C4_ = buff[0]<<8 | buff[1];
-    C5_ = I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C5, 2, 2);
+    C5_ = B1.ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C5, 2, 2);
     //C5_ = buff[0]<<8 | buff[1];
-    C6_ = I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C6, 2, 2);
+    C6_ = B1.ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C6, 2, 2);
     //C6_ = buff[0]<<8 | buff[1];
 
     Update();
@@ -74,7 +76,7 @@ void BAR::CalibrateBAR()
 bool BAR::TestConnection() 
 {
     uint8_t data;
-    int8_t status = I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C0, &data);
+    int8_t status = B1.ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C0, &data);
     if (status > 0)
         return true;
     else
@@ -94,12 +96,12 @@ void BAR::ReadPressure()
 {
     
     // Initiate the process of pressure measurement
-    I2C::WriteI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_D1_OSR_4096, 0, 0);
+    B1.WriteI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_D1_OSR_4096, 0, 0);
     usleep(10000); // Waiting for pressure data ready
 
     // Read pressure value
     //uint8_t buffer[3];
-    D1_ = I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3);
+    D1_ = B1.ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3);
     //D1_ = (buffer[0] << 16) | (buffer[1] << 8) | buffer[2];
 }
 
@@ -115,12 +117,12 @@ void BAR::RefreshTemperature()
 void BAR::ReadTemperature() 
 {
     // Initiate the process of temperature measurement
-    I2Cdev::writeBytes(MS5611_DEFAULT_ADDRESS, MS5611_RA_D2_OSR_4096, 0, 0);
+    B1.WriteI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_D2_OSR_4096, 0, 0);
     usleep(10000); // Waiting for temperature data ready
 
     // Read temperature value
     //uint8_t buffer[3];
-	D2_ = I2Cdev::readBytes(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3);
+	D2_ = B1.ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3);
 	//D2_ = (buffer[0] << 16) | (buffer[1] << 8) | buffer[2];
 }
 
@@ -168,11 +170,11 @@ void BAR::Update()
 {
     //refreshPressure();
     //usleep(10000); // Waiting for pressure data ready
-    readPressure();
+    ReadPressure();
 
     //refreshTemperature();
     //usleep(10000); // Waiting for temperature data ready
-    readTemperature();
+    ReadTemperature();
 
-    calculatePressureAndTemperature();
+    CalculatePressureAndTemperature();
 }
