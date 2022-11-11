@@ -25,6 +25,10 @@ IMU::~IMU()
 void IMU::ConvertACCData(int aX, int aY, int aZ)
 {
 
+    double aXf = float(aX);
+    double aYf = float(aY);
+    double aZf = float(aZ); 
+    
     printf("non-Converted - X: %d, Y: %d Z: %d\n", aX, aY, aZ);
   if(aX > 0x8000) 
     {
@@ -40,9 +44,6 @@ void IMU::ConvertACCData(int aX, int aY, int aZ)
         aZ = aZ - 0xFFFF;
     }
     
-    double aXf = float(aX);
-    double aYf = float(aY);
-    double aZf = float(aZ);
 
    
 /*   double XL_xdeg = (atan2(-aY, -aZ))/(PI/180);
