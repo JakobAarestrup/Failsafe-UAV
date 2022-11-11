@@ -19,102 +19,112 @@ BAR::~BAR()
  }
 
 //Calibrates the barometer data
-void BAR::calibrate_BAR() 
+void BAR::InitialAMSL() 
 {
-    initial_pressure_ = (pres_*mbar_to_Pa); // Convert mbar to Pascal
-    initial_AMSL_ = (T_s/T_G)*(1-pow((initial_pressure_/p_0),T_G*(R/g)))+deviation_; //using international barometric formula to get height
-    //printf("Initial AMSL: %f\n", initial_AMSL_);
+    initial_AMSL_ = (T_s/T_G)*(1-pow((pres_/p_0),T_G*(R/g))); //using international barometric formula to get height
 }
 
 // Converts the bar data into height
-void BAR::convertBARData() 
-{
-    pressure_ = (pres_*mbar_to_Pa); // Convert mbar to Pascal.
-    
-    height_AMSL_ = (T_s/T_G)*(1-pow((pressure_/p_0),T_G*(R/g)))+deviation_; // Using international barometric formula to get height
-    //printf("Height AMSL: %f\n", height_AMSL_);
+void BAR::ConvertToAGL() 
+{    
+    height_AMSL_ = (T_s/T_G)*(1-pow((pres_/p_0),T_G*(R/g))); // Using international barometric formula to get height
     height_AGL_ = height_AMSL_ - initial_AMSL_; // Subtract difference in height.
 }
 
 // Returns height above ground level
-float BAR::getHeight() 
+float BAR::GetHeight() 
 {    
     if(calibration_ <= 29)
     {
-        calibrate_BAR();
+        InitialAMSL();
         calibration_++;
     }
-        convertBARData();
+        ConvertToAGL();
         return height_AGL_; // Return height
 }
 
-int BAR::getCalibration()
+int BAR::GetCalibration()
 {
     return calibration_;
 }
 
 // Power on and prepare for general usage. This method reads coefficients stored in PROM.
-void BAR::initialize() 
+void BAR::CalibrateBAR() 
 {
     // Reading 6 calibration data values
     uint8_t buff[2];
-    I2Cdev::readBytes(MS5611_DEFAULT_ADDRESS, MS5611_RA_C1, 2, buff);
+    I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C1, 2, buff);
     C1_ = buff[0]<<8 | buff[1];
-    I2Cdev::readBytes(MS5611_DEFAULT_ADDRESS, MS5611_RA_C2, 2, buff);
+    I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C2, 2, buff);
     C2_ = buff[0]<<8 | buff[1];
-    I2Cdev::readBytes(MS5611_DEFAULT_ADDRESS, MS5611_RA_C3, 2, buff);
+    I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C3, 2, buff);
     C3_ = buff[0]<<8 | buff[1];
-    I2Cdev::readBytes(MS5611_DEFAULT_ADDRESS, MS5611_RA_C4, 2, buff);
+    I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C4, 2, buff);
     C4_ = buff[0]<<8 | buff[1];
-    I2Cdev::readBytes(MS5611_DEFAULT_ADDRESS, MS5611_RA_C5, 2, buff);
+    I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C5, 2, buff);
     C5_ = buff[0]<<8 | buff[1];
-    I2Cdev::readBytes(MS5611_DEFAULT_ADDRESS, MS5611_RA_C6, 2, buff);
+    I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C6, 2, buff);
     C6_ = buff[0]<<8 | buff[1];
 
-    update();
+    Update();
 }
 
-// Verify the I2C connectio. Returns True if connection is valid, false otherwise
-bool BAR::testConnection() 
+// Verify the I2C connection. Returns True if connection is valid, false otherwise
+bool BAR::TestConnection() 
 {
     uint8_t data;
-    int8_t status = I2Cdev::readByte(MS5611_DEFAULT_ADDRESS, MS5611_RA_C0, &data);
+    int8_t status = I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C0, &data);
     if (status > 0)
         return true;
     else
         return false;
 }
 
+/*
 // Initiate the process of pressure measurement
-void BAR::refreshPressure() 
+void BAR::RefreshPressure() 
 {
-    I2Cdev::writeBytes(MS5611_DEFAULT_ADDRESS, MS5611_RA_D1_OSR_4096, 0, 0);
+    I2C::WriteI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_D1_OSR_4096, 0, 0);
 }
+*/
 
 // Read pressure value
-void BAR::readPressure() 
+void BAR::ReadPressure() 
 {
-    uint8_t buffer[3];
-    I2Cdev::readBytes(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3, buffer);
-    D1_ = (buffer[0] << 16) | (buffer[1] << 8) | buffer[2];
+    
+    // Initiate the process of pressure measurement
+    I2C::WriteI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_D1_OSR_4096, 0, 0);
+    usleep(10000); // Waiting for pressure data ready
+
+    // Read pressure value
+    //uint8_t buffer[3];
+    D1_ = I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3);
+    //D1_ = (buffer[0] << 16) | (buffer[1] << 8) | buffer[2];
 }
 
+/*
 // Initiate the process of temperature measurement
-void BAR::refreshTemperature() 
+void BAR::RefreshTemperature() 
 {
 	I2Cdev::writeBytes(MS5611_DEFAULT_ADDRESS, MS5611_RA_D2_OSR_4096, 0, 0);
 }
+*/
 
 // Read temperature value
-void BAR::readTemperature() 
+void BAR::ReadTemperature() 
 {
-	uint8_t buffer[3];
-	I2Cdev::readBytes(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3, buffer);
-	D2_ = (buffer[0] << 16) | (buffer[1] << 8) | buffer[2];
+    // Initiate the process of temperature measurement
+    I2Cdev::writeBytes(MS5611_DEFAULT_ADDRESS, MS5611_RA_D2_OSR_4096, 0, 0);
+    usleep(10000); // Waiting for temperature data ready
+
+    // Read temperature value
+    //uint8_t buffer[3];
+	D2_ = I2Cdev::readBytes(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3);
+	//D2_ = (buffer[0] << 16) | (buffer[1] << 8) | buffer[2];
 }
 
 // Calculate temperature and pressure calculations and perform compensation. More info about these calculations is available in the datasheet.
-void BAR::calculatePressureAndTemperature() 
+void BAR::CalculatePressureAndTemperature() 
 {
     float dT = D2_ - C5_ * pow(2, 8);
     temp_ = (2000 + ((dT * C6_) / pow(2, 23)));
@@ -146,36 +156,22 @@ void BAR::calculatePressureAndTemperature()
     SENS = SENS - SENS2;
 
     // Final calculations
-    pres_ = ((D1_ * SENS) / pow(2, 21) - OFF) / pow(2, 15) / 100;
+    pres_ = (((D1_ * SENS) / pow(2, 21) - OFF) / pow(2, 15) / 100)*mbar_to_Pa;
     temp_ = temp_ / 100;
 }
 
 /** Perform pressure and temperature reading and calculation at once.
  *  Contains sleeps, better perform operations separately.
  */
-void BAR::update() 
+void BAR::Update() 
 {
-    refreshPressure();
-    usleep(10000); // Waiting for pressure data ready
+    //refreshPressure();
+    //usleep(10000); // Waiting for pressure data ready
     readPressure();
 
-    refreshTemperature();
-    usleep(10000); // Waiting for temperature data ready
+    //refreshTemperature();
+    //usleep(10000); // Waiting for temperature data ready
     readTemperature();
 
     calculatePressureAndTemperature();
 }
-
-/*
-// Get calculated temperature value. Return Temperature in degrees of Celsius
-float BAR::getTemperature() 
-{
-    return pres_;
-}
-
-// Get calculated pressure value. Return Pressure in millibars
-float BAR::getPressure() 
-{
-	return pres_;
-}
-*/

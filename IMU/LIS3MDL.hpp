@@ -1,5 +1,5 @@
-#define LIS3MDL_ADDR_1 0x1C ///< LSM6DSOX default device id from WHOAMI
-#define LIS3MDL_ADDR_2 0x1E ///< LSM6DSOX default device id from WHOAMI
+#define LIS3MDL_ADDR1 0x1C ///< LSM6DSOX default device id from WHOAMI
+#define LIS3MDL_ADDR2 0x1E ///< LSM6DSOX default device id from WHOAMI
 
 #define LIS3MDL_WHO_AM_I 0x0F // Unused
 #define LIS3MDL_CTRL_REG1 0x20 // should be written 0b01011100 to for: OM = 11 (ultra-high-performance mode for X and Y); DO = 100 (10 Hz ODR)
