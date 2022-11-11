@@ -76,7 +76,7 @@ float I2C::ReadI2C(int ADDR, int reg, int length, int HandleI2C)
     {
         I2Cdev::readBytes(ADDR, reg, length, Buffer1_);
         I2Cdev::readBytes(ADDR, reg+1, length, Buffer2_);
-        I2CData_ = (Buffer1_ | Buffer2_ << 8);
+        I2CData_ = float((Buffer1_ | Buffer2_ << 8));
     }
     else // 8-bit read
     {
