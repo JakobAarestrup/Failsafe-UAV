@@ -72,47 +72,16 @@ void BAR::CalibrateBAR()
     Update();
 }
 
-/*
-// Verify the I2C connection. Returns True if connection is valid, false otherwise
-bool BAR::TestConnection() 
-{
-    uint8_t data;
-    int8_t status = B1.ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C0, &data);
-    if (status > 0)
-        return true;
-    else
-        return false;
-}*/
-
-/*
-// Initiate the process of pressure measurement
-void BAR::RefreshPressure() 
-{
-    I2C::WriteI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_D1_OSR_4096, 0, 0);
-}
-*/
-
 // Read pressure value
 void BAR::ReadPressure() 
 {
-    
     // Initiate the process of pressure measurement
     B1.WriteI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_D1_OSR_4096, 0, 0);
     usleep(10000); // Waiting for pressure data ready
 
     // Read pressure value
-    //uint8_t buffer[3];
     D1_ = B1.ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3, 3);
-    //D1_ = (buffer[0] << 16) | (buffer[1] << 8) | buffer[2];
 }
-
-/*
-// Initiate the process of temperature measurement
-void BAR::RefreshTemperature() 
-{
-	I2Cdev::writeBytes(MS5611_DEFAULT_ADDRESS, MS5611_RA_D2_OSR_4096, 0, 0);
-}
-*/
 
 // Read temperature value
 void BAR::ReadTemperature() 
@@ -122,9 +91,7 @@ void BAR::ReadTemperature()
     usleep(10000); // Waiting for temperature data ready
 
     // Read temperature value
-    //uint8_t buffer[3];
 	D2_ = B1.ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3, 3);
-	//D2_ = (buffer[0] << 16) | (buffer[1] << 8) | buffer[2];
 }
 
 // Calculate temperature and pressure calculations and perform compensation. More info about these calculations is available in the datasheet.
@@ -169,13 +136,7 @@ void BAR::CalculatePressureAndTemperature()
  */
 void BAR::Update() 
 {
-    //refreshPressure();
-    //usleep(10000); // Waiting for pressure data ready
     ReadPressure();
-
-    //refreshTemperature();
-    //usleep(10000); // Waiting for temperature data ready
     ReadTemperature();
-
     CalculatePressureAndTemperature();
 }

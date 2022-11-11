@@ -25,7 +25,6 @@ I2C::~I2C()
 // Open i2c communication
 void I2C::InitializeI2C()
 {
-    /*
     //First IMU:
     I2Cdev::writeBytes(LSM6DSOX_ADDR1, LSM6DSOX_INT1_CTRL, 1, 0b00000011); // Enable gyroscope and accelerometer data interrupt
     I2Cdev::writeBytes(LSM6DSOX_ADDR1, LSM6DSOX_CTRL2_G, 1, 0b10011100); // Gyro = 416 Hz (High-Performance mode)
@@ -49,7 +48,6 @@ void I2C::InitializeI2C()
     I2Cdev::writeBytes(LIS3MDL_ADDR2, LIS3MDL_CTRL_REG2, 1, 0b00000000);// FS = 00 (+/- 4 gauss full scale)
     I2Cdev::writeBytes(LIS3MDL_ADDR2, LIS3MDL_CTRL_REG3, 1, 0b00000000);// MD = 00 (continuous-conversion mode)
     I2Cdev::writeBytes(LIS3MDL_ADDR2, LIS3MDL_CTRL_REG4, 1, 0b00001100);// OMZ = 11 (ultra-high-performance mode for Z)
-    */
 }
 
 // Write to I2C device register
