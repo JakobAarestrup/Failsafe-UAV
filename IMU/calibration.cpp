@@ -34,7 +34,7 @@ gettimeofday(&tvBegin, NULL);
 
 // Open I2C connection
 I1.openI2C(LSM6DSOX_ADDR2);
-I2.openI2C(LIS3MDL_ADDR_2);
+I2.openI2C(LIS3MDL_ADDR2);
 
 // Enable accelerometer and gyroscope
 I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_INT1_CTRL, 0b00000011); // Enable gyroscope and accelerometer data interrupt
