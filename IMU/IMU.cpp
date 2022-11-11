@@ -31,7 +31,7 @@ void IMU::ConvertACCData(int aX, int aY, int aZ)
 
     printf("non-Converted - X: %d, Y: %d Z: %d\n", aX, aY, aZ);
 
-/*   if(aX > 0x8000) 
+  if(aX > 0x8000) 
     {
         aX = aX - 0xFFFF;
     }
@@ -43,7 +43,7 @@ void IMU::ConvertACCData(int aX, int aY, int aZ)
     else if (aZ > 0x8000)
     {
         aZ = aZ - 0xFFFF;
-    } */
+    }
     
     printf("after if.. - X: %d, Y: %d Z: %d\n", aX, aY, aZ);
 
@@ -66,9 +66,7 @@ void IMU::ConvertACCData(int aX, int aY, int aZ)
     double aXc = conv_rate *aXf;
     double aYc = conv_rate *aYf;
     double aZc = conv_rate *aZf;
-   
-    XL_Roll_ = atan2(aY, aZ) * 180/PI;
-    XL_Pitch_ = atan2(-aX, sqrt(aY * aY + aZ * aZ)) * 180/PI;
+
     //printf("Bias - roll: %lf, pitch: %lf\n\n", XL_Roll_, XL_Pitch_);
     printf("Conv - X-AXIS: %lf, Y-AXIS: %lf Z-AXIS: %lf\n\n", aXc, aYc, aZc);  
 }
