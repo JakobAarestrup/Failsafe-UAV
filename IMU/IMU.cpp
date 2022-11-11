@@ -9,7 +9,7 @@
 #define DT 0.02       // [s/loop] loop period. 20ms
 #define AA 0.97       // complementary filter constant
 #define A_GAIN 0.0573 // [deg/LSB]
-#define G_GAIN 4.375  // [deg/s/LSB]
+#define G_GAIN 0.07  // [deg/s/LSB]
 
 // Constructor
 IMU::IMU()
