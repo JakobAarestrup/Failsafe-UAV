@@ -35,13 +35,15 @@ void IMU::ConvertACCData(int aX, int aY, int aZ)
     {
         aX = aX - 0xFFFF;
     }
-    else if (aY > 0x8000)
+
+    if (aY > 0x8000)
     {
         aY = aY - 0xFFFF;
     }
-    else if (aZ > 0x8000)
+    
+    if (aZ > 0x8000)
     {
-        aZ = aZ - 0xFFFF;
+        aZ = aZ - 0xFFFF; // lave det her i I2C read kald?
     } 
  
     printf("after if.. - X: %d, Y: %d Z: %d\n", aX, aY, aZ);
