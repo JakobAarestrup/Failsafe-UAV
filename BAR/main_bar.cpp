@@ -16,24 +16,24 @@ int main()
     {
         //arometer.refreshPressure();
         //usleep(10000); // Waiting for pressure data ready
-        barometer.readPressure();
+        barometer.ReadPressure();
 
         //barometer.refreshTemperature();
         //usleep(10000); // Waiting for temperature data ready
-        barometer.readTemperature();
+        barometer.ReadTemperature();
 
-        barometer.calculatePressureAndTemperature();
+        barometer.CalculatePressureAndTemperature();
         
         //printf("Temperature(C): %f Pressure(mbar): %f Height(m): %f\n", barometer.getTemperature(), barometer.getPressure(), barometer.getHeight());
-        calibration = barometer.getCalibration();
+        calibration = barometer.GetCalibration();
         if (calibration > 30)
         {
-        printf("Height(m): %f\n",barometer.getHeight());
+        printf("Height(m): %f\n",barometer.GetHeight());
         sleep(1);
         }
         else
         {
-            barometer.getHeight();
+            barometer.GetHeight();
             printf("Calibrating barometer..\n");
             sleep(1);
         }
