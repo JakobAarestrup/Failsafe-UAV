@@ -66,13 +66,13 @@ float I2C::ReadI2C(int ADDR, int reg, int length, int HandleI2C)
         I2Cdev::readBytes(ADDR, reg, length, buffer);
         I2CData_ = (buffer[0] << 16) | (buffer[1] << 8) | buffer[2];
     }
-    if else  (HandleI2C == 2) // 16-bit read likely from the IMU
+    else if(HandleI2C == 2) // 16-bit read likely from the IMU
     {
         uint8_t buff[2];
         I2Cdev::readBytes(ADDR, reg, length, buff);
         I2CData_ = buff[0]<<8 | buff[1];
     }
-    if else(HandleI2C == 1)
+    else if(HandleI2C == 1)
     {
         I2Cdev::readBytes(ADDR, reg, length, Buffer1_);
         I2Cdev::readBytes(ADDR, reg+1, length, Buffer2_);
