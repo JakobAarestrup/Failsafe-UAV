@@ -32,5 +32,7 @@ qz = c1 s2 c3 - s1 c2 s3;
 double yaw = atan2(2*qy*qw-2*qx*qz , 1 - 2*qy2 - 2*qz2)
 double pitch = asin(2*qx*qy + 2*qz*qw)
 double roll = atan2(2*qx*qw-2*qy*qz , 1 - 2*qx2 - 2*qz2)
+
+//https://forum.sparkfun.com/viewtopic.php?t=6350
 return 0;
 }
