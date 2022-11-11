@@ -66,18 +66,7 @@ void IMU::ConvertACCData(int aX, int aY, int aZ)
     XL_Roll_ = atan2(aY, aZ) * 180 / PI;
     XL_Pitch_ = atan2(-aX, sqrt(aY * aY + aZ * aZ)) * 180 / PI;
     printf("Bias - roll: %lf, pitch: %lf\n\n", XL_Roll_, XL_Pitch_);
-    printf("Conv - X-AXIS: %lf, Y-AXIS: %lf Z-AXIS: %lf\n\n", aXc, aYc, aZc);
-
-
-   /*  XL_xdeg -= (double)180.0;
-    if (XL_ydeg > 90)
-        XL_ydeg -= (double)270;
-    else
-        XL_ydeg += (double)90; 
-     if (XL_xdeg >180)
-        XL_xdeg -= (double)360.0;
-*/
-    
+    printf("Conv - X-AXIS: %lf, Y-AXIS: %lf Z-AXIS: %lf\n\n", aXc, aYc, aZc);  
 }
 
 void IMU::ConvertGyroData(int gX, int gY, int gZ)

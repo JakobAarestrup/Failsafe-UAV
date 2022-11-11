@@ -39,7 +39,7 @@ I2.openI2C(LIS3MDL_ADDR_2);
 // Enable accelerometer and gyroscope
 I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_INT1_CTRL, 0b00000011); // Enable gyroscope and accelerometer data interrupt
 I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 0b10011100); // Gyro = 416 Hz (High-Performance mode)
-I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL1_XL, 0b011000000); // Acc = 416 Hz (High-Performance mode)
+I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL1_XL, 0b011000000); // Acc = 416 Hz (High-Performance mode) 2g (default)
 I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL3_C, 0b01000000); // Enable BDU
 I1.WriteI2C(LSM6DSOX_ADDR2, LSM6DSOX_CTRL7_G, 0b10000000); // Enable High-Performance mode for Gyro
 
