@@ -3,23 +3,23 @@
 #include "MS5611.hpp"
 #include <unistd.h>
 #include <stdio.h>
+#include "I2C_v2.hpp"
 
 int main()
 {
     BAR barometer;
-
-    barometer.initialize();
-
     int calibration;
+
+    barometer.CalibrateBAR();
 
     while (true) 
     {
-        barometer.refreshPressure();
-        usleep(10000); // Waiting for pressure data ready
+        //arometer.refreshPressure();
+        //usleep(10000); // Waiting for pressure data ready
         barometer.readPressure();
 
-        barometer.refreshTemperature();
-        usleep(10000); // Waiting for temperature data ready
+        //barometer.refreshTemperature();
+        //usleep(10000); // Waiting for temperature data ready
         barometer.readTemperature();
 
         barometer.calculatePressureAndTemperature();

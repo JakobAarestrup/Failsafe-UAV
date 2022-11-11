@@ -52,19 +52,19 @@ int BAR::GetCalibration()
 void BAR::CalibrateBAR() 
 {
     // Reading 6 calibration data values
-    uint8_t buff[2];
-    I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C1, 2, buff);
-    C1_ = buff[0]<<8 | buff[1];
-    I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C2, 2, buff);
-    C2_ = buff[0]<<8 | buff[1];
-    I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C3, 2, buff);
-    C3_ = buff[0]<<8 | buff[1];
-    I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C4, 2, buff);
-    C4_ = buff[0]<<8 | buff[1];
-    I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C5, 2, buff);
-    C5_ = buff[0]<<8 | buff[1];
-    I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C6, 2, buff);
-    C6_ = buff[0]<<8 | buff[1];
+    //uint8_t buff[2];
+    C1_ = I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C1, 2);
+    //C1_ = buff[0]<<8 | buff[1];
+    C2_ = I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C2, 2);
+    //C2_ = buff[0]<<8 | buff[1];
+    C3_ = I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C3, 2);
+    //C3_ = buff[0]<<8 | buff[1];
+    C4_ = I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C4, 2);
+    //C4_ = buff[0]<<8 | buff[1];
+    C5_ = I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C5, 2);
+    //C5_ = buff[0]<<8 | buff[1];
+    C6_ = I2C::ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C6, 2);
+    //C6_ = buff[0]<<8 | buff[1];
 
     Update();
 }

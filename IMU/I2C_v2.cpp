@@ -6,7 +6,6 @@
 #include <fcntl.h>
 #include "LIS3MDL.hpp"
 #include "LSM6DSOX.hpp"
-#include "BAR.hpp"
 extern "C"
 {
     #include <linux/i2c-dev.h>
@@ -57,15 +56,21 @@ void I2C::WriteI2C(int ADDR, int reg, int length, int data)
 }
 
 // Read from i2c device register
-float I2C::ReadI2C(int ADDR, int reg, int length)
+float I2C::ReadI2C(int ADDR, int reg, int length, int HandleI2C)
 {
-    if(length==3) // 24-bit read likely from the Barometer
+    if(HandleI2C_ == 3) // 24-bit read likely from the Barometer
     {
         uint8_t buffer[3];
         I2Cdev::readBytes(ADDR, reg, length, buffer);
         I2CData_ = (buffer[0] << 16) | (buffer[1] << 8) | buffer[2];
     }
-    if else (length==2) // 16-bit read likely from the IMU
+    if else  (HandleI2C == 2) // 16-bit read likely from the IMU
+    {
+        uint8_t buff[2];
+        I2Cdev::readBytes(ADDR, reg, length, buff);
+        I2CData_ = buff[0]<<8 | buff[1];
+    }
+    if else(HandleI2C == 1)
     {
         I2Cdev::readBytes(ADDR, reg, length, Buffer1_);
         I2Cdev::readBytes(ADDR, reg+1, length, Buffer2_);
