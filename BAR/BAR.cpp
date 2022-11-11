@@ -72,6 +72,7 @@ void BAR::CalibrateBAR()
     Update();
 }
 
+/*
 // Verify the I2C connection. Returns True if connection is valid, false otherwise
 bool BAR::TestConnection() 
 {
@@ -81,7 +82,7 @@ bool BAR::TestConnection()
         return true;
     else
         return false;
-}
+}*/
 
 /*
 // Initiate the process of pressure measurement
@@ -101,7 +102,7 @@ void BAR::ReadPressure()
 
     // Read pressure value
     //uint8_t buffer[3];
-    D1_ = B1.ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3);
+    D1_ = B1.ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3, 3);
     //D1_ = (buffer[0] << 16) | (buffer[1] << 8) | buffer[2];
 }
 
@@ -122,7 +123,7 @@ void BAR::ReadTemperature()
 
     // Read temperature value
     //uint8_t buffer[3];
-	D2_ = B1.ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3);
+	D2_ = B1.ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3, 3);
 	//D2_ = (buffer[0] << 16) | (buffer[1] << 8) | buffer[2];
 }
 

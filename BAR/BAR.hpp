@@ -14,7 +14,7 @@ public:
     void InitialAMSL(); // Collects the initial AMSL value
     void CalibrateBAR(); // Calibrates the barometer
     int GetCalibration(); // Returns the calibration variable
-    bool TestConnection();
+    //bool TestConnection();
     //void RefreshPressure();
     void ReadPressure();
     //void RefreshTemperature();
