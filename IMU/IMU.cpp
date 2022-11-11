@@ -35,16 +35,15 @@ void IMU::ConvertACCData(int aX, int aY, int aZ)
     {
         aX = aX - 0xFFFF;
     }
-    
-    if (aY > 0x8000)
+    else if (aY > 0x8000)
     {
         aY = aY - 0xFFFF;
     }
-    
-    if (aZ > 0x8000)
+    else if (aZ > 0x8000)
     {
         aZ = aZ - 0xFFFF;
     } 
+ 
     printf("after if.. - X: %d, Y: %d Z: %d\n", aX, aY, aZ);
 
    
