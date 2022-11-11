@@ -59,17 +59,17 @@ void IMU::ConvertACCData(int aX, int aY, int aZ)
 
     XL_Roll_ = atan2(aYf, aZf) * 180 / PI;
     XL_Pitch_ = atan2(-aXf, sqrt(aYf * aYf + aZf * aZf)) * 180 / PI;
-    printf("Converted - roll: %lf, pitch: %lf\n\n", XL_Roll_, XL_Pitch_);
+    printf("Converted - XL_Roll: %lf, XL_pitch: %lf\n\n", XL_Roll_, XL_Pitch_);
 
 
-    double conv_rate = 90.053243980503472678;
+/*     double conv_rate = 90.053243980503472678;
 
     double aXc = conv_rate *aXf;
     double aYc = conv_rate *aYf;
     double aZc = conv_rate *aZf;
 
     //printf("Bias - roll: %lf, pitch: %lf\n\n", XL_Roll_, XL_Pitch_);
-    printf("Conv - X-AXIS: %lf, Y-AXIS: %lf Z-AXIS: %lf\n\n", aXc, aYc, aZc);  
+    printf("Conv - X-AXIS: %lf, Y-AXIS: %lf Z-AXIS: %lf\n\n", aXc, aYc, aZc);   */
 }
 
 void IMU::ConvertGyroData(int gX, int gY, int gZ)
@@ -82,6 +82,9 @@ void IMU::ConvertGyroData(int gX, int gY, int gZ)
     gyroYangle_ += rate_gyr_y_ * DT;
     gyroZangle_ += rate_gyr_z_ * DT;
     printf("GyroXangle: %f, GyroYangle: %f, GyroZangle: %f\n", gyroXangle_, gyroYangle_, gyroZangle_);
+    double CFangleX=AA*(CFangleX+rate_gyr_x_*DT) +(1 - AA) * XL_Roll_;
+    double CFangleY=AA*(CFangleY+rate_gyr_y_*DT) +(1 - AA) * XL_Pitch_;
+    printf("Roll_filtered: %f, Pitch filtered: %f, GyroZangle: %f\n", CFangleX, CFangleY);
 }
 
 void IMU::ConvertMagData(int mY, int mX)
