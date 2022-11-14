@@ -23,13 +23,14 @@ I2C::~I2C()
 }
 
 // Open i2c communication
-void I2C::InitializeI2C()
+void I2C::initializeI2C()
 {
     //First IMU:
     I2Cdev::writeBytes(LSM6DSOX_ADDR1, LSM6DSOX_INT1_CTRL, 1, 0b00000011); // Enable gyroscope and accelerometer data interrupt
-    I2Cdev::writeBytes(LSM6DSOX_ADDR1, LSM6DSOX_CTRL2_G, 1, 0b10011100); // // Gyro = 3.33 kHz   2000 dps
-    I2Cdev::writeBytes(LIS3MDL_ADDR1, LSM6DSOX_CTRL1_XL, 1, 0b011000000); // Acc = 416 Hz (High-Performance mode) 2g (default)
+    I2Cdev::writeBytes(LSM6DSOX_ADDR1, LSM6DSOX_CTRL2_G, 1, 0b10011100); // Gyro = 416 Hz (High-Performance mode)
+    I2Cdev::writeBytes(LIS3MDL_ADDR1, LSM6DSOX_CTRL1_XL, 1, 0b011000000); // Acc = 416 Hz (High-Performance mode)
     I2Cdev::writeBytes(LIS3MDL_ADDR1, LSM6DSOX_CTRL3_C, 1, 0b01000000); // Enable BDU
+    I2Cdev::writeBytes(LIS3MDL_ADDR1, LSM6DSOX_CTRL7_G, 1, 0b10000000); // Enable High-Performance mode for Gyro
 
     I2Cdev::writeBytes(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG1, 1, 0b01110000);// OM = 11 (ultra-high-performance mode for X and Y); DO = 100 (10 Hz ODR)
     I2Cdev::writeBytes(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG2, 1, 0b00000000);// FS = 00 (+/- 4 gauss full scale)
@@ -38,9 +39,10 @@ void I2C::InitializeI2C()
 
     //Second IMU:
     I2Cdev::writeBytes(LSM6DSOX_ADDR2, LSM6DSOX_INT1_CTRL, 1, 0b00000011); // Enable gyroscope and accelerometer data interrupt
-    I2Cdev::writeBytes(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 1, 0b10011100); // Gyro = 3.33 kHz   2000 dps
+    I2Cdev::writeBytes(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 1, 0b10011100); // Gyro = 416 Hz (High-Performance mode)
     I2Cdev::writeBytes(LIS3MDL_ADDR2, LSM6DSOX_CTRL1_XL, 1, 0b011000000); // Acc = 416 Hz (High-Performance mode)
     I2Cdev::writeBytes(LIS3MDL_ADDR2, LSM6DSOX_CTRL3_C, 1, 0b01000000); // Enable BDU
+    I2Cdev::writeBytes(LIS3MDL_ADDR2, LSM6DSOX_CTRL7_G, 1, 0b10000000); // Enable High-Performance mode for Gyro
 
     I2Cdev::writeBytes(LIS3MDL_ADDR2, LIS3MDL_CTRL_REG1, 1, 0b01110000);// OM = 11 (ultra-high-performance mode for X and Y); DO = 100 (10 Hz ODR)
     I2Cdev::writeBytes(LIS3MDL_ADDR2, LIS3MDL_CTRL_REG2, 1, 0b00000000);// FS = 00 (+/- 4 gauss full scale)
@@ -49,13 +51,13 @@ void I2C::InitializeI2C()
 }
 
 // Write to I2C device register
-void I2C::WriteI2C(int ADDR, int reg, int length, unsigned char* data)
+void I2C::writeI2C(int ADDR, int reg, int length, unsigned char* data)
 {
     I2Cdev::writeBytes(ADDR, reg, length, data);
 }
 
 // Read from i2c device register
-float I2C::ReadI2C(int ADDR, int reg, int length, int HandleI2C)
+float I2C::readI2C(int ADDR, int reg, int length, int HandleI2C)
 {
     if(HandleI2C == 3) // 24-bit read from Barometer
     {
@@ -63,7 +65,7 @@ float I2C::ReadI2C(int ADDR, int reg, int length, int HandleI2C)
         I2Cdev::readBytes(ADDR, reg, length, buffer);
         I2CData_ = (buffer[0] << 16) | (buffer[1] << 8) | buffer[2];
     }
-    else if(HandleI2C == 2) // 16-bit read for barometer calibration
+    else if(HandleI2C == 2) // 16-bit read for Barometer calibration
     {
         uint8_t buff[2];
         I2Cdev::readBytes(ADDR, reg, length, buff);
