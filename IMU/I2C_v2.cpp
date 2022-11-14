@@ -51,7 +51,7 @@ void I2C::initializeI2C()
 }
 
 // Write to I2C device register
-void I2C::writeI2C(int ADDR, int reg, int length, int data)
+void I2C::writeI2C(int ADDR, int reg, int length, unsigned char* data)
 {
     I2Cdev::writeBytes(ADDR, reg, length, data);
 }
