@@ -33,7 +33,7 @@ int startofloop  = mymillis();
 struct  timeval tvBegin, tvEnd,tvDiff;
 gettimeofday(&tvBegin, NULL);
 
-I1.InitializeI2C();
+I1.initializeI2C();
 
 // Main loop
 while(1)
