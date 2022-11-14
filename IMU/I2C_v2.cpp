@@ -59,19 +59,19 @@ void I2C::WriteI2C(int ADDR, int reg, int length, unsigned char* data)
 // Read from i2c device register
 float I2C::ReadI2C(int ADDR, int reg, int length, int HandleI2C)
 {
-    if(HandleI2C == 3) // 24-bit read likely from the Barometer
+    if(HandleI2C == 3) // 24-bit read from Barometer
     {
         uint8_t buffer[3];
         I2Cdev::readBytes(ADDR, reg, length, buffer);
         I2CData_ = (buffer[0] << 16) | (buffer[1] << 8) | buffer[2];
     }
-    else if(HandleI2C == 2) // 16-bit read likely from the IMU
+    else if(HandleI2C == 2) // 16-bit read for barometer calibration
     {
         uint8_t buff[2];
         I2Cdev::readBytes(ADDR, reg, length, buff);
         I2CData_ = buff[0]<<8 | buff[1];
     }
-    else if(HandleI2C == 1)
+    else if(HandleI2C == 1) // 16-bit read from IMU
     {
         uint8_t buff[2];
         I2Cdev::readBytes(ADDR, reg, length, buff);
