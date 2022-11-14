@@ -73,8 +73,8 @@ float I2C::readI2C(int ADDR, int reg, int length, int HandleI2C)
     }
     else if(HandleI2C == 1) // 16-bit read from IMU
     {
-        uint8_t buff[2]; // Read first register // Read second register
-        uint8_t nbuff[2];
+        uint8_t buff[1]; // Read first register // Read second register
+        uint8_t nbuff[1];
         I2Cdev::readBytes(ADDR, reg, length/2, buff);
         I2Cdev::readBytes(ADDR, reg+1, length/2, nbuff);
       /*   if (buff ==-1 | nbuff ==-1) // Check read errors
@@ -82,8 +82,8 @@ float I2C::readI2C(int ADDR, int reg, int length, int HandleI2C)
             printf("Failed to read from %d via I2C.", ADDR); // Read error
             exit(1);
         } */
-        printf("Buff: %d,buff2:%d\n", buff, nbuff);
-        int I2C_Data_ = (buff[0] | nbuff[0] << 8); 
+        printf("Buff: %d,buff2:%d\n", buff[0], nbuff[0]);
+        int I2C_Data_ = (buff[0] | nbuff[0] << 8);
         printf("Samlet: %d\n", I2C_Data_);
        /*  uint8_t buff; // Read first register // Read second register
         uint8_t nbuff;
