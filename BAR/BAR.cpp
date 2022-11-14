@@ -22,80 +22,73 @@ BAR::~BAR()
  }
 
 //Calibrates the barometer data
-void BAR::InitialAMSL() 
+void BAR::initialAMSL() 
 {
     initial_AMSL_ = (T_s/T_G)*(1-pow((pres_/p_0),T_G*(R/g))); //using international barometric formula to get height
 }
 
 // Converts the bar data into height
-void BAR::ConvertToAGL() 
+void BAR::convertToAGL() 
 {    
     height_AMSL_ = (T_s/T_G)*(1-pow((pres_/p_0),T_G*(R/g))); // Using international barometric formula to get height
     height_AGL_ = height_AMSL_ - initial_AMSL_; // Subtract difference in height.
 }
 
 // Returns height above ground level
-float BAR::GetHeight() 
+float BAR::getHeight() 
 {    
     if(calibration_ <= 30)
     {
-        InitialAMSL();
+        initialAMSL();
         calibration_++;
     }
-        ConvertToAGL();
+        convertToAGL();
         return height_AGL_; // Return height
 }
 
-int BAR::GetCalibration()
+int BAR::getCalibration()
 {
     return calibration_;
 }
 
 // Power on and prepare for general usage. This method reads coefficients stored in PROM.
-void BAR::CalibrateBAR() 
+void BAR::calibrateBAR() 
 {
     // Reading 6 calibration data values
-    //uint8_t buff[2];
-    C1_ = B1.ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C1, 2, 2);
-    //C1_ = buff[0]<<8 | buff[1];
-    C2_ = B1.ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C2, 2, 2);
-    //C2_ = buff[0]<<8 | buff[1];
-    C3_ = B1.ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C3, 2, 2);
-    //C3_ = buff[0]<<8 | buff[1];
-    C4_ = B1.ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C4, 2, 2);
-    //C4_ = buff[0]<<8 | buff[1];
-    C5_ = B1.ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C5, 2, 2);
-    //C5_ = buff[0]<<8 | buff[1];
-    C6_ = B1.ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C6, 2, 2);
-    //C6_ = buff[0]<<8 | buff[1];
+    C1_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C1, 2, 2);
+    C2_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C2, 2, 2);
+    C3_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C3, 2, 2);
+    C4_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C4, 2, 2);
+    C5_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C5, 2, 2);
+    C6_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C6, 2, 2);
 
-    Update();
+    update();
 }
 
 // Read pressure value
-void BAR::ReadPressure() 
+void BAR::readPressure() 
 {
     // Initiate the process of pressure measurement
-    B1.WriteI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_D1_OSR_4096, 0, 0);
+    B1.writeI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_D1_OSR_4096, 0, 0);
     usleep(10000); // Waiting for pressure data ready
 
     // Read pressure value
-    D1_ = B1.ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3, 3);
+    D1_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3, 3);
 }
 
 // Read temperature value
-void BAR::ReadTemperature() 
+void BAR::readTemperature() 
 {
     // Initiate the process of temperature measurement
-    B1.WriteI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_D2_OSR_4096, 0, 0);
+    B1.writeI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_D2_OSR_4096, 0, 0);
     usleep(10000); // Waiting for temperature data ready
 
     // Read temperature value
-	D2_ = B1.ReadI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3, 3);
+	D2_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3, 3);
 }
 
 // Calculate temperature and pressure calculations and perform compensation. More info about these calculations is available in the datasheet.
-void BAR::CalculatePressureAndTemperature() 
+void BAR::calculatePressureAndTemperature() 
 {
     float dT = D2_ - C5_ * pow(2, 8);
     temp_ = (2000 + ((dT * C6_) / pow(2, 23)));
@@ -134,9 +127,9 @@ void BAR::CalculatePressureAndTemperature()
 /** Perform pressure and temperature reading and calculation at once.
  *  Contains sleeps, better perform operations separately.
  */
-void BAR::Update() 
+void BAR::update() 
 {
-    ReadPressure();
-    ReadTemperature();
-    CalculatePressureAndTemperature();
+    readPressure();
+    readTemperature();
+    calculatePressureAndTemperature();
 }

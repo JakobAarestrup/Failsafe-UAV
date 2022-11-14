@@ -10,30 +10,23 @@ int main()
     BAR barometer;
     int calibration;
 
-    barometer.CalibrateBAR();
+    barometer.calibrateBAR();
 
     while (true) 
     {
-        //arometer.refreshPressure();
-        //usleep(10000); // Waiting for pressure data ready
-        barometer.ReadPressure();
-
-        //barometer.refreshTemperature();
-        //usleep(10000); // Waiting for temperature data ready
-        barometer.ReadTemperature();
-
-        barometer.CalculatePressureAndTemperature();
+        barometer.readPressure();
+        barometer.readTemperature();
+        barometer.calculatePressureAndTemperature();
         
-        //printf("Temperature(C): %f Pressure(mbar): %f Height(m): %f\n", barometer.getTemperature(), barometer.getPressure(), barometer.getHeight());
-        calibration = barometer.GetCalibration();
+        calibration = barometer.getCalibration();
         if (calibration > 30)
         {
-        printf("Height(m): %f\n",barometer.GetHeight());
+        printf("Height(m): %f\n",barometer.getHeight());
         sleep(1);
         }
         else
         {
-            barometer.GetHeight();
+            barometer.getHeight();
             printf("Calibrating barometer..\n");
             sleep(1);
         }
