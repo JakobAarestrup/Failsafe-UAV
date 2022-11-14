@@ -4,8 +4,8 @@ public:
     IMU(); // Constructor
     ~IMU(); // Destructor
     void ConvertACCData(float aX, float aY, float aZ);
-    void ConvertGyroData(int gX, int gY, int gZ);
-    void ConvertMagData(int mX, int mY);
+    void ConvertGyroData(float gX, float gY, float gZ);
+    void ConvertMagData(float mX, float mY);
     //float getACCData(); // Returns ACC data
     float getMagData();
     float getGyroData(); // Returns Gyro data
