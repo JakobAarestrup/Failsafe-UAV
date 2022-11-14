@@ -61,9 +61,9 @@ float I2C::readI2C(int ADDR, int reg, int length, int HandleI2C)
 {
     if(HandleI2C == 3) // 24-bit read from Barometer
     {
-        uint8_t buffer[3];
-        I2Cdev::readBytes(ADDR, reg, length, buffer);
-        I2CData_ = (buffer[0] << 16) | (buffer[1] << 8) | buffer[2]; // Convertering af int til float
+        uint8_t buff[3];
+        I2Cdev::readBytes(ADDR, reg, length, buff);
+        I2CData_ = (buff[0] << 16) | (buff[1] << 8) | buff[2]; // Convertering af int til float
     }
     else if(HandleI2C == 2) // 16-bit read for Barometer calibration
     {
@@ -73,27 +73,10 @@ float I2C::readI2C(int ADDR, int reg, int length, int HandleI2C)
     }
     else if(HandleI2C == 1) // 16-bit read from IMU
     {
-      /*   uint8_t buff[1]; // Read first register // Read second register
-        uint8_t nbuff[1];
-        I2Cdev::readBytes(ADDR, reg, length, buff);
-        I2Cdev::readBytes(ADDR, reg+1, length, nbuff);
-      /*   if (buff ==-1 | nbuff ==-1) // Check read errors
-        {
-            printf("Failed to read from %d via I2C.", ADDR); // Read error
-            exit(1);
-        } 
-        printf("Buff: %d,buff2:%d\n", buff[0], nbuff[0]);
-        int I2C_Data_ = (buff[0] | nbuff[0] << 8);
-        printf("Samlet: %d\n", I2C_Data_);*/
         uint8_t buff; // Read first register // Read second register
         uint8_t nbuff;
         I2Cdev::readBytes(ADDR, reg, length, &buff);
         I2Cdev::readBytes(ADDR, reg+1, length, &nbuff);
-     /*    if (buff ==-1 | nbuff ==-1) // Check read errors
-        {
-            printf("Failed to read from %d via I2C.", ADDR); // Read error
-            exit(1);
-        } */
         int IMU_reg16 = (buff | nbuff << 8);
         I2CData_ = IMU_reg16;
 
