@@ -2,6 +2,7 @@
 #include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include "I2C.hpp"
 
 // Definitions
 #define PI 3.14159265358979323846
@@ -77,6 +78,8 @@ void IMU::ConvertMagData(float mY, float mX)
 void IMU::calibrateIMU()
 {
     // få data fra acc
+    I2C::readI2C(LSM6DSOX_ADDR2)
+
     // set offset variabel
     // anden kalibrering
 
