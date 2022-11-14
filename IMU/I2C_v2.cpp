@@ -84,6 +84,7 @@ float I2C::readI2C(int ADDR, int reg, int length, int HandleI2C)
         } */
         printf("Buff: %d,buff2:%d\n", buff, nbuff);
         int I2C_Data_ = (buff[0] | nbuff[0] << 8); 
+        printf("Samlet: %d\n", I2C_Data_);
        /*  uint8_t buff; // Read first register // Read second register
         uint8_t nbuff;
         I2Cdev::readBytes(ADDR, reg, length, &buff);
