@@ -6,17 +6,8 @@ public:
     void ConvertACCData(float aX, float aY, float aZ);
     void ConvertGyroData(float gX, float gY, float gZ);
     void ConvertMagData(float mX, float mY);
-    //float getACCData(); // Returns ACC data
-    float getMagData();
-    float getGyroData(); // Returns Gyro data
-/* 	float gyr_Zangle_ = 0.0; // Gyroscope Z-angle
-    
-    int acc_X_; // Accelerometer X-axis
-    int acc_Y_; // Accelerometer Y-axis
-    int acc_Z_; // Accelerometer Z-axis
-    int gyro_Y_; // Gyroscope Y-axis
-    int gyro_Z_; // Gyroscope Z-axis
-    */
+
+private:
     double magYaw_ = 0.0;
     double rate_gyr_y_ = 0.0;   // Gyroscope X-angle in deg/s
 	double rate_gyr_x_ = 0.0;   // Gyroscope Y-angle in deg/s
