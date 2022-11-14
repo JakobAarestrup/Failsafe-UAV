@@ -22,13 +22,13 @@ IMU::~IMU()
     // delete [] sensor_handle_,gyr_Xangle_,gyr_Yangle_, gyr_Zangle_,roll_,pitch_; // Delete private variables
     // delete [] rate_gyr_x_,rate_gyr_y_,rate_gyr_z_,mag_X_,mag_Y_,mag_Z_; // Delete private variables
 }
-void IMU::ConvertACCData(int aX, int aY, int aZ)
+void IMU::ConvertACCData(float aX, float aY, float aZ)
 {
 
-    double aXf = float(aX);
+    /* double aXf = float(aX);
     double aYf = float(aY);
     double aZf = float(aZ); 
-
+ */
     printf("non-Converted - X: %d, Y: %d Z: %d\n", aX, aY, aZ);
 
     if(aX > 0x8000) 
@@ -53,9 +53,9 @@ void IMU::ConvertACCData(int aX, int aY, int aZ)
     double XL_ydeg = (atan2(-aZ, -aX))/(PI/180);
     double XL_zdeg = 180 - (atan2(-aY, -aZ) / (PI / 180)); */
 
-    aXf = (float(aX)*0.061)/1000;
-    aYf = (float(aY)*0.061)/1000;
-    aZf = (float(aZ)*0.061)/1000;
+    aXf = (aX*0.061)/1000;
+    aYf = (aY*0.061)/1000;
+    aZf = (aZ*0.061)/1000;
 
     XL_Roll_ = atan2(aYf, aZf) * 180 / PI;
     XL_Pitch_ = atan2(-aXf, sqrt(aYf * aYf + aZf * aZf)) * 180 / PI;
