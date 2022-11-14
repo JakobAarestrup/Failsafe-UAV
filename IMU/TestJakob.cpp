@@ -49,6 +49,8 @@ while(1)
     float my = I2.ReadI2C_16bit(LIS3MDL_ADDR2, LIS3MDL_OUT_Y_L);
     float mz = I2.ReadI2C_16bit(LIS3MDL_ADDR2, LIS3MDL_OUT_Z_L); */
     
+    printf("ax: %f ay: %f az: %f\n",ax,ay,az);
+
     IMU1.ConvertACCData(ax, ay, az);
     IMU1.ConvertGyroData(gx,gy,gz);
     //IMU1.ConvertMagData(mx,my);
