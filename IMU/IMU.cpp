@@ -19,16 +19,10 @@ IMU::IMU()
 // Destructor
 IMU::~IMU()
 {
-    // delete [] sensor_handle_,gyr_Xangle_,gyr_Yangle_, gyr_Zangle_,roll_,pitch_; // Delete private variables
-    // delete [] rate_gyr_x_,rate_gyr_y_,rate_gyr_z_,mag_X_,mag_Y_,mag_Z_; // Delete private variables
 }
 void IMU::ConvertACCData(float aX, float aY, float aZ)
 {
 
-    /* double aXf = float(aX);
-    double aYf = float(aY);
-    double aZf = float(aZ); 
- */
     printf("non-Converted - X: %f, Y: %f Z: %f\n", aX, aY, aZ);
 
     if(aX > 0x8000) 
@@ -48,11 +42,6 @@ void IMU::ConvertACCData(float aX, float aY, float aZ)
  
     printf("after if.. - X: %f, Y: %f Z: %f\n", aX, aY, aZ);
 
-   
-/*  double XL_xdeg = (atan2(-aY, -aZ))/(PI/180);
-    double XL_ydeg = (atan2(-aZ, -aX))/(PI/180);
-    double XL_zdeg = 180 - (atan2(-aY, -aZ) / (PI / 180)); */
-
     float aXf = (aX*0.061)/1000;
     float aYf = (aY*0.061)/1000;
     float aZf = (aZ*0.061)/1000;
@@ -60,16 +49,6 @@ void IMU::ConvertACCData(float aX, float aY, float aZ)
     XL_Roll_ = atan2(aYf, aZf) * 180 / PI;
     XL_Pitch_ = atan2(-aXf, sqrt(aYf * aYf + aZf * aZf)) * 180 / PI;
     printf("Converted - XL_Roll: %lf, XL_pitch: %lf\n\n", XL_Roll_, XL_Pitch_);
-
-
-/*     double conv_rate = 90.053243980503472678;
-
-    double aXc = conv_rate *aXf;
-    double aYc = conv_rate *aYf;
-    double aZc = conv_rate *aZf;
-
-    //printf("Bias - roll: %lf, pitch: %lf\n\n", XL_Roll_, XL_Pitch_);
-    printf("Conv - X-AXIS: %lf, Y-AXIS: %lf Z-AXIS: %lf\n\n", aXc, aYc, aZc);   */
 }
 
 void IMU::ConvertGyroData(float gX, float gY, float gZ)
