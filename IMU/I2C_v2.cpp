@@ -63,27 +63,27 @@ float I2C::readI2C(int ADDR, int reg, int length, int HandleI2C)
     {
         uint8_t buffer[3];
         I2Cdev::readBytes(ADDR, reg, length, buffer);
-        I2CData_ = (buffer[0] << 16) | (buffer[1] << 8) | buffer[2];
+        I2CData_ = (buffer[0] << 16) | (buffer[1] << 8) | buffer[2]; // Convertering af int til float
     }
     else if(HandleI2C == 2) // 16-bit read for Barometer calibration
     {
         uint8_t buff[2];
         I2Cdev::readBytes(ADDR, reg, length, buff);
-        I2CData_ = buff[0]<<8 | buff[1];
+        I2CData_ = buff[0]<<8 | buff[1]; // Convertering af int til float
     }
     else if(HandleI2C == 1) // 16-bit read from IMU
     {
         uint8_t buff[2];
         I2Cdev::readBytes(ADDR, reg, length, buff);
         I2Cdev::readBytes(ADDR, reg+1, length, buff);
-        I2CData_ = buff[0]<<8 | buff[1];
+        I2CData_ = buff[0]<<8 | buff[1]; // Convertering af int til float
     }
     else // 8-bit read
     {
         uint8_t buff[1];
         I2Cdev::readBytes(ADDR, reg, length, buff);
-        I2CData_ = buff[0];
+        I2CData_ = buff[0]; // Convertering af int til float
     }
 
-    return I2CData_;
+    return I2CData_; 
 }
