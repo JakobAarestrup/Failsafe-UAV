@@ -95,16 +95,14 @@ float I2C::readI2C(int ADDR, int reg, int length, int HandleI2C)
             exit(1);
         } */
         int IMU_reg16 = (buff | nbuff << 8);
-        printf("Samlet: %d\n", IMU_reg16);
         I2CData_ = IMU_reg16;
 
     }
     else // 8-bit read
     {
-        uint8_t buff[1];
-        I2Cdev::readBytes(ADDR, reg, length, buff);
-        I2CData_ = buff[0]; // Convertering af int til float
+        uint8_t buff;
+        I2Cdev::readBytes(ADDR, reg, length, &buff);
+        I2CData_ = buff; // Convertering af int til float
     }
-    printf("I2CData_: %f\n", I2CData_);
     return I2CData_; 
 }
