@@ -94,12 +94,10 @@ float I2C::readI2C(int ADDR, int reg, int length, int HandleI2C)
             printf("Failed to read from %d via I2C.", ADDR); // Read error
             exit(1);
         } */
-
-        //printf("Buff: %d,buff2:%d\n", buff, nbuff);
         int IMU_reg16 = (buff | nbuff << 8);
-        printf("Samlet: %d\n", I2CData_);
+        printf("Samlet: %d\n", IMU_reg16);
         I2CData_ = IMU_reg16;
-
+        printf("I2CData_%f\n", I2CData_);
     }
     else // 8-bit read
     {
