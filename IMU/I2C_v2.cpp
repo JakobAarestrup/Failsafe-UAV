@@ -27,10 +27,9 @@ void I2C::InitializeI2C()
 {
     //First IMU:
     I2Cdev::writeBytes(LSM6DSOX_ADDR1, LSM6DSOX_INT1_CTRL, 1, 0b00000011); // Enable gyroscope and accelerometer data interrupt
-    I2Cdev::writeBytes(LSM6DSOX_ADDR1, LSM6DSOX_CTRL2_G, 1, 0b10011100); // Gyro = 416 Hz (High-Performance mode)
+    I2Cdev::writeBytes(LSM6DSOX_ADDR1, LSM6DSOX_CTRL2_G, 1, 0b10011100); // // Gyro = 3.33 kHz   2000 dps
     I2Cdev::writeBytes(LIS3MDL_ADDR1, LSM6DSOX_CTRL1_XL, 1, 0b011000000); // Acc = 416 Hz (High-Performance mode) 2g (default)
     I2Cdev::writeBytes(LIS3MDL_ADDR1, LSM6DSOX_CTRL3_C, 1, 0b01000000); // Enable BDU
-    I2Cdev::writeBytes(LIS3MDL_ADDR1, LSM6DSOX_CTRL7_G, 1, 0b10000000); // Enable High-Performance mode for Gyro
 
     I2Cdev::writeBytes(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG1, 1, 0b01110000);// OM = 11 (ultra-high-performance mode for X and Y); DO = 100 (10 Hz ODR)
     I2Cdev::writeBytes(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG2, 1, 0b00000000);// FS = 00 (+/- 4 gauss full scale)
@@ -39,10 +38,9 @@ void I2C::InitializeI2C()
 
     //Second IMU:
     I2Cdev::writeBytes(LSM6DSOX_ADDR2, LSM6DSOX_INT1_CTRL, 1, 0b00000011); // Enable gyroscope and accelerometer data interrupt
-    I2Cdev::writeBytes(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 1, 0b10011100); // Gyro = 416 Hz (High-Performance mode)
+    I2Cdev::writeBytes(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 1, 0b10011100); // Gyro = 3.33 kHz   2000 dps
     I2Cdev::writeBytes(LIS3MDL_ADDR2, LSM6DSOX_CTRL1_XL, 1, 0b011000000); // Acc = 416 Hz (High-Performance mode)
     I2Cdev::writeBytes(LIS3MDL_ADDR2, LSM6DSOX_CTRL3_C, 1, 0b01000000); // Enable BDU
-    I2Cdev::writeBytes(LIS3MDL_ADDR2, LSM6DSOX_CTRL7_G, 1, 0b10000000); // Enable High-Performance mode for Gyro
 
     I2Cdev::writeBytes(LIS3MDL_ADDR2, LIS3MDL_CTRL_REG1, 1, 0b01110000);// OM = 11 (ultra-high-performance mode for X and Y); DO = 100 (10 Hz ODR)
     I2Cdev::writeBytes(LIS3MDL_ADDR2, LIS3MDL_CTRL_REG2, 1, 0b00000000);// FS = 00 (+/- 4 gauss full scale)
