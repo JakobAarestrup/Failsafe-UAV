@@ -74,8 +74,8 @@ float I2C::readI2C(int ADDR, int reg, int length, int HandleI2C)
     else if(HandleI2C == 1) // 16-bit read from IMU
     {
         uint8_t buff[2];
-        I2Cdev::readBytes(ADDR, reg, length, buff);
-        I2Cdev::readBytes(ADDR, reg+1, length, buff);
+        I2Cdev::readBytes(ADDR, reg, length, buff[0]);
+        I2Cdev::readBytes(ADDR, reg+1, length, buff[1]);
         I2CData_ = buff[0]<<8 | buff[1];
     }
     else // 8-bit read
