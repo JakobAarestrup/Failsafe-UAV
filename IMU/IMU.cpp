@@ -20,9 +20,9 @@ IMU::IMU()
 IMU::~IMU()
 {
 }
+
 void IMU::ConvertACCData(float aX, float aY, float aZ)
 {
-
     printf("non-Converted - X: %f, Y: %f Z: %f\n", aX, aY, aZ);
 
     if(aX > 0x8000) 
@@ -72,4 +72,19 @@ void IMU::ConvertMagData(float mY, float mX)
     if(magYaw_ < 0)
       magYaw_ += 360;
     printf("magYaw: %f\n\n", magYaw_);
+}
+
+void IMU::calibrateIMU()
+{
+    // få data fra acc
+    // set offset variabel
+    // anden kalibrering
+
+    // få data fra gyr
+    // set offset variabel
+    // anden kalibrering
+
+    // få data fra mag
+    // set offset variabel
+    // anden kalibrering
 }
