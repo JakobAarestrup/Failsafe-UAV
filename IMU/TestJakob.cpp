@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <iostream>
-#include "I2C.hpp"
+//#include "I2C.hpp"
 #include "IMU.hpp"
 #include "LIS3MDL.hpp"
 #include "LSM6DSOX.hpp"
