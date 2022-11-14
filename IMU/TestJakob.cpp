@@ -39,12 +39,12 @@ I1.initializeI2C();
 while(1)
 {
     startofloop = mymillis();
-    float ax = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_A,2,1);
-    float ay = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_A,2,1);
-    float az = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_A,2,1);
-    float gx = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_G,2,1);
-    float gy = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_G,2,1);
-    float gz = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_G,2,1);
+    float ax = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_A,1,1);
+    float ay = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_A,1,1);
+    float az = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_A,1,1);
+    float gx = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_G,1,1);
+    float gy = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_G,1,1);
+    float gz = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_G,1,1);
    /*  float mx = I2.ReadI2C_16bit(LIS3MDL_ADDR2, LIS3MDL_OUT_X_L);
     float my = I2.ReadI2C_16bit(LIS3MDL_ADDR2, LIS3MDL_OUT_Y_L);
     float mz = I2.ReadI2C_16bit(LIS3MDL_ADDR2, LIS3MDL_OUT_Z_L); */
@@ -53,9 +53,11 @@ while(1)
     IMU1.ConvertGyroData(gx,gy,gz);
     //IMU1.ConvertMagData(mx,my);
 
-  while(mymillis() - startofloop < 20){
+/*   while(mymillis() - startofloop < 20){
             usleep(100);
-    }
+    } */
+
+    usleep(1000000);
     printf("Loop Time %d\n", mymillis()- startofloop);
 }
 return 0;
