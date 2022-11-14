@@ -97,7 +97,7 @@ float I2C::readI2C(int ADDR, int reg, int length, int HandleI2C)
 
            printf("Buff: %d,buff2:%d\n", buff, nbuff);
         int I2CData_ = (buff | nbuff << 8);
-        printf("Samlet: %d\n", I2C_Data_);
+        printf("Samlet: %d\n", I2CData_);
 
     }
     else // 8-bit read
