@@ -104,6 +104,6 @@ float I2C::readI2C(int ADDR, int reg, int length, int HandleI2C)
         I2Cdev::readBytes(ADDR, reg, length, buff);
         I2CData_ = buff[0]; // Convertering af int til float
     }
-
+    printf("I2CData_%f\n", I2CData_);
     return I2CData_; 
 }
