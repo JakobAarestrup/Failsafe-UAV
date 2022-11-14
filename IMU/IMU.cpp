@@ -8,7 +8,7 @@
 #define RAD_TO_DEG 57.29578
 #define DT 0.02       // [s/loop] loop period. 20ms
 #define AA 0.97       // complementary filter constant
-#define A_GAIN 0.0573 // [deg/LSB]
+#define XL_Sensitivity 0.061 // [deg/LSB]
 #define G_GAIN 0.07  // [deg/s/LSB]
 
 // Constructor
@@ -93,19 +93,4 @@ void IMU::ConvertMagData(float mY, float mX)
     if(magYaw_ < 0)
       magYaw_ += 360;
     printf("magYaw: %f\n\n", magYaw_);
-}
-
-/* float IMU::getACCData() // Returns ACC data
-{
-    return accData;
-} */
-
-float IMU::getGyroData() // Returns Gyro data
-{
-    return gyroYangle_;
-}
-
-float IMU::getMagData() // Returns Mag data
-{
-    return gyroXangle_;
 }
