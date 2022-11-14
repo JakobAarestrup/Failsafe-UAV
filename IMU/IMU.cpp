@@ -29,7 +29,7 @@ void IMU::ConvertACCData(float aX, float aY, float aZ)
     double aYf = float(aY);
     double aZf = float(aZ); 
  */
-    printf("non-Converted - X: %d, Y: %d Z: %d\n", aX, aY, aZ);
+    printf("non-Converted - X: %f, Y: %f Z: %f\n", aX, aY, aZ);
 
     if(aX > 0x8000) 
     {
@@ -46,16 +46,16 @@ void IMU::ConvertACCData(float aX, float aY, float aZ)
         aZ = aZ - 0xFFFF; // lave det her i I2C read kald?
     } 
  
-    printf("after if.. - X: %d, Y: %d Z: %d\n", aX, aY, aZ);
+    printf("after if.. - X: %f, Y: %f Z: %f\n", aX, aY, aZ);
 
    
 /*  double XL_xdeg = (atan2(-aY, -aZ))/(PI/180);
     double XL_ydeg = (atan2(-aZ, -aX))/(PI/180);
     double XL_zdeg = 180 - (atan2(-aY, -aZ) / (PI / 180)); */
 
-    aXf = (aX*0.061)/1000;
-    aYf = (aY*0.061)/1000;
-    aZf = (aZ*0.061)/1000;
+    float aXf = (aX*0.061)/1000;
+    float aYf = (aY*0.061)/1000;
+    float aZf = (aZ*0.061)/1000;
 
     XL_Roll_ = atan2(aYf, aZf) * 180 / PI;
     XL_Pitch_ = atan2(-aXf, sqrt(aYf * aYf + aZf * aZf)) * 180 / PI;
