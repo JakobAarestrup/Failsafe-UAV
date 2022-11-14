@@ -26,16 +26,16 @@ I2C::~I2C()
 void I2C::initializeI2C()
 {
     //First IMU:
-    I2Cdev::writeBytes(LSM6DSOX_ADDR1, LSM6DSOX_INT1_CTRL, 1, 0b00000011); // Enable gyroscope and accelerometer data interrupt
-    I2Cdev::writeBytes(LSM6DSOX_ADDR1, LSM6DSOX_CTRL2_G, 1, 0b10011100); // Gyro = 416 Hz (High-Performance mode)
-    I2Cdev::writeBytes(LIS3MDL_ADDR1, LSM6DSOX_CTRL1_XL, 1, 0b011000000); // Acc = 416 Hz (High-Performance mode)
-    I2Cdev::writeBytes(LIS3MDL_ADDR1, LSM6DSOX_CTRL3_C, 1, 0b01000000); // Enable BDU
-    I2Cdev::writeBytes(LIS3MDL_ADDR1, LSM6DSOX_CTRL7_G, 1, 0b10000000); // Enable High-Performance mode for Gyro
+    I2Cdev::writeByte(LSM6DSOX_ADDR1, LSM6DSOX_INT1_CTRL, 0b00000011); // Enable gyroscope and accelerometer data interrupt
+    I2Cdev::writeByte(LSM6DSOX_ADDR1, LSM6DSOX_CTRL2_G, 0b10011100); // Gyro = 416 Hz (High-Performance mode)
+    I2Cdev::writeByte(LIS3MDL_ADDR1, LSM6DSOX_CTRL1_XL, 0b011000000); // Acc = 416 Hz (High-Performance mode)
+    I2Cdev::writeByte(LIS3MDL_ADDR1, LSM6DSOX_CTRL3_C, 0b01000000); // Enable BDU
+    I2Cdev::writeByte(LIS3MDL_ADDR1, LSM6DSOX_CTRL7_G, 0b10000000); // Enable High-Performance mode for Gyro
 
-    I2Cdev::writeBytes(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG1, 1, 0b01110000);// OM = 11 (ultra-high-performance mode for X and Y); DO = 100 (10 Hz ODR)
-    I2Cdev::writeBytes(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG2, 1, 0b00000000);// FS = 00 (+/- 4 gauss full scale)
-    I2Cdev::writeBytes(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG3, 1, 0b00000000);// MD = 00 (continuous-conversion mode)
-    I2Cdev::writeBytes(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG4, 1, 0b00001100);// OMZ = 11 (ultra-high-performance mode for Z)
+    I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG1, 0b01110000);// OM = 11 (ultra-high-performance mode for X and Y); DO = 100 (10 Hz ODR)
+    I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG2, 0b00000000);// FS = 00 (+/- 4 gauss full scale)
+    I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG3, 0b00000000);// MD = 00 (continuous-conversion mode)
+    I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG4, 0b00001100);// OMZ = 11 (ultra-high-performance mode for Z)
 
     //Second IMU:
    /*  I2Cdev::writeBytes(LSM6DSOX_ADDR2, LSM6DSOX_INT1_CTRL, 1, 0b00000011); // Enable gyroscope and accelerometer data interrupt
