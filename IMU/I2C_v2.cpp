@@ -83,7 +83,7 @@ float I2C::readI2C(int ADDR, int reg, int length, int HandleI2C)
             exit(1);
         }
         int I2C_Data_ = (Reg_data1 | Reg_data2 << 8);
-        return I2C_Data_;
+
     }
     else // 8-bit read
     {
