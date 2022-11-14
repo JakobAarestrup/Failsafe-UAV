@@ -23,7 +23,7 @@ I2C::I2C()
 // Destructor
 I2C::~I2C()
 {
-    /*delete [] I2C_Data_,I2C_File_,Write_File_; // Delete private variables*/
+    //delete [] I2C_Data_,I2C_File_,Write_File_; // Delete private variables
 }
 
 // Open i2c communication
@@ -59,11 +59,8 @@ int I2C::ReadI2C_16bit(int ADDR, int reg)
         printf("Failed to read from %d via I2C.", ADDR); // Read error
         exit(1);
     }
-    else
-   {
-        I2C_Data_ = (Reg_data2 << 8) | Reg_data1; // Bitshift registers together
-        return I2C_Data_; // Return i2c data
-   }
+    int I2C_Data_ = (Reg_data1 | Reg_data2 << 8);
+    return I2C_Data_; // Return i2c data
 }
 
 // Read from i2c device register
