@@ -42,7 +42,7 @@ void I2C::initializeI2C()
     I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 0b10011100); // Gyro = 416 Hz (High-Performance mode)
     I2Cdev::writeByte(LIS3MDL_ADDR2, LSM6DSOX_CTRL1_XL, 0b011000000); // Acc = 416 Hz (High-Performance mode)
     I2Cdev::writeByte(LIS3MDL_ADDR2, LSM6DSOX_CTRL3_C, 0b01000000); // Enable BDU
-    I2Cdev::writeByte(LIS3MDL_ADDR2, LSM6DSOX_CTRL7_G, 0b10000000); // Enable High-Performance mode for Gyro
+   // I2Cdev::writeByte(LIS3MDL_ADDR2, LSM6DSOX_CTRL7_G, 0b10000000); // Enable High-Performance mode for Gyro
 
     I2Cdev::writeByte(LIS3MDL_ADDR2, LIS3MDL_CTRL_REG1, 0b01110000);// OM = 11 (ultra-high-performance mode for X and Y); DO = 100 (10 Hz ODR)
     I2Cdev::writeByte(LIS3MDL_ADDR2, LIS3MDL_CTRL_REG2, 0b00000000);// FS = 00 (+/- 4 gauss full scale)
@@ -97,7 +97,7 @@ float I2C::readI2C(int ADDR, int reg, int length, int HandleI2C)
         int IMU_reg16 = (buff | nbuff << 8);
         printf("Samlet: %d\n", IMU_reg16);
         I2CData_ = IMU_reg16;
-        return I2CData_;
+
     }
     else // 8-bit read
     {
@@ -106,5 +106,5 @@ float I2C::readI2C(int ADDR, int reg, int length, int HandleI2C)
         I2CData_ = buff[0]; // Convertering af int til float
     }
     printf("I2CData_: %f\n", I2CData_);
-    //return I2CData_; 
+    return I2CData_; 
 }
