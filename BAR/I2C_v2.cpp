@@ -23,7 +23,7 @@ I2C::~I2C()
 }
 
 // Open i2c communication
-void I2C::InitializeI2C()
+void I2C::initializeI2C()
 {
     //First IMU:
     I2Cdev::writeBytes(LSM6DSOX_ADDR1, LSM6DSOX_INT1_CTRL, 1, 0b00000011); // Enable gyroscope and accelerometer data interrupt
@@ -51,27 +51,27 @@ void I2C::InitializeI2C()
 }
 
 // Write to I2C device register
-void I2C::WriteI2C(int ADDR, int reg, int length, unsigned char* data)
+void I2C::writeI2C(int ADDR, int reg, int length, unsigned char* data)
 {
     I2Cdev::writeBytes(ADDR, reg, length, data);
 }
 
 // Read from i2c device register
-float I2C::ReadI2C(int ADDR, int reg, int length, int HandleI2C)
+float I2C::readI2C(int ADDR, int reg, int length, int HandleI2C)
 {
-    if(HandleI2C == 3) // 24-bit read likely from the Barometer
+    if(HandleI2C == 3) // 24-bit read from Barometer
     {
         uint8_t buffer[3];
         I2Cdev::readBytes(ADDR, reg, length, buffer);
         I2CData_ = (buffer[0] << 16) | (buffer[1] << 8) | buffer[2];
     }
-    else if(HandleI2C == 2) // 16-bit read likely from the IMU
+    else if(HandleI2C == 2) // 16-bit read for Barometer calibration
     {
         uint8_t buff[2];
         I2Cdev::readBytes(ADDR, reg, length, buff);
         I2CData_ = buff[0]<<8 | buff[1];
     }
-    else if(HandleI2C == 1)
+    else if(HandleI2C == 1) // 16-bit read from IMU
     {
         uint8_t buff[2];
         I2Cdev::readBytes(ADDR, reg, length, buff);

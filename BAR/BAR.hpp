@@ -10,18 +10,15 @@ class BAR
 public:
     BAR(); // Constructor
     ~BAR();// Destructor
-    void ConvertToAGL(); // Converts the bar data into height in AGL
-    void InitialAMSL(); // Collects the initial AMSL value
-    void CalibrateBAR(); // Calibrates the barometer
-    int GetCalibration(); // Returns the calibration variable
-    //bool TestConnection();
-    //void RefreshPressure();
-    void ReadPressure();
-    //void RefreshTemperature();
-    void ReadTemperature();
-    void CalculatePressureAndTemperature();
-    void Update();
-    float GetHeight(); // Returns the height above ground level
+    void convertToAGL(); // Converts the bar data into height in AGL
+    void initialAMSL(); // Collects the initial AMSL value
+    void calibrateBAR(); // Calibrates the barometer
+    int getCalibration(); // Returns the calibration variable
+    void readPressure();
+    void readTemperature();
+    void calculatePressureAndTemperature();
+    void update();
+    float getHeight(); // Returns the height above ground level
 private:
     float initial_AMSL_; // Initial height above mean sea level when drone is on the ground
     float height_AMSL_; // Height above mean sea level
