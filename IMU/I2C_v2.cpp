@@ -82,7 +82,7 @@ float I2C::readI2C(int ADDR, int reg, int length, int HandleI2C)
             printf("Failed to read from %d via I2C.", ADDR); // Read error
             exit(1);
         } */
-        printf("Buff: %s,buff2:%s\n", buff, nbuff);
+        printf("Buff: %f,buff2:%f\n", buff, nbuff);
         int I2C_Data_ = (buff[0] | nbuff[0] << 8); 
        /*  uint8_t buff; // Read first register // Read second register
         uint8_t nbuff;
