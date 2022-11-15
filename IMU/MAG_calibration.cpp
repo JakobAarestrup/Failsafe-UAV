@@ -26,9 +26,9 @@ I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG4, 0b00001100);// OMZ = 11 (ult
 // Main loop
 while(1)
 {
-    float mx = ((I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_X_L,1,1)/mag_gain)*100);
-    float my = ((I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Y_L,1,1)/mag_gain)*100);
-    float mz = ((I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L,1,1)/mag_gain)*100);
+    float mx = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_X_L,1,1);
+    float my = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Y_L,1,1);
+    float mz = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L,1,1);
 
     if(mx > 0x8000) 
     {
@@ -44,8 +44,12 @@ while(1)
     {
         mz = mz - 0xFFFF; // lave det her i I2C read kald?
     } 
+
+    float mxc = (mx/mag_gain)*100;
+    float myc = (my/mag_gain)*100;
+    float mzc = (mz/mag_gain)*100;
     
-    printf("%f %f %f \n",mx,my,mz);
+    printf("%f %f %f \n",mxc,myc,mzc);
     usleep(10000); // 10ms Delay
 }
 return 0;
