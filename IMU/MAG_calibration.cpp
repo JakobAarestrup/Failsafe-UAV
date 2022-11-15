@@ -14,19 +14,35 @@ int main()
 {
 
 I2C I1;
+int N = 0;
 
 // Enable magnetometer
-I2Cdev::writeByte(LIS3MDL_ADDR2, LIS3MDL_CTRL_REG1, 0b01110000);// OM = 11 (ultra-high-performance mode for X and Y); DO = 100 (10 Hz ODR)
-I2Cdev::writeByte(LIS3MDL_ADDR2, LIS3MDL_CTRL_REG2, 0b00000000);// FS = 00 (+/- 4 gauss full scale)
-I2Cdev::writeByte(LIS3MDL_ADDR2, LIS3MDL_CTRL_REG3, 0b00000000);// MD = 00 (continuous-conversion mode)
-I2Cdev::writeByte(LIS3MDL_ADDR2, LIS3MDL_CTRL_REG4, 0b00001100);// OMZ = 11 (ultra-high-performance mode for Z)
+I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG1, 0b01110000);// OM = 11 (ultra-high-performance mode for X and Y); DO = 100 (10 Hz ODR)
+I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG2, 0b00000000);// FS = 00 (+/- 4 gauss full scale)
+I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG3, 0b00000000);// MD = 00 (continuous-conversion mode)
+I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG4, 0b00001100);// OMZ = 11 (ultra-high-performance mode for Z)
 
 // Main loop
 while(1)
 {
-    float mx = I1.readI2C(LIS3MDL_ADDR2, LIS3MDL_OUT_X_L,1,1);
-    float my = I1.readI2C(LIS3MDL_ADDR2, LIS3MDL_OUT_Y_L,1,1);
-    float mz = I1.readI2C(LIS3MDL_ADDR2, LIS3MDL_OUT_Z_L,1,1);
+    float mx = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_X_L,1,1);
+    float my = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Y_L,1,1);
+    float mz = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L,1,1);
+    if(mx > 0x8000)
+    {
+        mx = mx - 0xFFFF;
+    }
+
+    if (my > 0x8000)
+    {
+        my = my - 0xFFFF;
+    }
+
+    if (mz > 0x8000)
+    {
+        mz = mz - 0xFFFF; // lave det her i I2C read kald?
+    }
+
     
     printf("%f %f %f \n",mx,my,mz);
     usleep(10000); // 10ms Delay
