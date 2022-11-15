@@ -55,7 +55,7 @@ void IMU::ConvertACCData(float aX, float aY, float aZ)
 void IMU::ConvertGyroData(float gX, float gY, float gZ)
 {
     
-    if(aX > 0x8000) 
+    if(gX > 0x8000) 
     {
         gX = gX - 0xFFFF;
     }
