@@ -58,6 +58,7 @@ while(1)
     else
     {
         printf("done!!!");
+        break;
     }
 }
 return 0;
