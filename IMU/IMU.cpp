@@ -48,7 +48,7 @@ void IMU::ConvertACCData(float aX, float aY, float aZ)
     float aZf = (aZ*0.061)/1000;
 
     XL_Roll_ = atan2(aYf, aZf) * 180 / PI;
-    XL_Pitch_ = atan2(-aXf, sqrt(aYf * aYf + aZf * aZf)) * 180 / PI;
+    XL_Pitch_ = atan2(aXf, sqrt(aYf * aYf + aZf * aZf)) * 180 / PI;
     printf("Converted - XL_Roll: %lf, XL_pitch: %lf\n\n", XL_Roll_, XL_Pitch_);
 }
 
