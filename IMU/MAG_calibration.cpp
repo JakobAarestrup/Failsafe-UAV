@@ -18,10 +18,10 @@ I2C I1;
 int mag_gain = 6842;
 
 // Enable magnetometer
-I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG1, 0b00100010);// OM = 11 (ultra-high-performance mode for X and Y); DO = 000 (10 Hz ODR)
+I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG1, 0b00100010);// OM = 01 (Medium-performance mode for X and Y); DO = 000 (default) FAST_ODR = 1 (155 Hz ODR)
 I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG2, 0b00000000);// FS = 00 (+/- 4 gauss full scale)
 I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG3, 0b00000000);// MD = 00 (continuous-conversion mode)
-I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG4, 0b00000100);// OMZ = 11 (ultra-high-performance mode for Z)
+I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG4, 0b00000100);// OMZ = 11 (Medium-performance mode for Z)
 
 // Main loop
 while(1)
