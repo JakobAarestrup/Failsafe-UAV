@@ -55,7 +55,7 @@ void IMU::ConvertACCData(float aX, float aY, float aZ)
 void IMU::ConvertGyroData(float gX, float gY, float gZ)
 {
     
-  /*   if(gX > 0x8000) 
+    if(gX > 0x8000) 
     {
         gX = gX - 0xFFFF;
     }
@@ -69,7 +69,7 @@ void IMU::ConvertGyroData(float gX, float gY, float gZ)
     {
         gZ = gZ - 0xFFFF; // lave det her i I2C read kald?
     } 
-  */
+ 
     printf("RawgX: %f, RawgY: %f, RawgZ: %f\n", gX, gY, gZ);
     rate_gyr_x_ = (gX*0.0175); // gyro_sensitivity
     rate_gyr_y_ = (gY*0.0175); // gyro_sensitivity 
