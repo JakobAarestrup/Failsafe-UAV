@@ -48,7 +48,7 @@ void IMU::ConvertACCData(float aX, float aY, float aZ)
     float aZf = (aZ*0.061)/1000;
 
     XL_Roll_ = atan2(aYf, aZf) * 180 / PI;
-    XL_Pitch_ = atan2(-aXf, sqrt(aYf * aYf + aZf * aZf)) * 180 / PI;
+    XL_Pitch_ = atan2(-aXf, sqrt(aYf * aYf + aZf * aZf)) * -180 / PI;
     printf("Converted - XL_Roll: %lf, XL_pitch: %lf\n\n", XL_Roll_, XL_Pitch_);
 }
 
@@ -77,12 +77,12 @@ void IMU::ConvertGyroData(float gX, float gY, float gZ)
     printf("GyroX: %f, GyroY: %f, GyroZ: %f\n", rate_gyr_x_, rate_gyr_y_, rate_gyr_z_);
     gyroXangle_ = PI*(rate_gyr_x_ / (DT*1000));
     gyroYangle_ = PI*(rate_gyr_y_ / (DT*1000));
-    gyroZangle_ = PI*(rate_gyr_z_ / (DT*1000));
+    gyroZangle_ = PI*(rate_gyr_z_ / (DT*1000)); 
    
     double CFangleX=AA*(CFangleX+gyroYangle_) +(1 - AA) * XL_Roll_; // 97% Gyro 3% Accelerometer
     double CFangleY=AA*(CFangleY+gyroXangle_) +(1 - AA) * XL_Pitch_;// 97% Gyro 3% Accelerometer
-    printf("GyroXangle: %f, GyroYangle: %f, GyroZangle: %f\n", gyroXangle_, gyroYangle_, gyroZangle_);
-    printf("Roll_filtered: %f, Pitch filtered: %f, GyroZangle: %f\n", CFangleX, CFangleY);
+     printf("GyroXangle: %f, GyroYangle: %f, GyroZangle: %f\n", gyroXangle_, gyroYangle_, gyroZangle_);
+    printf("Roll_filtered: %f, Pitch filtered: %f, GyroZangle: %f\n", CFangleX, CFangleY)
 }
 
 void IMU::ConvertMagData(float mY, float mX)

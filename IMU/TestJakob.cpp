@@ -49,7 +49,7 @@ while(1)
     
     printf("ax: %f ay: %f az: %f\n",ax,ay,az);
 
-    IMU1.ConvertACCData(ax, ay, az);
+    IMU1.ConvertACCData(ax, ay, az); */
     IMU1.ConvertGyroData(gx,gy,gz);
     //IMU1.ConvertMagData(mx,my);
 
