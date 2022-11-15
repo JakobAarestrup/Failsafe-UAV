@@ -26,9 +26,9 @@ I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG4, 0b00001100);// OMZ = 11 (ult
 // Main loop
 while(1)
 {
-    float mx = I1.ReadI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_X_L,1,1);
-    float my = I1.ReadI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Y_L,1,1);
-    float mz = I1.ReadI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L,1,1);
+    float mx = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_X_L,1,1);
+    float my = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Y_L,1,1);
+    float mz = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L,1,1);
     
     printf("%f, %f, %f\n",mx,my,mz);
 }
