@@ -54,9 +54,9 @@ void IMU::ConvertACCData(float aX, float aY, float aZ)
 
 void IMU::ConvertGyroData(float gX, float gY, float gZ)
 {
-    rate_gyr_x_ = (gX * 70)/1000;
-    rate_gyr_y_ = (gY * 70)/1000;
-    rate_gyr_z_ = (gZ * 70)/1000;
+    rate_gyr_x_ = (gX/70)/1000;
+    rate_gyr_y_ = (gY/70)/1000;
+    rate_gyr_z_ = (gZ/70)/1000;
     printf("GyroX: %f, GyroY: %f, GyroZ: %f\n", rate_gyr_x_, rate_gyr_y_, rate_gyr_z_);
     gyroXangle_ += rate_gyr_x_ * DT;
     gyroYangle_ += rate_gyr_y_ * DT;
