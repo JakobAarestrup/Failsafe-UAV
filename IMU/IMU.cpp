@@ -63,8 +63,8 @@ void IMU::ConvertGyroData(float gX, float gY, float gZ)
     gyroYangle_ += rate_gyr_y_ * DT;
     gyroZangle_ += rate_gyr_z_ * DT;
     printf("GyroXangle: %f, GyroYangle: %f, GyroZangle: %f\n", gyroXangle_, gyroYangle_, gyroZangle_);
-    double CFangleX=AA*(CFangleX+rate_gyr_x_*DT) +(1 - AA) * XL_Roll_;
-    double CFangleY=AA*(CFangleY+rate_gyr_y_*DT) +(1 - AA) * XL_Pitch_;
+    double CFangleX=AA*(CFangleX+gyroXangle_) +(1 - AA) * XL_Roll_;
+    double CFangleY=AA*(CFangleY+gyroYangle_) +(1 - AA) * XL_Pitch_;
     printf("Roll_filtered: %f, Pitch filtered: %f, GyroZangle: %f\n", CFangleX, CFangleY);
 }
 
