@@ -31,6 +31,7 @@ while(1)
     float mz = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L,1,1);
     
     printf("%f, %f, %f\n",mx,my,mz);
+    usleep(200000); // Delay
 }
 return 0;
 }
