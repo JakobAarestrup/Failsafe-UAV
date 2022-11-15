@@ -29,6 +29,21 @@ while(1)
     float mx = ((I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_X_L,1,1)/mag_gain)*100);
     float my = ((I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Y_L,1,1)/mag_gain)*100);
     float mz = ((I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L,1,1)/mag_gain)*100);
+
+     if(mx > 0x8000) 
+    {
+        mx = mx - 0xFFFF;
+    }
+
+    if (my > 0x8000)
+    {
+        my = my - 0xFFFF;
+    }
+    
+    if (mz > 0x8000)
+    {
+        mz = mz - 0xFFFF; // lave det her i I2C read kald?
+    } 
     
     printf("%f %f %f \n",mx,my,mz);
     usleep(10000); // 10ms Delay
