@@ -79,8 +79,8 @@ void IMU::ConvertGyroData(float gX, float gY, float gZ)
     gyroYangle_ = PI*(rate_gyr_y_ / (DT*1000));
     gyroZangle_ = PI*(rate_gyr_z_ / (DT*1000));
    
-    double CFangleX=AA*(CFangleX+gyroXangle_) +(1 - AA) * XL_Roll_; // 97% Gyro 3% Accelerometer
-    double CFangleY=AA*(CFangleY+gyroYangle_) +(1 - AA) * XL_Pitch_;// 97% Gyro 3% Accelerometer
+    double CFangleX=AA*(CFangleX+gyroYangle_) +(1 - AA) * XL_Roll_; // 97% Gyro 3% Accelerometer
+    double CFangleY=AA*(CFangleY+gyroXangle_) +(1 - AA) * XL_Pitch_;// 97% Gyro 3% Accelerometer
     printf("GyroXangle: %f, GyroYangle: %f, GyroZangle: %f\n", gyroXangle_, gyroYangle_, gyroZangle_);
     printf("Roll_filtered: %f, Pitch filtered: %f, GyroZangle: %f\n", CFangleX, CFangleY);
 }
