@@ -26,7 +26,7 @@ void IMU::ConvertACCData(float aX, float aY, float aZ)
 {
     printf("non-Converted - X: %f, Y: %f Z: %f\n", aX, aY, aZ);
 
-    if(aX > 0x8000) 
+   /*  if(aX > 0x8000) 
     {
         aX = aX - 0xFFFF;
     }
@@ -39,7 +39,7 @@ void IMU::ConvertACCData(float aX, float aY, float aZ)
     if (aZ > 0x8000)
     {
         aZ = aZ - 0xFFFF; // lave det her i I2C read kald?
-    } 
+    }  */
  
     printf("after if.. - X: %f, Y: %f Z: %f\n", aX, aY, aZ);
 
