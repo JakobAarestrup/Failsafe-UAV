@@ -7,13 +7,9 @@
 #include <iostream>
 int main()
 {
-double lat_Data = 5610.50098;
-double lon_Data = 01010.08142;
-double lat_Deg = double(int(lat_Data))/100; // (d)dd(deg)
-double lon_Deg = double(int(lon_Data))/100; // (d)dd(deg)
-
-double lat_Sec = (lat_Data-lat_Deg*100); // mm.mmmm(minutes)
-double lon_Sec = (lon_Data-lon_Deg*100); // mm.mmmm(minutes)
-printf("lat_Deg: %lf, lat_Sec: %lf, lon_Deg: %lf, lon_Sec: %lf", lat_Deg, lat_Sec, lon_Deg, lon_Sec);
+int b1 = 0b01110000;
+int b2 = 0b11111111;
+int x = b1|b2 << 8;
+printf("%d",x);
 return 0;
 }

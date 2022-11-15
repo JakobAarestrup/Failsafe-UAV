@@ -15,6 +15,8 @@ int main()
 
 I2C I1;
 
+int N = 0;
+
 int mag_gain = 6842;
 
 // Enable magnetometer
@@ -30,7 +32,7 @@ while(1)
     float my = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Y_L,1,1);
     float mz = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L,1,1);
 
-    /*
+    
     if(mx > 0x8000) 
     {
         mx = mx - 0xFFFF;
@@ -45,14 +47,21 @@ while(1)
     {
         mz = mz - 0xFFFF; // lave det her i I2C read kald?
     } 
-    */
+   
 
     float mxc = (mx/mag_gain)*100;
     float myc = (my/mag_gain)*100;
     float mzc = (mz/mag_gain)*100;
-    
+
+    if (N < 2000)
     printf("%f %f %f \n",mxc,myc,mzc);
     usleep(20000); // 20ms Delay
+    N = N+1;
+    else
+    {
+    print("done!!!")
+    }
+
 }
 return 0;
 }
