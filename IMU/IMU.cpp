@@ -80,7 +80,7 @@ void IMU::ConvertMagData(float mY, float mX)
 void IMU::calibrateIMU()
 {
     // få data fra acc
-    I2C::readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_A,1,1);
+    //I2C::readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_A,1,1);
 
     // set offset variabel
     // anden kalibrering
