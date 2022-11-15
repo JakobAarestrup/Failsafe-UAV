@@ -54,12 +54,14 @@ while(1)
     float mzc = (mz/mag_gain)*100;
 
     if (N < 2000)
+    {
     printf("%f %f %f \n",mxc,myc,mzc);
     usleep(20000); // 20ms Delay
     N = N+1;
+    }
     else
     {
-    print("done!!!")
+    printf("done!!!");
     }
 
 }
