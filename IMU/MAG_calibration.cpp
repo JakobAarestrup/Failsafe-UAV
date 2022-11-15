@@ -30,7 +30,7 @@ while(1)
     float my = ((I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Y_L,1,1)/mag_gain)*100);
     float mz = ((I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L,1,1)/mag_gain)*100);
 
-     if(mx > 0x8000) 
+    if(mx > 0x8000) 
     {
         mx = mx - 0xFFFF;
     }
