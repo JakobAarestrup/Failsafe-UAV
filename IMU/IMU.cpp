@@ -59,9 +59,9 @@ void IMU::ConvertGyroData(float gX, float gY, float gZ)
     rate_gyr_y_ = (gY*0.0175); // gyro_sensitivity 
     rate_gyr_z_ = (gZ*0.0175); // gyro_sensitivity
     printf("GyroX: %f, GyroY: %f, GyroZ: %f\n", rate_gyr_x_, rate_gyr_y_, rate_gyr_z_);
-    gyroXangle_ += rate_gyr_x_ * DT;
-    gyroYangle_ += rate_gyr_y_ * DT;
-    gyroZangle_ += rate_gyr_z_ * DT;
+    gyroXangle_ += (rate_gyr_x_ / DT)*(PI/1000);
+    gyroYangle_ += (rate_gyr_y_ / DT)*(PI/1000);
+    gyroZangle_ += (rate_gyr_z_ / DT)*(PI/1000);
    
     double CFangleX=AA*(CFangleX+gyroXangle_) +(1 - AA) * XL_Roll_; // 97% Gyro 3% Accelerometer
     double CFangleY=AA*(CFangleY+gyroYangle_) +(1 - AA) * XL_Pitch_;// 97% Gyro 3% Accelerometer
