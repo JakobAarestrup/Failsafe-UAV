@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <iostream>
-//#include "I2C.hpp"
 #include "IMU.hpp"
 #include "LIS3MDL.hpp"
 #include "LSM6DSOX.hpp"
@@ -10,8 +9,7 @@
 #include <stdbool.h>
 #include <sys/time.h>
 #include <time.h>
-#include "I2C_v2.hpp"
-//#include "Kalman.cpp"
+#include "I2C.hpp"
 
 #define DT 0.02         // [s/loop] loop period. 20ms (2s)
 
