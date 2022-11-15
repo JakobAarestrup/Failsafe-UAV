@@ -4,8 +4,6 @@
 #include "IMU.hpp"
 #include "LIS3MDL.hpp"
 #include "LSM6DSOX.hpp"
-#include <wiringPiI2C.h>
-#include <wiringPi.h>
 #include <stdbool.h>
 #include <sys/time.h>
 #include <time.h>
@@ -30,7 +28,7 @@ while(1)
     float my = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Y_L,1,1);
     float mz = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L,1,1);
     
-    printf("%f, %f, %f\n",mx,my,mz);
+    printf("[%f, %f, %f] uT   |   Norm: \f uT\n",mx,my,mz);
     usleep(200000); // Delay
 }
 return 0;
