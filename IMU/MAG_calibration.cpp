@@ -28,8 +28,8 @@ while(1)
     float my = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Y_L,1,1);
     float mz = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L,1,1);
     
-    printf("[%f, %f, %f] uT   |   Norm: \f uT\n",mx,my,mz);
-    usleep(200000); // Delay
+    printf("%f %f %f \n",mx,my,mz);
+    usleep(10000); // 10ms Delay
 }
 return 0;
 }
