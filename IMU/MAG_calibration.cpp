@@ -10,6 +10,7 @@
 #include <sys/time.h>
 #include <time.h>
 #include "I2C.hpp"
+#include "I2Cdev.h"
 
 int main()
 {
