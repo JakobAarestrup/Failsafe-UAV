@@ -5,6 +5,7 @@
 #include "I2C.hpp"
 #include "LIS3MDL.hpp"
 #include "LSM6DSOX.hpp"
+#include "linalg.h"
 
 // Definitions
 #define PI 3.14159265358979323846
@@ -13,6 +14,12 @@
 #define AA 0.97       // complementary filter constant
 #define XL_Sensitivity 0.061 // [deg/LSB]
 #define G_GAIN 0.07  // [deg/s/LSB]
+
+///
+/// Linalg defines
+///
+#define float3 linalg::aliases::float3
+#define float3x3 linalg::aliases::float3x3
 
 I2C I1;
 
@@ -85,21 +92,25 @@ void IMU::calibrateIMU()
     //float mx = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_X_L,1,1);
     //float my = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Y_L,1,1);
     //float mz = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L,1,1);
-    float mx = I1.readI2C(LIS3MDL_ADDR2, LIS3MDL_OUT_X_L,1,1);
-    float my = I1.readI2C(LIS3MDL_ADDR2, LIS3MDL_OUT_Y_L,1,1);
-    float mz = I1.readI2C(LIS3MDL_ADDR2, LIS3MDL_OUT_Z_L,1,1);
+    float mx = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_X_L,1,1);
+    float my = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Y_L,1,1);
+    float mz = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L,1,1);
 
-    float magData[3] = {mx,my,mz};
+    float3 magData {mx,my,mz};
 
     ///
     /// Definer kalibreringsmatricer
     ///
-    float A[3][3] = {1.002979, 0.039343, -0.014713, 0.039343, 1.019943, -0.006826, -0.014713, -0.006826, 1.014517};
-    float b[3] = {7.977849, 3.137438, -5.371644};
+    float3x3 A {{1.002979, 0.039343, -0.014713}, 
+            {0.039343, 1.019943, -0.006826}, 
+            {-0.014713, -0.006826, 1.014517}};
+
+    float3 b {7.977849,3.137438,-5.371644};
 
     ///
     /// Udregn kalibreret magnetometer x,y og z værdier
     ///
-    float magC[3] = A*(magData-b);
+    float3 magC = linalg::mul(A,magData-b);
+    printf("Calibrated magData: x %f, y: %f, z: %f\n",magC[0],magC[1],magC[2]);
 
 }
