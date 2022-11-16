@@ -7,15 +7,31 @@
 #include <iostream>
 int main()
 {
-double lat_Data = 5610.50098;
-double lon_Data = 01010.08142;
-double lat_Deg = double(int(lat_Data))/100; // (d)dd(deg)
-double lon_Deg = double(int(lon_Data))/100; // (d)dd(deg)
+float mx = 28.061972;
+float my = 9.909383;
+float mz = -52.645428;
 
-double lat_Sec = (lat_Data-lat_Deg*100); // mm.mmmm(minutes)
-double lon_Sec = (lon_Data-lon_Deg*100); // mm.mmmm(minutes)
-printf("lat_Deg: %lf, lat_Sec: %lf, lon_Deg: %lf, lon_Sec: %lf", lat_Deg, lat_Sec, lon_Deg, lon_Sec);
+//float magData[3] = {mx,my,mz};
 
-mx
+float A[3][3] = { {1.002979, 0.039343, -0.014713}, 
+                  {0.039343, 1.019943, -0.006826}, 
+                  {-0.014713, -0.006826, 1.014517} };
+
+float b[3] {7.977849,3.137438,-5.371644};
+
+float magxC = A[0][0]*mx + A[0][1]*my + A[0][2]*mz;
+float bxC   = A[0][0]*b[0] + A[0][1]*b[1] + A[0][2]*b[2];
+float magCalibX = magxC-bxC;
+
+float magyC = A[1][0]*mx + A[1][1]*my + A[1][2]*mz;
+float byC   = A[1][0]*b[0] + A[1][1]*b[1] + A[1][2]*b[2];
+float magCalibY = magyC-byC;
+
+float magzC = A[2][0]*mx + A[2][1]*my + A[2][2]*mz;
+float bzC   = A[2][0]*b[0] + A[2][1]*b[1] + A[2][2]*b[2];
+float magCalibZ = magzC-bzC;
+
+
+printf("magCalibX: %f magCalibY: %f  magCalibZ: %f non-calibrated", magCalibX,magCalibY,magCalibZ);
 return 0;
 }
