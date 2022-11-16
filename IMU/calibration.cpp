@@ -28,12 +28,12 @@ int main()
 I2C I1;
 I2C I2;
 IMU IMU1;
-//Kalman k1;
 int startofloop  = mymillis();
 struct  timeval tvBegin, tvEnd,tvDiff;
 gettimeofday(&tvBegin, NULL);
 
-I1.InitializeI2C();
+I1.InitializeI2C(); // write to registers
+IMU1.calibrateIMU(); // gyroscope calibration and set hardcoded values for accelerometer and magnometer
 
 // Main loop
 while(1)
