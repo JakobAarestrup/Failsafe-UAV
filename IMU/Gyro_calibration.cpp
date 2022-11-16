@@ -18,7 +18,7 @@ int N = 0;
 int gyro_sensitivity = 17.5;
 IMU IMU1;
 
-// Enable  from IMU1
+// Enable  from IMU2
 I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_INT1_CTRL, 0b00000011); // Enable gyroscope and accelerometer data interrupt
 I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 0b01100100);   // Gyro = 416 Hz (High-Performance mode) 500 dps
 I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL3_C, 0b01000000);   // Enable BDU
@@ -33,13 +33,13 @@ while(1)
 
     float gxc = (gx*gyro_sensitivity)/1000; 
     float gyc = (gy*gyro_sensitivity)/1000; 
-    float gzc = (gz*gyro_sensitivity)/1000;
+    float gzc = (gz*gyro_sensitivity)/1000; 
 
     
 
     if (N < 500)
     {
-        printf("%f %f %f \n",gxc,gyc,gzc);
+        printf("%f %f %f \n",gx,gy,gz);
         usleep(20000); // 20ms Delay
         N = N+1;
     }
