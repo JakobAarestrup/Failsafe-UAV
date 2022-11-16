@@ -78,7 +78,8 @@ float I2C::readI2C(int ADDR, int reg, int length, int HandleI2C)
         I2Cdev::readBytes(ADDR, reg, length, &buff);
         I2Cdev::readBytes(ADDR, reg+1, length, &nbuff);
         I2C_Data_ = (buff | nbuff << 8);
-        if(I2C_Data_ < 0x8000) 
+        
+        if(I2C_Data_ < 0x8000)  // two's complement read from 16 bit register
         {
 
         }
