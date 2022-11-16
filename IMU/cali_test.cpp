@@ -24,7 +24,7 @@ float3x3 A {{1.002979, 0.039343, -0.014713},
 float3 b {7.977849,3.137438,-5.371644};
 
 float3 magb = magData-b;
-float3 magC = linalg::mul(A,magData);
+float3 magC = linalg::mul(A,magData-b);
 
 printf("Calibrated magData: %f, %f, %f",magb[0],magb[1],magb[2]);
 printf("Calibrated magData: %f, %f, %f",magC[0],magC[1],magC[2]);
