@@ -15,5 +15,7 @@ double lon_Deg = double(int(lon_Data))/100; // (d)dd(deg)
 double lat_Sec = (lat_Data-lat_Deg*100); // mm.mmmm(minutes)
 double lon_Sec = (lon_Data-lon_Deg*100); // mm.mmmm(minutes)
 printf("lat_Deg: %lf, lat_Sec: %lf, lon_Deg: %lf, lon_Sec: %lf", lat_Deg, lat_Sec, lon_Deg, lon_Sec);
+
+mx
 return 0;
 }

@@ -30,23 +30,6 @@ void IMU::ConvertACCData(float aX, float aY, float aZ)
 {
     printf("non-Converted - X: %f, Y: %f Z: %f\n", aX, aY, aZ);
 
-    if(aX > 0x8000) 
-    {
-        aX = aX - 0xFFFF;
-    }
-
-    if (aY > 0x8000)
-    {
-        aY = aY - 0xFFFF;
-    }
-    
-    if (aZ > 0x8000)
-    {
-        aZ = aZ - 0xFFFF; // lave det her i I2C read kald?
-    } 
- 
-    printf("after if.. - X: %f, Y: %f Z: %f\n", aX, aY, aZ);
-
     float aXf = (aX*0.061)/1000;
     float aYf = (aY*0.061)/1000;
     float aZf = (aZ*0.061)/1000;
@@ -59,25 +42,10 @@ void IMU::ConvertACCData(float aX, float aY, float aZ)
 void IMU::ConvertGyroData(float gX, float gY, float gZ)
 {
     
-    if(gX > 0x8000) 
-    {
-        gX = gX - 0xFFFF;
-    }
-
-    if (gY > 0x8000)
-    {
-        gY = gY - 0xFFFF;
-    }
-    
-    if (gZ > 0x8000)
-    {
-        gZ = gZ - 0xFFFF; // lave det her i I2C read kald?
-    } 
- 
     printf("RawgX: %f, RawgY: %f, RawgZ: %f\n", gX, gY, gZ);
-    rate_gyr_x_ = (gX*0.0175); // gyro_sensitivity
-    rate_gyr_y_ = (gY*0.0175); // gyro_sensitivity 
-    rate_gyr_z_ = (gZ*0.0175); // gyro_sensitivity
+    rate_gyr_x_ = (gX*17.5)/1000; // gyro_sensitivity
+    rate_gyr_y_ = (gY*17.5)/1000; // gyro_sensitivity 
+    rate_gyr_z_ = (gZ*17.5)/1000; // gyro_sensitivity
     printf("GyroX: %f, GyroY: %f, GyroZ: %f\n", rate_gyr_x_, rate_gyr_y_, rate_gyr_z_);
     gyroXangle_ = PI*(rate_gyr_x_ / (DT*1000));
     gyroYangle_ = PI*(rate_gyr_y_ / (DT*1000));
@@ -92,7 +60,7 @@ void IMU::ConvertGyroData(float gX, float gY, float gZ)
 void IMU::ConvertMagData(float mY, float mX)
 {	
     //float mg_variation = 217.9 / 1000.0; få Magnetic variation i millirad
-    magYaw_ = 180 * (atan2(mY,mX)/PI);
+    magYaw_ = 180 * (atan2(mY,mX)/PI); // minus magnetic_decline
     // magYaw_ += mg_variation * 180/PI;
     if(magYaw_ < 0) // correct yaw if under 0
       magYaw_ += 360;

@@ -8,18 +8,21 @@
 #include <windows.h>
 #include <math.h>
 int main(){
-int x, y, z;     
+int x, y, z;  
+int b1 = 0b01000000, b2 = 0b01111111;   
 x = 16210;
 y = 65535;
-z = 0; 
-                  //three axis acceleration data
-double roll = 0.00, pitch = 0.00;       //Roll & Pitch are the angles which rotate by the axis X and y
-double x_Buff = float(x)*0.061/1000;
-double y_Buff = float(y)*0.061/1000;
-double z_Buff = float(z)*0.061/1000;
-printf("X: %f Y: %f Z: %f\n",x_Buff,y_Buff,z_Buff);
-roll = atan2(y_Buff , z_Buff) * 57.3;
-pitch = atan2((- x_Buff) , sqrt(y_Buff * y_Buff + z_Buff * z_Buff)) * 57.3;
-printf("Roll:%f Pitch: %f",roll,pitch);
+z = 0;     //Roll & Pitch are the angles which rotate by the axis X and y
+float I2C_Data_;
+I2C_Data_ = (b1| b2 << 8); // Bitshift registers together
+if(I2C_Data_ < 0x8000) 
+{
+
+}
+else
+{
+    I2C_Data_ = I2C_Data_ - 0xFFFF;
+}
+printf("%f\n", I2C_Data_);
 return 0;
 }
