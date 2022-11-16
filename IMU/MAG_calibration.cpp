@@ -16,6 +16,7 @@ int main()
 I2C I1;
 int N = 0;
 int mag_gain = 6842;
+IMU IMU1;
 
 // Enable magnetometer from IMU1
 I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG1, 0b01100010);// OM = 11 (ultra-high-performance mode for X and Y) FAST_ODR = 1 (155Hz ODR)
@@ -32,10 +33,11 @@ I2Cdev::writeByte(LIS3MDL_ADDR2, LIS3MDL_CTRL_REG4, 0b00001100);// OMZ = 11 (ult
 // Main loop
 while(1)
 {
+    
     // Read from Magnetometer from IMU1
-    float mx = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_X_L,1,1);
-    float my = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Y_L,1,1);
-    float mz = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L,1,1);
+    //float mx = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_X_L,1,1);
+    //float my = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Y_L,1,1);
+    //float mz = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L,1,1);
 
     /* Read from the Magnetometer from IMU2
     float mx = I1.readI2C(LIS3MDL_ADDR2, LIS3MDL_OUT_X_L,1,1);
@@ -43,6 +45,7 @@ while(1)
     float mz = I1.readI2C(LIS3MDL_ADDR2, LIS3MDL_OUT_Z_L,1,1);
     */
 
+    /*
     if(mx > 0x8000)
     {
         mx = mx - 0xFFFF;
@@ -73,6 +76,9 @@ while(1)
         printf("done!!!");
         break;
     }
+    */
+
+   IMU1.calibrateIMU();
 }
 return 0;
 }
