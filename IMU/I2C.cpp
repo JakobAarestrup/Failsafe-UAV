@@ -77,15 +77,15 @@ float I2C::readI2C(int ADDR, int reg, int length, int HandleI2C)
         uint8_t nbuff;
         I2Cdev::readBytes(ADDR, reg, length, &buff);
         I2Cdev::readBytes(ADDR, reg+1, length, &nbuff);
-        I2C_Data_ = (buff | nbuff << 8);
+        I2CData_ = (buff | nbuff << 8);
         
-        if(I2C_Data_ < 0x8000)  // two's complement read from 16 bit register
+        if(I2CData_ < 0x8000)  // two's complement read from 16 bit register
         {
 
         }
         else
         {
-        I2C_Data_ = I2C_Data_ - 0xFFFF;
+        I2CData_ = I2CData_ - 0xFFFF;
         }
         //I2CData_ = IMU_reg16;
 
