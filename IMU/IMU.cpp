@@ -56,7 +56,7 @@ void IMU::ConvertGyroData(float gX, float gY, float gZ)
 void IMU::ConvertMagData(float mY, float mX)
 {	
     //float mg_variation = 217.9 / 1000.0; få Magnetic variation i millirad
-    magYaw_ = 180 * (atan2(mY,mX)/PI);
+    magYaw_ = 180 * (atan2(mY,mX)/PI); // minus magnetic_decline
     // magYaw_ += mg_variation * 180/PI;
     if(magYaw_ < 0) // correct yaw if under 0
       magYaw_ += 360;
