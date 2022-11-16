@@ -92,9 +92,9 @@ void IMU::calibrateIMU()
     //float mx = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_X_L,1,1);
     //float my = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Y_L,1,1);
     //float mz = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L,1,1);
-    float mx = I1.readI2C(LIS3MDL_ADDR2, LIS3MDL_OUT_X_L,1,1);
-    float my = I1.readI2C(LIS3MDL_ADDR2, LIS3MDL_OUT_Y_L,1,1);
-    float mz = I1.readI2C(LIS3MDL_ADDR2, LIS3MDL_OUT_Z_L,1,1);
+    float mx = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_X_L,1,1);
+    float my = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Y_L,1,1);
+    float mz = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L,1,1);
 
     float3 magData {mx,my,mz};
 
