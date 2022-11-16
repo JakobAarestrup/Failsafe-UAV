@@ -18,9 +18,9 @@ printf("magData: \f\n",magData);
 printf("A: \f\n",A);
 printf("b: \f\n",b);
 
-//float magC[3] = A*(magData-b);
+float magC[3] = A*(magData-b);
 
-//printf("Calibrated magData: \f",magC);
+printf("Calibrated magData: \f",magC);
 
 return 0;
 };
