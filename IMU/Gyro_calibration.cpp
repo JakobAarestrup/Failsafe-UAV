@@ -27,14 +27,14 @@ int gyro_sensitivity = 70;
 
 // Enable  from IMU2
 I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_INT1_CTRL, 0b00000011); // Enable gyroscope and accelerometer data interrupt
-I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 0b10011100);   // Gyro = 105 Hz (normal mode) 250 dps
+I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 0b01010000);   // Gyro = 208 Hz (normal mode) 250 dps
 I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL3_C, 0b01000000);   // Enable BDU
 int startofloop  = mymillis();
 struct  timeval tvBegin, tvEnd,tvDiff;
 gettimeofday(&tvBegin, NULL);
 
 // Main loop
-    while(mymillis() < startofloop + 2000)
+    while(mymillis() < startofloop + 20000)
     {
         // Read from Gyro from IMU2
         float gx = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_G,1,1);
