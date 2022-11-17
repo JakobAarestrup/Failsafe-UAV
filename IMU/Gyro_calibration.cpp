@@ -9,9 +9,19 @@
 #include <time.h>
 #include "I2C.hpp"
 #include "I2Cdev.h"
+int mymillis()
+{
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec) * 1000 + (tv.tv_usec)/1000;
+}
 
 int main()
 {
+int startofloop  = mymillis();
+struct  timeval tvBegin, tvEnd,tvDiff;
+gettimeofday(&tvBegin, NULL);
+
 
 I2C I1;
 int N = 0;
@@ -45,6 +55,9 @@ I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL3_C, 0b01000000);   // Enable BDU
             printf("done!!!");
             break;
         }
+        while(mymillis() - startofloop < 20){
+            usleep(100);
+    }
 
     }
 
