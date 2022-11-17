@@ -48,7 +48,7 @@ gettimeofday(&tvBegin, NULL);
         float gzc = (gz*gyro_sensitivity)/1000; 
 
         printf("%f %f %f \n",gx,gy,gz);
-        usleep(100000);
+        usleep(20000);
         }
    // }
 
