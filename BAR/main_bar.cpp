@@ -22,7 +22,8 @@ int main()
         if (calibration > 30)
         {
         printf("Height(m): %f\n",barometer.getHeight());
-        sleep(1);
+        usleep(10000)
+        //sleep(1);
         }
         else
         {
