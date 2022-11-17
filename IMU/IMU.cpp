@@ -74,6 +74,8 @@ void IMU::ConvertMagData(float mY, float mX)
     printf("magYaw: %f\n\n", magYaw_);
 }
 
+
+/// @brief 
 void IMU::calibrateIMU()
 {
     // få data fra acc
@@ -86,9 +88,6 @@ void IMU::calibrateIMU()
     // set offset variabel
     // anden kalibrering
 
-    ///
-    /// Læs rå data fra magnetometer
-    ///
     //float mx = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_X_L,1,1);
     //float my = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Y_L,1,1);
     //float mz = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L,1,1);
@@ -96,21 +95,22 @@ void IMU::calibrateIMU()
     float my = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Y_L,1,1);
     float mz = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L,1,1);
 
-    float3 magData {mx,my,mz};
+    float bx = 7.977849; 
+    float by = 3.137438; 
+    float bz = -5.371644;
 
-    ///
-    /// Definer kalibreringsmatricer
-    ///
-    float3x3 A {{1.002979, 0.039343, -0.014713}, 
-            {0.039343, 1.019943, -0.006826}, 
-            {-0.014713, -0.006826, 1.014517}};
+    float A[3][3] = { {1.002979, 0.039343, -0.014713}, 
+                    {0.039343, 1.019943, -0.006826}, 
+                    {-0.014713, -0.006826, 1.014517} };
 
-    float3 b {7.977849,3.137438,-5.371644};
+    // formel magdataCalibrated = A(magdata-b)
 
-    ///
-    /// Udregn kalibreret magnetometer x,y og z værdier
-    ///
-    float3 magC = linalg::mul(A,magData-b);
-    printf("Calibrated magData: x %f, y: %f, z: %f\n",magC[0],magC[1],magC[2]);
+    float mxb = mx - bx; 
+    float myb = my - by;
+    float mzb = mz - bz;
+
+    float magCalibX = A[0][0]*mxb + A[0][1]*myb + A[0][2]*mzb;  // A[0,:]*(magdata-b)
+    float magCalibY = A[1][0]*mxb + A[1][1]*myb + A[1][2]*mzb;  // A[1,:]*(magdata-b)
+    float magCalibZ = A[2][0]*mxb + A[2][1]*myb + A[2][2]*mzb;  // A[2,:]*(magdata-b)
 
 }
