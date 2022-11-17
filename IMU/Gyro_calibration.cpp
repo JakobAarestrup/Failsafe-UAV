@@ -18,9 +18,7 @@ int mymillis()
 
 int main()
 {
-int startofloop  = mymillis();
-struct  timeval tvBegin, tvEnd,tvDiff;
-gettimeofday(&tvBegin, NULL);
+
 
 
 I2C I1;
@@ -31,9 +29,12 @@ int gyro_sensitivity = 8.75;
 I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_INT1_CTRL, 0b00000011); // Enable gyroscope and accelerometer data interrupt
 I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 0b01000000);   // Gyro = 105 Hz (normal mode) 250 dps
 I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL3_C, 0b01000000);   // Enable BDU
+int startofloop  = mymillis();
+struct  timeval tvBegin, tvEnd,tvDiff;
+gettimeofday(&tvBegin, NULL);
 
 // Main loop
-    while(1)
+    while(mymillis() < startofloop + 200)
     {
         // Read from Gyro from IMU2
         float gx = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_G,1,1);
@@ -44,23 +45,8 @@ I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL3_C, 0b01000000);   // Enable BDU
         float gyc = (gy*gyro_sensitivity)/1000; 
         float gzc = (gz*gyro_sensitivity)/1000; 
 
-        if (N < 2000)
-        {
-            printf("%f %f %f \n",gx,gy,gz);
-            usleep(20000); // 20ms Delay
-            N = N+1;
-        }
-        else
-        {
-            printf("done!!!");
-            break;
-        }
-
-   /*     while(mymillis() - startofloop < 200)
-        {
-            usleep(100);
-        } */
-
+        printf("%f %f %f \n",gx,gy,gz);
+        N = N+1;
     }
 
 return 0;
