@@ -47,7 +47,7 @@ I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL3_C, 0b01000000);   // Enable BDU
         if (N < 2000)
         {
             printf("%f %f %f \n",gx,gy,gz);
-            //usleep(20000); // 20ms Delay
+            usleep(20000); // 20ms Delay
             N = N+1;
         }
         else
@@ -56,10 +56,10 @@ I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL3_C, 0b01000000);   // Enable BDU
             break;
         }
 
-        while(mymillis() - startofloop < 50)
+       /*  while(mymillis() - startofloop < 50)
         {
             usleep(100);
-        }
+        } */
 
     }
 
