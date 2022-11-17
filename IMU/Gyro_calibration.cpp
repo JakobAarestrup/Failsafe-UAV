@@ -24,31 +24,31 @@ I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 0b01100100);   // Gyro = 416
 I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL3_C, 0b01000000);   // Enable BDU
 
 // Main loop
-while(1)
-{
-     // Read from Gyro from IMU2
-    float gx = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_G);
-    float gy = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_G);
-    float gz = I1.ReadI2C_16bit(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_G);
-
-    float gxc = (gx*gyro_sensitivity)/1000; 
-    float gyc = (gy*gyro_sensitivity)/1000; 
-    float gzc = (gz*gyro_sensitivity)/1000; 
-
-    
-
-    if (N < 500)
+    while(1)
     {
-        printf("%f %f %f \n",gx,gy,gz);
-        usleep(20000); // 20ms Delay
-        N = N+1;
-    }
-    else
-    {
-        printf("done!!!");
-        break;
+        // Read from Gyro from IMU2
+        float gx = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_G,1,1);
+        float gy = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_G,1,1);
+        float gz = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_G,1,1);
+
+        float gxc = (gx*gyro_sensitivity)/1000; 
+        float gyc = (gy*gyro_sensitivity)/1000; 
+        float gzc = (gz*gyro_sensitivity)/1000; 
+
+        if (N < 500)
+        {
+            printf("%f %f %f \n",gx,gy,gz);
+            usleep(20000); // 20ms Delay
+            N = N+1;
+        }
+        else
+        {
+            printf("done!!!");
+            break;
+        }
+
     }
 
-}
 return 0;
+
 }
