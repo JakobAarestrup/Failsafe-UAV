@@ -78,8 +78,11 @@ while(1)
     }
     */
 
+   float mx = 1;
+   float my = 1;
+
    IMU1.calibrateIMU();
-   IMU1.ConvertMagData();
+   IMU1.ConvertMagData(mx,my);
    usleep(100000);
 }
 return 0;

@@ -14,13 +14,7 @@
 #define AA 0.97       // complementary filter constant
 #define XL_Sensitivity 0.061 // [deg/LSB]
 #define G_GAIN 0.07  // [deg/s/LSB]
-#define MG_Sensitivity = 6842
-
-///
-/// Linalg defines
-///
-#define float3 linalg::aliases::float3
-#define float3x3 linalg::aliases::float3x3
+#define MG_Sensitivity 6842
 
 I2C I1;
 
