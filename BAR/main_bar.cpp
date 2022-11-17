@@ -21,7 +21,8 @@ int main()
         calibration = barometer.getCalibration();
         if (calibration > 30)
         {
-        printf("%i Height(m): %f\n",i,barometer.getHeight());
+        int n = i-30;
+        printf("%i Height(m): %f\n",n,barometer.getHeight());
         usleep(10000);
         //sleep(1);
         }
