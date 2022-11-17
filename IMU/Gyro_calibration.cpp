@@ -25,7 +25,7 @@ gettimeofday(&tvBegin, NULL);
 
 I2C I1;
 int N = 0;
-int gyro_sensitivity = 17.5;
+int gyro_sensitivity = 8.75;
 
 // Enable  from IMU2
 I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_INT1_CTRL, 0b00000011); // Enable gyroscope and accelerometer data interrupt
@@ -58,7 +58,7 @@ I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL3_C, 0b01000000);   // Enable BDU
 
        while(mymillis() - startofloop < 200)
         {
-            usleep(20000);
+            usleep(100);
         }
 
     }
