@@ -23,7 +23,7 @@ int main()
 
 I2C I1;
 int N = 0;
-int gyro_sensitivity = 8.75;
+int gyro_sensitivity = 70;
 
 // Enable  from IMU2
 //I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_INT1_CTRL, 0b00000011); // Enable gyroscope and accelerometer data interrupt
