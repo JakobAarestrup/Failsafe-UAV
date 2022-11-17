@@ -27,6 +27,6 @@ private:
 
     float XL_Roll_ = 0.0; // Accelerometer X-axis
     float XL_Pitch_ = 0.0; // Accelerometer Y-axis
-    float magYaw_;
+    float MAG_Yaw_;
     
 };
