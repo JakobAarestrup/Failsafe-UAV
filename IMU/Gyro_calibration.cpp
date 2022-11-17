@@ -37,7 +37,7 @@ I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL3_C, 0b01000000);   // Enable BDU
         if (N < 500)
         {
             printf("%f %f %f \n",gx,gy,gz);
-            usleep(20000); // 20ms Delay
+            //usleep(20000); // 20ms Delay
             N = N+1;
         }
         else
