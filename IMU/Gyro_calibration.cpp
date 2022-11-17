@@ -34,8 +34,8 @@ struct  timeval tvBegin, tvEnd,tvDiff;
 gettimeofday(&tvBegin, NULL);
 
 // Main loop
-    while(mymillis() < startofloop + 20000)
-    {
+   // while(mymillis() < startofloop + 200)
+  //  {
         // Read from Gyro from IMU2
         float gx = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_G,1,1);
         float gy = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_G,1,1);
@@ -46,7 +46,9 @@ gettimeofday(&tvBegin, NULL);
         float gzc = (gz*gyro_sensitivity)/1000; 
 
         printf("%f %f %f \n",gx,gy,gz);
-    }
+        usleep(100000);
+
+   // }
 
 return 0;
 
