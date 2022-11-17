@@ -29,7 +29,7 @@ IMU::~IMU()
 }
 
 /**
- * @brief Reads data of the three sensors and subtracting hardcoded offsets.
+ * @brief Reads data of the three sensors and subtracting offsets.
  * 
  * @param IMU handler for choosing IMU sensor.
  */
