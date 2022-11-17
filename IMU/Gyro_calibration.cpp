@@ -37,6 +37,8 @@ gettimeofday(&tvBegin, NULL);
    // while(mymillis() < startofloop + 200)
   //  {
         // Read from Gyro from IMU2
+        while(1)
+        {
         float gx = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_G,1,1);
         float gy = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_G,1,1);
         float gz = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_G,1,1);
@@ -47,7 +49,7 @@ gettimeofday(&tvBegin, NULL);
 
         printf("%f %f %f \n",gx,gy,gz);
         usleep(100000);
-
+        }
    // }
 
 return 0;
