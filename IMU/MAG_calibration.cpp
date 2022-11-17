@@ -79,6 +79,8 @@ while(1)
     */
 
    IMU1.calibrateIMU();
+   IMU1.ConvertMagData();
+   usleep(100000);
 }
 return 0;
 }

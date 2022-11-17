@@ -17,4 +17,7 @@ private:
     double XL_Roll_ = 0.0; // Accelerometer X-axis
     double XL_Pitch_ = 0.0; // Accelerometer Y-axis
     double magYaw_ = 0.0;
+    float magCalibX_;
+    float magCalibY_;
+    float magCalibZ_;
 };
