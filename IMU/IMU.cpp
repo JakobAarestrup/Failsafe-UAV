@@ -70,7 +70,7 @@ void IMU::ConvertMagData(float mY, float mX)
 }
 
 /// @brief 
-void IMU::calibrateIMU()
+void IMU::readIMU()
 {
     // få data fra acc
     //I2C::readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_A,1,1);
