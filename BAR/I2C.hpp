@@ -10,4 +10,4 @@ private:
     float I2CData_; // I2C device data
     unsigned char* Buffer1_;
     unsigned char* Buffer2_;
-};
+}; 
