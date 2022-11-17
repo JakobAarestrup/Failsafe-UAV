@@ -3,11 +3,14 @@ class IMU
 public:
     IMU(); // Constructor
     ~IMU(); // Destructor
-    void calibrateGyro();
-    void readIMU();
-    void ConvertACCData(float aX, float aY, float aZ);
-    void ConvertGyroData(float gX, float gY, float gZ);
-    void ConvertMagData(float mX, float mY);   
+    void calibrateGyro(int IMU);
+    void readIMU(int IMU); 
+    void readACC(int IMU);
+    void readGYRO(int IMU);
+    void readMAG(int IMU);
+    void ConvertACCData();
+    void ConvertGyroData();
+    void ConvertMagData();   
 private:
     double rate_gyr_y_ = 0.0;   // Gyroscope X-angle in deg/s
 	double rate_gyr_x_ = 0.0;   // Gyroscope Y-angle in deg/s

@@ -28,7 +28,103 @@ IMU::~IMU()
 {
 }
 
-void IMU::ConvertACCData(float aX, float aY, float aZ)
+void IMU::readIMU()
+{
+    /**
+     * @brief reading from first IMU
+     * 
+     */
+    /* float ax = I1.readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_X_L_A,1,1);
+    float ay = I1.readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_A,1,1);
+    float az = I1.readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_A,1,1);
+    float gx = I1.readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_X_L_G,1,1);
+    float gy = I1.readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_G,1,1);
+    float gz = I1.readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_G,1,1);
+    float mx = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_X_L,1,1);
+    float my = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Y_L,1,1);
+    float mz = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L,1,1); */
+
+    /**
+     * @brief reading from second IMU
+     * 
+     */
+    float ax_2 = I2C::readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_A,1,1);
+    float ay_2 = I2C::readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_A,1,1);
+    float az_2 = I2C::readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_A,1,1);
+    float gx_2 = I2C::readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_G,1,1);
+    float gy_2 = I2C::readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_G,1,1);
+    float gz_2 = I2C::readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_G,1,1);
+
+    
+    //magCalibZ_ = A[2][0]*mx_2b + A[2][1]*my_2b + A[2][2]*mz_2b;  // A[2,:]*(magdata-b)
+    //printf("Calibrated Data: x %f, y %f\n",magCalibX_,magCalibY_);
+}
+
+void IMU::readACC()
+{
+
+}
+
+void IMU::readGYRO()
+{
+
+}
+
+void IMU::readMAG(int IMU)
+{
+    float mx,my,mz;
+    float bx,by,bz;
+
+    if(IMU == 0)
+    {
+        mx = i2C::readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_X_L,1,1);
+        my = I2C::readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Y_L,1,1);
+        mz = i2C::readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L,1,1);
+
+    }
+    else
+    {
+        mx = i2C::readI2C(LIS3MDL_ADDR2, LIS3MDL_OUT_X_L,1,1);
+        my = i2C::readI2C(LIS3MDL_ADDR2, LIS3MDL_OUT_Y_L,1,1);
+        mz = i2C::readI2C(LIS3MDL_ADDR2, LIS3MDL_OUT_Z_L,1,1);
+    }
+    
+    mx = (mx/MG_Sensitivity)*100;
+    my = (my/MG_Sensitivity)*100;
+    mz = (mz/MG_Sensitivity)*100;
+
+    //printf("Raw Data: x %f, y %f, z %f\n",mx_2,my_2,mz_2);
+    if(IMU = 0)
+    {
+        bx = 7.977849; 
+        by = 3.137438; 
+        bz = -5.371644;
+
+        float A[3][3] = {{1.002979, 0.039343, -0.014713}, 
+                        {0.039343, 1.019943, -0.006826}, 
+                        {-0.014713, -0.006826, 1.014517}};
+    }
+    else
+    {
+        bx = 7.977849; 
+        by = 3.137438; 
+        bz = -5.371644;
+
+        float A[3][3] = {{1.002979, 0.039343, -0.014713}, 
+                        {0.039343, 1.019943, -0.006826}, 
+                        {-0.014713, -0.006826, 1.014517}};
+    }
+
+    // formel magdataCalibrated = A(magdata-b)
+    mx = mx - bx; 
+    my = my - by;
+    mz = mz - bz;
+
+    magCalibX_ = A[0][0]*mx + A[0][1]*my + A[0][2]*mz;  // A[0,:]*(magdata-b)
+    magCalibY_ = A[1][0]*mx + A[1][1]*my + A[1][2]*mz;  // A[1,:]*(magdata-b)
+}
+
+void IMU::ConvertACCData()
 {
     printf("non-Converted - X: %f, Y: %f Z: %f\n", aX, aY, aZ);
 
@@ -41,7 +137,7 @@ void IMU::ConvertACCData(float aX, float aY, float aZ)
     printf("Converted - XL_Roll: %lf, XL_pitch: %lf\n\n", XL_Roll_, XL_Pitch_);
 }
 
-void IMU::ConvertGyroData(float gX, float gY, float gZ)
+void IMU::ConvertGyroData()
 {
     
     printf("RawgX: %f, RawgY: %f, RawgZ: %f\n", gX, gY, gZ);
@@ -59,7 +155,7 @@ void IMU::ConvertGyroData(float gX, float gY, float gZ)
     printf("Roll_filtered: %f, Pitch filtered: %f, GyroZangle: %f\n", CFangleX, CFangleY);
 }
 
-void IMU::ConvertMagData(float mY, float mX)
+void IMU::ConvertMagData()
 {	
     //float mg_variation = 217.9 / 1000.0; få Magnetic variation i millirad
     magYaw_ = 180 * (atan2(magCalibY_,magCalibX_)/PI); // minus magnetic_decline
@@ -67,50 +163,4 @@ void IMU::ConvertMagData(float mY, float mX)
     if(magYaw_ < 0) // correct yaw if under 0
       magYaw_ += 360;
     printf("magYaw: %f\n\n", magYaw_);
-}
-
-/// @brief 
-void IMU::readIMU()
-{
-    // få data fra acc
-    //I2C::readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_A,1,1);
-
-    // set offset variabel
-    // anden kalibrering
-
-    // få data fra gyr
-    // set offset variabel
-    // anden kalibrering
-
-    //float mx = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_X_L,1,1);
-    //float my = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Y_L,1,1);
-    //float mz = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L,1,1);
-    float mx = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_X_L,1,1);
-    float my = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Y_L,1,1);
-    float mz = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L,1,1);
-
-    mx = (mx/MG_Sensitivity)*100;
-    my = (my/MG_Sensitivity)*100;
-    mz = (mz/MG_Sensitivity)*100;
-
-    printf("Raw Data: x %f, y %f, z %f\n",mx,my,mz);
-
-    float bx = 7.977849; 
-    float by = 3.137438; 
-    float bz = -5.371644;
-
-    float A[3][3] = {{1.002979, 0.039343, -0.014713}, 
-                    {0.039343, 1.019943, -0.006826}, 
-                    {-0.014713, -0.006826, 1.014517}};
-
-    // formel magdataCalibrated = A(magdata-b)
-    float mxb = mx - bx; 
-    float myb = my - by;
-    float mzb = mz - bz;
-
-    magCalibX_ = A[0][0]*mxb + A[0][1]*myb + A[0][2]*mzb;  // A[0,:]*(magdata-b)
-    magCalibY_ = A[1][0]*mxb + A[1][1]*myb + A[1][2]*mzb;  // A[1,:]*(magdata-b)
-    //magCalibZ_ = A[2][0]*mxb + A[2][1]*myb + A[2][2]*mzb;  // A[2,:]*(magdata-b)
-
-    printf("Calibrated Data: x %f, y %f\n",magCalibX_,magCalibY_);
 }
