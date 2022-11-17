@@ -20,5 +20,5 @@ private:
     double magYaw_ = 0.0;
     float magCalibX_;
     float magCalibY_;
-    float magCalibZ_;
+    //float magCalibZ_;
 };

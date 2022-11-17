@@ -110,7 +110,7 @@ void IMU::readIMU()
 
     magCalibX_ = A[0][0]*mxb + A[0][1]*myb + A[0][2]*mzb;  // A[0,:]*(magdata-b)
     magCalibY_ = A[1][0]*mxb + A[1][1]*myb + A[1][2]*mzb;  // A[1,:]*(magdata-b)
-    magCalibZ_ = A[2][0]*mxb + A[2][1]*myb + A[2][2]*mzb;  // A[2,:]*(magdata-b)
+    //magCalibZ_ = A[2][0]*mxb + A[2][1]*myb + A[2][2]*mzb;  // A[2,:]*(magdata-b)
 
-    printf("Calibrated Data: x %f, y %f, z %f\n",magCalibX_,magCalibY_,magCalibZ_);
+    printf("Calibrated Data: x %f, y %f\n",magCalibX_,magCalibY_);
 }
