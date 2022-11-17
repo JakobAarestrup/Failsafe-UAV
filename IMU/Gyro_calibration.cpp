@@ -44,7 +44,7 @@ I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL3_C, 0b01000000);   // Enable BDU
         float gyc = (gy*gyro_sensitivity)/1000; 
         float gzc = (gz*gyro_sensitivity)/1000; 
 
-        if (N < 500)
+        if (N < 2000)
         {
             printf("%f %f %f \n",gx,gy,gz);
             //usleep(20000); // 20ms Delay
@@ -55,9 +55,11 @@ I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL3_C, 0b01000000);   // Enable BDU
             printf("done!!!");
             break;
         }
-        while(mymillis() - startofloop < 20){
+
+        while(mymillis() - startofloop < 50)
+        {
             usleep(100);
-    }
+        }
 
     }
 
