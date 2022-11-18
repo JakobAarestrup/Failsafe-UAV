@@ -1,9 +1,11 @@
+#included <math.h>
+
 class BAR_UNIT
 {
 public:
-    void BAR_UNIT::calculatePressureAndTemperature(float temp, float pres);
-    void BAR_UNIT::initialAMSL(float pres);
-    void BAR_UNIT::convertToAGL(float pres);
+    float BAR_UNIT::calculatePressureAndTemperature(float temp, float pres, int handle);
+    float BAR_UNIT::initialAMSL(float pres);
+    float BAR_UNIT::convertToAGL(float pres);
 private:
     float initial_AMSL_; // Initial height above mean sea level when drone is on the ground
     float height_AMSL_; // Height above mean sea level
@@ -23,7 +25,7 @@ private:
 #define T_G 0.0065 // Temperature gradient in K/m
 #define g 9.807 // Gravitational constant in m/s^2
 
-void BAR_UNIT::calculatePressureAndTemperature(float temp, float pres) 
+float BAR_UNIT::calculatePressureAndTemperature(float temp, float pres, int handle) 
 {
     float dT = D2_ - C5_ * pow(2, 8);
     temp_ = (2000 + ((dT * C6_) / pow(2, 23)));
@@ -45,8 +47,7 @@ void BAR_UNIT::calculatePressureAndTemperature(float temp, float pres)
         SENS2 = OFF2 / 2;
     }
     if (temp_ < -1500)
-    {
-        OFF2 = OFF2 + 7 * pow(temp_ + 1500, 2);
+    {        OFF2 = OFF2 + 7 * pow(temp_ + 1500, 2);
         SENS2 = SENS2 + 11 * pow(temp_ + 1500, 2) / 2;
     }
 
@@ -57,17 +58,28 @@ void BAR_UNIT::calculatePressureAndTemperature(float temp, float pres)
     // Final calculations
     pres_ = (((D1_ * SENS) / pow(2, 21) - OFF) / pow(2, 15) / 100)*mbar_to_Pa;
     temp_ = temp_ / 100;
+
+    if (handle == 1)
+    {
+        return temp_;
+    }
+    else
+    {
+        return pres_;
+    }
 }
 
 //Calibrates the barometer data
-void BAR_UNIT::initialAMSL(float pres) 
+float BAR_UNIT::initialAMSL(float pres) 
 {
     initial_AMSL_ = (T_s/T_G)*(1-pow((pres_/p_0),T_G*(R/g))); //using international barometric formula to get height
+    return initial_AMSL_;
 }
 
 // Converts the bar data into height
-void BAR_UNIT::convertToAGL(float pres) 
+float BAR_UNIT::convertToAGL(float pres) 
 {    
     height_AMSL_ = (T_s/T_G)*(1-pow((pres_/p_0),T_G*(R/g))); // Using international barometric formula to get height
     height_AGL_ = height_AMSL_ - initial_AMSL_; // Subtract difference in height.
+    return height_AGL_;
 }
