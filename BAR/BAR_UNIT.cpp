@@ -47,7 +47,8 @@ float BAR_UNIT::calculatePressureAndTemperature(float temp, float pres, int hand
         SENS2 = OFF2 / 2;
     }
     if (temp_ < -1500)
-    {        OFF2 = OFF2 + 7 * pow(temp_ + 1500, 2);
+    {        
+        OFF2 = OFF2 + 7 * pow(temp_ + 1500, 2);
         SENS2 = SENS2 + 11 * pow(temp_ + 1500, 2) / 2;
     }
 
