@@ -21,17 +21,39 @@ int main()
     */
 
     /**
-     * @brief Initial height in AMSL calculation function
-     * Returns the initial height AMSL
-     */
+     * -100m to -100m
+    */
     float initial_height = b1.initialAMSL(pressure[0]);
+    float height = b1.convertToAGL(pressure[0]);
+    printf("-100m - -100m test: Initial Height: %f\nHeight: %f\n-------------------------------------\n",initial_height, height);
 
     /**
-     * @brief Compensated height in AGL calculation function
-     * Returns the height in AGL
-     */
+     * -100m to 0m
+    */
+    float initial_height = b1.initialAMSL(pressure[0]);
     float height = b1.convertToAGL(pressure[1]);
+    printf("-100m - 0m test: Initial Height: %f\nHeight: %f\n-------------------------------------\n",initial_height, height);
 
-    printf("Initial Height: %f\nHeight: %f\n",initial_height, height);
+    /**
+     * 0m to 300m
+    */
+    float initial_height = b1.initialAMSL(pressure[1]);
+    float height = b1.convertToAGL(pressure[2]);
+    printf("0m - 300m test: Initial Height: %f\nHeight: %f\n-------------------------------------\n",initial_height, height);
+
+    /**
+     * 0m to 500m
+    */
+    float initial_height = b1.initialAMSL(pressure[1]);
+    float height = b1.convertToAGL(pressure[3]);
+    printf("0m - 500m test: Initial Height: %f\nHeight: %f\n-------------------------------------\n",initial_height, height);
+
+    /**
+     * -100m to 500m
+    */
+    float initial_height = b1.initialAMSL(pressure[0]);
+    float height = b1.convertToAGL(pressure[3]);
+    printf("-100m - 500m test: Initial Height: %f\nHeight: %f\n-------------------------------------\n",initial_height, height);
+
     return 0;
 }
