@@ -25,6 +25,7 @@ int main()
     /**
      * -100m to -100m
     */
+    printf("-------------------------------------\n");
     initial_height = b1.initialAMSL(pressure[0]);
     height = b1.convertToAGL(pressure[0]);
     printf("-100m - -100m test: Initial Height: %f\nHeight: %f\n-------------------------------------\n",initial_height, height);
