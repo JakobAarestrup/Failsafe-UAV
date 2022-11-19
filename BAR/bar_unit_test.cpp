@@ -9,7 +9,7 @@ int main()
      * 
      */
     //float temperature[3] = {1,2,3};
-    float pressure[4]  = {102532.096,101325,97772.574,95460.834};
+    float pressure[4]  = {102532.096,101325,97772.574,95460.834}; //-100m, 0m, 300m, 500m
 
     /**
      * @brief Temperature and Pressure calculation function
@@ -30,8 +30,8 @@ int main()
      * @brief Compensated height in AGL calculation function
      * Returns the height in AGL
      */
-    float height = b1.convertToAGL(pressure[0]);
+    float height = b1.convertToAGL(pressure[1]);
 
-    printf("Initial Height: %f\n Height: %f\n",initial_height, height);
+    printf("Initial Height: %f\nHeight: %f\n",initial_height, height);
     return 0;
 }
