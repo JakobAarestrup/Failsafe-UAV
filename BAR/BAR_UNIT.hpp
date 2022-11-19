@@ -4,8 +4,8 @@ class BAR_UNIT
 {
 public:
     //float BAR_UNIT::calculatePressureAndTemperature(float temp, float pres, int handle);
-    float BAR_UNIT::initialAMSL(float pres);
-    float BAR_UNIT::convertToAGL(float pres);
+    float initialAMSL(float pres);
+    float convertToAGL(float pres);
 private:
     float initial_AMSL_; // Initial height above mean sea level when drone is on the ground
     float height_AMSL_; // Height above mean sea level
