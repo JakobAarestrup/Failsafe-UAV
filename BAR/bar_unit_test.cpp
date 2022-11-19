@@ -8,29 +8,30 @@ int main()
      * @brief Test variables
      * 
      */
-    float temperature[3] = {1,2,3};
-    float pressure[3]  = {0,1,2,3};
+    //float temperature[3] = {1,2,3};
+    float pressure[4]  = {102532.096,101325,97772.574,95460.834};
 
     /**
      * @brief Temperature and Pressure calculation function
      * 1 for temperature in last variable, anything else for pressure
      */
+    /*
     float temp_calc = b1.calculatePressureAndTemperature(temperature[1],pressure[1],0);
     float pres_calc = b1.calculatePressureAndTemperature(temperature[1],pressure[1],1);
+    */
 
     /**
      * @brief Initial height in AMSL calculation function
      * Returns the initial height AMSL
      */
-    flaot initial_height = b1.initialAMSL(pres_calc);
+    float initial_height = b1.initialAMSL(pressure[0]);
 
     /**
      * @brief Compensated height in AGL calculation function
      * Returns the height in AGL
      */
-    float height = b1.convertToAGL(pres_calc);
+    float height = b1.convertToAGL(pressure[0]);
 
-    printf("Calulated temperature: %f\n Calculated pressure: %f\n",temp_calc, pres_calc);
     printf("Initial Height: %f\n Height: %f\n",initial_height, height);
     return 0;
 }

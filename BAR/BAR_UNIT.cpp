@@ -25,6 +25,7 @@ private:
 #define T_G 0.0065 // Temperature gradient in K/m
 #define g 9.807 // Gravitational constant in m/s^2
 
+/*
 float BAR_UNIT::calculatePressureAndTemperature(float temp, float pres, int handle) 
 {
     float dT = D2_ - C5_ * pow(2, 8);
@@ -69,18 +70,19 @@ float BAR_UNIT::calculatePressureAndTemperature(float temp, float pres, int hand
         return pres_;
     }
 }
+*/
 
 //Calibrates the barometer data
 float BAR_UNIT::initialAMSL(float pres) 
 {
-    initial_AMSL_ = (T_s/T_G)*(1-pow((pres_/p_0),T_G*(R/g))); //using international barometric formula to get height
+    initial_AMSL_ = (T_s/T_G)*(1-pow((pres/p_0),T_G*(R/g))); //using international barometric formula to get height
     return initial_AMSL_;
 }
 
 // Converts the bar data into height
 float BAR_UNIT::convertToAGL(float pres) 
 {    
-    height_AMSL_ = (T_s/T_G)*(1-pow((pres_/p_0),T_G*(R/g))); // Using international barometric formula to get height
+    height_AMSL_ = (T_s/T_G)*(1-pow((pres/p_0),T_G*(R/g))); // Using international barometric formula to get height
     height_AGL_ = height_AMSL_ - initial_AMSL_; // Subtract difference in height.
     return height_AGL_;
 }
