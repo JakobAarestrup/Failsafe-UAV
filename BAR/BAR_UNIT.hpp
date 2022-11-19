@@ -15,4 +15,4 @@ private:
     float temp_; // Calculated temperature
 	float pres_; // Calculated pressure
     //int calibration_ = 0; // Calibration variable for getHeight()
-}
+};
