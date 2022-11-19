@@ -1,4 +1,4 @@
-#include "BAR_UNIT.cpp"
+#include "BAR_UNIT.hpp"
 
 int main()
 {
