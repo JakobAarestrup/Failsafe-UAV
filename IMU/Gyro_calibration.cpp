@@ -54,11 +54,10 @@ gettimeofday(&tvBegin, NULL);
         
 
         printf("%f %f %f \n",gxc,gyc,gzc);
-        usleep(200000);
-      /*    while(mymillis() - startofloop < DT)
+         while(mymillis() - startofloop < DT)
          {
             usleep(100);
-         }*/
+         }
         }
 
 return 0;
