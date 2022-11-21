@@ -27,7 +27,7 @@ I2C I1;
 I2C I2;
 IMU IMU1;
 IMU IMU2;
-//Kalman k1;
+
 int startofloop  = mymillis();
 struct  timeval tvBegin, tvEnd,tvDiff;
 gettimeofday(&tvBegin, NULL);
