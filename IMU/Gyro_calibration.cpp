@@ -54,7 +54,7 @@ gettimeofday(&tvBegin, NULL);
         float gzc = ((gz/gyro_sensitivity) / 57.3)/1000; // rad/s
         
 
-        printf("%0.5f %0.5f %0.5f \n",gxc,gyc,gzc);
+        printf("%f %f %f \n",gxc,gyc,gzc);
          while(mymillis() - startofloop < DT)
          {
             usleep(100);
