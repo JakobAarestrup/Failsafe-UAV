@@ -28,10 +28,10 @@ int DT = 20;
 
 // Enable  from IMU2
 //I2Cdev::writeByte(LSM6DSOX_ADDR1, LSM6DSOX_INT1_CTRL, 0b00000011); // Enable gyroscope and accelerometer data interrupt
-I2Cdev::writeByte(LSM6DSOX_ADDR1, LSM6DSOX_CTRL2_G, 0b01010000);   // Gyro = 208 Hz (normal mode) 250 dps
-I2Cdev::writeByte(LSM6DSOX_ADDR1, LSM6DSOX_CTRL3_C, 0b01000000);   // Enable BDU
+I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 0b01010000);   // Gyro = 208 Hz (normal mode) 250 dps
+I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL3_C, 0b01000000);   // Enable BDU
 //I2Cdev::writeByte(LSM6DSOX_ADDR1, LSM6DSOX_CTRL4_C, 0b00000010);  // Gyro LPF enabled 33        
-I2Cdev::writeByte(LSM6DSOX_ADDR1, LSM6DSOX_CTRL7_G, 0b01000000);  // enable HPF // default HPF (00) 16 Hz
+I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL7_G, 0b01000000);  // enable HPF // default HPF (00) 16 Hz
 
 int startofloop  = mymillis();
 struct  timeval tvBegin, tvEnd,tvDiff;
@@ -44,9 +44,9 @@ gettimeofday(&tvBegin, NULL);
         {
     /*     startofloop = mymillis(); */
         
-        float gx = I1.readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_X_L_G,1,1);
-        float gy = I1.readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_G,1,1);
-        float gz = I1.readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_G,1,1);
+        float gx = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_G,1,1);
+        float gy = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_G,1,1);
+        float gz = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_G,1,1);
 
         float gxc = ((gx/gyro_sensitivity) / 57.3); // mrad/s
         float gyc = ((gy/gyro_sensitivity) / 57.3); // mrad/s
