@@ -48,9 +48,9 @@ gettimeofday(&tvBegin, NULL);
         float gy = I1.readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_G,1,1);
         float gz = I1.readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_G,1,1);
 
-        float gxc = ((gx/gyro_sensitivity) / 57.3) / 1000; // rad/s
-        float gyc = ((gy/gyro_sensitivity) / 57.3) / 1000; // rad/s
-        float gzc = ((gz/gyro_sensitivity) / 57.3) / 1000; // rad/s
+        float gxc = ((gx/gyro_sensitivity) / 57.3); // mrad/s
+        float gyc = ((gy/gyro_sensitivity) / 57.3); // mrad/s
+        float gzc = ((gz/gyro_sensitivity) / 57.3); // mrad/s
         
 
         printf("%0.3f %0.3f %0.3f \n",gxc,gyc,gzc);
