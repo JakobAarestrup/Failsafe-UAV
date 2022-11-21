@@ -21,6 +21,10 @@ private:
     float gyroCalibY_; ///< Gyroscope calibrated y-axis in deg/s
     float gyroCalibZ_; ///< Gyroscope calibrated x-axis in deg/s
 
+    float gx_drift;
+    float gy_drift;
+    float gz_drift;
+
     float magCalibX_;
     float magCalibY_;
     //float magCalibZ_;

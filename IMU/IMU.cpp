@@ -13,8 +13,9 @@
 #define DT 0.02       // [s/loop] loop period. 20ms
 #define AA 0.97       // complementary filter constant
 #define XL_Sensitivity  0.061 // [deg/LSB]
-#define G_Sensitivity   17.5  // [deg/s/LSB]
+#define G_Sensitivity   70  // [deg/s/LSB]
 #define MG_Sensitivity 6842
+#define gyroDrift 0.07
 
 I2C I1;
 
@@ -27,6 +28,49 @@ IMU::IMU()
 IMU::~IMU()
 {
 }
+
+/**
+ * @brief Calibrates gyro from starting position
+ * 
+ * @param IMU handler for choosing IMU sensor.
+ */
+void IMU::calibrateGyro(int IMU)
+{
+    float gx_TOTAL, gy_TOTAL, gz_TOTAL;
+    int i = 0;
+    int N = 500; // amount of samples
+    
+    for(i = 0; i <N ; i++)
+    {
+
+        if (IMU == 1)
+        {
+            gx_TOTAL += I2C::readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_X_L_G,1,1);
+            gy_TOTAL += I2C::readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_G,1,1);
+            gz_TOTAL += I2C::readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_G,1,1);
+        }
+        else if (IMU == 2)
+        {
+            gx_TOTAL += I2C::readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_G,1,1);
+            gy_TOTAL += I2C::readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_G,1,1);
+            gz_TOTAL += I2C::readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_G,1,1);
+        }
+        else
+        {
+            printf("IMU value is not supported...\n")
+            break
+        }
+
+    }
+    /**
+     * @brief Convert 16 bit register from mdeg/s/LSB to deg/s
+     * 
+     */
+    gx_drift = ((gx_TOTAL*G_Sensitivity)/1000)/N;
+    gy_drift = ((gy_TOTAL*G_Sensitivity)/1000)/N;
+    gz_drift = ((gz_TOTAL*G_Sensitivity)/1000)/N;
+}
+
 
 /**
  * @brief Reads data of the three sensors and subtracting offsets.
@@ -45,6 +89,11 @@ void IMU::readIMU(int IMU)
 void IMU::readACC(int IMU)
 {
     float ax,ay,az;
+
+    /**
+     * @brief handler for IMU sensor
+     * 
+     */
     if(IMU == 1)
     {
         ax = I2C::readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_X_L_A,1,1);
@@ -64,9 +113,15 @@ void IMU::readACC(int IMU)
         printf("IMU value is not supported...\n")
         break
     }
+
+    /**
+     * @brief Convert 16 bit register from mg/LSB to g
+     * 
+     */
     ax = (ax*XL_Sensitivity)/1000;
     ay = (ay*XL_Sensitivity)/1000;
     az = (az*XL_Sensitivity)/1000;
+
     /**
      * @brief Calibration right here..
      * 
@@ -81,6 +136,10 @@ void IMU::readGYRO(int IMU)
 {
     float gx,gy,gz;
 
+    /**
+     * @brief handler for IMU sensor
+     * 
+     */
     if (IMU == 1)
     {
     gx = I2C::readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_X_L_G,1,1);
@@ -99,31 +158,52 @@ void IMU::readGYRO(int IMU)
         break
     }
 
-    gx = (gx*G_Sensitivity)/1000;
+
+    /**
+     * @brief Convert 16 bit register from mdeg/s/LSB to deg/s
+     * 
+     */
+    gx = (gx*G_Sensitivity)/1000; 
     gy = (gy*G_Sensitivity)/1000;
     gz = (gz*G_Sensitivity)/1000;
 
-    /**
-     * @brief Calibration right here..
+   /**
+     * @brief hardcoded offset or calibration offset
      * 
      */
+    /*
+    /* hardcoded offset */ 
+    /*if (gx > 0) 
+    {
+       gyroCalibX_ = gx - gyroDrift;   // Gyroscope X-angle in deg/s
+    }  
 
-    /*  gyroXangle_ = PI*(rate_gyr_x_ / (DT*1000));
-    gyroYangle_ = PI*(rate_gyr_y_ / (DT*1000));
-    gyroZangle_ = PI*(rate_gyr_z_ / (DT*1000));  */
+    if (gy > 0)
+    {
+       gyroCalibY_ = gy - gyroDrift;   // Gyroscope Y-angle in deg/s
+    }   
 
-    gyroCalibX_ = gx - gyroDriftX;   // Gyroscope X-angle in deg/s
-    gyroCalibY_ = gy - gyroDriftY;   // Gyroscope Y-angle in deg/s
-    gyroCalibZ_ = gz - gyroDriftZ;   // Gyroscope Z-angle in deg/s
-
-
+    if (gz > 0)
+    {
+       gyroCalibZ_ = gz - gyroDrift;   // Gyroscope Z-angle in deg/s
+    }  
+    */
+    /* Calibration offset */ 
+    gyroCalibX_ = gx - gx_drift;   // Gyroscope X-angle in deg/s
+    gyroCalibY_ = gy - gy_drift;   // Gyroscope Y-angle in deg/s
+    gyroCalibZ_ = gz - gz_drift;   // Gyroscope Z-angle in deg/s 
 }
+
 
 void IMU::readMAG(int IMU)
 {
     float mx,my,mz;
     float bx,by,bz;
 
+    /**
+     * @brief handler for IMU sensor
+     * 
+     */
     if(IMU == 1)
     {
         mx = I2C::readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_X_L,1,1);
@@ -142,7 +222,11 @@ void IMU::readMAG(int IMU)
         printf("IMU value is not supported...\n")
         break
     }
-    
+
+    /**
+     * @brief Convert 16 bit register from LSB/guass to uT (micro Tesla)
+     * 
+     */
     mx = (mx/MG_Sensitivity)*100;
     my = (my/MG_Sensitivity)*100;
     mz = (mz/MG_Sensitivity)*100;
