@@ -23,40 +23,78 @@ Normal::~Normal() {}
 
 void Normal::AxisControl(RDS &RDS)
 {
-	setState(RDS, new Normal());
+	//.. check values
+
+	if(roll | pitch | yaw > 0 )
+	setState(RDS, new Critical());
+	else if (//.. something)
+	setState(RDS, new HyperCritical());
+	else //.. Dont change state
 }
 
 void Normal::RouteControl(RDS &RDS) 
-{
- 	setState(RDS, new Normal());
+{	
+	//.. check values
+	
+	if(Routefail > 0 )
+ 	setState(RDS, new Critical());
+	else if (//.. something)
+	setState(RDS, new HyperCritical());
+	else //.. Dont change state
 }
 
 void Normal::HeightControl(RDS &RDS) 
 {
- 	setState(RDS, new Normal());
+	//.. check values
+
+	if (Height > 000) //
+ 	setState(RDS, new Critical());
+	else if (//.. something)
+	setState(RDS, new HyperCritical());
+	else //.. Dont change state
 }
 
 Critical::~Critical() {}
 
 void Critical::AxisControl(RDS &RDS)
 {
-	setState(RDS, new Critical());
+	//.. check values
+
+	if(roll | pitch | yaw > 0 ) // checks if hyper critical or Drone is flying okay again
+	setState(RDS, new HyperCritical());
+	else if (//.. something)
+	setState(RDS, new Normal());
+	else //.. Dont change state
 }
 
 void Critical::RouteControl(RDS &RDS) 
 {
- 	setState(RDS, new Critical());
+	//.. check values
+
+ 	if(Routefail > 0 ) // checks if hyper critical or Drone is flying okay agaim
+ 	setState(RDS, new HyperCritical());
+	else if (//.. something)
+	setState(RDS, new Normal());
+	else //.. Dont change state
+	
 }
 
 void Critical::HeightControl(RDS &RDS)  
 {
- 	setState(RDS, new Critical());
+	//.. check values
+
+ 	if (Height > 000) // checks if hyper critical or Drone is flying okay agaim
+ 	setState(RDS, new HyperCritical());
+	else if (//.. something minorFlag: minor flag er små fejl??)
+	setState(RDS, new Normal());
+	else //.. Dont change state
+
 }
 
 HyperCritical::~HyperCritical() {}
 
 void HyperCritical::LandDrone(RDS &RDS)
 {
-	setState(RDS, new HyperCritical());
+	// Land drone...
 }
 
