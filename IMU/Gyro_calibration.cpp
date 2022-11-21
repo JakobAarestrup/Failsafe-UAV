@@ -48,15 +48,16 @@ gettimeofday(&tvBegin, NULL);
         float gy = I1.readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_G,1,1);
         float gz = I1.readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_G,1,1);
 
-        float gxc = (gx*gyro_sensitivity)/1000; 
-        float gyc = (gy*gyro_sensitivity)/1000; 
-        float gzc = (gz*gyro_sensitivity)/1000; 
+        float gxc = (gx*gyro_sensitivity); // mdeg/S to
+        float gyc = (gy*gyro_sensitivity); 
+        float gzc = (gz*gyro_sensitivity); 
         
 
         printf("%f %f %f \n",gxc,gyc,gzc);
-        /*  while(mymillis() - startofloop < DT){
-         } */
-         usleep(1000000);
+         while(mymillis() - startofloop < DT)
+         {
+            usleep(100);
+         }
         }
 
 return 0;
