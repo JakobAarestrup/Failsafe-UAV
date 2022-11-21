@@ -23,13 +23,13 @@ int main()
 
 I2C I1;
 int N = 0;
-int gyro_sensitivity = 70;
-int DT = 50;
+int gyro_sensitivity = 35;
+int DT = 10;
 int count = 0;
 
 // Enable  from IMU2
 //I2Cdev::writeByte(LSM6DSOX_ADDR1, LSM6DSOX_INT1_CTRL, 0b00000011); // Enable gyroscope and accelerometer data interrupt
-I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 0b01011100);   // Gyro = 208 Hz (normal mode) 2000 dps
+I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 0b01001100);   // Gyro = 208 Hz (normal mode) 2000 dps
 I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL3_C, 0b01000000);   // Enable BDU
 //I2Cdev::writeByte(LSM6DSOX_ADDR1, LSM6DSOX_CTRL4_C, 0b00000010);  // Gyro LPF enabled 33        
 I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL7_G, 0b01000000);  // enable HPF // default HPF (00) 16 Hz
