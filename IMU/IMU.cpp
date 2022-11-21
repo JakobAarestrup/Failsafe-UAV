@@ -12,12 +12,10 @@
 #define RAD_TO_DEG 57.29578
 #define DT 0.02       // [s/loop] loop period. 20ms
 #define AA 0.97       // complementary filter constant
-#define XL_Sensitivity  0.061 // [deg/LSB]
-#define G_Sensitivity   70  // [deg/s/LSB]
+#define XL_Sensitivity 0.061 
+#define G_Sensitivity  70   
 #define MG_Sensitivity 6842
 #define gyroDrift 0.07
-
-I2C I1;
 
 // Constructor
 IMU::IMU()
@@ -57,8 +55,8 @@ void IMU::calibrateGyro(int IMU)
         }
         else
         {
-            printf("IMU value is not supported...\n")
-            break
+            printf("IMU value is not supported...\n");
+            return;
         }
 
     }
@@ -110,8 +108,8 @@ void IMU::readACC(int IMU)
     }
     else
     {
-        printf("IMU value is not supported...\n")
-        break
+        printf("IMU value is not supported...\n");
+        return;
     }
 
     /**
@@ -154,8 +152,8 @@ void IMU::readGYRO(int IMU)
     }
     else
     {
-        printf("IMU value is not supported...\n")
-        break
+        printf("IMU value is not supported...\n");
+        return;
     }
 
 
@@ -219,8 +217,8 @@ void IMU::readMAG(int IMU)
     }
     else
     {
-        printf("IMU value is not supported...\n")
-        break
+        printf("IMU value is not supported...\n");
+        return;
     }
 
     /**
@@ -275,15 +273,6 @@ void IMU::ConvertACCData()
     printf("Converted - XL_Roll: %lf, XL_pitch: %lf\n\n", XL_Roll_, XL_Pitch_);
 }
 
-void IMU::ConvertGyroData()
-{ 
-    double CFangleX=AA*(CFangleX+gyroCalibY_) +(1 - AA) * XL_Roll_; // 97% Gyro 3% Accelerometer
-    double CFangleY=AA*(CFangleY+gyroCalibX_) +(1 - AA) * XL_Pitch_;// 97% Gyro 3% Accelerometer
-    double CFangleZ=AA*(CFangleZ+gyroCalibZ_) +(1 - AA) * MAG_Yaw_; // 97% Gyro 3% Magnometer
-   // printf("GyroXangle: %f, GyroYangle: %f, GyroZangle: %f\n", gyroXangle_, gyroYangle_, gyroZangle_);
-    printf("Roll_filtered: %f, Pitch filtered: %f, GyroZangle: %f\n", CFangleX, CFangleY);
-}
-
 void IMU::ConvertMagData()
 {	
     MAG_Yaw_ = (atan2(magCalibY_,magCalibX_) * 180 / PI); // minus magnetic_decline
@@ -292,4 +281,14 @@ void IMU::ConvertMagData()
       MAG_Yaw_ += 360;
     //printf("magYaw: %f\n\n", MAG_Yaw_);
     }
+}
+
+void IMU::ComplementaryFilter()
+{ 
+    /*Complementary Filter*/
+    double CFangleX=AA*(CFangleX+gyroCalibY_*DT) +(1 - AA) * XL_Roll_; // 97% Gyro 3% Accelerometer
+    double CFangleY=AA*(CFangleY+gyroCalibX_*DT) +(1 - AA) * XL_Pitch_;// 97% Gyro 3% Accelerometer
+    double CFangleZ=AA*(CFangleZ+gyroCalibZ_*DT) +(1 - AA) * MAG_Yaw_; // 97% Gyro 3% Magnometer
+   // printf("GyroXangle: %f, GyroYangle: %f, GyroZangle: %f\n", gyroXangle_, gyroYangle_, gyroZangle_);
+    printf("Roll_filtered: %f, Pitch filtered: %f, GyroZangle: %f\n", CFangleX, CFangleY);
 }

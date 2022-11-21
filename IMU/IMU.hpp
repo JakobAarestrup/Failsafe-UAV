@@ -9,8 +9,8 @@ public:
     void readGYRO(int IMU);
     void readMAG(int IMU);
     void ConvertACCData();
-    void ConvertGyroData();
-    void ConvertMagData();   
+    void ConvertMagData();
+    void ComplementaryFilter();   
 private:
     
     float accCalibX_;
