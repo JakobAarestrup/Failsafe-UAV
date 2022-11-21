@@ -60,7 +60,7 @@ gettimeofday(&tvBegin, NULL);
             usleep(100);
          }
          count++;
-         if (count == 2000)
+         if (count == 500)
          {
             break;
          }
