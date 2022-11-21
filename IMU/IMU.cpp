@@ -202,7 +202,7 @@ void IMU::ConvertGyroData()
 
 void IMU::ConvertMagData()
 {	
-    MAG_Yaw_ = 180 * (atan2(magCalibY_,magCalibX_)/PI); // minus magnetic_decline
+    MAG_Yaw_ = (atan2(magCalibY_,magCalibX_) * 180 / PI); // minus magnetic_decline
     if(MAG_Yaw_ < 0) // correct yaw if under 0 degrees
     {
       MAG_Yaw_ += 360;
