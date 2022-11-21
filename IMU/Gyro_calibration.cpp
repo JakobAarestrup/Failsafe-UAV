@@ -28,7 +28,7 @@ int DT = 20;
 
 // Enable  from IMU2
 I2Cdev::writeByte(LSM6DSOX_ADDR1, LSM6DSOX_INT1_CTRL, 0b00000011); // Enable gyroscope and accelerometer data interrupt
-I2Cdev::writeByte(LSM6DSOX_ADDR1, LSM6DSOX_CTRL2_G, 0b01011100);   // Gyro = 208 Hz (normal mode) 2000 dps
+//I2Cdev::writeByte(LSM6DSOX_ADDR1, LSM6DSOX_CTRL2_G, 0b01011100);   // Gyro = 208 Hz (normal mode) 2000 dps
 I2Cdev::writeByte(LSM6DSOX_ADDR1, LSM6DSOX_CTRL3_C, 0b01000000);   // Enable BDU
 //I2Cdev::writeByte(LSM6DSOX_ADDR1, LSM6DSOX_CTRL4_C, 0b00000010);  // Gyro LPF enabled 33        
 I2Cdev::writeByte(LSM6DSOX_ADDR1, LSM6DSOX_CTRL7_G, 0b01000000);  // enable HPF // default HPF (00) 16 Hz
@@ -48,17 +48,18 @@ gettimeofday(&tvBegin, NULL);
         float gy = I1.readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_G,1,1);
         float gz = I1.readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_G,1,1);
 
-        float gxc = (gx/32768)*gyro_sensitivity; // mdeg/s
-        float gyc = (gy/32768)*gyro_sensitivity; // mdeg/s
-        float gzc = (gz/32768)*gyro_sensitivity; // mdeg/s
+        float gxc = (gx/gyro_sensitivity); // mdeg/s
+        float gyc = (gy/gyro_sensitivity); // mdeg/s
+        float gzc = (gz/gyro_sensitivity); // mdeg/s
         
 
         printf("%f %f %f \n",gxc,gyc,gzc);
-         while(mymillis() - startofloop < DT)
+        usleep(200000);
+      /*    while(mymillis() - startofloop < DT)
          {
             usleep(100);
          }
-        }
+        } */
 
 return 0;
 
