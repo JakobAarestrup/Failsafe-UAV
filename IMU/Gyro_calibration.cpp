@@ -24,7 +24,7 @@ int main()
 I2C I1;
 int N = 0;
 int gyro_sensitivity = 70;
-int DT = 20;
+int DT = 50;
 int count = 0;
 
 // Enable  from IMU2
