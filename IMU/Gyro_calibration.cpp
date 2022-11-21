@@ -58,8 +58,8 @@ gettimeofday(&tvBegin, NULL);
       /*    while(mymillis() - startofloop < DT)
          {
             usleep(100);
-         }
-        } */
+         }*/
+        }
 
 return 0;
 
