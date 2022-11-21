@@ -38,7 +38,7 @@
 #define LSM6DSOX_OUT_TEMP_H 0x21  ///< Unused
 
 // Gyro output registers
-#define LSM6DSOX_OUT_X_L_G 0x21 // First half of x-coordinates from Gyro
+#define LSM6DSOX_OUT_X_L_G 0x22 // First half of x-coordinates from Gyro
 #define LSM6DSOX_OUT_X_H_G 0x23 // Second half of x-coordinates from Gyro
 #define LSM6DSOX_OUT_Y_L_G 0x24 // First half of y-coordinates from Gyro
 #define LSM6DSOX_OUT_Y_H_G 0x25 // Second half of y-coordinates from Gyro
