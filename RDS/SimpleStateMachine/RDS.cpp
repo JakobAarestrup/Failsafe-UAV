@@ -1,4 +1,4 @@
-#include "SimpleState.hpp"
+#include "RDS.hpp"
 
 RDS::RDS(ValidateState* state) : state_(nullptr)
 {
@@ -92,82 +92,3 @@ void RDS::AnalyseHeight()
 { 
     state_->HeightControl(); 
 }
-
-void Normal::AxisControl()
-{
-    std::cout <<"Normal State: ";
-   // std::cout << typeid(this).name() << "called AxisControl()\n"; gets pointer value and class name
-    RDS_->TransitionTo(new Normal);
-}
-
-void Normal::RouteControl()
-{
-    std::cout <<"Normal State: ";
-    //.. Compare values
-	//if(Routefail > 0 
-    RDS_->TransitionTo(new Critical);
-	//else if (//.. something)
-	RDS_->TransitionTo(new Critical);
-	//else //.. Dont change state
-}
-void Normal::HeightControl()
-{
-    std::cout <<"Normal State: ";
-    /* if(altitudeSYS_ > 300 | altitudeRDS_ > 300)
-    {
-        landDrone();
-    }
-
-    else if (altitudeSYS_ > 200 | altitudeRDS_ > 200)
-    { 
-        RDS_->TransitionTo(new Critical);
-    }
-    */
-}
-
-
-void Critical::AxisControl()
-{
-    std::cout <<"Critical State: ";
-    RDS_->TransitionTo(new Critical);
-}
-
-void Critical::RouteControl()
-{
-    std::cout <<"Critical State: ";
-    //.. Compare values
-	//if(Routefail > 0 
-    RDS_->TransitionTo(new Normal);
-	//else if (//.. something)
-	//else //.. Dont change state
-}
-    
-void Critical::HeightControl()
-{
-   /*  std::cout <<"Critical State: ";
-    if (altitudeSYS_ > 300 | altitudeRDS_ > 300)
-    {
-	    landDrone();
-    }
-    else if (altitudeSYS_ < 200 | altitudeRDS_ < 200)
-    {
-        RDS_->TransitionTo(new Normal);
-    } */
-    
-}
-
-void Critical::landDrone()
-{
-    printf("Landing drone immediately...");
-    /*MAVLINK MESSAGE TO LAND*/
-}
-/* void HyperCritical::AxisControl() {}
-void HyperCritical::RouteControl() {}
-void HyperCritical::HeightControl() {}
-
-void HyperCritical::landDrone()
-{
-    printf("Landing drone immediately...")
-    /*MAVLINK MESSAGE TO LAND
-} 
-*/

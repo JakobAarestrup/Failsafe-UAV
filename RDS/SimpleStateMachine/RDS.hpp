@@ -1,25 +1,4 @@
 #pragma once
-#include <iostream>
-#include <typeinfo>
-
-class RDS; // forward declaration
-
-class ValidateState {
-
-public:
-  virtual ~ValidateState() {}
-
-  void setRDS_(RDS* RDS) {
-    RDS_ = RDS;
-  }
-
-  virtual void AxisControl() = 0;
-  virtual void RouteControl() = 0;
-  virtual void HeightControl() = 0;
-
-protected:
-  RDS* RDS_;
-};
 
 class RDS {
 
@@ -41,12 +20,6 @@ public:
   void AnalyseRoute();
   void AnalyseHeight();
 
-private:
-  ValidateState* state_;
-  /**
-   * @brief GPS Values
-   * 
-   */
    /**
    * @brief GPS Values
    * 
@@ -67,7 +40,7 @@ private:
    */
   float RollSYS_, PitchSYS_, YawSYS_;
 
-    /**
+  /**
    * @brief IMU Values
    * 
    */
@@ -91,29 +64,11 @@ private:
    * 
    */
 
+private:
+  ValidateState* state_;
+  /**
+   * @brief GPS Values
+   * 
+   */
+
 };
-
-class Normal : public ValidateState{
-public:
-  virtual void AxisControl();
-  virtual void RouteControl();
-  virtual void HeightControl();
-};
-
-class Critical : public ValidateState {
-public:
-  virtual void AxisControl();
-  virtual void RouteControl();
-  virtual void HeightControl();
-  void landDrone();
-}; 
-
-/* class HyperCritical : public ValidateState {
-public:
-  virtual void AxisControl();
-  virtual void RouteControl();
-  virtual void HeightControl();
-  void landDrone();
-};
- */
-
