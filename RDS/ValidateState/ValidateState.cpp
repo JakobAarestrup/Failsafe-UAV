@@ -81,10 +81,10 @@ void ValidateState::LogData()
 
 void ValidateState::AxisControl()
 {
-    if (state_ = 1)
-    printf("Critical State");
+    if (state_ == 1)
+    printf("Critical State\n");
     else
-    printf("Normal State");
+    printf("Normal State \n");
 
       /*   if(altitudeSYS_ > 300 | altitudeRDS_ > 300)
     {
@@ -93,7 +93,7 @@ void ValidateState::AxisControl()
 
     else if (altitudeSYS_ > 200 | altitudeRDS_ > 200)
     { 
-        state_ = 1
+        state_ = 1;
         printf("Closing in on ERROR!!! Changing state... to Critical\n");
     }
 
@@ -107,10 +107,10 @@ void ValidateState::AxisControl()
 
 void ValidateState::RouteControl()
 {
-    if (state_ = 1)
-    printf("Critical State");
+    if (state_ == 1)
+    printf("Critical State\n");
     else
-    printf("Normal State");
+    printf("Normal State \n");
 
   /*   if(altitudeSYS_ > 300 | altitudeRDS_ > 300)
     {
@@ -119,7 +119,7 @@ void ValidateState::RouteControl()
 
     else if (altitudeSYS_ > 200 | altitudeRDS_ > 200)
     { 
-        state_ = 1
+        state_ = 1;
         printf("Closing in on ERROR!!! Changing state... to Critical\n");
     }
 
@@ -132,10 +132,10 @@ void ValidateState::RouteControl()
 }
 void ValidateState::HeightControl()
 {
-    if (state_ = 1)
-    printf("Critical State");
+    if (state_ == 1)
+    printf("Critical State\n");
     else
-    printf("Normal State");
+    printf("Normal State \n");
 
 
     if(altitudeSYS_ > 300 | altitudeRDS_ > 300)
@@ -145,11 +145,11 @@ void ValidateState::HeightControl()
 
     else if (altitudeSYS_ > 200 | altitudeRDS_ > 200)
     { 
-        state_ = 1
+        state_ = 1;
         printf("Closing in on ERROR!!! Changing state... to Critical\n");
     }
 
-    else if (altitudeSYS_ < 200 | altitudeRDS_ < 200)
+    else if (altitudeSYS_ < 200 & state_ == 1 | altitudeRDS_ < 200 & state_ == 1)  // In Critical State and under 200 m
     { 
         state_ = 0;
         printf("Changing state... to Normal\n");
@@ -160,6 +160,6 @@ void ValidateState::HeightControl()
 
 void ValidateState::landDrone()
 {
-    printf("Landing drone immediately...");
+    printf("Landing drone immediately...\n");
     /*MAVLINK MESSAGE TO LAND*/
 }
