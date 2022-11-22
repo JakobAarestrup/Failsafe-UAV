@@ -47,3 +47,5 @@ int main() {
 
   return 0;
 }
+
+//https://stackoverflow.com/questions/14676709/c-code-for-state-machine

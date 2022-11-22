@@ -103,7 +103,6 @@ private:
 };
 
 
-/*
 class Normal : public ValidateState {
 public:
   void AxisControl() override {
@@ -148,5 +147,5 @@ public:
   }
 
 };
-*/
+
 
