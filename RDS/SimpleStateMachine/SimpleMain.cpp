@@ -1,5 +1,5 @@
 #include "SimpleState.hpp"
-#include "HyperCritical.hpp"
+
 
 int main() {
   RDS Dronesystem(new HyperCritical); // Default State
@@ -9,6 +9,7 @@ int main() {
   /* Dronesystem.UpdateSystemValues(); 
   Dronesystem.LogData(); */
 
+  Dronesystem.AnalyseAxis();
   Dronesystem.AnalyseAxis();
   Dronesystem.AnalyseRoute();
   Dronesystem.AnalyseHeight();

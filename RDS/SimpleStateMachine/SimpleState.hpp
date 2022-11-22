@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include <typeinfo>
-#include "Normal.hpp"
 
 class RDS; // forward declaration
 
@@ -25,39 +24,18 @@ protected:
 class RDS {
 
 public:
-  RDS(ValidateState* state) : state_(nullptr) {
-    TransitionTo(state);
-    /*
+  RDS(ValidateState* state);
+ 
+  ~RDS(); 
 
-    */
-  }
+  void UpdateSystemValues();
+  void LogData();
 
-  ~RDS() { delete state_; }
+  void TransitionTo(ValidateState* state);
 
-  void TransitionTo(ValidateState* state) {
-    if (state_) delete state_;
-    state_ = state;
-    state_->setRDS_(this);
-  }
-
-  void AnalyseAxis() { state_->AxisControl(); }
-  void AnalyseRoute() { state_->RouteControl(); }
-  void AnalyseHeight() { state_->HeightControl(); }
-
-  void UpdateSystemValues()
-  {
-    /* get
-    get
-    get
-    get */
-  }
-  
-  void LogData()
-  {
-    /*START logging*/
-    printf("Longitude: %f %c Latitude: %f %c Satellites: %d Altitude: %f \n"); // GPS Data + baro
-    printf("Roll: %f \370 Pitch: %f \370  Yaw: %f \370 \n");  // IMU Data
-  }
+  void AnalyseAxis();
+  void AnalyseRoute();
+  void AnalyseHeight();
 
 private:
   ValidateState* state_;
@@ -105,47 +83,23 @@ private:
 
 class Normal : public ValidateState {
 public:
-  void AxisControl() override {
-    std::cout << typeid(this).name() << " called AxisControl()\n";
-    RDS_->TransitionTo(new HyperCritical);
-  }
-  void RouteControl() override {
-    std::cout << typeid(this).name() << " called RouteControl()\n";
-  }
-  void HeightControl() override {
-    std::cout << typeid(this).name() << " called HeightControl()\n";
-  }
+  virtual void AxisControl();
+  virtual void RouteControl();
+  virtual void HeightControl();
 };
 
 class Critical : public ValidateState {
 public:
-  void AxisControl() override {
-    std::cout << typeid(this).name() << " called AxisControl()\n";
-    //RDS_->TransitionTo(new Normal);
-  }
-  void RouteControl() override {
-    std::cout << typeid(this).name() << " called RouteControl()\n";
-  }
-  void HeightControl() override {
-    std::cout << typeid(this).name() << " called HeightControl()\n";
-    RDS_->TransitionTo(new Normal);
-  }
+  virtual void AxisControl();
+  virtual void RouteControl();
+  virtual void HeightControl();
 }; 
 
 class HyperCritical : public ValidateState {
 public:
-  void AxisControl() override {
-    std::cout << typeid(this).name() << " Yo yocalled AxisControl()\n";
-    RDS_->TransitionTo(new Normal);
-  }
-  void RouteControl() override {
-    std::cout << typeid(this).name() << " called RouteControl()\n";
-  }
-  void HeightControl() override {
-    std::cout << typeid(this).name() << " called HeightControl()\n";
-    //
-  }
-
+  virtual void AxisControl();
+  virtual void RouteControl();
+  virtual void HeightControl();
 };
 
 
