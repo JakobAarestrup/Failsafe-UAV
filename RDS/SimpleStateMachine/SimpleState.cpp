@@ -10,16 +10,64 @@ RDS::~RDS()
     delete state_; 
 }
 
+void RDS::GetGPSValues()
+{
+    // maybe opret class objekt
+  /*GPS::readGPS(); // reads NMEA message
+    GPS::convertData(); //converts to decimal degrees format 
+    longitudeRDS_ = GPS::getLongitude();    // returns longitude
+    latitudeRDS_ = GPS::getLatitude();      // returns latitude
+    longPoleRDS_ = GPS::getNorthSouth();     // returns either a north pole or south pole
+    latPoleRDS_ = GPS::getEastWest();       // returns either a East pole or West pole
+    GPS::getSV()
+
+    */
+    
+    /*MAVLINK GET GPS DATA*/
+
+    /* longitudeSYS_ = 
+    latitudeSYS_ = 
+    longPoleSYS_ = 
+    latPoleSYS_ =  */
+}
+
+void RDS::GetIMUValues()
+{
+
+    /*MAVLINK GET IMU FROM DRONE DATA*/
+}
+
+void RDS::GetBaroValues()
+{
+
+
+    /*MAVLINK GET BARO DATA*/
+
+}
+
+
+
+
 void RDS::UpdateSystemValues()
 {
-/*Get get get get*/
+    GetGPSValues();
+    GetIMUValues();
+    GetBaroValues();
 }
 
 void RDS::LogData()
 {
     /*START logging*/
-    printf("Longitude: %f %c Latitude: %f %c Satellites: %d Altitude: %f \n"); // GPS Data + baro
-    printf("Roll: %f \370 Pitch: %f \370  Yaw: %f \370 \n");  // IMU Data
+    freopen("RDSLog.txt", "w", stdout); // Ved ikke om det her duer ordentligt
+    /*RDS sensors*/
+    printf("Longitude: %f %c Latitude: %f %c Satellites: %d Altitude: %f \n"
+    ,longitudeRDS_, longPoleRDS_, latitudeRDS_, latPoleRDS_, SatellitesRDS_, altitudeRDS_); // GPS Data + baro
+    printf("Roll: %f \370 Pitch: %f \370  Yaw: %f \370 \n",RollRDS_, PitchRDS_, YawRDS_);  // IMU Data
+
+    /*Drone sensors*/
+    printf("Longitude: %f %c Latitude: %f %c Satellites: %d Altitude: %f \n"
+    ,longitudeSYS_, longPoleSYS_, latitudeSYS_, latPoleSYS_, SatellitesSYS_, altitudeSYS_); // GPS Data + baro
+    printf("Roll: %f \370 Pitch: %f \370  Yaw: %f \370 \n",RollSYS_, PitchSYS_, YawSYS_);  // IMU Data
 }
 
 void RDS::TransitionTo(ValidateState* state) 
@@ -46,54 +94,66 @@ void RDS::AnalyseHeight()
 void Normal::AxisControl()
 {
     std::cout <<"Normal State: ";
-    std::cout << typeid(this).name() << " Yo yocalled AxisControl()\n";
+   // std::cout << typeid(this).name() << "called AxisControl()\n";
     RDS_->TransitionTo(new Normal);
 }
 
 void Normal::RouteControl()
 {
     std::cout <<"Normal State: ";
-    std::cout << typeid(this).name() << " called RouteControl()\n";
+    //.. Compare values
+	//if(Routefail > 0 
+    RDS_->TransitionTo(new Critical);
+	//else if (//.. something)
+	RDS_->TransitionTo(new HyperCritical);
+	//else //.. Dont change state
 }
 void Normal::HeightControl()
 {
     std::cout <<"Normal State: ";
-    std::cout << typeid(this).name() << " called HeightControl()\n";
+    //.. Compare values
+	//if(Heightfail > 0 
+    RDS_->TransitionTo(new Critical);
+	//else if (//.. something)
+	RDS_->TransitionTo(new HyperCritical);
+	//else //.. Dont change state
 }
 
 
 void Critical::AxisControl()
 {
     std::cout <<"Critical State: ";
-    std::cout << typeid(this).name() << " Yo yocalled AxisControl()\n";
     RDS_->TransitionTo(new HyperCritical);
 }
 
 void Critical::RouteControl()
 {
-    std::cout <<"Critical State: ";
-    std::cout << typeid(this).name() << " called RouteControl()\n";   
+    std::cout <<"Normal State: ";
+    //.. Compare values
+	//if(Routefail > 0 
+    RDS_->TransitionTo(new Normal);
+	//else if (//.. something)
+	RDS_->TransitionTo(new HyperCritical);
+	//else //.. Dont change state
 }
+    
 void Critical::HeightControl()
 {
-    std::cout <<"Critical State: ";
-    std::cout << typeid(this).name() << " called HeightControl()\n";
-}
-
-void HyperCritical::AxisControl()
-{
-    std::cout <<"HyperCritical State: ";
-    std::cout << typeid(this).name() << " Yo yocalled AxisControl()\n";
+    std::cout <<"Normal State: ";
+    //.. Compare values
+	//if(Routefail > 0 
     RDS_->TransitionTo(new Normal);
+	//else if (//.. something)
+	RDS_->TransitionTo(new HyperCritical);
+	//else //.. Dont change state
 }
 
-void HyperCritical::RouteControl()
+void HyperCritical::AxisControl() {}
+void HyperCritical::RouteControl() {}
+void HyperCritical::HeightControl() {}
+
+void HyperCritical::landDrone()
 {
-    std::cout <<"HyperCritical State: ";
-    std::cout << typeid(this).name() << " called RouteControl()\n";
-}
-void HyperCritical::HeightControl()
-{
-    std::cout <<"HyperCritical State: ";
-    std::cout << typeid(this).name() << " called HeightControl()\n";
+    printf("Landing drone immediately...")
+    /*MAVLINK MESSAGE TO LAND*/
 }

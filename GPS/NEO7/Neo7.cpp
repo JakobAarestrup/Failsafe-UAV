@@ -31,37 +31,31 @@ int GPS::openUART(int fd) // open UART serial port
     return fd;
 }
 
-void GPS::config(int fd, const char* message, size_t length) // configuration of the GPS
-{
-    write(fd, message, length); // sends CFG string to serial 
-}
-
 void GPS::configAll()
 {
     /* OPEN UART */
-    int serial_port;
-    serial_port = openUART(serial_port);
+    serialPort_ = openUART(serialPort_);
 
     printf("Serial port is open! %d \n",serial_port);
 
     /* CONFIGURATION */
     
     /*NMEA Config*/
-    write(serial_port, UBX_protocol::NMEA_CFG, UBX_protocol::NMEA_CFG_Length); // disable SBAS QZSS GLONASS BeiDou Galileo
+    write(serialPort_, UBX_protocol::NMEA_CFG, UBX_protocol::NMEA_CFG_Length); // disable SBAS QZSS GLONASS BeiDou Galileo
     
     /*Update Rate*/
-    write(serial_port, UBX_protocol::RATE, UBX_protocol::RATE_Length); // Measurement frequency: 10 hz, navigation frequency 10 hz
+    write(serialPort_, UBX_protocol::RATE, UBX_protocol::RATE_Length); // Measurement frequency: 10 hz, navigation frequency 10 hz
     
     /*NMEA messages*/
-    write(serial_port, UBX_protocol::GLL, UBX_protocol::GP_Length); // disable GPGLL
-    write(serial_port, UBX_protocol::GSA, UBX_protocol::GP_Length); // disable GSA
-    write(serial_port, UBX_protocol::GSV, UBX_protocol::GP_Length); // disable GPGSV
-    write(serial_port, UBX_protocol::RMC, UBX_protocol::GP_Length); // disable RMC
-    write(serial_port, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG
+    write(serialPort_, UBX_protocol::GLL, UBX_protocol::GP_Length); // disable GPGLL
+    write(serialPort_, UBX_protocol::GSA, UBX_protocol::GP_Length); // disable GSA
+    write(serialPort_, UBX_protocol::GSV, UBX_protocol::GP_Length); // disable GPGSV
+    write(serialPort_, UBX_protocol::RMC, UBX_protocol::GP_Length); // disable RMC
+    write(serialPort_, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG
     printf("Configuration is done! \n"); 
 }
 
-void GPS::readGPS(int fd, char sensor_Data) // reads GPS serial data
+void GPS::readGPS() // reads GPS serial data
 {
     /*VARIABLES*/
     char buff[100], GGA_Check[3];
@@ -71,12 +65,12 @@ void GPS::readGPS(int fd, char sensor_Data) // reads GPS serial data
     char *start_ptr, *end_ptr, *start_ptr_origin, *jump_ptr;
     while(1)
     {
-        if(serialDataAvail(fd))		/* check for any data available on serial port */
+        if(serialDataAvail(serialPort_))		/* check for any data available on serial port */
         { 
-            sensor_Data = serialGetchar(fd);		/* receive character serially */	
-            printf("%c",sensor_Data);
+            GPS_Data_ = serialGetchar(serialPort_);		/* receive character serially */	
+            printf("%c",GPS_Data_);
             
-            if(sensor_Data == '$') //check for start of NMEA message
+            if(GPS_Data_ == '$') //check for start of NMEA message
             {
                 GGA_Flag = 0;
                 GGA_Index = 0;
@@ -84,9 +78,9 @@ void GPS::readGPS(int fd, char sensor_Data) // reads GPS serial data
 
             else if(GGA_Flag ==1)
             {
-                buff[GGA_Index++] = sensor_Data;
+                buff[GGA_Index++] = GPS_Data_;
 
-                if(sensor_Data == '\r')
+                if(GPS_Data_ == '\r')
                 {
                     GGA_Received = 1;
                 }
@@ -104,7 +98,7 @@ void GPS::readGPS(int fd, char sensor_Data) // reads GPS serial data
             {
                 GGA_Check[0] = GGA_Check[1];
                 GGA_Check[1] = GGA_Check[2];
-                GGA_Check[2] = sensor_Data;
+                GGA_Check[2] = GPS_Data_;
             }
         }
 
@@ -148,13 +142,17 @@ void GPS::readGPS(int fd, char sensor_Data) // reads GPS serial data
     }            
 }
 
-void GPS::convertData(double lon_Data, double lat_Data, char NS[], char EW[]) // converts GPS serial data to decimal degrees
+void GPS::convertData() // converts GPS serial data to decimal degrees
 {
-    double lat_Deg = int(lat_Data)/100; // (d)dd(deg)
-    double lon_Deg = int(lon_Data)/100; // (d)dd(deg)
+    double lat_Deg = int(latitude_)/100; // (d)dd(deg)
+    double lon_Deg = int(longitude_)/100; // (d)dd(deg)
 
-    double lat_Sec = (lat_Data-lat_Deg*100)/60; // mm.mmmm(minutes) / 60 = seconds
-    double lon_Sec = (lon_Data-lon_Deg*100)/60; // mm.mmmm(minutes) / 60 = seconds
+    double lat_Sec = (latitude_-lat_Deg*100)/60; // mm.mmmm(minutes) / 60 = seconds
+    double lon_Sec = (longitude_-lon_Deg*100)/60; // mm.mmmm(minutes) / 60 = seconds
+    char NS[1] = getNorthSouth(NS_);
+    char EW[1] = getNorthSouth(EW_);
+    NS_ = NS;
+    EW_ = EW;
    
         if(strcmp(NS,"") == 0 | strcmp(EW,"") == 0) // is 1 of the arrays empty?
         {
@@ -186,7 +184,7 @@ void GPS::convertData(double lon_Data, double lat_Data, char NS[], char EW[]) //
                 longitude_ = lon_Deg  + lon_Sec;
             }
 
-        std::cout << "" << latitude_ << "," << NS_[1] << " " << longitude_ << "," << EW_[1] << " Satellites:" << SV_ << std::endl;
+        //std::cout << "" << latitude_ << "," << NS_[1] << " " << longitude_ << "," << EW_[1] << " Satellites:" << SV_ << std::endl;
         
         }
 }

@@ -14,12 +14,10 @@ class GPS
     public:
         GPS();  // default constructor
         ~GPS(); // destructor
-
         int openUART(int fd); // open UART serial port
-        void config(int fd, const char* message, size_t length); // configuration of the GPS
         void configAll();
-        void convertData(double lon_Data, double lat_Data, char NS[], char EW[]);   // converts GPS data
-        void readGPS(int fd, char sensor_Data); // reads GPS serial data
+        void readGPS(); // reads GPS serial data
+        void convertData();   // converts GPS data
         void startLogging(); // sends private data to a log file 
 
         int getSV() const;             // returns amount of satellites
@@ -36,5 +34,5 @@ class GPS
         char EW_[10];
         char NS_[10];
         int serialPort_;
-        char GPS_Data_;
+        char GPS_Data_
 };

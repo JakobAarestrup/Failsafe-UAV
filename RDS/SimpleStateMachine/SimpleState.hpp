@@ -28,6 +28,10 @@ public:
  
   ~RDS(); 
 
+  void GetGPSValues();
+  void GetIMUValues();
+  void GetBaroValues();
+
   void UpdateSystemValues();
   void LogData();
 
@@ -100,6 +104,7 @@ public:
   virtual void AxisControl();
   virtual void RouteControl();
   virtual void HeightControl();
+  void landDrone();
 };
 
 
