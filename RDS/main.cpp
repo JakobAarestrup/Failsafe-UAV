@@ -7,12 +7,14 @@
 int main() 
 {
     RDS DroneSystem;
-    while(1)
-    {
+   // while(1)
+   // {
 
-        DroneSystem.LogData();
+        /* //DroneSystem.LogData();
+        DroneSystem.AxisControl();
+        DroneSystem.AxisControl(); */
 
-    }
+    //}
 
     return 0;
 }

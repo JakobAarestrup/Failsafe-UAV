@@ -1,7 +1,8 @@
 #include "SimpleState.hpp"
+#include "HyperCritical.hpp"
 
 int main() {
-  RDS Dronesystem(new Normal); // Default State
+  RDS Dronesystem(new HyperCritical); // Default State
 
   // while(1)
   //{

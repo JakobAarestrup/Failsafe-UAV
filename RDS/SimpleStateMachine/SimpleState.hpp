@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <typeinfo>
+#include "Normal.hpp"
 
 class RDS; // forward declaration
 
@@ -101,10 +102,13 @@ private:
 
 };
 
+
+/*
 class Normal : public ValidateState {
 public:
   void AxisControl() override {
     std::cout << typeid(this).name() << " called AxisControl()\n";
+    RDS_->TransitionTo(new HyperCritical);
   }
   void RouteControl() override {
     std::cout << typeid(this).name() << " called RouteControl()\n";
@@ -127,13 +131,13 @@ public:
     std::cout << typeid(this).name() << " called HeightControl()\n";
     RDS_->TransitionTo(new Normal);
   }
-};
+}; 
 
 class HyperCritical : public ValidateState {
 public:
   void AxisControl() override {
     std::cout << typeid(this).name() << " Yo yocalled AxisControl()\n";
-    //RDS_->TransitionTo(new Normal);
+    RDS_->TransitionTo(new Normal);
   }
   void RouteControl() override {
     std::cout << typeid(this).name() << " called RouteControl()\n";
@@ -144,4 +148,5 @@ public:
   }
 
 };
+*/
 
