@@ -18,6 +18,5 @@ public:
     void LogData(); 
 
 private:
-    unsigned int stock;
     ValidateState *state;
 };
