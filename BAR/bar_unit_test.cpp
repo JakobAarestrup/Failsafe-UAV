@@ -6,21 +6,10 @@ int main()
 
     /**
      * @brief Test variables
-     * 
      */
-    //float temperature[3] = {1,2,3};
     float pressure[4]  = {102532.096,101325,97772.574,95460.834}; //-100m, 0m, 300m, 500m
     float initial_height;
     float height;
-
-    /**
-     * @brief Temperature and Pressure calculation function
-     * 1 for temperature in last variable, anything else for pressure
-     */
-    /*
-    float temp_calc = b1.calculatePressureAndTemperature(temperature[1],pressure[1],0);
-    float pres_calc = b1.calculatePressureAndTemperature(temperature[1],pressure[1],1);
-    */
 
     /**
      * -100m to -100m

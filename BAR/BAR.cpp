@@ -24,13 +24,13 @@ BAR::~BAR()
 //Calibrates the barometer data
 void BAR::initialAMSL() 
 {
-    initial_AMSL_ = (T_s/T_G)*(1-pow((pres_/p_0),T_G*(R/g))); //using international barometric formula to get height
+    initial_AMSL_ = (T_s/T_G)*(1-pow((pres_/p_0),T_G*(R/g))); //Using barometric formula.
 }
 
 // Converts the bar data into height
 void BAR::convertToAGL() 
 {    
-    height_AMSL_ = (T_s/T_G)*(1-pow((pres_/p_0),T_G*(R/g))); // Using international barometric formula to get height
+    height_AMSL_ = (T_s/T_G)*(1-pow((pres_/p_0),T_G*(R/g))); // Using barometric formula.
     height_AGL_ = height_AMSL_ - initial_AMSL_; // Subtract difference in height.
 }
 
