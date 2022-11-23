@@ -11,6 +11,11 @@ public:
     void ConvertACCData();
     void ConvertMagData();
     void ComplementaryFilter();   
+
+    float getRoll();
+    float getPitch();
+    float getYaw();
+    
 private:
     
     float accCalibX_;
@@ -27,10 +32,13 @@ private:
 
     float magCalibX_;
     float magCalibY_;
-    //float magCalibZ_;
 
     float XL_Roll_ = 0.0; // Accelerometer X-axis
     float XL_Pitch_ = 0.0; // Accelerometer Y-axis
     float MAG_Yaw_;
+
+    float CompRoll_;
+    float CompPitch_;
+    float CompYaw_;
     
 };

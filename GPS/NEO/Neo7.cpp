@@ -4,11 +4,11 @@
 GPS::GPS() // default constructor
 {
     printf("Constructor called \n");
-} 
+}
 
 GPS::~GPS() // destructor
 {
-    //delete[] longitude_, latitude_; // delete
+    // delete[] longitude_, latitude_; // delete
     printf("Destructor called\n");
 }
 
@@ -16,88 +16,86 @@ int GPS::openUART(int fd) // open UART serial port
 {
 
     if ((fd = serialOpen("/dev/ttyS0", 9600)) < 0) // open serial port with set baudrate
-        {
-            fprintf (stderr, "Unable to open serial device: %s\n", strerror (errno)); // error handling
-            return 1;
-        }
+    {
+        fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
+        return 1;
+    }
 
+    if (wiringPiSetup() == -1) // initializes wiringPi setup
+    {
+        fprintf(stdout, "Unable to start wiringPi: %s\n", strerror(errno)); // error handling
+        return 1;
+    }
 
-    if (wiringPiSetup() == -1)	// initializes wiringPi setup
-        {
-            fprintf (stdout, "Unable to start wiringPi: %s\n", strerror (errno)); // error handling
-            return 1;
-        }
-        
     return fd;
 }
 
-void GPS::config(int fd, const char* message, size_t length) // configuration of the GPS
+void GPS::config(int fd, const char *message, size_t length) // configuration of the GPS
 {
-    write(fd, message, length); // sends CFG string to serial 
+    write(fd, message, length); // sends CFG string to serial
 }
 
 void GPS::configAll()
 {
     /* OPEN UART */
-    int serial_port;
-    serial_port = openUART(serial_port);
+    serialPort_ = openUART(serial_port_);
 
-    printf("Serial port is open! %d \n",serial_port);
+    printf("Serial port is open! %d \n", serial_port);
 
     /* CONFIGURATION */
-    
+
     /*NMEA Config*/
-    write(serial_port, UBX_protocol::NMEA_CFG, UBX_protocol::NMEA_CFG_Length); // disable SBAS QZSS GLONASS BeiDou Galileo
-    
+    write(serialPort_, UBX_protocol::NMEA_CFG, UBX_protocol::NMEA_CFG_Length); // disable SBAS QZSS GLONASS BeiDou Galileo
+
     /*Update Rate*/
-    write(serial_port, UBX_protocol::RATE, UBX_protocol::RATE_Length); // Measurement frequency: 10 hz, navigation frequency 10 hz
-    
+    write(serialPort_, UBX_protocol::RATE, UBX_protocol::RATE_Length); // Measurement frequency: 10 hz, navigation frequency 10 hz
+
     /*NMEA messages*/
-    write(serial_port, UBX_protocol::GLL, UBX_protocol::GP_Length); // disable GPGLL
-    write(serial_port, UBX_protocol::GSA, UBX_protocol::GP_Length); // disable GSA
-    write(serial_port, UBX_protocol::GSV, UBX_protocol::GP_Length); // disable GPGSV
-    write(serial_port, UBX_protocol::RMC, UBX_protocol::GP_Length); // disable RMC
-    write(serial_port, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG
-    printf("Configuration is done! \n"); 
+    write(serialPort_, UBX_protocol::GLL, UBX_protocol::GP_Length); // disable GPGLL
+    write(serialPort_, UBX_protocol::GSA, UBX_protocol::GP_Length); // disable GSA
+    write(serialPort_, UBX_protocol::GSV, UBX_protocol::GP_Length); // disable GPGSV
+    write(serialPort_, UBX_protocol::RMC, UBX_protocol::GP_Length); // disable RMC
+    write(serialPort_, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG
+    printf("Configuration is done! \n");
 }
 
 void GPS::readGPS(int fd, char sensor_Data) // reads GPS serial data
 {
     /*VARIABLES*/
     char buff[100], GGA_Check[3];
-    unsigned char GGA_Flag=0;
-    unsigned char GGA_Index=0;
+    unsigned char GGA_Flag = 0;
+    unsigned char GGA_Index = 0;
     unsigned char GGA_Received = 0;
     char *start_ptr, *end_ptr, *start_ptr_origin, *jump_ptr;
-    while(1)
+    while (1)
     {
-        if(serialDataAvail(fd))		/* check for any data available on serial port */
-        { 
-            sensor_Data = serialGetchar(fd);		/* receive character serially */	
-            printf("%c",sensor_Data);
-            
-            if(sensor_Data == '$') //check for start of NMEA message
+        if (serialDataAvail(fd)) /* check for any data available on serial port */
+        {
+            sensor_Data = serialGetchar(fd); /* receive character serially */
+            printf("%c", sensor_Data);
+
+            if (sensor_Data == '$') // check for start of NMEA message
             {
                 GGA_Flag = 0;
                 GGA_Index = 0;
             }
 
-            else if(GGA_Flag ==1)
+            else if (GGA_Flag == 1)
             {
                 buff[GGA_Index++] = sensor_Data;
 
-                if(sensor_Data == '\r')
+                if (sensor_Data == '\r')
                 {
                     GGA_Received = 1;
                 }
             }
 
-            else if(GGA_Check[0] =='G' && GGA_Check[1] =='G' && GGA_Check[2] =='A')
+            else if (GGA_Check[0] == 'G' && GGA_Check[1] == 'G' && GGA_Check[2] == 'A')
             {
                 GGA_Flag = 1;
-                GGA_Check[0]= 0; 
-                GGA_Check[0]= 0;
-                GGA_Check[0]= 0;		
+                GGA_Check[0] = 0;
+                GGA_Check[0] = 0;
+                GGA_Check[0] = 0;
             }
 
             else
@@ -108,101 +106,99 @@ void GPS::readGPS(int fd, char sensor_Data) // reads GPS serial data
             }
         }
 
-        if(GGA_Received==1)
+        if (GGA_Received == 1)
         {
-            printf("GGA:%s\n",buff);
-            char *gps = buff; 
-            start_ptr = strchr(gps, ','); // find start of latitude field
-            end_ptr = strchr(++start_ptr, ',');  // find end of field... 
-            latitude_ = atof(start_ptr);   // Convert char to float & store in variable
-            
-            start_ptr = strchr(start_ptr, ',');  // find start of pole NS field
+            printf("GGA:%s\n", buff);
+            char *gps = buff;
+            start_ptr = strchr(gps, ',');       // find start of latitude field
+            end_ptr = strchr(++start_ptr, ','); // find end of field...
+            latitude_ = atof(start_ptr);        // Convert char to float & store in variable
+
+            start_ptr = strchr(start_ptr, ','); // find start of pole NS field
             end_ptr = strchr(++start_ptr, ','); // find end of field... ¨
             jump_ptr = end_ptr;
             *end_ptr = '\0';
             strcpy(NS_, start_ptr);
 
-            //printf(" lat: %f DDDDDDDDDD:%s\n",latitude,NS_);
-            
-            start_ptr = jump_ptr; // find start of longitude field
-            end_ptr = strchr(++start_ptr, ','); // find end of field... 
-            jump_ptr = end_ptr; 
-            *end_ptr = '\0';  // and zero terminate
-            longitude_ = atof(start_ptr); 
+            // printf(" lat: %f DDDDDDDDDD:%s\n",latitude,NS_);
 
-            //printf(" lat: %f D:%s long: %f\n",latitude,NS_,longitude);
-
-            start_ptr = jump_ptr; // find start of pole EW field
+            start_ptr = jump_ptr;               // find start of longitude field
             end_ptr = strchr(++start_ptr, ','); // find end of field...
-            *end_ptr = '\0';  // and zero terminate 
+            jump_ptr = end_ptr;
+            *end_ptr = '\0'; // and zero terminate
+            longitude_ = atof(start_ptr);
+
+            // printf(" lat: %f D:%s long: %f\n",latitude,NS_,longitude);
+
+            start_ptr = jump_ptr;               // find start of pole EW field
+            end_ptr = strchr(++start_ptr, ','); // find end of field...
+            *end_ptr = '\0';                    // and zero terminate
             strcpy(EW_, start_ptr);
-            
+
             start_ptr = strchr(++end_ptr, ','); // find start of satellite field
-            end_ptr = strchr(++start_ptr, ','); // find end of field... 
-            *end_ptr = '\0';  // and zero terminate
-            SV_ = atoi(start_ptr); // Convert char to int & store in variable
-            
+            end_ptr = strchr(++start_ptr, ','); // find end of field...
+            *end_ptr = '\0';                    // and zero terminate
+            SV_ = atoi(start_ptr);              // Convert char to int & store in variable
+
             printf("latitude: %f %s longitude: %f %s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
             break;
         }
-    }            
+    }
 }
 
 void GPS::convertData(double lon_Data, double lat_Data, char NS[], char EW[]) // converts GPS serial data to decimal degrees
 {
-    double lat_Deg = int(lat_Data)/100; // (d)dd(deg)
-    double lon_Deg = int(lon_Data)/100; // (d)dd(deg)
+    double lat_Deg = int(lat_Data) / 100; // (d)dd(deg)
+    double lon_Deg = int(lon_Data) / 100; // (d)dd(deg)
 
-    double lat_Sec = (lat_Data-lat_Deg*100)/60; // mm.mmmm(minutes) / 60 = seconds
-    double lon_Sec = (lon_Data-lon_Deg*100)/60; // mm.mmmm(minutes) / 60 = seconds
-   
-        if(strcmp(NS,"") == 0 | strcmp(EW,"") == 0) // is 1 of the arrays empty?
+    double lat_Sec = (lat_Data - lat_Deg * 100) / 60; // mm.mmmm(minutes) / 60 = seconds
+    double lon_Sec = (lon_Data - lon_Deg * 100) / 60; // mm.mmmm(minutes) / 60 = seconds
+
+    if (strcmp(NS, "") == 0 | strcmp(EW, "") == 0) // is 1 of the arrays empty?
+    {
+        std::cout << "NS or EW returned N/A. Skipping conversion..." << std::endl;
+    }
+
+    else
+    {
+        if (strcmp(NS, "S") == 0 & strcmp(EW, "E") == 0) // handles negative
         {
-            std::cout << "NS or EW returned N/A. Skipping conversion..." << std::endl;
+            latitude_ = (lat_Deg + lat_Sec) * -1;
+            longitude_ = lon_Deg + lon_Sec;
         }
+        else if (strcmp(NS, "N") == 0 & strcmp(EW, "W") == 0)
+        {
 
+            latitude_ = lat_Deg + (lat_Sec);
+            longitude_ = lon_Deg + (lon_Sec) * -1;
+            printf("HELLO\n");
+        }
+        else if (strcmp(NS, "S") == 0 & strcmp(EW, "W") == 0)
+        {
+            latitude_ = lat_Deg + (lat_Sec) * -1;
+            longitude_ = lon_Deg + (lon_Sec) * -1;
+        }
         else
         {
-            if (strcmp(NS,"S") == 0 & strcmp(EW, "E") == 0 ) // handles negative
-            {
-                latitude_  = (lat_Deg  + lat_Sec)*-1;
-                longitude_ = lon_Deg  + lon_Sec;
-            }
-            else if (strcmp(NS,"N") == 0 & strcmp(EW, "W") == 0)
-            {
-
-                latitude_  = lat_Deg  + (lat_Sec);
-                longitude_ = lon_Deg  + (lon_Sec)*-1;
-                printf("HELLO\n");
-            }
-            else if (strcmp(NS,"S") == 0 & strcmp(EW, "W") == 0)
-            {
-                latitude_  = lat_Deg  + (lat_Sec)*-1;
-                longitude_ = lon_Deg  + (lon_Sec)*-1;
-            }
-            else
-            {
-                latitude_  = lat_Deg  + lat_Sec;
-                longitude_ = lon_Deg  + lon_Sec;
-            }
+            latitude_ = lat_Deg + lat_Sec;
+            longitude_ = lon_Deg + lon_Sec;
+        }
 
         std::cout << "" << latitude_ << "," << NS_[1] << " " << longitude_ << "," << EW_[1] << " Satellites:" << SV_ << std::endl;
-        
-        }
+    }
 }
 
 void GPS::startLogging()
 {
-   freopen("RDSLog.txt", "w", stdout); // https://stackoverflow.com/questions/7400418/writing-a-log-file-in-c-c
-   //cout << "" << longitude_ << "," << NS_ << " " << latitude_ << "," << EW_ <<  "  Satellites: " << SV_ << endl;
+    freopen("RDSLog.txt", "w", stdout); // https://stackoverflow.com/questions/7400418/writing-a-log-file-in-c-c
+                                        // cout << "" << longitude_ << "," << NS_ << " " << latitude_ << "," << EW_ <<  "  Satellites: " << SV_ << endl;
 }
-
 
 /* GET FUNCTIONS */
 
 int GPS::getSV() const // returns amount of satellites
 {
-    return SV_; 
+    return SV_;
 }
 
 double GPS::getLongitude() const // returns longitude
@@ -217,19 +213,20 @@ double GPS::getLatitude() const // returns latitude
 
 void GPS::getNorthSouth(char NS[]) // returns either a East pole or West pole
 {
-    int strLength = strlen(NS_); //finds length of the array
-    for (int i = 0; i < strLength; i++) {
-        NS[i] = NS_[strLength-1-i]; //copies UserInput in reverse to TempInput
+    int strLength = strlen(NS_); // finds length of the array
+    for (int i = 0; i < strLength; i++)
+    {
+        NS[i] = NS_[strLength - 1 - i]; // copies UserInput in reverse to TempInput
     }
-    NS[strLength] = '\0'; //adds NULL character at end
+    NS[strLength] = '\0'; // adds NULL character at end
 }
 
 void GPS::getEastWest(char EW[]) // returns either a East pole or West pole
 {
-    int strLength = strlen(EW_); //finds length of the array
-    for (int i = 0; i < strLength; i++) {
-        EW[i] = EW_[strLength-1-i]; //copies UserInput in reverse to TempInput
+    int strLength = strlen(EW_); // finds length of the array
+    for (int i = 0; i < strLength; i++)
+    {
+        EW[i] = EW_[strLength - 1 - i]; // copies UserInput in reverse to TempInput
     }
-    EW[strLength] = '\0'; //adds NULL character at end
+    EW[strLength] = '\0'; // adds NULL character at end
 }
-

@@ -286,9 +286,24 @@ void IMU::ConvertMagData()
 void IMU::ComplementaryFilter()
 { 
     /*Complementary Filter*/
-    double CFangleX=AA*(CFangleX+gyroCalibY_*DT) +(1 - AA) * XL_Roll_; // 97% Gyro 3% Accelerometer
-    double CFangleY=AA*(CFangleY+gyroCalibX_*DT) +(1 - AA) * XL_Pitch_;// 97% Gyro 3% Accelerometer
-    double CFangleZ=AA*(CFangleZ+gyroCalibZ_*DT) +(1 - AA) * MAG_Yaw_; // 97% Gyro 3% Magnometer
+    CompRoll_ = AA*(CompRoll_+gyroCalibY_*DT) +(1 - AA) * XL_Roll_; // 97% Gyro 3% Accelerometer
+    CompPitch_ = AA*(CompPitch_+gyroCalibX_*DT) +(1 - AA) * XL_Pitch_;// 97% Gyro 3% Accelerometer
+    CompYaw_ = AA*(CompYaw_+gyroCalibZ_*DT) +(1 - AA) * MAG_Yaw_; // 97% Gyro 3% Magnometer
    // printf("GyroXangle: %f, GyroYangle: %f, GyroZangle: %f\n", gyroXangle_, gyroYangle_, gyroZangle_);
-    printf("Roll_filtered: %f, Pitch filtered: %f, GyroZangle: %f\n", CFangleX, CFangleY);
+    printf("Roll_filtered: %f, Pitch filtered: %f, GyroZangle: %f\n", CompRoll_, CompPitch_);
+}
+
+float IMU::getRoll()
+{
+    return CompRoll_;
+}
+
+float IMU::getPitch()
+{
+    return CompPitch_;
+}
+
+float IMU::getYaw()
+{
+    return CompYaw_;
 }

@@ -1,24 +1,40 @@
 #include "ValidateState.hpp"
+#include <stdio.h>
 //#include "Neo7.hpp"
 
+int main()
+{
+  ValidateState RDS; // System
+  FILE *fp;
 
-int main() {
-  ValidateState Dronesystem; // System
-  //GPS::configAll(); // configs the GPS
-  //BARO::configAll(); // configs the BARO
-  //IMU::configAll(); // configs the IMU
+  /*Configuration of Sensors*/
+  // GPS::configAll(); // configs the GPS
+  // BARO::configAll(); // configs the BARO
+  // I1.initializeI2C(); // IMU1
+  // I2.initializeI2C(); // IMU2
 
+  /*Calibration*/
+  /* IMU1.calibrateGyro();
+    IMU2.calibrateGyro();*/
 
-  // while(1)
-  //{
-  /* Dronesystem.UpdateSystemValues();   // gets all values from sensors
-  Dronesystem.LogData();*/               // Sends data to log file
+  /*Logging initialized*/
+  fp = freopen("RDSLog.txt", "w", stdout);
+  int N = 0;
 
-  Dronesystem.AxisControl(); // Checks for Failure on the Axises
-  Dronesystem.RouteControl(); // Checks for Failure in the KML
-  Dronesystem.HeightControl(); // Checks for Failure for height
+  while (1)
+  {
+    /* Dronesystem.UpdateSystemValues();*/ // gets all values from sensors
 
- // } 
-
+    RDS.LogData();       // Sends sensor data to log file
+    RDS.AxisControl();   // Checks for Failure on the Axises
+    RDS.RouteControl();  // Checks for Failure in the KML
+    RDS.HeightControl(); // Checks for Failure for height
+    N++;
+    if (N > 100)
+    {
+      break;
+    }
+  }
+  fclose(fp); // close logging
   return 0;
 }

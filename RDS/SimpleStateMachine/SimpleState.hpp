@@ -52,7 +52,7 @@ private:
    * 
    */
 
-  float longitudeSYS_, latitudeSYS_, longPoleSYS_, latPoleSYS_;
+  float longitudeSYS_ = 0, latitudeSYS_ = 0, longPoleSYS_= 0, latPoleSYS_ = 0;
   int SatellitesSYS_;
 
    /**
