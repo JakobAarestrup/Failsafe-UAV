@@ -190,9 +190,9 @@ void IMU::readMAG(int IMU)
 {
     float mx, my, mz;
     float bx, by, bz;
-    float A[3][3] = { {0, 0, 0},
-                      {0, 0, 0},
-                      {0, 0, 0} }
+    float A[3][3] = {{0, 0, 0},
+                     {0, 0, 0},
+                     {0, 0, 0}};
 
     /**
      * @brief handler for IMU sensor
