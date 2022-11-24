@@ -35,7 +35,7 @@ void GPS::configAll()
     /* OPEN UART */
     serialPort_ = openUART(serialPort_);
 
-    printf("Serial port is open! %d \n", serial_port);
+    printf("Serial port is open! %d \n", serialPort_);
 
     /* CONFIGURATION */
 
@@ -148,8 +148,9 @@ void GPS::convertData() // converts GPS serial data to decimal degrees
 
     double lat_Sec = (latitude_ - lat_Deg * 100) / 60;  // mm.mmmm(minutes) / 60 = seconds
     double lon_Sec = (longitude_ - lon_Deg * 100) / 60; // mm.mmmm(minutes) / 60 = seconds
-    char NS[1] = {getNorthSouth(NS_)};
-    char EW[1] = {getNorthSouth(EW_)};
+    char NS[1];
+    NS = getNorthSouth(NS_);
+    EW = getNorthSouth(EW_);
     NS_ = NS;
     EW_ = EW;
 
