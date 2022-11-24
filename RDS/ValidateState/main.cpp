@@ -1,6 +1,6 @@
 #include "ValidateState.hpp"
 #include <stdio.h>
-#include "Neo7.hpp"
+#include "../NEO7/Neo7.hpp"
 
 int main()
 {

@@ -5,7 +5,7 @@
 
 #include "UBX_Protocol_Constants.h"
 #include <wiringPi.h>
-#include <wiringSerial.h>
+#include <wiringSerial.hpp>
 
 //#pragma once // skal denne bruges?
 
