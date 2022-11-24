@@ -77,7 +77,7 @@ int main()
         }
         */
 
-        IMU1.readIMU(2);
+        IMU1.readMAG(2);
         IMU1.ConvertMagData();
         usleep(100000);
     }
