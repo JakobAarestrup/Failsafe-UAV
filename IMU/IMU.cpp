@@ -266,7 +266,7 @@ void IMU::ConvertACCData()
     /*  gyroXangle_ = PI*(rate_gyr_x_ / (DT*1000));
    gyroYangle_ = PI*(rate_gyr_y_ / (DT*1000));
    gyroZangle_ = PI*(rate_gyr_z_ / (DT*1000));  */
-    XL_Roll_ = atan2(accCalibX_, accCalibZ_) * 180 / PI;
+    XL_Roll_ = atan2(accCalibY_, accCalibZ_) * 180 / PI;
     XL_Pitch_ = atan2(-accCalibX_, sqrt(accCalibY_ * accCalibY_ + accCalibZ_ * accCalibZ_)) * -180 / PI;
 }
 
