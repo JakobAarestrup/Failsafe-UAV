@@ -3,6 +3,7 @@
 #include <errno.h>
 #include <iostream>
 
+#include "UBX_Protocol_Constants.h"
 #include <wiringPi.h>
 #include <wiringSerial.h>
 
@@ -32,5 +33,5 @@ private:     // Coordinates from the GPS
     char EW_[10];
     char NS_[10];
     int serialPort_;
-    char GPS_Data_
+    char GPS_Data_;
 };

@@ -148,8 +148,8 @@ void GPS::convertData() // converts GPS serial data to decimal degrees
 
     double lat_Sec = (latitude_ - lat_Deg * 100) / 60;  // mm.mmmm(minutes) / 60 = seconds
     double lon_Sec = (longitude_ - lon_Deg * 100) / 60; // mm.mmmm(minutes) / 60 = seconds
-    char NS[1] = getNorthSouth(NS_);
-    char EW[1] = getNorthSouth(EW_);
+    char NS[1] = {getNorthSouth(NS_)};
+    char EW[1] = {getNorthSouth(EW_)};
     NS_ = NS;
     EW_ = EW;
 
