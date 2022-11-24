@@ -1,7 +1,7 @@
 #include "ValidateState.hpp"
 #include <stdio.h>
 #include <unistd.h>
-//#include "I2C.hpp"
+#include "IMU/I2C.hpp"
 #include <sys/time.h>
 #include <time.h>
 
@@ -18,7 +18,7 @@ int main()
   FILE *fp;
   GPS G1;
   I2C I1;
-  IMU IMU1;
+  IMU IMU2;
   // IMU I2;
 
   /*Configuration of Sensors*/
@@ -28,7 +28,7 @@ int main()
   // I2.initializeI2C(); // IMU2
 
   /*Calibration*/
-  IMU1.calibrateGyro();
+  IMU2.calibrateGyro(2);
   // IMU2.calibrateGyro();
 
   /*Logging initialized*/
@@ -39,7 +39,7 @@ int main()
   while (1)
   {
     startofloop = mymillis();
-    RDS.UpdateSystemValues(G1, IMU1); // gets all values from sensors
+    RDS.UpdateSystemValues(G1, IMU2); // gets all values from sensors
 
     RDS.LogData();       // Sends sensor data to log file
     RDS.AxisControl();   // Checks for Failure on the Axises
