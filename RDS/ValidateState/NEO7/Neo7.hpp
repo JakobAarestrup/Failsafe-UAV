@@ -31,7 +31,7 @@ private:     // Coordinates from the GPS
     double longitude_;
     double latitude_;
     char EW_[1];
-    char NS_[1];
+    char NS_[2];
     int serialPort_;
     char GPS_Data_;
 };
