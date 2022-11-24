@@ -237,14 +237,6 @@ void IMU::readMAG(int IMU)
         A[3][3] = {{1.002979, 0.039343, -0.014713},
                    {0.039343, 1.019943, -0.006826},
                    {-0.014713, -0.006826, 1.014517}};
-
-        // formel magdataCalibrated = A(magdata-b)
-        mx = mx - bx;
-        my = my - by;
-        mz = mz - bz;
-
-        magCalibX_ = A[0][0] * mx + A[0][1] * my + A[0][2] * mz; // A[0,:]*(magdata-b)
-        magCalibY_ = A[1][0] * mx + A[1][1] * my + A[1][2] * mz; // A[1,:]*(magdata-b)
     }
     else if (IMU = 2) // TODO ny calibreringsdata
     {
@@ -255,15 +247,15 @@ void IMU::readMAG(int IMU)
         A[3][3] = {{1.002979, 0.039343, -0.014713},
                    {0.039343, 1.019943, -0.006826},
                    {-0.014713, -0.006826, 1.014517}};
-
-        // formel magdataCalibrated = A(magdata-b)
-        mx = mx - bx;
-        my = my - by;
-        mz = mz - bz;
-
-        magCalibX_ = A[0][0] * mx + A[0][1] * my + A[0][2] * mz; // A[0,:]*(magdata-b)
-        magCalibY_ = A[1][0] * mx + A[1][1] * my + A[1][2] * mz; // A[1,:]*(magdata-b)
     }
+
+    // formel magdataCalibrated = A(magdata-b)
+    mx = mx - bx;
+    my = my - by;
+    mz = mz - bz;
+
+    magCalibX_ = A[0][0] * mx + A[0][1] * my + A[0][2] * mz; // A[0,:]*(magdata-b)
+    magCalibY_ = A[1][0] * mx + A[1][1] * my + A[1][2] * mz; // A[1,:]*(magdata-b)
 }
 
 void IMU::ConvertACCData()
