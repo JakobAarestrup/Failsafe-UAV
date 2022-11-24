@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include "NEO7/Neo7.hpp"
 class ValidateState
 {
 
