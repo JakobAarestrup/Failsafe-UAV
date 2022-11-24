@@ -69,7 +69,7 @@ void ValidateState::LogData()
     /*RDS sensors*/
     std::string GPSBaro = "Longitude: " + std::to_string(longitudeRDS_) + " " + longPoleRDS_[0] + " Latitude: " + std::to_string(latitudeRDS_) + " " + latPoleRDS_ + " Satellites: " + std::to_string(SatellitesRDS_) + " Altitude: " + std::to_string(altitudeRDS_);
     Logger(GPSBaro);
-    std::string IMU = "Roll: " + std::to_string(RollRDS_) + "Pitch: " + std::to_string(PitchRDS_) + "Yaw: " + std::to_string(YawRDS_);
+    std::string IMU = "Roll: " + std::to_string(RollRDS_) + " Pitch: " + std::to_string(PitchRDS_) + " Yaw: " + std::to_string(YawRDS_);
     Logger(IMU);
     /*  Logger("Longitude: %f %c Latitude: %f %c Satellites: %d Altitude: %f \n", longitudeRDS_, longPoleRDS_, latitudeRDS_, latPoleRDS_, SatellitesRDS_, altitudeRDS_); // GPS Data + baro
      printf("Roll: %f%c Pitch: %f%c  Yaw: %f%c \n", RollRDS_, 176, PitchRDS_, 176, YawRDS_, 176);  */
