@@ -49,7 +49,7 @@ int main()
     IMU2.ConvertACCData();
     // IMU2.ConvertMagData();
 
-    // IMU2.ComplementaryFilter();
+    IMU2.ComplementaryFilter();
 
     /* IMU1.readIMU();
 
