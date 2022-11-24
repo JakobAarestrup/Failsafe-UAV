@@ -5,7 +5,6 @@
 #include "I2C.hpp"
 #include "LIS3MDL.hpp"
 #include "LSM6DSOX.hpp"
-#include "linalg.h"
 
 // Definitions
 #define PI 3.14159265358979323846

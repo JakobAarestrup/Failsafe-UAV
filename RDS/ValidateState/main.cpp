@@ -1,6 +1,9 @@
 #include "ValidateState.hpp"
 #include <stdio.h>
 #include <unistd.h>
+#include "I2C.hpp"
+#include <sys/time.h>
+#include <time.h>
 
 int mymillis()
 {
@@ -14,7 +17,8 @@ int main()
   ValidateState RDS; // System
   FILE *fp;
   GPS G1;
-  IMU I1;
+  I2C I1;
+  IMU IMU1;
   // IMU I2;
 
   /*Configuration of Sensors*/
@@ -35,7 +39,7 @@ int main()
   while (1)
   {
     startofloop = mymillis();
-    RDS.UpdateSystemValues(G1); // gets all values from sensors
+    RDS.UpdateSystemValues(G1, IMU1); // gets all values from sensors
 
     RDS.LogData();       // Sends sensor data to log file
     RDS.AxisControl();   // Checks for Failure on the Axises
