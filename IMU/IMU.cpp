@@ -276,7 +276,6 @@ void IMU::ConvertMagData()
         MAG_Yaw_ += 360;
         // printf("magYaw: %f\n\n", MAG_Yaw_);
     }
-    printf("magYaw: %f\n\n", MAG_Yaw_);
 }
 
 void IMU::ComplementaryFilter()
@@ -286,6 +285,7 @@ void IMU::ComplementaryFilter()
     CompPitch_ = AA * (CompPitch_ + gyroCalibX_ * DT) + (1 - AA) * XL_Pitch_; // 97% Gyro 3% Accelerometer
     CompYaw_ = AA * (CompYaw_ + gyroCalibZ_ * DT) + (1 - AA) * MAG_Yaw_;      // 97% Gyro 3% Magnometer
     printf("Converted - XL_Roll: %lf, XL_pitch: %lf\n\n", XL_Roll_, XL_Pitch_);
+    printf("magYaw: %f\n\n", MAG_Yaw_);
     printf("Roll_filtered: %f, Pitch filtered: %f, GyroZangle: %f\n", CompRoll_, CompPitch_, CompYaw_);
 }
 
