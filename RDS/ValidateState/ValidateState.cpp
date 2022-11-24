@@ -67,7 +67,7 @@ void ValidateState::LogData()
 {
     /*START logging*/
     /*RDS sensors*/
-    std::string GPSBaro = "Longitude: " + std::to_string(longitudeRDS_) + longPoleRDS_ + "Latitude: " + std::to_string(latitudeRDS_) + latPoleRDS_ + "Satellites: " + std::to_string(SatellitesRDS_) + "Altitude: " + std::to_string(AltitudeRDS_);
+    std::string GPSBaro = "Longitude: " + std::to_string(longitudeRDS_) + longPoleRDS_ + "Latitude: " + std::to_string(latitudeRDS_) + latPoleRDS_ + "Satellites: " + std::to_string(SatellitesRDS_) + "Altitude: " + std::to_string(altitudeRDS_);
     Logger(GPSBaro);
     std::string IMU = "Roll: " + std::to_string(RollRDS_) + "Pitch: " + std::to_string(PitchRDS_) + "Yaw: " + std::to_string(YawRDS_);
     Logger(IMU);
