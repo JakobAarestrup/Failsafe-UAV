@@ -36,7 +36,7 @@ int main()
   // I2.initializeI2C();
 
   /*Not used atm*/
-  IMU1.calibrateGyro();
+  IMU1.calibrateGyro(2);
   // IMU2.calibrateGyro();
 
   // Main loop
@@ -44,7 +44,7 @@ int main()
   {
     startofloop = mymillis();
 
-    IMU1.readIMU();
+    IMU1.readIMU(2);
 
     IMU1.ConvertACCData();
     IMU1.ConvertMagData();
