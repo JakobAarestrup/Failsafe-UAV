@@ -30,18 +30,18 @@ void ValidateState::GetGPSValues(GPS NEO)
     */
 }
 
-void ValidateState::GetIMUValues(IMU Sensor) // void ValidateState::GetIMUValues(IMU Sensor)
+void ValidateState::GetIMUValues(IMU sensor) // void ValidateState::GetIMUValues(IMU sensor)
 {
 
-    Sensor.readIMU(2);
+    sensor.readIMU(2);
 
-    Sensor.ConvertACCData();
-    Sensor.ConvertMagData();
+    sensor.ConvertACCData();
+    sensor.ConvertMagData();
 
-    Sensor.ComplementaryFilter();
-    RollRDS_ = Sensor.getRoll();
-    PitchRDS_ = Sensor.getPitch();
-    YawRDS_ = Sensor.getYaw();
+    sensor.ComplementaryFilter();
+    RollRDS_ = sensor.getRoll();
+    PitchRDS_ = sensor.getPitch();
+    YawRDS_ = sensor.getYaw();
 
     /*MAVLINK GET IMU DATA FROM DRONE*/
     // RollSYS_ =;
@@ -49,18 +49,22 @@ void ValidateState::GetIMUValues(IMU Sensor) // void ValidateState::GetIMUValues
     // YawSYS_ =;
 }
 
-void ValidateState::GetBaroValues()
+void ValidateState::GetBaroValues(BAR barometer)
 {
-    // altitudeRDS_ = getAltitude()
+    barometer.readPressure();
+    barometer.readTemperature();
+    barometer.calculatePressureAndTemperature();
+    altitudeRDS_ = barometer.getHeight();
+
     /*MAVLINK GET BARO DATA FROM DRONE*/
     // altitudeSYS_ =;
 }
 
-void ValidateState::UpdateSystemValues(GPS NEO, IMU Sensor)
+void ValidateState::UpdateSystemValues(GPS NEO, BAR barometer, IMU sensor)
 {
     GetGPSValues(NEO);
-    GetIMUValues(Sensor);
-    GetBaroValues();
+    GetBaroValues(barometer);
+    GetIMUValues(sensor);
 }
 
 void ValidateState::LogData()

@@ -19,20 +19,19 @@ int main()
   GPS G1;
   I2C I1;
   IMU IMU2;
+  BAR B1;
   // IMU I2;
 
   /*Configuration of Sensors*/
-  G1.configAll(); // configs the GPS
-  // BARO::configAll(); // configs the BARO
-  I1.initializeI2C(); // IMU1
-  // I2.initializeI2C(); // IMU2
+  G1.configAll();     // configs the GPS
+  I1.initializeI2C(); // Initialize IMU1
+  // I2.initializeI2C(); // Initialize IMU2
 
   /*Calibration*/
+  B1.calibrateBAR();
   IMU2.calibrateGyro(2);
   // IMU2.calibrateGyro();
 
-  /*Logging initialized*/
-  // fp = freopen("RDSLog.txt", "w", stdout);
   int N = 0;
   int startofloop;
 

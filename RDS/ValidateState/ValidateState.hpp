@@ -3,6 +3,7 @@
 #include "NEO7/Neo7.hpp"
 #include "IMU/IMU.hpp"
 #include <string.h>
+#include "BAR/BAR.hpp"
 #include <fstream>
 #include <sstream>
 class ValidateState
@@ -12,10 +13,10 @@ public:
   ValidateState();
   ~ValidateState();
   void GetGPSValues(GPS NEO);
-  void GetIMUValues(IMU Sensor);
-  void GetBaroValues();
+  void GetIMUValues(IMU sensor);
+  void GetBaroValues(BAR barometer);
 
-  void UpdateSystemValues(GPS NEO, IMU Sensor);
+  void UpdateSystemValues(GPS NEO, BAR barometer, IMU Sensor);
   void LogData();
 
   void AxisControl();
