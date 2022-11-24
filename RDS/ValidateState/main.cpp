@@ -23,7 +23,7 @@ int main()
 
   while (1)
   {
-    Dronesystem.UpdateSystemValues(); // gets all values from sensors
+    RDS.UpdateSystemValues(); // gets all values from sensors
 
     RDS.LogData();       // Sends sensor data to log file
     RDS.AxisControl();   // Checks for Failure on the Axises
