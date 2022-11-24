@@ -31,8 +31,7 @@ int main()
     RDS.RouteControl();  // Checks for Failure in the KML
     RDS.HeightControl(); // Checks for Failure for height
     N++;
-    usleep(500000);
-    if (N > 10)
+    if (N > 5)
     {
       break;
     }
