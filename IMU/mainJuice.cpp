@@ -47,7 +47,7 @@ int main()
     IMU2.readIMU(2);
 
     IMU2.ConvertACCData();
-    // IMU2.ConvertMagData();
+    IMU2.ConvertMagData();
 
     IMU2.ComplementaryFilter();
 
@@ -58,13 +58,12 @@ int main()
 
     IMU2.ComplementaryFilter();
  */
-    usleep(500000);
-    /*    while (mymillis() - startofloop < 20)
-       {
-         usleep(100);
-       }
+    while (mymillis() - startofloop < 20)
+    {
+      usleep(100);
+    }
 
-       printf("Loop Time %d\n", mymillis() - startofloop); */
+    printf("Loop Time %d\n", mymillis() - startofloop);
   }
   return 0;
 }
