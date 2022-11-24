@@ -80,7 +80,7 @@ int main()
         float mx = 1;
         float my = 1;
 
-        IMU1.readIMU();
+        IMU1.readIMU(2);
         IMU1.ConvertMagData(mx, my);
         usleep(100000);
     }
