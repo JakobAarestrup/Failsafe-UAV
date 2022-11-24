@@ -184,15 +184,13 @@ void IMU::readGYRO(int IMU)
     gyroCalibX_ = gx - gx_drift; // Gyroscope X-angle in deg/s
     gyroCalibY_ = gy - gy_drift; // Gyroscope Y-angle in deg/s
     gyroCalibZ_ = gz - gz_drift; // Gyroscope Z-angle in deg/s
+    printf("gyroCalibX_: %f gyroCalibY_: %f gyroCalibZ_", gyroCalibX_, gyroCalibY_, gyroCalibZ_);
 }
 
 void IMU::readMAG(int IMU)
 {
     float mx, my, mz;
     float bx, by, bz;
-    float A[3][3] = {{0, 0, 0},
-                     {0, 0, 0},
-                     {0, 0, 0}};
 
     /**
      * @brief handler for IMU sensor
@@ -228,7 +226,7 @@ void IMU::readMAG(int IMU)
      * @brief hardcoded offsets. b = Hard-Iron distortion and A = Soft-Iron distortion.
      *
      */
-    if (IMU = 1)
+    if (IMU == 1)
     {
         bx = 7.977849;
         by = 3.137438;
@@ -238,7 +236,7 @@ void IMU::readMAG(int IMU)
                          {0.039343, 1.019943, -0.006826},
                          {-0.014713, -0.006826, 1.014517}};
     }
-    else if (IMU = 2) // TODO ny calibreringsdata
+    else if (IMU == 2) // TODO ny calibreringsdata
     {
         bx = 7.977849;
         by = 3.137438;
@@ -265,7 +263,6 @@ void IMU::ConvertACCData()
    gyroZangle_ = PI*(rate_gyr_z_ / (DT*1000));  */
     XL_Roll_ = atan2(accCalibX_, accCalibY_) * 180 / PI;
     XL_Pitch_ = atan2(-accCalibX_, sqrt(accCalibY_ * accCalibY_ + accCalibZ_ * accCalibZ_)) * -180 / PI;
-    printf("Converted - XL_Roll: %lf, XL_pitch: %lf\n\n", XL_Roll_, XL_Pitch_);
 }
 
 void IMU::ConvertMagData()
@@ -284,7 +281,8 @@ void IMU::ComplementaryFilter()
     CompRoll_ = AA * (CompRoll_ + gyroCalibY_ * DT) + (1 - AA) * XL_Roll_;    // 97% Gyro 3% Accelerometer
     CompPitch_ = AA * (CompPitch_ + gyroCalibX_ * DT) + (1 - AA) * XL_Pitch_; // 97% Gyro 3% Accelerometer
     CompYaw_ = AA * (CompYaw_ + gyroCalibZ_ * DT) + (1 - AA) * MAG_Yaw_;      // 97% Gyro 3% Magnometer
-                                                                              // printf("GyroXangle: %f, GyroYangle: %f, GyroZangle: %f\n", gyroXangle_, gyroYangle_, gyroZangle_);
+    printf("Converted - XL_Roll: %lf, XL_pitch: %lf\n\n", XL_Roll_, XL_Pitch_);
+    printf("magYaw: %f\n\n", MAG_Yaw_);
     printf("Roll_filtered: %f, Pitch filtered: %f, GyroZangle: %f\n", CompRoll_, CompPitch_, CompYaw_);
 }
 

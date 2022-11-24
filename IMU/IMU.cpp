@@ -221,6 +221,7 @@ void IMU::readMAG(int IMU)
     mx = (mx / MG_Sensitivity) * 100;
     my = (my / MG_Sensitivity) * 100;
     mz = (mz / MG_Sensitivity) * 100;
+    printf("mx: %f, my: %f, mz: %f", mx, my, mz);
 
     /**
      * @brief hardcoded offsets. b = Hard-Iron distortion and A = Soft-Iron distortion.
