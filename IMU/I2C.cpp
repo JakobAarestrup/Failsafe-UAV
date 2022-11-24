@@ -46,7 +46,7 @@ void I2C::initializeI2C()
     I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL7_G, 0b01000000);   // enable HPF // default HPF (00) 16 Hz
                                                                        // I2Cdev::writeByte(LIS3MDL_ADDR2, LSM6DSOX_CTRL7_G, 0b10000000); // Enable High-Performance mode for Gyro
 
-    // Enable magnetometer from IMU1
+    // Enable magnetometer from IMU2
     I2Cdev::writeByte(LIS3MDL_ADDR2, LIS3MDL_CTRL_REG1, 0b01100010); // OM = 11 (ultra-high-performance mode for X and Y) FAST_ODR = 1 (155Hz ODR)
     I2Cdev::writeByte(LIS3MDL_ADDR2, LIS3MDL_CTRL_REG2, 0b00000000); // FS = 00 (+/- 4 gauss full scale) Default
     I2Cdev::writeByte(LIS3MDL_ADDR2, LIS3MDL_CTRL_REG3, 0b00000000); // MD = 00 (continuous-conversion mode)
