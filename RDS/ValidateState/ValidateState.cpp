@@ -16,9 +16,9 @@ void ValidateState::GetGPSValues(GPS NEO)
     NEO.convertData();                  // converts to decimal degrees format
     longitudeRDS_ = NEO.getLongitude(); // returns longitude
     latitudeRDS_ = NEO.getLatitude();   // returns latitude
-    longPoleRDS_ = NEO.getNorthSouth(); // returns either a north pole or south pole
-    latPoleRDS_ = NEO.getEastWest();    // returns either a East pole or West pole
-    SatellitesRDS_ = NEO.getSV()
+    NEO.getNorthSouth(longPoleRDS_);    // returns either a north pole or south pole
+    NEO.getEastWest(latPoleRDS_);       // returns either a East pole or West pole
+    SatellitesRDS_ = NEO.getSV();
 
     /*MAVLINK GET GPS DATA FROM DRONE*/
 

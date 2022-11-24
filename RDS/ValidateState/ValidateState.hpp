@@ -25,7 +25,8 @@ private:
    *
    */
 
-  float longitudeSYS_, latitudeSYS_, longPoleSYS_, latPoleSYS_;
+  float longitudeSYS_, latitudeSYS_;
+  char longPoleSYS_[1], latPoleSYS_[1];
   int SatellitesSYS_;
 
   /**
@@ -44,7 +45,8 @@ private:
    * @brief GPS Values
    *
    */
-  float longitudeRDS_, latitudeRDS_, longPoleRDS_, latPoleRDS_;
+  float longitudeRDS_, latitudeRDS_;
+  char longPoleRDS_[1], latPoleRDS_[1];
   int SatellitesRDS_;
 
   /**
