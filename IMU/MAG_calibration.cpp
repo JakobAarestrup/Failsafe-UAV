@@ -23,7 +23,7 @@ I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG1, 0b01100010);// OM = 11 (ultr
 I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG2, 0b00000000);// FS = 00 (+/- 4 gauss full scale) Default
 I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG3, 0b00000000);// MD = 00 (continuous-conversion mode)
 I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG4, 0b00001100);// OMZ = 11 (ultra-high-performance mode for Z)
-
+I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG4, 0b00001100);// OMZ = 11 (ultra-high-performance mode for Z)
 /* Enable Magnetometer from IMU2
 I2Cdev::writeByte(LIS3MDL_ADDR2, LIS3MDL_CTRL_REG1, 0b01100010);// OM = 11 (ultra-high-performance mode for X and Y) FAST_ODR = 1 (155Hz ODR)
 I2Cdev::writeByte(LIS3MDL_ADDR2, LIS3MDL_CTRL_REG2, 0b00000000);// FS = 00 (+/- 4 gauss full scale) Default

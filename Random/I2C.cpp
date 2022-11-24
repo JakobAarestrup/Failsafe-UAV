@@ -10,7 +10,7 @@
 
 int main()
 {
-int aX = 65000, aY = 49000  , aZ = 16300;
+     int aX = 65000, aY = 49000  , aZ = 16300;
 aX = aX-0xFFFF;
 aY = aY-0xFFFF;
 int gX = 0, gY = 0, gZ =0;
