@@ -190,6 +190,7 @@ void IMU::readMAG(int IMU)
 {
     float mx, my, mz;
     float bx, by, bz;
+    printf("IMU: %d\n", IMU);
 
     /**
      * @brief handler for IMU sensor

@@ -38,45 +38,20 @@ int main()
         // float my = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Y_L,1,1);
         // float mz = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L,1,1);
 
-        // Read from the Magnetometer from IMU2
-        float mx = I1.readI2C(LIS3MDL_ADDR2, LIS3MDL_OUT_X_L, 1, 1);
-        float my = I1.readI2C(LIS3MDL_ADDR2, LIS3MDL_OUT_Y_L, 1, 1);
-        float mz = I1.readI2C(LIS3MDL_ADDR2, LIS3MDL_OUT_Z_L, 1, 1);
+        /*         if (N < 2000)
+                {
+                    printf("%f %f %f \n", mxc, myc, mzc);
+                    usleep(20000); // 20ms Delay
+                    N = N + 1;
+                }
+                else
+                {
+                    printf("done!!!");
+                    break;
+                } */
 
-        /*   if(mx > 0x8000)
-          {
-              mx = mx - 0xFFFF;
-          }
-
-          if (my > 0x8000)
-          {
-              my = my - 0xFFFF;
-          }
-
-          if (mz > 0x8000)
-          {
-              mz = mz - 0xFFFF; // lave det her i I2C read kald?
-          } */
-
-        float mxc = (mx / mag_gain) * 100;
-        float myc = (my / mag_gain) * 100;
-        float mzc = (mz / mag_gain) * 100;
-
-        if (N < 2000)
-        {
-            printf("%f %f %f \n", mxc, myc, mzc);
-            usleep(20000); // 20ms Delay
-            N = N + 1;
-        }
-        else
-        {
-            printf("done!!!");
-            break;
-        }
-
-        /*
-                IMU1.readMAG(2);
-                IMU1.ConvertMagData(); */
+        IMU1.readMAG(2);
+        IMU1.ConvertMagData();
     }
     return 0;
 }
