@@ -277,6 +277,7 @@ void IMU::ConvertMagData()
         MAG_Yaw_ += 360;
         // printf("magYaw: %f\n\n", MAG_Yaw_);
     }
+    printf("magYaw: %f\n\n", MAG_Yaw_);
 }
 
 void IMU::ComplementaryFilter()
