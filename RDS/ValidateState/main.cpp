@@ -14,27 +14,48 @@ int mymillis()
 
 int main()
 {
+  /**
+   * @brief RDS initialized
+   *
+   */
   ValidateState RDS; // System
-  FILE *fp;
+
+  /**
+   * @brief Initialize used object variables
+   *
+   */
   GPS G1;
   I2C I1;
   IMU IMU2;
+  // IMU IMU2;
   BAR B1;
-  // IMU I2;
 
-  /*Configuration of Sensors*/
+  /**
+   * @brief  Configuration of Sensors
+   *
+   */
   G1.configAll();     // configs the GPS
   I1.initializeI2C(); // Initialize IMU1
   // I2.initializeI2C(); // Initialize IMU2
-
-  /*Calibration*/
+  /**
+   * @brief Calibration..
+   *
+   */
   B1.calibrateBAR();
   IMU2.calibrateGyro(2);
   // IMU2.calibrateGyro();
 
+  /**
+   * @brief Used variables
+   *
+   */
   int N = 0;
   int startofloop;
 
+  /**
+   * @brief starting of loop for checking and logging sensor data
+   *
+   */
   while (1)
   {
     startofloop = mymillis();
@@ -58,6 +79,5 @@ int main()
       break;
     }
   }
-  // fclose(fp); // close logging
   return 0;
 }

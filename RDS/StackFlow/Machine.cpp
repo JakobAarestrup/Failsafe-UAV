@@ -1,9 +1,11 @@
 #include "Machine.h"
 #include "MachineStates.h"
 
-Machine::Machine(unsigned int _stock) {
- static_cast<AbstractState *>(new Normal());
-                    //: static_cast<AbstractState *>(new SoldOut());
+Machine::Machine(unsigned int _stock)
+{
+  stock = _stock;
+  state = _stock > 0 ? static_cast<AbstractState *>(new Normal())
+                     : static_cast<AbstractState *>(new SoldOut());
 }
 
 Machine::~Machine() { delete state; }

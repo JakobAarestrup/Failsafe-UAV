@@ -6,6 +6,7 @@
 #include "BAR/BAR.hpp"
 #include <fstream>
 #include <sstream>
+
 class ValidateState
 {
 

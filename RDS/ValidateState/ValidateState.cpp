@@ -1,14 +1,27 @@
 #include "ValidateState.hpp"
 
+/**
+ * @brief Construct a Validate State object
+ *
+ */
 ValidateState::ValidateState()
 {
     state_ = 0; // Normal State
 }
 
+/**
+ * @brief Destroy the Validate State object
+ *
+ */
 ValidateState::~ValidateState()
 {
 }
 
+/**
+ * @brief Gets the available GPS data from the NEO7 sensor and asks the drone over mavlink for their data.
+ *
+ * @param NEO Class object of GPS class
+ */
 void ValidateState::GetGPSValues(GPS NEO)
 {
     // maybe opret class objekt
@@ -30,6 +43,11 @@ void ValidateState::GetGPSValues(GPS NEO)
     */
 }
 
+/**
+ * @brief Gets Roll, Pitch and YAW from IMU object and over MAVLINK from Drone
+ *
+ * @param sensor Class object of IMU class
+ */
 void ValidateState::GetIMUValues(IMU sensor) // void ValidateState::GetIMUValues(IMU sensor)
 {
 
@@ -49,6 +67,11 @@ void ValidateState::GetIMUValues(IMU sensor) // void ValidateState::GetIMUValues
     // YawSYS_ =;
 }
 
+/**
+ * @brief Gets all barometer values needed to get height
+ *
+ * @param barometer Class object of BAR class
+ */
 void ValidateState::GetBaroValues(BAR barometer)
 {
     barometer.readPressure();
@@ -60,6 +83,13 @@ void ValidateState::GetBaroValues(BAR barometer)
     // altitudeSYS_ =;
 }
 
+/**
+ * @brief Updates all private variables in ValidateState for critical failure status.
+ *
+ * @param NEO Class object of GPS class
+ * @param barometer  Class object of BAR class
+ * @param sensor Class object of IMU class
+ */
 void ValidateState::UpdateSystemValues(GPS NEO, BAR barometer, IMU sensor)
 {
     GetGPSValues(NEO);
@@ -67,6 +97,10 @@ void ValidateState::UpdateSystemValues(GPS NEO, BAR barometer, IMU sensor)
     GetIMUValues(sensor);
 }
 
+/**
+ * @brief logs all read data from the available sensors.
+ *
+ */
 void ValidateState::LogData()
 {
     /*START logging*/
@@ -85,6 +119,10 @@ void ValidateState::LogData()
     // IMU Data
 }
 
+/**
+ * @brief Checks for critical failure for orientation
+ *
+ */
 void ValidateState::AxisControl()
 {
 
@@ -112,6 +150,10 @@ void ValidateState::AxisControl()
 */
 }
 
+/**
+ * @brief Checks if the drone is following the correct path
+ *
+ */
 void ValidateState::RouteControl()
 {
     if (state_ == 1)
@@ -137,6 +179,11 @@ void ValidateState::RouteControl()
       }
    */
 }
+
+/**
+ * @brief Checks if drone is flying too high.
+ *
+ */
 void ValidateState::HeightControl()
 {
     if (state_ == 1)
@@ -168,24 +215,35 @@ void ValidateState::landDrone()
     /*MAVLINK MESSAGE TO LAND*/
 }
 
-inline std::string ValidateState::getCurrentDateTime(std::string s)
+/**
+ * @brief Gets current date
+ *
+ * @param str string value
+ * @return std::string returns current date
+ */
+inline std::string ValidateState::getCurrentDateTime(std::string str)
 {
     time_t now = time(0);
     struct tm tstruct;
-    char buf[80];
+    char buffer[80];
     tstruct = *localtime(&now);
-    if (s == "now")
-        strftime(buf, sizeof(buf), "%Y-%m-%d %X", &tstruct);
-    else if (s == "date")
-        strftime(buf, sizeof(buf), "%Y-%m-%d", &tstruct);
-    return std::string(buf);
+    if (str == "now")
+        strftime(buffer, sizeof(buffer), "%Y-%m-%d %X", &tstruct);
+    else if (str == "date")
+        strftime(buffer, sizeof(buffer), "%Y-%m-%d", &tstruct);
+    return std::string(buffer);
 };
 
-inline void ValidateState::Logger(std::string logMsg)
+/**
+ * @brief Prints inserted string to log file.
+ *
+ * @param logMsg string value printed to log file
+ */
+inline void ValidateState::Logger(std::string logMessage)
 {
     std::string filePath = "Database/log_" + getCurrentDateTime("date") + ".txt";
     std::string now = getCurrentDateTime("now");
     std::ofstream ofs(filePath.c_str(), std::ios_base::out | std::ios_base::app);
-    ofs << now << '\t' << logMsg << '\n';
+    ofs << now << '\t' << logMessage << '\n';
     ofs.close();
 }

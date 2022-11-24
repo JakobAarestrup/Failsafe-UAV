@@ -1,4 +1,3 @@
-#include "RDS.hpp"
 
 RDS::RDS(ValidateState* state) : state_(nullptr)
 {

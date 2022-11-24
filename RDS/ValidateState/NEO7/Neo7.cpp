@@ -66,7 +66,7 @@ void GPS::readGPS() // reads GPS serial data
         if (serialDataAvail(serialPort_)) /* check for any data available on serial port */
         {
             GPS_Data_ = serialGetchar(serialPort_); /* receive character serially */
-            printf("%c", GPS_Data_);
+            // printf("%c", GPS_Data_);
 
             if (GPS_Data_ == '$') // check for start of NMEA message
             {
@@ -102,7 +102,7 @@ void GPS::readGPS() // reads GPS serial data
 
         if (GGA_Received == 1)
         {
-            printf("GGA:%s\n", buff);
+            printf("GPGGA:%s\n", buff);
             char *gps = buff;
             start_ptr = strchr(gps, ',');       // find start of latitude field
             end_ptr = strchr(++start_ptr, ','); // find end of field...
