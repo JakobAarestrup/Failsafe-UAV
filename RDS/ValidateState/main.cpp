@@ -23,7 +23,7 @@ int main()
 
   while (1)
   {
-    RDS.UpdateSystemValues(); // gets all values from sensors
+    RDS.UpdateSystemValues(G1); // gets all values from sensors
 
     RDS.LogData();       // Sends sensor data to log file
     RDS.AxisControl();   // Checks for Failure on the Axises
