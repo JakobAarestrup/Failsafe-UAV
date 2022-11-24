@@ -31,7 +31,7 @@ private:
    */
 
   float longitudeSYS_, latitudeSYS_;
-  char longPoleSYS_[1], latPoleSYS_[1];
+  char longPoleSYS_, latPoleSYS_;
   int SatellitesSYS_;
 
   /**
@@ -51,7 +51,7 @@ private:
    *
    */
   float longitudeRDS_, latitudeRDS_;
-  char longPoleRDS_[1], latPoleRDS_[1];
+  char longPoleRDS_, latPoleRDS_;
   int SatellitesRDS_;
 
   /**
