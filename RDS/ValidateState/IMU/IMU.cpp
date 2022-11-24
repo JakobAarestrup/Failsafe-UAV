@@ -220,7 +220,7 @@ void IMU::readMAG(int IMU)
     mx = (mx / MG_Sensitivity) * 100;
     my = (my / MG_Sensitivity) * 100;
     mz = (mz / MG_Sensitivity) * 100;
-
+    float A[3][3];
     /**
      * @brief hardcoded offsets. b = Hard-Iron distortion and A = Soft-Iron distortion.
      *
@@ -231,9 +231,9 @@ void IMU::readMAG(int IMU)
         by = 3.137438;
         bz = -5.371644;
 
-        float A[3][3] = {{1.002979, 0.039343, -0.014713},
-                         {0.039343, 1.019943, -0.006826},
-                         {-0.014713, -0.006826, 1.014517}};
+        A[3][3] = {{1.002979, 0.039343, -0.014713},
+                   {0.039343, 1.019943, -0.006826},
+                   {-0.014713, -0.006826, 1.014517}};
     }
     else if (IMU = 2) // TODO ny calibreringsdata
     {
@@ -241,9 +241,9 @@ void IMU::readMAG(int IMU)
         by = 3.137438;
         bz = -5.371644;
 
-        float A[3][3] = {{1.002979, 0.039343, -0.014713},
-                         {0.039343, 1.019943, -0.006826},
-                         {-0.014713, -0.006826, 1.014517}};
+        A[3][3] = {{1.002979, 0.039343, -0.014713},
+                   {0.039343, 1.019943, -0.006826},
+                   {-0.014713, -0.006826, 1.014517}};
     }
 
     // formel magdataCalibrated = A(magdata-b)
