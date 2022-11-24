@@ -184,6 +184,7 @@ void IMU::readGYRO(int IMU)
     gyroCalibX_ = gx - gx_drift; // Gyroscope X-angle in deg/s
     gyroCalibY_ = gy - gy_drift; // Gyroscope Y-angle in deg/s
     gyroCalibZ_ = gz - gz_drift; // Gyroscope Z-angle in deg/s
+    printf("Converted - XL_Roll: %lf, XL_pitch: %lf\n\n", XL_Roll_, XL_Pitch_);
     printf("gyroCalibX_: %f gyroCalibY_: %f gyroCalibZ_", gyroCalibX_, gyroCalibY_, gyroCalibZ_);
 }
 

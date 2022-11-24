@@ -184,7 +184,6 @@ void IMU::readGYRO(int IMU)
     gyroCalibX_ = gx - gx_drift; // Gyroscope X-angle in deg/s
     gyroCalibY_ = gy - gy_drift; // Gyroscope Y-angle in deg/s
     gyroCalibZ_ = gz - gz_drift; // Gyroscope Z-angle in deg/s
-    printf("gyroCalibX_: %f gyroCalibY_: %f gyroCalibZ_", gyroCalibX_, gyroCalibY_, gyroCalibZ_);
 }
 
 void IMU::readMAG(int IMU)
@@ -284,12 +283,12 @@ void IMU::ConvertMagData()
 
 void IMU::ComplementaryFilter()
 {
+    printf("XL_Roll_ %f XL_Pitch_%f", XL_Roll_, XL_Pitch_);
+    printf("YAW: %f ", MAG_Yaw_);
     /*Complementary Filter*/
     CompRoll_ = AA * (CompRoll_ + gyroCalibY_ * DT) + (1 - AA) * XL_Roll_;    // 97% Gyro 3% Accelerometer
     CompPitch_ = AA * (CompPitch_ + gyroCalibX_ * DT) + (1 - AA) * XL_Pitch_; // 97% Gyro 3% Accelerometer
     CompYaw_ = AA * (CompYaw_ + gyroCalibZ_ * DT) + (1 - AA) * MAG_Yaw_;      // 97% Gyro 3% Magnometer
-    printf("Converted - XL_Roll: %lf, XL_pitch: %lf\n\n", XL_Roll_, XL_Pitch_);
-    printf("magYaw: %f\n\n", MAG_Yaw_);
     printf("Roll_filtered: %f, Pitch filtered: %f, GyroZangle: %f\n", CompRoll_, CompPitch_, CompYaw_);
 }
 
