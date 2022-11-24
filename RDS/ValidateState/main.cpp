@@ -19,7 +19,7 @@ int main()
     IMU2.calibrateGyro();*/
 
   /*Logging initialized*/
-  fp = freopen("RDSLog.txt", "w", stdout);
+  // fp = freopen("RDSLog.txt", "w", stdout);
   int N = 0;
 
   while (1)
@@ -31,11 +31,12 @@ int main()
     RDS.RouteControl();  // Checks for Failure in the KML
     RDS.HeightControl(); // Checks for Failure for height
     N++;
+
     if (N > 5)
     {
       break;
     }
   }
-  fclose(fp); // close logging
+  // fclose(fp); // close logging
   return 0;
 }

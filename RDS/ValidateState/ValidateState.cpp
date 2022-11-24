@@ -67,12 +67,18 @@ void ValidateState::LogData()
 {
     /*START logging*/
     /*RDS sensors*/
-    printf("Longitude: %f %c Latitude: %f %c Satellites: %d Altitude: %f \n", longitudeRDS_, longPoleRDS_, latitudeRDS_, latPoleRDS_, SatellitesRDS_, altitudeRDS_); // GPS Data + baro
-    printf("Roll: %f%c Pitch: %f%c  Yaw: %f%c \n", RollRDS_, 176, PitchRDS_, 176, YawRDS_, 176);                                                                     // IMU Data
+    std::string GPSBaro = "Longitude: " + std::to_string(longitudeRDS_) + std::to_string(longPoleRDS_) + "Latitude: " + std::to_string(latitudeRDS_) + std::to_string(latPoleRDS_) + "Satellites: " + std::to_string(SatellitesRDS_) + "Altitude: " + std::to_string(AltitudeRDS_);
+    Logger(GPSBaro);
+    std::string IMU = "Roll: " + std::to_string(RollRDS_) + "Pitch: " + std::to_string(PitchRDS_) "Yaw: " + std::to_string(YawRDS_);
+    Logger(IMU);
+    /*  Logger("Longitude: %f %c Latitude: %f %c Satellites: %d Altitude: %f \n", longitudeRDS_, longPoleRDS_, latitudeRDS_, latPoleRDS_, SatellitesRDS_, altitudeRDS_); // GPS Data + baro
+     printf("Roll: %f%c Pitch: %f%c  Yaw: %f%c \n", RollRDS_, 176, PitchRDS_, 176, YawRDS_, 176);  */
+    // IMU Data
 
-    /*Drone sensors*/
+    /*
     printf("Longitude: %f %c Latitude: %f %c Satellites: %d Altitude: %f \n", longitudeSYS_, longPoleSYS_, latitudeSYS_, latPoleSYS_, SatellitesSYS_, altitudeSYS_); // GPS Data + baro
-    printf("Roll: %f%c Pitch: %f%c  Yaw: %f%c \n", RollSYS_, 176, PitchSYS_, 176, YawSYS_, 176);                                                                     // IMU Data
+    printf("Roll: %f%c Pitch: %f%c  Yaw: %f%c \n", RollSYS_, 176, PitchSYS_, 176, YawSYS_, 176);  */
+    // IMU Data
 }
 
 void ValidateState::AxisControl()
@@ -158,7 +164,7 @@ void ValidateState::landDrone()
     /*MAVLINK MESSAGE TO LAND*/
 }
 
-inline string ValidateState::getCurrentDateTime(string s)
+inline std::string ValidateState::getCurrentDateTime(std::string s)
 {
     time_t now = time(0);
     struct tm tstruct;
@@ -168,14 +174,14 @@ inline string ValidateState::getCurrentDateTime(string s)
         strftime(buf, sizeof(buf), "%Y-%m-%d %X", &tstruct);
     else if (s == "date")
         strftime(buf, sizeof(buf), "%Y-%m-%d", &tstruct);
-    return string(buf);
+    return std::string(buf);
 };
 
-inline void ValidateState::Logger(string logMsg)
+inline void ValidateState::Logger(std::string logMsg)
 {
-    string filePath = "Database/log_" + getCurrentDateTime("date") + ".txt";
-    string now = getCurrentDateTime("now");
-    ofstream ofs(filePath.c_str(), std::ios_base::out | std::ios_base::app);
+    std::string filePath = "Database/log_" + getCurrentDateTime("date") + ".txt";
+    std::string now = getCurrentDateTime("now");
+    std::ofstream ofs(filePath.c_str(), std::ios_base::out | std::ios_base::app);
     ofs << now << '\t' << logMsg << '\n';
     ofs.close();
 }

@@ -18,6 +18,7 @@ int GPS::openUART(int fd) // open UART serial port
     if ((fd = serialOpen("/dev/ttyS0", 9600)) < 0) // open serial port with set baudrate
     {
         fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
+        
         return 1;
     }
 

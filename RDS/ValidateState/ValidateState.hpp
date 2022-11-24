@@ -1,6 +1,9 @@
 #pragma once
 #include <iostream>
 #include "NEO7/Neo7.hpp"
+#include <string.h>
+#include <fstream>
+#include <sstream>
 class ValidateState
 {
 
@@ -18,8 +21,8 @@ public:
   void RouteControl();
   void HeightControl();
   void landDrone();
-  inline void Logger(string logMsg);
-  inline string getCurrentDateTime(string s);
+  inline void Logger(std::string logMsg);
+  inline std::string getCurrentDateTime(std::string s);
 
 private:
   /**
