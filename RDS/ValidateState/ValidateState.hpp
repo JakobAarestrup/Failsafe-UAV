@@ -6,11 +6,11 @@ class ValidateState
 public:
   ValidateState();
   ~ValidateState();
-  void GetGPSValues();
+  void GetGPSValues(GPS NEO);
   void GetIMUValues();
   void GetBaroValues();
 
-  void UpdateSystemValues();
+  void UpdateSystemValues(GPS NEO);
   void LogData();
 
   void AxisControl();

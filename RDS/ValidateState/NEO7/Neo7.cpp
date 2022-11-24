@@ -35,8 +35,6 @@ void GPS::configAll()
     /* OPEN UART */
     serialPort_ = openUART(serialPort_);
 
-    printf("Serial port is open! %d \n", serialPort_);
-
     /* CONFIGURATION */
 
     /*NMEA Config*/

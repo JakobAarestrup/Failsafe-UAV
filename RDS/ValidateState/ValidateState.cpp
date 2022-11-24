@@ -9,18 +9,16 @@ ValidateState::~ValidateState()
 {
 }
 
-void ValidateState::GetGPSValues()
+void ValidateState::GetGPSValues(GPS NEO)
 {
     // maybe opret class objekt
-    /*GPS::readGPS(); // reads NMEA message
-      GPS::convertData(); //converts to decimal degrees format
-      longitudeRDS_ = GPS::getLongitude();    // returns longitude
-      latitudeRDS_ = GPS::getLatitude();      // returns latitude
-      longPoleRDS_ = GPS::getNorthSouth();     // returns either a north pole or south pole
-      latPoleRDS_ = GPS::getEastWest();       // returns either a East pole or West pole
-      SatellitesRDS_ = GPS::getSV()
-
-      */
+    NEO.readGPS();                      // reads NMEA message
+    NEO.convertData();                  // converts to decimal degrees format
+    longitudeRDS_ = NEO.getLongitude(); // returns longitude
+    latitudeRDS_ = NEO.getLatitude();   // returns latitude
+    longPoleRDS_ = NEO.getNorthSouth(); // returns either a north pole or south pole
+    latPoleRDS_ = NEO.getEastWest();    // returns either a East pole or West pole
+    SatellitesRDS_ = NEO.getSV()
 
     /*MAVLINK GET GPS DATA FROM DRONE*/
 
@@ -58,9 +56,9 @@ void ValidateState::GetBaroValues()
     // altitudeSYS_ =;
 }
 
-void ValidateState::UpdateSystemValues()
+void ValidateState::UpdateSystemValues(GPS NEO)
 {
-    GetGPSValues();
+    GetGPSValues(NEO);
     GetIMUValues();
     GetBaroValues();
 }
