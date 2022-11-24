@@ -18,6 +18,8 @@ public:
   void RouteControl();
   void HeightControl();
   void landDrone();
+  inline void Logger(string logMsg);
+  inline string getCurrentDateTime(string s);
 
 private:
   /**
