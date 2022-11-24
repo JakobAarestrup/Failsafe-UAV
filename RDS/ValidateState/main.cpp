@@ -6,9 +6,10 @@ int main()
 {
   ValidateState RDS; // System
   FILE *fp;
+  GPS G1;
 
   /*Configuration of Sensors*/
-  GPS::configAll(); // configs the GPS
+  G1.configAll(); // configs the GPS
   // BARO::configAll(); // configs the BARO
   // I1.initializeI2C(); // IMU1
   // I2.initializeI2C(); // IMU2
