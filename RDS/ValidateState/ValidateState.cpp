@@ -30,19 +30,19 @@ void ValidateState::GetGPSValues(GPS NEO)
     */
 }
 
-void ValidateState::GetIMUValues() // void ValidateState::GetIMUValues(IMU Sensor)
+void ValidateState::GetIMUValues(IMU Sensor) // void ValidateState::GetIMUValues(IMU Sensor)
 {
-    /*
+
     Sensor.readIMU();
 
     Sensor.ConvertACCData();
     Sensor.ConvertMagData();
 
-    IMU1.ComplementaryFilter();
+    Sensor.ComplementaryFilter();
     RollRDS_ = Sensor.getRoll();
     PitchRDS_ = Sensor.getPitch();
     YawRDS_ = Sensor.getYaw();
-    */
+
     /*MAVLINK GET IMU DATA FROM DRONE*/
     // RollSYS_ =;
     // PitchSYS_ =;
@@ -56,10 +56,10 @@ void ValidateState::GetBaroValues()
     // altitudeSYS_ =;
 }
 
-void ValidateState::UpdateSystemValues(GPS NEO)
+void ValidateState::UpdateSystemValues(GPS NEO, IMU Sensor)
 {
     GetGPSValues(NEO);
-    GetIMUValues();
+    GetIMUValues(Sensor);
     GetBaroValues();
 }
 

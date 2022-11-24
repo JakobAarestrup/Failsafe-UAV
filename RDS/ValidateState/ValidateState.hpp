@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "NEO7/Neo7.hpp"
+#include "IMU/IMU.hpp"
 #include <string.h>
 #include <fstream>
 #include <sstream>
@@ -11,10 +12,10 @@ public:
   ValidateState();
   ~ValidateState();
   void GetGPSValues(GPS NEO);
-  void GetIMUValues();
+  void GetIMUValues(IMU Sensor);
   void GetBaroValues();
 
-  void UpdateSystemValues(GPS NEO);
+  void UpdateSystemValues(GPS NEO, IMU Sensor);
   void LogData();
 
   void AxisControl();
