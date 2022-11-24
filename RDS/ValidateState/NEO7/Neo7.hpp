@@ -30,8 +30,8 @@ private:     // Coordinates from the GPS
     int SV_; // amount of satellites
     double longitude_;
     double latitude_;
-    char EW_[1];
-    char NS_[2];
+    char EW_[10];
+    char NS_[10];
     int serialPort_;
     char GPS_Data_;
 };
