@@ -2,48 +2,49 @@
 #include "I2C.hpp"
 
 /*Math constants*/
-#define p_0 101325 // Pressure at sea level
+#define p_0 101325     // Pressure at sea level
 #define mbar_to_Pa 100 // Conversion rate
-#define T_s 288.15 // Temperature at sea level in Kelvin
-#define R 287.052 // Specific gas constant in J/K*kg
-#define T_G 0.0065 // Temperature gradient in K/m
-#define g 9.807 // Gravitational constant in m/s^2
+#define T_s 288.15     // Temperature at sea level in Kelvin
+#define R 287.052      // Specific gas constant in J/K*kg
+#define T_G 0.0065     // Temperature gradient in K/m
+#define g 9.807        // Gravitational constant in m/s^2
 
 I2C B1;
 
 // Constructor
 BAR::BAR()
-{}
+{
+}
 
 // Destructor
-BAR::~BAR() 
+BAR::~BAR()
 {
     /*delete [] height_AGL_, height_AMSL_, initial_pressure_, initial_AMSL_, pressure_; // Delete private variables*/
- }
+}
 
-//Calibrates the barometer data
-void BAR::initialAMSL() 
+// Calibrates the barometer data
+void BAR::initialAMSL()
 {
-    initial_AMSL_ = (T_s/T_G)*(1-pow((pres_/p_0),T_G*(R/g))); //Using barometric formula.
+    initial_AMSL_ = (T_s / T_G) * (1 - pow((pres_ / p_0), T_G * (R / g))); // Using barometric formula.
 }
 
 // Converts the bar data into height
-void BAR::convertToAGL() 
-{    
-    height_AMSL_ = (T_s/T_G)*(1-pow((pres_/p_0),T_G*(R/g))); // Using barometric formula.
-    height_AGL_ = height_AMSL_ - initial_AMSL_; // Subtract difference in height.
+void BAR::convertToAGL()
+{
+    height_AMSL_ = (T_s / T_G) * (1 - pow((pres_ / p_0), T_G * (R / g))); // Using barometric formula.
+    height_AGL_ = height_AMSL_ - initial_AMSL_;                           // Subtract difference in height.
 }
 
 // Returns height above ground level
-float BAR::getHeight() 
-{    
-    if(calibration_ <= 30)
+float BAR::getHeight()
+{
+    if (calibration_ <= 30)
     {
         initialAMSL();
         calibration_++;
     }
-        convertToAGL();
-        return height_AGL_; // Return height
+    convertToAGL();
+    return height_AGL_; // Return height
 }
 
 int BAR::getCalibration()
@@ -52,7 +53,7 @@ int BAR::getCalibration()
 }
 
 // Power on and prepare for general usage. This method reads coefficients stored in PROM.
-void BAR::calibrateBAR() 
+void BAR::calibrateBAR()
 {
     // Reading 6 calibration data values
     C1_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C1, 2, 2);
@@ -66,7 +67,7 @@ void BAR::calibrateBAR()
 }
 
 // Read pressure value
-void BAR::readPressure() 
+void BAR::readPressure()
 {
     // Initiate the process of pressure measurement
     B1.writeI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_D1_OSR_4096, 0, 0);
@@ -77,18 +78,18 @@ void BAR::readPressure()
 }
 
 // Read temperature value
-void BAR::readTemperature() 
+void BAR::readTemperature()
 {
     // Initiate the process of temperature measurement
     B1.writeI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_D2_OSR_4096, 0, 0);
     usleep(10000); // Waiting for temperature data ready
 
     // Read temperature value
-	D2_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3, 3);
+    D2_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3, 3);
 }
 
 // Calculate temperature and pressure calculations and perform compensation. More info about these calculations is available in the datasheet.
-void BAR::calculatePressureAndTemperature() 
+void BAR::calculatePressureAndTemperature()
 {
     float dT = D2_ - C5_ * pow(2, 8);
     temp_ = (2000 + ((dT * C6_) / pow(2, 23)));
@@ -120,14 +121,14 @@ void BAR::calculatePressureAndTemperature()
     SENS = SENS - SENS2;
 
     // Final calculations
-    pres_ = (((D1_ * SENS) / pow(2, 21) - OFF) / pow(2, 15) / 100)*mbar_to_Pa;
+    pres_ = (((D1_ * SENS) / pow(2, 21) - OFF) / pow(2, 15) / 100) * mbar_to_Pa;
     temp_ = temp_ / 100;
 }
 
 /** Perform pressure and temperature reading and calculation at once.
  *  Contains sleeps, better perform operations separately.
  */
-void BAR::update() 
+void BAR::update()
 {
     readPressure();
     readTemperature();
