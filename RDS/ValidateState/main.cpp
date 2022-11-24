@@ -8,7 +8,7 @@ int main()
   FILE *fp;
 
   /*Configuration of Sensors*/
-  // GPS::configAll(); // configs the GPS
+  GPS::configAll(); // configs the GPS
   // BARO::configAll(); // configs the BARO
   // I1.initializeI2C(); // IMU1
   // I2.initializeI2C(); // IMU2
