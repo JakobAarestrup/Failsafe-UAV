@@ -33,7 +33,7 @@ void ValidateState::GetGPSValues(GPS NEO)
 void ValidateState::GetIMUValues(IMU Sensor) // void ValidateState::GetIMUValues(IMU Sensor)
 {
 
-    Sensor.readIMU();
+    Sensor.readIMU(2);
 
     Sensor.ConvertACCData();
     Sensor.ConvertMagData();

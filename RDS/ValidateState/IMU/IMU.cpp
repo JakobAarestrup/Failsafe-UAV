@@ -16,6 +16,8 @@
 #define MG_Sensitivity 6842
 #define gyroDrift 0.07
 
+I2C I1;
+
 // Constructor
 IMU::IMU()
 {
@@ -42,15 +44,15 @@ void IMU::calibrateGyro(int IMU)
 
         if (IMU == 1)
         {
-            gx_TOTAL += I2C::readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_X_L_G, 1, 1);
-            gy_TOTAL += I2C::readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_G, 1, 1);
-            gz_TOTAL += I2C::readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_G, 1, 1);
+            gx_TOTAL += I1.readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_X_L_G, 1, 1);
+            gy_TOTAL += I1.readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_G, 1, 1);
+            gz_TOTAL += I1.readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_G, 1, 1);
         }
         else if (IMU == 2)
         {
-            gx_TOTAL += I2C::readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_G, 1, 1);
-            gy_TOTAL += I2C::readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_G, 1, 1);
-            gz_TOTAL += I2C::readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_G, 1, 1);
+            gx_TOTAL += I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_G, 1, 1);
+            gy_TOTAL += I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_G, 1, 1);
+            gz_TOTAL += I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_G, 1, 1);
         }
         else
         {
@@ -90,15 +92,15 @@ void IMU::readACC(int IMU)
      */
     if (IMU == 1)
     {
-        ax = I2C::readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_X_L_A, 1, 1);
-        ay = I2C::readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_A, 1, 1);
-        az = I2C::readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_A, 1, 1);
+        ax = I1.readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_X_L_A, 1, 1);
+        ay = I1.readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_A, 1, 1);
+        az = I1.readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_A, 1, 1);
     }
     else if (IMU == 2)
     {
-        ax = I2C::readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_A, 1, 1);
-        ay = I2C::readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_A, 1, 1);
-        az = I2C::readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_A, 1, 1);
+        ax = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_A, 1, 1);
+        ay = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_A, 1, 1);
+        az = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_A, 1, 1);
     }
     else
     {
@@ -133,15 +135,15 @@ void IMU::readGYRO(int IMU)
      */
     if (IMU == 1)
     {
-        gx = I2C::readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_X_L_G, 1, 1);
-        gy = I2C::readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_G, 1, 1);
-        gz = I2C::readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_G, 1, 1);
+        gx = I1.readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_X_L_G, 1, 1);
+        gy = I1.readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Y_L_G, 1, 1);
+        gz = I1.readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_Z_L_G, 1, 1);
     }
     else if (IMU == 2)
     {
-        gx = I2C::readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_G, 1, 1);
-        gy = I2C::readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_G, 1, 1);
-        gz = I2C::readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_G, 1, 1);
+        gx = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_X_L_G, 1, 1);
+        gy = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Y_L_G, 1, 1);
+        gz = I1.readI2C(LSM6DSOX_ADDR2, LSM6DSOX_OUT_Z_L_G, 1, 1);
     }
     else
     {
@@ -195,15 +197,15 @@ void IMU::readMAG(int IMU)
      */
     if (IMU == 1)
     {
-        mx = I2C::readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_X_L, 1, 1);
-        my = I2C::readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Y_L, 1, 1);
-        mz = I2C::readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L, 1, 1);
+        mx = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_X_L, 1, 1);
+        my = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Y_L, 1, 1);
+        mz = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_Z_L, 1, 1);
     }
     else if (IMU == 2)
     {
-        mx = I2C::readI2C(LIS3MDL_ADDR2, LIS3MDL_OUT_X_L, 1, 1);
-        my = I2C::readI2C(LIS3MDL_ADDR2, LIS3MDL_OUT_Y_L, 1, 1);
-        mz = I2C::readI2C(LIS3MDL_ADDR2, LIS3MDL_OUT_Z_L, 1, 1);
+        mx = I1.readI2C(LIS3MDL_ADDR2, LIS3MDL_OUT_X_L, 1, 1);
+        my = I1.readI2C(LIS3MDL_ADDR2, LIS3MDL_OUT_Y_L, 1, 1);
+        mz = I1.readI2C(LIS3MDL_ADDR2, LIS3MDL_OUT_Z_L, 1, 1);
     }
     else
     {
