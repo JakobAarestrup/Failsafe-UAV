@@ -266,7 +266,6 @@ void IMU::ConvertACCData()
    gyroZangle_ = PI*(rate_gyr_z_ / (DT*1000));  */
     XL_Roll_ = atan2(accCalibX_, accCalibY_) * 180 / PI;
     XL_Pitch_ = atan2(-accCalibX_, sqrt(accCalibY_ * accCalibY_ + accCalibZ_ * accCalibZ_)) * -180 / PI;
-    printf("Converted - XL_Roll: %lf, XL_pitch: %lf\n\n", XL_Roll_, XL_Pitch_);
 }
 
 void IMU::ConvertMagData()
@@ -286,7 +285,7 @@ void IMU::ComplementaryFilter()
     CompRoll_ = AA * (CompRoll_ + gyroCalibY_ * DT) + (1 - AA) * XL_Roll_;    // 97% Gyro 3% Accelerometer
     CompPitch_ = AA * (CompPitch_ + gyroCalibX_ * DT) + (1 - AA) * XL_Pitch_; // 97% Gyro 3% Accelerometer
     CompYaw_ = AA * (CompYaw_ + gyroCalibZ_ * DT) + (1 - AA) * MAG_Yaw_;      // 97% Gyro 3% Magnometer
-                                                                              // printf("GyroXangle: %f, GyroYangle: %f, GyroZangle: %f\n", gyroXangle_, gyroYangle_, gyroZangle_);
+    printf("Converted - XL_Roll: %lf, XL_pitch: %lf\n\n", XL_Roll_, XL_Pitch_);
     printf("Roll_filtered: %f, Pitch filtered: %f, GyroZangle: %f\n", CompRoll_, CompPitch_, CompYaw_);
 }
 
