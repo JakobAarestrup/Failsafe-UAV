@@ -191,9 +191,6 @@ void IMU::readMAG(int IMU)
 {
     float mx, my, mz;
     float bx, by, bz;
-    float A[3][3] = {{0, 0, 0},
-                     {0, 0, 0},
-                     {0, 0, 0}};
 
     /**
      * @brief handler for IMU sensor
@@ -229,7 +226,7 @@ void IMU::readMAG(int IMU)
      * @brief hardcoded offsets. b = Hard-Iron distortion and A = Soft-Iron distortion.
      *
      */
-    if (IMU = 1)
+    if (IMU == 1)
     {
         bx = 7.977849;
         by = 3.137438;
@@ -239,7 +236,7 @@ void IMU::readMAG(int IMU)
                          {0.039343, 1.019943, -0.006826},
                          {-0.014713, -0.006826, 1.014517}};
     }
-    else if (IMU = 2) // TODO ny calibreringsdata
+    else if (IMU == 2) // TODO ny calibreringsdata
     {
         bx = 7.977849;
         by = 3.137438;
