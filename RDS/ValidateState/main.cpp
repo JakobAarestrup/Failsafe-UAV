@@ -49,7 +49,6 @@ int main()
    * @brief Used variables
    *
    */
-  int N = 0;
   int startofloop;
 
   /**
@@ -74,10 +73,10 @@ int main()
 
     printf("Loop Time %d\n", mymillis() - startofloop);
 
-    if (N > 5)
-    {
-      break;
-    }
+    /*   if (N > 5)
+      {
+        break;
+      } */
   }
   return 0;
 }

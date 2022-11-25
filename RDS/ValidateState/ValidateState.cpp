@@ -52,11 +52,10 @@ void ValidateState::GetIMUValues(IMU sensor) // void ValidateState::GetIMUValues
 {
 
     sensor.readIMU(2);
-
     sensor.ConvertACCData();
     sensor.ConvertMagData();
-
     sensor.ComplementaryFilter();
+
     RollRDS_ = sensor.getRoll();
     PitchRDS_ = sensor.getPitch();
     YawRDS_ = sensor.getYaw();
@@ -92,6 +91,7 @@ void ValidateState::GetBaroValues(BAR barometer)
  */
 void ValidateState::UpdateSystemValues(GPS NEO, BAR barometer, IMU sensor)
 {
+    printf("Hello there updating values...\n");
     GetGPSValues(NEO);
     GetBaroValues(barometer);
     GetIMUValues(sensor);
