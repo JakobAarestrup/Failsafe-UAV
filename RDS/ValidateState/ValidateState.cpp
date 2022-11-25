@@ -6,7 +6,7 @@
  */
 ValidateState::ValidateState()
 {
-    state_ = 0; // Normal State
+    // state_ = 0; // Normal State
 }
 
 /**
@@ -91,9 +91,9 @@ void ValidateState::GetBaroValues(BAR barometer)
 void ValidateState::UpdateSystemValues(GPS NEO, BAR barometer, IMU sensor)
 {
     // printf("Hello there updating values...\n");
-    GetGPSValues(NEO);
+    // GetGPSValues(NEO);
     GetBaroValues(barometer);
-    GetIMUValues(sensor);
+    // GetIMUValues(sensor);
 }
 
 /**
