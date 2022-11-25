@@ -1,5 +1,4 @@
 #include "BAR.hpp"
-#include "I2C.hpp"
 
 /*Math constants*/
 #define p_0 101325     // Pressure at sea level
@@ -69,6 +68,7 @@ void BAR::calibrateBAR()
             update();
             initialAMSL();
             usleep(1000000);
+            printf("Calibrating baro...%d\n", i);
         }
     }
 }

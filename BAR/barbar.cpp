@@ -8,9 +8,12 @@ int main()
 {
     BAR barometer;
     barometer.calibrateBAR();
+    int height;
+
     while (1)
     {
-        barometer.getHeight();
+        height = barometer.getHeight();
+        printf("%d\n", height);
         usleep(100000);
     }
 
