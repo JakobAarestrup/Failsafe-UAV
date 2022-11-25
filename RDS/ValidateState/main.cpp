@@ -29,7 +29,7 @@ int main()
   IMU IMU2;
   // IMU IMU2;
   BAR B1;
-
+  B1.calibrateBAR();
   /**
    * @brief  Configuration of Sensors
    *
@@ -41,7 +41,6 @@ int main()
    * @brief Calibration..
    *
    */
-  B1.calibrateBAR();
   IMU2.calibrateGyro(2);
   // IMU2.calibrateGyro();
 

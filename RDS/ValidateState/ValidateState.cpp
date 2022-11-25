@@ -24,7 +24,6 @@ ValidateState::~ValidateState()
  */
 void ValidateState::GetGPSValues(GPS NEO)
 {
-    // maybe opret class objekt
     NEO.readGPS();                      // reads NMEA message
     NEO.convertData();                  // converts to decimal degrees format
     longitudeRDS_ = NEO.getLongitude(); // returns longitude
@@ -186,27 +185,27 @@ void ValidateState::RouteControl()
  */
 void ValidateState::HeightControl()
 {
-    if (state_ == 1)
-        printf("Critical State\n");
-    else
-        printf("Normal State \n");
+    /*     if (state_ == 1)
+            printf("Critical State\n");
+        else
+            printf("Normal State \n");
 
-    if (altitudeSYS_ > 300 | altitudeRDS_ > 300)
-    {
-        landDrone();
-    }
+        if (altitudeSYS_ > 300 | altitudeRDS_ > 300)
+        {
+            landDrone();
+        }
 
-    else if (altitudeSYS_ > 200 | altitudeRDS_ > 200)
-    {
-        state_ = 1;
-        printf("Closing in on ERROR!!! Changing state... to Critical\n");
-    }
+        else if (altitudeSYS_ > 200 | altitudeRDS_ > 200)
+        {
+            state_ = 1;
+            printf("Closing in on ERROR!!! Changing state... to Critical\n");
+        }
 
-    else if (altitudeSYS_ < 200 & state_ == 1 | altitudeRDS_ < 200 & state_ == 1) // In Critical State and under 200 m
-    {
-        state_ = 0;
-        printf("Changing state... to Normal\n");
-    }
+        else if (altitudeSYS_ < 200 & state_ == 1 | altitudeRDS_ < 200 & state_ == 1) // In Critical State and under 200 m
+        {
+            state_ = 0;
+            printf("Changing state... to Normal\n");
+        } */
 }
 
 void ValidateState::landDrone()
