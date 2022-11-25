@@ -18,7 +18,7 @@ int main()
         barometer.readTemperature();
         barometer.calculatePressureAndTemperature();
 
-        barometer.getCalibration();
+        // barometer.getCalibration();
         /*    if (calibration > 30)
            {
            if (height < 0)
@@ -29,14 +29,12 @@ int main()
         printf("%f\n", height);
         usleep(100000);
         // sleep(1);
+        /*    else
+           {
+               barometer.getHeight();
+               printf("Calibrating barometer..\n");
+               sleep(1);
+           } */
     }
-    /*    else
-       {
-           barometer.getHeight();
-           printf("Calibrating barometer..\n");
-           sleep(1);
-       } */
-}
-
-return 0;
+    return 0;
 }
