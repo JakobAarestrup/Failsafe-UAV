@@ -35,39 +35,39 @@ private:
 
   float longitudeSYS_, latitudeSYS_;
   char longPoleSYS_[1], latPoleSYS_[1];
-  int SatellitesSYS_;
+  int SatellitesSYS_ = 0;
 
   /**
    * @brief Baro Values
    *
    */
-  float altitudeSYS_;
+  float altitudeSYS_ = 0;
 
   /**
    * @brief IMU Values
    *
    */
-  float RollSYS_, PitchSYS_, YawSYS_;
+  float RollSYS_ = 0, PitchSYS_ = 0, YawSYS_ = 0;
 
   /**
    * @brief GPS Values
    *
    */
-  float longitudeRDS_, latitudeRDS_;
-  char longPoleRDS_[1], latPoleRDS_[1];
-  int SatellitesRDS_;
+  float longitudeRDS_ = 0, latitudeRDS_ = 0;
+  char longPoleRDS_[1] = 0, latPoleRDS_[1] = 0;
+  int SatellitesRDS_ = 0;
 
   /**
    * @brief Baro Values
    *
    */
-  float altitudeRDS_;
+  float altitudeRDS_ = 0;
 
   /**
    * @brief IMU Values
    *
    */
-  float RollRDS_, PitchRDS_, YawRDS_;
+  float RollRDS_ = 0, PitchRDS_ = 0, YawRDS_ = 0;
 
-  int state_;
+  int state_ = 0;
 };
