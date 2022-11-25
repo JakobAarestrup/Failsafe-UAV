@@ -7,7 +7,7 @@
 int main()
 {
     BAR barometer;
-    int calibration;
+
     while (1)
     {
         barometer.calibrateBAR();

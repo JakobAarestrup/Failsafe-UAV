@@ -1,3 +1,4 @@
+#pragma once
 #include <stdint.h>
 #include "MS5611.hpp"
 #include <math.h>
