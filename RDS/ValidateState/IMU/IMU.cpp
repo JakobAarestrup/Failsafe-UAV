@@ -9,7 +9,7 @@
 // Definitions
 #define PI 3.14159265358979323846
 #define RAD_TO_DEG 57.29578
-#define DT 0.02 // [s/loop] loop period. 20ms
+#define DT 0.05 // [s/loop] loop period. 50ms
 #define AA 0.97 // complementary filter constant
 #define XL_Sensitivity 0.061
 #define G_Sensitivity 70

@@ -103,7 +103,7 @@ void GPS::readGPS() // reads GPS serial data
 
         if (GGA_Received == 1)
         {
-            printf("GPGGA:%s\n", buff);
+            // printf("GPGGA:%s\n", buff);
             char *gps = buff;
             start_ptr = strchr(gps, ',');       // find start of latitude field
             end_ptr = strchr(++start_ptr, ','); // find end of field...
@@ -135,7 +135,7 @@ void GPS::readGPS() // reads GPS serial data
             *end_ptr = '\0';                    // and zero terminate
             SV_ = atoi(start_ptr);              // Convert char to int & store in variable
 
-            printf("latitude: %f %s longitude: %f %s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
+            // printf("latitude: %f %s longitude: %f %s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
             break;
         }
     }

@@ -65,7 +65,7 @@ int main()
     RDS.HeightControl(); // Checks for Failure for height
     // N++;
 
-    while (mymillis() - startofloop < 20)
+    while (mymillis() - startofloop < 50)
     {
       usleep(100);
     }
