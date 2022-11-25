@@ -1,4 +1,4 @@
-//#include "I2C.hpp"
+#include "I2C.hpp"
 #include "BAR.hpp"
 #include "MS5611.hpp"
 #include <unistd.h>
