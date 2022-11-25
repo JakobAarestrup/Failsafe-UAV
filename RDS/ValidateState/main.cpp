@@ -59,7 +59,7 @@ int main()
   while (1)
   {
     startofloop = mymillis();
-    RDS.UpdateSystemValues(G1, IMU2); // gets all values from sensors
+    RDS.UpdateSystemValues(G1, IMU2, B1); // gets all values from sensors
 
     RDS.LogData();       // Sends sensor data to log file
     RDS.AxisControl();   // Checks for Failure on the Axises
