@@ -65,12 +65,12 @@ int main()
     RDS.HeightControl(); // Checks for Failure for height
     // N++;
 
-    while (mymillis() - startofloop < 500)
-    {
-      // usleep(100);
-    }
+    /*  while (mymillis() - startofloop < 20)
+     {
+       // usleep(100);
+     }
 
-    printf("Loop Time %d\n", mymillis() - startofloop);
+     printf("Loop Time %d\n", mymillis() - startofloop); */
 
     /*   if (N > 5)
       {

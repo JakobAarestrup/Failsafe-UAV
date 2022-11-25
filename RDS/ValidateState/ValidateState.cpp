@@ -125,10 +125,10 @@ void ValidateState::LogData()
 void ValidateState::AxisControl()
 {
 
-    if (state_ == 1)
-        printf("Critical State\n");
-    else
-        printf("Normal State \n");
+    /*  if (state_ == 1)
+         printf("Critical State\n");
+     else
+         printf("Normal State \n"); */
 
     /*   if(altitudeSYS_ > 300 | altitudeRDS_ > 300)
   {
@@ -155,10 +155,10 @@ void ValidateState::AxisControl()
  */
 void ValidateState::RouteControl()
 {
-    if (state_ == 1)
+    /* if (state_ == 1)
         printf("Critical State\n");
     else
-        printf("Normal State \n");
+        printf("Normal State \n"); */
 
     /*   if(altitudeSYS_ > 300 | altitudeRDS_ > 300)
       {
