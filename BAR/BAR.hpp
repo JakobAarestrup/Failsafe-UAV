@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include "MS5611.hpp"
 #include <math.h>
+#include "I2C.hpp"
 #include "I2Cdev.h"
 #include <unistd.h>
 #include <string>
