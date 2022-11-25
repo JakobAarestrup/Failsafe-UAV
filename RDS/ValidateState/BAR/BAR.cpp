@@ -61,7 +61,7 @@ void BAR::calibrateBAR()
     C4_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C4, 2, 2);
     C5_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C5, 2, 2);
     C6_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C6, 2, 2);
-
+    printf("SUP");
     update();
 }
 
