@@ -12,6 +12,7 @@ int main()
 
     while (1)
     {
+        update();
         height = barometer.getHeight();
         printf("%f\n", height);
         usleep(100000);
