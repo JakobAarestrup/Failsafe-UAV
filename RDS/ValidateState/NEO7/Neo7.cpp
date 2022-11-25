@@ -55,6 +55,7 @@ void GPS::configAll()
 
 void GPS::readGPS() // reads GPS serial data
 {
+
     /*VARIABLES*/
     char buff[100], GGA_Check[3];
     unsigned char GGA_Flag = 0;
@@ -66,7 +67,7 @@ void GPS::readGPS() // reads GPS serial data
         if (serialDataAvail(serialPort_)) /* check for any data available on serial port */
         {
             GPS_Data_ = serialGetchar(serialPort_); /* receive character serially */
-            printf("%c", GPS_Data_);
+            // printf("%c", GPS_Data_);
 
             if (GPS_Data_ == '$') // check for start of NMEA message
             {
