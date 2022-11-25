@@ -1,23 +1,23 @@
+#pragma once
 class IMU
 {
 public:
-    IMU(); // Constructor
+    IMU();  // Constructor
     ~IMU(); // Destructor
     void calibrateGyro(int IMU);
-    void readIMU(int IMU); 
+    void readIMU(int IMU);
     void readACC(int IMU);
     void readGYRO(int IMU);
     void readMAG(int IMU);
     void ConvertACCData();
     void ConvertMagData();
-    void ComplementaryFilter();   
+    void ComplementaryFilter();
 
     float getRoll();
     float getPitch();
     float getYaw();
-    
+
 private:
-    
     float accCalibX_;
     float accCalibY_;
     float accCalibZ_;
@@ -33,12 +33,11 @@ private:
     float magCalibX_;
     float magCalibY_;
 
-    float XL_Roll_ = 0.0; // Accelerometer X-axis
+    float XL_Roll_ = 0.0;  // Accelerometer X-axis
     float XL_Pitch_ = 0.0; // Accelerometer Y-axis
     float MAG_Yaw_;
 
     float CompRoll_;
     float CompPitch_;
     float CompYaw_;
-    
 };
