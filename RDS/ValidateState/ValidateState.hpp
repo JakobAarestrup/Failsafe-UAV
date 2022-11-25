@@ -34,7 +34,7 @@ private:
    */
 
   float longitudeSYS_ = 0, latitudeSYS_ = 0;
-  char longPoleSYS_[1] = {"0"}, latPoleSYS_[1] = {"0"};
+  char longPoleSYS_[1] = "", latPoleSYS_[1] = "";
   int SatellitesSYS_ = 0;
 
   /**
@@ -54,7 +54,7 @@ private:
    *
    */
   float longitudeRDS_ = 0, latitudeRDS_ = 0;
-  char longPoleRDS_[1] = {"0"}, latPoleRDS_[1] = {"0"};
+  char longPoleRDS_[1] = "", latPoleRDS_[1] = "";
   int SatellitesRDS_ = 0;
 
   /**
