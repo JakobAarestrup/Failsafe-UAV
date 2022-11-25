@@ -3,13 +3,13 @@
 
 GPS::GPS() // default constructor
 {
-    printf("Constructor called \n");
+    // printf("Constructor called \n");
 }
 
 GPS::~GPS() // destructor
 {
     // delete[] longitude_, latitude_; // delete
-    printf("Destructor called \n");
+    // printf("Destructor called \n");
 }
 
 int GPS::openUART(int fd) // open UART serial port
