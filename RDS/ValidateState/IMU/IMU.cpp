@@ -184,8 +184,6 @@ void IMU::readGYRO(int IMU)
     gyroCalibX_ = gx - gx_drift; // Gyroscope X-angle in deg/s
     gyroCalibY_ = gy - gy_drift; // Gyroscope Y-angle in deg/s
     gyroCalibZ_ = gz - gz_drift; // Gyroscope Z-angle in deg/s
-    printf("Converted - XL_Roll: %lf, XL_pitch: %lf\n\n", XL_Roll_, XL_Pitch_);
-    printf("gyroCalibX_: %f gyroCalibY_: %f gyroCalibZ_", gyroCalibX_, gyroCalibY_, gyroCalibZ_);
 }
 
 void IMU::readMAG(int IMU)
@@ -236,6 +234,13 @@ void IMU::readMAG(int IMU)
         float A[3][3] = {{1.002979, 0.039343, -0.014713},
                          {0.039343, 1.019943, -0.006826},
                          {-0.014713, -0.006826, 1.014517}};
+        // formel magdataCalibrated = A(magdata-b)
+        mx = mx - bx;
+        my = my - by;
+        mz = mz - bz;
+
+        magCalibX_ = A[0][0] * mx + A[0][1] * my + A[0][2] * mz; // A[0,:]*(magdata-b)
+        magCalibY_ = A[1][0] * mx + A[1][1] * my + A[1][2] * mz; // A[1,:]*(magdata-b)
     }
     else if (IMU == 2) // TODO ny calibreringsdata
     {
@@ -246,15 +251,14 @@ void IMU::readMAG(int IMU)
         float A[3][3] = {{1.002979, 0.039343, -0.014713},
                          {0.039343, 1.019943, -0.006826},
                          {-0.014713, -0.006826, 1.014517}};
+        // formel magdataCalibrated = A(magdata-b)
+        mx = mx - bx;
+        my = my - by;
+        mz = mz - bz;
+
+        magCalibX_ = A[0][0] * mx + A[0][1] * my + A[0][2] * mz; // A[0,:]*(magdata-b)
+        magCalibY_ = A[1][0] * mx + A[1][1] * my + A[1][2] * mz; // A[1,:]*(magdata-b)
     }
-
-    // formel magdataCalibrated = A(magdata-b)
-    mx = mx - bx;
-    my = my - by;
-    mz = mz - bz;
-
-    magCalibX_ = A[0][0] * mx + A[0][1] * my + A[0][2] * mz; // A[0,:]*(magdata-b)
-    magCalibY_ = A[1][0] * mx + A[1][1] * my + A[1][2] * mz; // A[1,:]*(magdata-b)
 }
 
 void IMU::ConvertACCData()
@@ -262,7 +266,7 @@ void IMU::ConvertACCData()
     /*  gyroXangle_ = PI*(rate_gyr_x_ / (DT*1000));
    gyroYangle_ = PI*(rate_gyr_y_ / (DT*1000));
    gyroZangle_ = PI*(rate_gyr_z_ / (DT*1000));  */
-    XL_Roll_ = atan2(accCalibX_, accCalibY_) * 180 / PI;
+    XL_Roll_ = atan2(accCalibY_, accCalibZ_) * 180 / PI;
     XL_Pitch_ = atan2(-accCalibX_, sqrt(accCalibY_ * accCalibY_ + accCalibZ_ * accCalibZ_)) * -180 / PI;
 }
 
@@ -274,16 +278,18 @@ void IMU::ConvertMagData()
         MAG_Yaw_ += 360;
         // printf("magYaw: %f\n\n", MAG_Yaw_);
     }
+    printf("YAW: %f\n", MAG_Yaw_);
 }
 
 void IMU::ComplementaryFilter()
 {
+    printf("XL_Roll_ %f XL_Pitch_%f\n", XL_Roll_, XL_Pitch_);
+    printf("YAW: %f\n", MAG_Yaw_);
     /*Complementary Filter*/
+
     CompRoll_ = AA * (CompRoll_ + gyroCalibY_ * DT) + (1 - AA) * XL_Roll_;    // 97% Gyro 3% Accelerometer
     CompPitch_ = AA * (CompPitch_ + gyroCalibX_ * DT) + (1 - AA) * XL_Pitch_; // 97% Gyro 3% Accelerometer
-    CompYaw_ = AA * (CompYaw_ + gyroCalibZ_ * DT) + (1 - AA) * MAG_Yaw_;      // 97% Gyro 3% Magnometer
-    printf("Converted - XL_Roll: %lf, XL_pitch: %lf\n\n", XL_Roll_, XL_Pitch_);
-    printf("magYaw: %f\n\n", MAG_Yaw_);
+    CompYaw_ = 0.5 * (CompYaw_ + gyroCalibZ_ * DT) + (1 - 0.5) * MAG_Yaw_;    // 50% Gyro 50% Magnometer
     printf("Roll_filtered: %f, Pitch filtered: %f, GyroZangle: %f\n", CompRoll_, CompPitch_, CompYaw_);
 }
 
