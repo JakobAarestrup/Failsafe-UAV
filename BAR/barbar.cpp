@@ -8,7 +8,7 @@ int main()
 {
     BAR barometer;
     barometer.calibrateBAR();
-    int height;
+    float height;
 
     while (1)
     {
