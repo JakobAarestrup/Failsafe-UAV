@@ -64,7 +64,7 @@ int main()
     RDS.AxisControl();   // Checks for Failure on the Axises
     RDS.RouteControl();  // Checks for Failure in the KML
     RDS.HeightControl(); // Checks for Failure for height
-    N++;
+    // N++;
 
     while (mymillis() - startofloop < 20)
     {
