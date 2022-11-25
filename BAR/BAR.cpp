@@ -86,7 +86,7 @@ void BAR::readPressure()
 {
     // Initiate the process of pressure measurement
     B1.writeI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_D1_OSR_4096, 0, 0);
-
+    usleep(10000);
     // Read pressure value
     D1_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3, 3);
 }
@@ -96,7 +96,7 @@ void BAR::readTemperature()
 {
     // Initiate the process of temperature measurement
     B1.writeI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_D2_OSR_4096, 0, 0);
-
+    usleep(10000);
     // Read temperature value
     D2_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3, 3);
 }
