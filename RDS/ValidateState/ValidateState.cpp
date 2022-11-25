@@ -91,9 +91,9 @@ void ValidateState::GetBaroValues(BAR barometer)
 void ValidateState::UpdateSystemValues(GPS NEO, BAR barometer, IMU sensor)
 {
     // printf("Hello there updating values...\n");
-    GetBaroValues(barometer);
-    GetIMUValues(sensor);
-    usleep(100);
+    /*     GetBaroValues(barometer);
+        GetIMUValues(sensor);
+        usleep(100); */
     GetGPSValues(NEO);
 }
 
