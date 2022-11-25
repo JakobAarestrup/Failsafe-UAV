@@ -37,11 +37,6 @@ void BAR::convertToAGL()
 // Returns height above ground level
 float BAR::getHeight()
 {
-    if (calibration_ <= 30)
-    {
-        initialAMSL();
-        calibration_++;
-    }
     convertToAGL();
     return height_AGL_; // Return height
 }
@@ -54,15 +49,27 @@ int BAR::getCalibration()
 // Power on and prepare for general usage. This method reads coefficients stored in PROM.
 void BAR::calibrateBAR()
 {
-    // Reading 6 calibration data values
-    C1_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C1, 2, 2);
-    C2_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C2, 2, 2);
-    C3_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C3, 2, 2);
-    C4_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C4, 2, 2);
-    C5_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C5, 2, 2);
-    C6_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C6, 2, 2);
-    printf("SUP");
-    update();
+    int i = 0;
+    for (i; i < 31; i++)
+    {
+        if (calibration_ == 0)
+        {
+            // Reading 6 calibration data values
+            C1_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C1, 2, 2);
+            C2_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C2, 2, 2);
+            C3_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C3, 2, 2);
+            C4_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C4, 2, 2);
+            C5_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C5, 2, 2);
+            C6_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_C6, 2, 2);
+            calibration_++;
+        }
+        else
+        {
+            update();
+            initialAMSL();
+            usleep(1000000);
+        }
+    }
 }
 
 // Read pressure value
