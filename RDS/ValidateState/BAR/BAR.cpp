@@ -65,6 +65,7 @@ void BAR::calibrateBAR()
         }
         else
         {
+            printf("Calibrating baro...\n");
             update();
             initialAMSL();
             usleep(1000000);
