@@ -25,6 +25,10 @@ BAR::~BAR()
 void BAR::initialAMSL()
 {
     initial_AMSL_ = (T_s / T_G) * (1 - pow((pres_ / p_0), T_G * (R / g))); // Using barometric formula.
+    if (initial_AMSL_ < 0)
+    {
+        initial_AMSL_ = 0;
+    }
 }
 
 // Converts the bar data into height
@@ -32,6 +36,10 @@ void BAR::convertToAGL()
 {
     height_AMSL_ = (T_s / T_G) * (1 - pow((pres_ / p_0), T_G * (R / g))); // Using barometric formula.
     height_AGL_ = height_AMSL_ - initial_AMSL_;                           // Subtract difference in height.
+    if (height_AGL_ < 0)
+    {
+        height_AGL_ = 0;
+    }
 }
 
 // Returns height above ground level
@@ -65,10 +73,10 @@ void BAR::calibrateBAR()
         }
         else
         {
-            printf("Calibrating baro...%d\n", i);
             update();
             initialAMSL();
             usleep(1000000);
+            printf("Calibrating baro...%d\n", i);
         }
     }
 }
@@ -78,7 +86,7 @@ void BAR::readPressure()
 {
     // Initiate the process of pressure measurement
     B1.writeI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_D1_OSR_4096, 0, 0);
-
+    usleep(10000);
     // Read pressure value
     D1_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3, 3);
 }
@@ -88,7 +96,7 @@ void BAR::readTemperature()
 {
     // Initiate the process of temperature measurement
     B1.writeI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_D2_OSR_4096, 0, 0);
-
+    usleep(10000);
     // Read temperature value
     D2_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3, 3);
 }
