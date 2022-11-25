@@ -7,10 +7,9 @@
 int main()
 {
     BAR barometer;
-
+    barometer.calibrateBAR();
     while (1)
     {
-        barometer.calibrateBAR();
         barometer.getHeight();
         usleep(100000);
     }
