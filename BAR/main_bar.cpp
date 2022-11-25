@@ -12,31 +12,31 @@ int main()
 
     barometer.calibrateBAR();
 
-    for (int i = 0; i<1031; i++)
+    for (int i = 0; i < 1031; i++)
     {
         barometer.readPressure();
         barometer.readTemperature();
         barometer.calculatePressureAndTemperature();
-        
-        calibration = barometer.getCalibration();
-        if (calibration > 30)
-        {
-        float height = barometer.getHeight();
-        if (height < 0)
-        {
-        height  = 0;
-        }
-        printf("%f\n",height);
-        usleep(10000);
-        //sleep(1);
-        }
-        else
-        {
-            barometer.getHeight();
-            printf("Calibrating barometer..\n");
-            sleep(1);
-        }
-    }
 
-    return 0;
+        barometer.getCalibration();
+        /*    if (calibration > 30)
+           {
+           if (height < 0)
+           {
+           height  = 0;
+           } */
+        float height = barometer.getHeight();
+        printf("%f\n", height);
+        usleep(100000);
+        // sleep(1);
+    }
+    /*    else
+       {
+           barometer.getHeight();
+           printf("Calibrating barometer..\n");
+           sleep(1);
+       } */
+}
+
+return 0;
 }
