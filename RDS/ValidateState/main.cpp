@@ -67,7 +67,7 @@ int main()
 
     while (mymillis() - startofloop < 50)
     {
-      usleep(100);
+      // usleep(100);
     }
 
     printf("Loop Time %d\n", mymillis() - startofloop);
