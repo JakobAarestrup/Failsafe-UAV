@@ -25,6 +25,10 @@ BAR::~BAR()
 void BAR::initialAMSL()
 {
     initial_AMSL_ = (T_s / T_G) * (1 - pow((pres_ / p_0), T_G * (R / g))); // Using barometric formula.
+    if (initial_AMSL_ < 0)
+    {
+        initial_AMSL_ = 0;
+    }
 }
 
 // Converts the bar data into height
@@ -32,6 +36,10 @@ void BAR::convertToAGL()
 {
     height_AMSL_ = (T_s / T_G) * (1 - pow((pres_ / p_0), T_G * (R / g))); // Using barometric formula.
     height_AGL_ = height_AMSL_ - initial_AMSL_;                           // Subtract difference in height.
+    if (height_AGL_ < 0)
+    {
+        height_AGL_ = 0;
+    }
 }
 
 // Returns height above ground level
