@@ -2,9 +2,11 @@
 #include <stdint.h>
 #include "MS5611.hpp"
 #include <math.h>
+#include "../IMU/I2C.hpp"
 #include <unistd.h>
 #include <string>
 
+class I2C;
 class BAR
 {
 public:
