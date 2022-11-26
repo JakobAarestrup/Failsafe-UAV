@@ -61,6 +61,7 @@ void GPS::readGPS() // reads GPS serial data
     unsigned char GGA_Flag = 0;
     unsigned char GGA_Index = 0;
     unsigned char GGA_Received = 0;
+    int sd;
     int end = 0;
 
     // char *start_ptr, *end_ptr, *jump_ptr, *gps;
@@ -74,44 +75,47 @@ void GPS::readGPS() // reads GPS serial data
             GPS_Data_ = serialGetchar(serialPort_); // receive character serially
             printf("%c", GPS_Data_);
 
-            if (GPS_Data_ == '$') // check for start of NMEA message
-            {
-                GGA_Flag = 0;
-                GGA_Index = 0;
-            }
 
-            else if (GGA_Flag == 1)
-            {
-                buff[GGA_Index++] = GPS_Data_;
+        }
+             */
 
-                if (GPS_Data_ == '\r')
-                {
-                    GGA_Received = 1;
-                }
-            }
+        if (GPS_Data_ == '$') // check for start of NMEA message
+        {
+            GGA_Flag = 0;
+            GGA_Index = 0;
+        }
 
-            else if (GGA_Check[0] == 'G' && GGA_Check[1] == 'G' && GGA_Check[2] == 'A')
-            {
-                GGA_Flag = 1;
-                GGA_Check[0] = 0;
-                GGA_Check[0] = 0;
-                GGA_Check[0] = 0;
-            }
+        else if (GGA_Flag == 1)
+        {
+            buff[GGA_Index++] = GPS_Data_;
 
-            else
+            if (GPS_Data_ == '\r')
             {
-                GGA_Check[0] = GGA_Check[1];
-                GGA_Check[1] = GGA_Check[2];
-                GGA_Check[2] = GPS_Data_;
+                GGA_Received = 1;
             }
+        }
+
+        else if (GGA_Check[0] == 'G' && GGA_Check[1] == 'G' && GGA_Check[2] == 'A')
+        {
+            GGA_Flag = 1;
+            GGA_Check[0] = 0;
+            GGA_Check[0] = 0;
+            GGA_Check[0] = 0;
         }
 
         else
         {
+            GGA_Check[0] = GGA_Check[1];
+            GGA_Check[1] = GGA_Check[2];
+            GGA_Check[2] = GPS_Data_;
+        }
+
+        if ((sd = serialDataAvail(serialPort_)) == -1)
+        {
             printf("No data available from GPS\n");
             configAll();
             end = 1;
-        } */
+        }
 
         /*         if (GGA_Received == 1)
                 {
