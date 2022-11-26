@@ -29,20 +29,20 @@ int main()
   IMU IMU2;
   // IMU IMU2;
   BAR B1;
-  B1.calibrateBAR();
+  // B1.calibrateBAR();
   /**
    * @brief  Configuration of Sensors
    *
    */
-  G1.configAll();     // configs the GPS
-  I1.initializeI2C(); // Initialize IMU1
-  // I2.initializeI2C(); // Initialize IMU2
+  G1.configAll(); // configs the GPS
+  // I1.initializeI2C(); // Initialize IMU1
+  //  I2.initializeI2C(); // Initialize IMU2
   /**
    * @brief Calibration..
    *
    */
-  IMU2.calibrateGyro(2);
-  // IMU2.calibrateGyro();
+  // IMU2.calibrateGyro(2);
+  //  IMU2.calibrateGyro();
 
   /**
    * @brief Used variables
@@ -59,11 +59,11 @@ int main()
     startofloop = mymillis();
     RDS.UpdateSystemValues(G1, B1, IMU2); // gets all values from sensors
 
-    RDS.LogData();       // Sends sensor data to log file
-    RDS.AxisControl();   // Checks for Failure on the Axises
-    RDS.RouteControl();  // Checks for Failure in the KML
-    RDS.HeightControl(); // Checks for Failure for height
-                         // N++;
+    RDS.LogData(); // Sends sensor data to log file
+                   /*  RDS.AxisControl();   // Checks for Failure on the Axises
+                    RDS.RouteControl();  // Checks for Failure in the KML
+                    RDS.HeightControl(); // Checks for Failure for height
+                                         // N++; */
 
     while (mymillis() - startofloop < 100)
     {
