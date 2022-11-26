@@ -67,9 +67,11 @@ void GPS::readGPS() // reads GPS serial data
 
     while (end < 1)
     {
-        if (serialDataAvail(serialPort_)) /* check for any data available on serial port */
+        GPS_Data_ = serialGetchar(serialPort_); /* receive character serially */
+        printf("%c", GPS_Data_);
+        /* if (serialDataAvail(serialPort_)) // check for any data available on serial port
         {
-            GPS_Data_ = serialGetchar(serialPort_); /* receive character serially */
+            GPS_Data_ = serialGetchar(serialPort_); // receive character serially
             printf("%c", GPS_Data_);
 
             if (GPS_Data_ == '$') // check for start of NMEA message
@@ -107,10 +109,9 @@ void GPS::readGPS() // reads GPS serial data
         else
         {
             printf("No data available from GPS\n");
-            /* OPEN UART */
             configAll();
             end = 1;
-        }
+        } */
 
         /*         if (GGA_Received == 1)
                 {
