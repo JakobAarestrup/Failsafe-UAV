@@ -165,7 +165,7 @@ void GPS::convertData() // converts GPS serial data to decimal degrees
 
     if (strcmp(NS, "") == 0 | strcmp(EW, "") == 0) // is 1 of the arrays empty?
     {
-        // std::cout << "NS or EW returned N/A. Skipping conversion..." << std::endl;
+        std::cout << "NS or EW returned N/A. Skipping conversion..." << std::endl;
     }
 
     else
