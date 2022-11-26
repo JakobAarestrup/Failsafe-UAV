@@ -66,8 +66,8 @@ void GPS::readGPS() // reads GPS serial data
     int end = 0;
     char test;
     char *start_ptr, *end_ptr, *jump_ptr, *gps;
-
-    while (end < 1)
+    int i;
+    for (i; i < 200; i++)
     {
 
         // receive character serially
@@ -131,6 +131,7 @@ void GPS::readGPS() // reads GPS serial data
 
             printf("latitude: %f %s longitude: %f %s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
             end = 1;
+            i = 200;
         }
 
         /*   if ((sd = serialDataAvail(serialPort_)) < 0)
@@ -192,12 +193,6 @@ void GPS::convertData() // converts GPS serial data to decimal degrees
 
         // std::cout << "" << latitude_ << "," << NS_[1] << " " << longitude_ << "," << EW_[1] << " Satellites:" << SV_ << std::endl;
     }
-}
-
-void GPS::startLogging()
-{
-    freopen("RDSLog.txt", "w", stdout); // https://stackoverflow.com/questions/7400418/writing-a-log-file-in-c-c
-                                        // cout << "" << longitude_ << "," << NS_ << " " << latitude_ << "," << EW_ <<  "  Satellites: " << SV_ << endl;
 }
 
 /* GET FUNCTIONS */
