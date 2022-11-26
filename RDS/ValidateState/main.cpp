@@ -64,13 +64,13 @@ int main()
                     RDS.RouteControl();  // Checks for Failure in the KML
                     RDS.HeightControl(); // Checks for Failure for height
                                          // N++; */
-
-    while (mymillis() - startofloop < 100)
-    {
-      // usleep(100);
-    }
-
-    printf("Loop Time %d\n", mymillis() - startofloop);
+                   /*
+                       while (mymillis() - startofloop < 100)
+                       {
+                         // usleep(100);
+                       }
+               
+                       printf("Loop Time %d\n", mymillis() - startofloop); */
 
     /*   if (N > 5)
       {
