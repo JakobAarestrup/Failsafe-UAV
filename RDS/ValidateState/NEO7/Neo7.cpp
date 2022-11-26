@@ -71,8 +71,8 @@ void GPS::readGPS() // reads GPS serial data
     {
 
         // receive character serially
-        GPS_Data = serialGetchar(serialPort_);
-        read(serialPort_, &test, 1);
+        // GPS_Data = serialGetchar(serialPort_);
+        read(serialPort_, &GPS_Data, 1);
         if (test == '$') // check for start of NMEA message
         {
             printf("SUP");
