@@ -66,7 +66,9 @@ void GPS::readGPS() // reads GPS serial data
     int end = 0;
     char test;
     char *start_ptr, *end_ptr, *jump_ptr, *gps;
+
     int i;
+
     for (i; i < 200; i++)
     {
 
@@ -75,7 +77,6 @@ void GPS::readGPS() // reads GPS serial data
         // read(serialPort_, &GPS_Data, 1);
         if (GPS_Data == '$') // check for start of NMEA message
         {
-            printf("SUP");
             GGA_Flag = 0;
             GGA_Index = 0;
         }
@@ -130,7 +131,7 @@ void GPS::readGPS() // reads GPS serial data
             SV_ = atoi(start_ptr);              // Convert char to int & store in variable
 
             printf("latitude: %f %s longitude: %f %s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
-            end = 1;
+            // end = 1;
             i = 200;
         }
 
@@ -144,7 +145,7 @@ void GPS::readGPS() // reads GPS serial data
         GGA_Check[1] = GGA_Check[2];
         GGA_Check[2] = GPS_Data;
 
-        // printf("%c", test);
+        printf("%c", GPS_Data);
     }
 }
 
