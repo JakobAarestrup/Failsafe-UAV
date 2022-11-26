@@ -155,8 +155,8 @@ void GPS::convertData() // converts GPS serial data to decimal degrees
     double lat_Sec = (latitude_ - lat_Deg * 100) / 60;  // mm.mmmm(minutes) / 60 = seconds
     double lon_Sec = (longitude_ - lon_Deg * 100) / 60; // mm.mmmm(minutes) / 60 = seconds
 
-    char NS[1] = getNorthSouth(NS_);
-    char EW[1] = getNorthSouth(EW_);
+    char NS[1] = getNorthSouth(NS);
+    char EW[1] = getNorthSouth(EW);
     NS_ = NS;
     EW_ = EW;
 
@@ -177,7 +177,6 @@ void GPS::convertData() // converts GPS serial data to decimal degrees
 
             latitude_ = lat_Deg + (lat_Sec);
             longitude_ = lon_Deg + (lon_Sec) * -1;
-            printf("HELLO\n");
         }
         else if (strcmp(NS_, "S") == 0 & strcmp(EW_, "W") == 0)
         {
