@@ -61,10 +61,10 @@ void GPS::readGPS() // reads GPS serial data
     unsigned char GGA_Flag = 0;
     unsigned char GGA_Index = 0;
     unsigned char GGA_Received = 0;
-    int sd;
+    char sd;
     int end = 0;
 
-    // char *start_ptr, *end_ptr, *jump_ptr, *gps;
+    / char *start_ptr, *end_ptr, *jump_ptr, *gps;
 
     while (end < 1)
     {
@@ -113,48 +113,48 @@ void GPS::readGPS() // reads GPS serial data
         if ((sd = serialDataAvail(serialPort_)) == -1)
         {
             printf("No data available from GPS\n");
-            configAll();
+            openUART(serialPort_);
             end = 1;
         }
 
-        /*         if (GGA_Received == 1)
-                {
-                    // printf("GPGGA:%s\n", buff);
-                    gps = buff;
-                    start_ptr = strchr(gps, ',');       // find start of latitude field
-                    end_ptr = strchr(++start_ptr, ','); // find end of field...
-                    latitude_ = atof(start_ptr);        // Convert char to float & store in variable
+        if (GGA_Received == 1)
+        {
+            // printf("GPGGA:%s\n", buff);
+            gps = buff;
+            start_ptr = strchr(gps, ',');       // find start of latitude field
+            end_ptr = strchr(++start_ptr, ','); // find end of field...
+            latitude_ = atof(start_ptr);        // Convert char to float & store in variable
 
-                    start_ptr = strchr(start_ptr, ','); // find start of pole NS field
-                    end_ptr = strchr(++start_ptr, ','); // find end of field... ¨
-                    jump_ptr = end_ptr;
-                    *end_ptr = '\0';
-                    strcpy(NS_, start_ptr);
+            start_ptr = strchr(start_ptr, ','); // find start of pole NS field
+            end_ptr = strchr(++start_ptr, ','); // find end of field... ¨
+            jump_ptr = end_ptr;
+            *end_ptr = '\0';
+            strcpy(NS_, start_ptr);
 
-                    // printf(" lat: %f DDDDDDDDDD:%s\n",latitude,NS_);
+            // printf(" lat: %f DDDDDDDDDD:%s\n",latitude,NS_);
 
-                    start_ptr = jump_ptr;               // find start of longitude field
-                    end_ptr = strchr(++start_ptr, ','); // find end of field...
-                    jump_ptr = end_ptr;
-                    *end_ptr = '\0'; // and zero terminate
-                    longitude_ = atof(start_ptr);
+            start_ptr = jump_ptr;               // find start of longitude field
+            end_ptr = strchr(++start_ptr, ','); // find end of field...
+            jump_ptr = end_ptr;
+            *end_ptr = '\0'; // and zero terminate
+            longitude_ = atof(start_ptr);
 
-                    // printf(" lat: %f D:%s long: %f\n",latitude,NS_,longitude);
+            // printf(" lat: %f D:%s long: %f\n",latitude,NS_,longitude);
 
-                    start_ptr = jump_ptr;               // find start of pole EW field
-                    end_ptr = strchr(++start_ptr, ','); // find end of field...
-                    *end_ptr = '\0';                    // and zero terminate
-                    strcpy(EW_, start_ptr);
+            start_ptr = jump_ptr;               // find start of pole EW field
+            end_ptr = strchr(++start_ptr, ','); // find end of field...
+            *end_ptr = '\0';                    // and zero terminate
+            strcpy(EW_, start_ptr);
 
-                    start_ptr = strchr(++end_ptr, ','); // find start of satellite field
-                    end_ptr = strchr(++start_ptr, ','); // find end of field...
-                    *end_ptr = '\0';                    // and zero terminate
-                    SV_ = atoi(start_ptr);              // Convert char to int & store in variable
+            start_ptr = strchr(++end_ptr, ','); // find start of satellite field
+            end_ptr = strchr(++start_ptr, ','); // find end of field...
+            *end_ptr = '\0';                    // and zero terminate
+            SV_ = atoi(start_ptr);              // Convert char to int & store in variable
 
-                    printf("latitude: %f %s longitude: %f %s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
+            printf("latitude: %f %s longitude: %f %s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
 
-                    end = 1;
-                } */
+            end = 1;
+        }
     }
 }
 
