@@ -284,8 +284,8 @@ void IMU::ConvertMagData()
 
 void IMU::ComplementaryFilter()
 {
-    /*  printf("XL_Roll_ %f XL_Pitch_%f\n", XL_Roll_, XL_Pitch_);
-     printf("YAW: %f\n", MAG_Yaw_); */
+    printf("XL_Roll_ %f XL_Pitch_%f\n", XL_Roll_, XL_Pitch_);
+    /*printf("YAW: %f\n", MAG_Yaw_); */
     /*Complementary Filter*/
 
     CompRoll_ = AA * (CompRoll_ + gyroCalibY_ * DT) + (1 - AA) * XL_Roll_;    // 97% Gyro 3% Accelerometer
