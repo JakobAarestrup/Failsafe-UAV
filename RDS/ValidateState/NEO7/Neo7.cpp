@@ -100,8 +100,7 @@ void GPS::readGPS() // reads GPS serial data
                 GGA_Check[2] = GPS_Data_;
             }
         }
-
-        if (GGA_Received == 1)
+        else if (GGA_Received == 1)
         {
             // printf("GPGGA:%s\n", buff);
             char *gps = buff;
