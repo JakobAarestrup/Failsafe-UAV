@@ -103,6 +103,10 @@ void GPS::readGPS() // reads GPS serial data
                 GGA_Check[2] = GPS_Data_;
             }
         }
+        else
+        {
+            printf("No data available from GPS");
+        }
 
         if (GGA_Received == 1)
         {
