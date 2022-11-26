@@ -70,7 +70,7 @@ void GPS::readGPS() // reads GPS serial data
     while (end < 1)
     {
 
-        ; // receive character serially
+        // receive character serially
 
         if ((GPS_Data = serialGetchar(serialPort_)) == '$') // check for start of NMEA message
         {
