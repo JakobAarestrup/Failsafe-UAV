@@ -156,8 +156,9 @@ void GPS::convertData() // converts GPS serial data to decimal degrees
     double lon_Sec = (longitude_ - lon_Deg * 100) / 60; // mm.mmmm(minutes) / 60 = seconds
 
     char NS[1];
-    getNorthSouth(NS);
     char EW[1];
+
+    getNorthSouth(NS);
     getNorthSouth(EW);
 
     if (strcmp(NS_, "") == 0 | strcmp(EW_, "") == 0) // is 1 of the arrays empty?
