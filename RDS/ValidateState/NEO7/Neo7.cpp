@@ -70,41 +70,40 @@ void GPS::readGPS() // reads GPS serial data
     // configAll();
     for (i; i < 200; i++)
     {
-        if (serialDataAvail(serialPort_)) /* check for any data available on serial port */
+
+        GPS_Data_ = serialGetchar(serialPort_); /* receive character serially */
+        printf("%c", GPS_Data_);
+        // read(serialPort_, &GPS_Data, 1);
+        if (GPS_Data_ == '$') // check for start of NMEA message
         {
-            GPS_Data_ = serialGetchar(serialPort_); /* receive character serially */
-            printf("%c", GPS_Data_);
-            // read(serialPort_, &GPS_Data, 1);
-            if (GPS_Data_ == '$') // check for start of NMEA message
-            {
-                GGA_Flag = 0;
-                GGA_Index = 0;
-            }
+            GGA_Flag = 0;
+            GGA_Index = 0;
+        }
 
-            else if (GGA_Flag == 1)
-            {
-                buff[GGA_Index++] = GPS_Data_;
+        else if (GGA_Flag == 1)
+        {
+            buff[GGA_Index++] = GPS_Data_;
 
-                if (GPS_Data_ == '\r')
-                {
-                    GGA_Received = 1;
-                }
-            }
-            else if (GGA_Check[0] == 'G' && GGA_Check[1] == 'G' && GGA_Check[2] == 'A')
+            if (GPS_Data_ == '\r')
             {
-                GGA_Flag = 1;
-                printf("YO");
-                GGA_Check[0] = 0;
-                GGA_Check[1] = 0;
-                GGA_Check[2] = 0;
-            }
-            else
-            {
-                GGA_Check[0] = GGA_Check[1];
-                GGA_Check[1] = GGA_Check[2];
-                GGA_Check[2] = GPS_Data_;
+                GGA_Received = 1;
             }
         }
+        else if (GGA_Check[0] == 'G' && GGA_Check[1] == 'G' && GGA_Check[2] == 'A')
+        {
+            GGA_Flag = 1;
+            printf("YO");
+            GGA_Check[0] = 0;
+            GGA_Check[1] = 0;
+            GGA_Check[2] = 0;
+        }
+        else
+        {
+            GGA_Check[0] = GGA_Check[1];
+            GGA_Check[1] = GGA_Check[2];
+            GGA_Check[2] = GPS_Data_;
+        }
+
         if (GGA_Received == 1)
         {
             printf("yo");
