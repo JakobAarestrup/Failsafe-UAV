@@ -61,6 +61,7 @@ void GPS::readGPS() // reads GPS serial data
     unsigned char GGA_Flag = 0;
     unsigned char GGA_Index = 0;
     unsigned char GGA_Received = 0;
+    GPS_Data_ = 0;
     char sd;
     int end = 0;
 
@@ -113,7 +114,7 @@ void GPS::readGPS() // reads GPS serial data
         if ((sd = serialDataAvail(serialPort_)) == -1)
         {
             printf("No data available from GPS\n");
-            serialPort_ = openUART(serialPort_);
+            configAll();
             end = 1;
         }
 
