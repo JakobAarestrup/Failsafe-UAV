@@ -70,7 +70,7 @@ void GPS::readGPS() // reads GPS serial data
         if (serialDataAvail(serialPort_)) /* check for any data available on serial port */
         {
             GPS_Data_ = serialGetchar(serialPort_); /* receive character serially */
-            printf("%c", GPS_Data_);
+            // printf("%c", GPS_Data_);
 
             if (GPS_Data_ == '$') // check for start of NMEA message
             {
@@ -145,10 +145,6 @@ void GPS::readGPS() // reads GPS serial data
             end_ptr = strchr(++start_ptr, ','); // find end of field...
             *end_ptr = '\0';                    // and zero terminate
             SV_ = atoi(start_ptr);              // Convert char to int & store in variable
-
-            *start_ptr = '\0'; // and zero terminate
-            *gps = '\0';
-            *jump_ptr = '\0'; //
 
             printf("latitude: %f %s longitude: %f %s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
 
