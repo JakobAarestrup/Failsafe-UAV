@@ -67,7 +67,6 @@ void GPS::readGPS() // reads GPS serial data
 
     while (end < 1)
     {
-        printf("yo");
         if (serialDataAvail(serialPort_)) /* check for any data available on serial port */
         {
             GPS_Data_ = serialGetchar(serialPort_); /* receive character serially */
@@ -104,6 +103,7 @@ void GPS::readGPS() // reads GPS serial data
                 GGA_Check[2] = GPS_Data_;
             }
         }
+
         else
         {
             printf("No data available from GPS\n");
