@@ -61,7 +61,7 @@ void GPS::readGPS() // reads GPS serial data
     unsigned char GGA_Flag = 0;
     unsigned char GGA_Index = 0;
     unsigned char GGA_Received = 0;
-    unsigned char GPS_Data = 0;
+    char GPS_Data = 0;
     char sd;
     int end = 0;
     char test;
