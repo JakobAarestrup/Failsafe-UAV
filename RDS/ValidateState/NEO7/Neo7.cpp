@@ -96,10 +96,16 @@ void GPS::readGPS() // reads GPS serial data
             GGA_Check[1] = 0;
             GGA_Check[2] = 0;
         }
+        else
+        {
+            GGA_Check[0] = GGA_Check[1];
+            GGA_Check[1] = GGA_Check[2];
+            GGA_Check[2] = GPS_Data;
+        }
 
         if (GGA_Received == 1)
         {
-            // printf("GPGGA:%s\n", buff);
+            printf("yo");
             gps = buff;
             start_ptr = strchr(gps, ',');       // find start of latitude field
             end_ptr = strchr(++start_ptr, ','); // find end of field...
@@ -142,9 +148,6 @@ void GPS::readGPS() // reads GPS serial data
               configAll();
               end = 1;
           } */
-        GGA_Check[0] = GGA_Check[1];
-        GGA_Check[1] = GGA_Check[2];
-        GGA_Check[2] = GPS_Data;
 
         printf("%c", GPS_Data);
     }
