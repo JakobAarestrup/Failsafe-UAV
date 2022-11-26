@@ -80,6 +80,7 @@ void GPS::readGPS() // reads GPS serial data
                 GGA_Flag = 0;
                 GGA_Index = 0;
             }
+
             else if (GGA_Flag == 1)
             {
                 buff[GGA_Index++] = GPS_Data_;
@@ -92,6 +93,7 @@ void GPS::readGPS() // reads GPS serial data
             else if (GGA_Check[0] == 'G' && GGA_Check[1] == 'G' && GGA_Check[2] == 'A')
             {
                 GGA_Flag = 1;
+                printf("YO");
                 GGA_Check[0] = 0;
                 GGA_Check[1] = 0;
                 GGA_Check[2] = 0;
