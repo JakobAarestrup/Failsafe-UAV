@@ -149,7 +149,7 @@ void GPS::readGPS() // reads GPS serial data
 
             end = 1;
         }
-        printf("%c", GPS_Data);
+        printf("%c|", GPS_Data);
     }
 }
 
