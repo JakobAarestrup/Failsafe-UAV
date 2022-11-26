@@ -70,7 +70,6 @@ void GPS::readGPS() // reads GPS serial data
     while (end < 1)
     {
         GPS_Data = serialGetchar(serialPort_); /* receive character serially */
-        printf("%c", GPS_Data);
         /* if (serialDataAvail(serialPort_)) // check for any data available on serial port
         {
             GPS_Data = serialGetchar(serialPort_); // receive character serially
@@ -156,6 +155,7 @@ void GPS::readGPS() // reads GPS serial data
 
             end = 1;
         }
+        printf("%c", GPS_Data);
     }
 }
 
