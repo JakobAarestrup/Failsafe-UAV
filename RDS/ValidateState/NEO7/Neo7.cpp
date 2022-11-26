@@ -61,7 +61,7 @@ void GPS::readGPS() // reads GPS serial data
     unsigned char GGA_Flag = 0;
     unsigned char GGA_Index = 0;
     unsigned char GGA_Received = 0;
-    char *start_ptr, *end_ptr, *start_ptr_origin, *jump_ptr;
+    char *start_ptr = 0, *end_ptr = 0, *start_ptr_origin = 0, *jump_ptr = 0;
     while (1)
     {
         if (serialDataAvail(serialPort_)) /* check for any data available on serial port */
