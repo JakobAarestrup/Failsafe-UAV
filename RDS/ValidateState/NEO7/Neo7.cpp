@@ -142,7 +142,7 @@ void GPS::readGPS() // reads GPS serial data
         GGA_Check[1] = GGA_Check[2];
         GGA_Check[2] = GPS_Data;
 
-        printf("%c", GPS_Data);
+        // printf("%c", GPS_Data);
     }
 }
 
