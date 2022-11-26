@@ -159,19 +159,19 @@ void GPS::convertData() // converts GPS serial data to decimal degrees
 
     else
     {
-        if (strcmp(NS_[0], "S") == 0 & strcmp(EW_[0], "E") == 0) // handles negative
+        if (strcmp(NS_, "S") == 0 & strcmp(EW_, "E") == 0) // handles negative
         {
             latitude_ = (lat_Deg + lat_Sec) * -1;
             longitude_ = lon_Deg + lon_Sec;
         }
-        else if (strcmp(NS_[0], "N") == 0 & strcmp(EW_[0], "W") == 0)
+        else if (strcmp(NS_, "N") == 0 & strcmp(EW_, "W") == 0)
         {
 
             latitude_ = lat_Deg + (lat_Sec);
             longitude_ = lon_Deg + (lon_Sec) * -1;
             printf("HELLO\n");
         }
-        else if (strcmp(NS_[0], "S") == 0 & strcmp(EW_[0], "W") == 0)
+        else if (strcmp(NS_, "S") == 0 & strcmp(EW_, "W") == 0)
         {
             latitude_ = lat_Deg + (lat_Sec) * -1;
             longitude_ = lon_Deg + (lon_Sec) * -1;
