@@ -19,7 +19,7 @@ int main()
     double latitude, longitude;
     int SV_;
     int i = 0;
-    for (i = 0; i < 50; i++)
+    for (i = 0; i < 1000; i++)
     {
         /* char gps_string[100] = "GPGGA,12121001,1200.201021,N,01011.51302,E,1,09,0.89,74.9,M,42.8,M,,*64";
         char *gps = gps_string; */
