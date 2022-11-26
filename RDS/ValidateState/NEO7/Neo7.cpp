@@ -104,7 +104,7 @@ void GPS::readGPS() // reads GPS serial data
                 GGA_Check[2] = GPS_Data_;
             }
         }
-        else if (serialDataAvail(serialPort_ == -1))
+        else if (serialDataAvail(serialPort_) == -1)
         {
             printf("No data available from GPS\n");
             /* OPEN UART */
