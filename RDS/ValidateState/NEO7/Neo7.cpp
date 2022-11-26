@@ -110,15 +110,12 @@ void GPS::readGPS() // reads GPS serial data
             /* OPEN UART */
             if ((fd = serialOpen("/dev/ttyS0", 9600)) < 0) // open serial port with set baudrate
             {
-                fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
-
-                return 1;
+                fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handler
             }
 
             if (wiringPiSetup() == -1) // initializes wiringPi setup
             {
                 fprintf(stdout, "Unable to start wiringPi: %s\n", strerror(errno)); // error handling
-                return 1;
             }
             end = 1;
         }
