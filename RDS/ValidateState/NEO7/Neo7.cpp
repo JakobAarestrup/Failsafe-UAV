@@ -90,8 +90,8 @@ void GPS::readGPS() // reads GPS serial data
         {
             GGA_Flag = 1;
             GGA_Check[0] = 0;
-            GGA_Check[0] = 0;
-            GGA_Check[0] = 0;
+            GGA_Check[1] = 0;
+            GGA_Check[2] = 0;
         }
         else if (GGA_Received == 1)
         {
