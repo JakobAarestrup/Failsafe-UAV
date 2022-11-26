@@ -61,10 +61,11 @@ void GPS::readGPS() // reads GPS serial data
     unsigned char GGA_Flag = 0;
     unsigned char GGA_Index = 0;
     unsigned char GGA_Received = 0;
+    int end = 0;
 
     char *start_ptr, *end_ptr, *jump_ptr, *gps;
 
-    while (1)
+    while (end < 1)
     {
         if (serialDataAvail(serialPort_)) /* check for any data available on serial port */
         {
@@ -102,7 +103,8 @@ void GPS::readGPS() // reads GPS serial data
                 GGA_Check[2] = GPS_Data_;
             }
         }
-        else if (GGA_Received == 1)
+
+        if (GGA_Received == 1)
         {
             // printf("GPGGA:%s\n", buff);
             gps = buff;
@@ -142,7 +144,7 @@ void GPS::readGPS() // reads GPS serial data
 
             // printf("latitude: %f %s longitude: %f %s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
 
-            break;
+            end = 1;
         }
     }
 }
