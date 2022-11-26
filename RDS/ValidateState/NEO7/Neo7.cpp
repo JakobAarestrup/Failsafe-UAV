@@ -106,6 +106,7 @@ void GPS::readGPS() // reads GPS serial data
 
         if (GGA_Received == 1)
         {
+            printf("GPGGA:%s\n", buff);
             /* // printf("GPGGA:%s\n", buff);
             gps = buff;
             start_ptr = strchr(gps, ',');       // find start of latitude field
