@@ -34,4 +34,5 @@ private:     // Coordinates from the GPS
     char NS_[10];
     int serialPort_;
     char GPS_Data_;
+    int pointer_set_ = 0;
 };
