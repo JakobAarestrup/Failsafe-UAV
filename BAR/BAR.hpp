@@ -6,8 +6,6 @@
 #include "I2Cdev.h"
 #include <unistd.h>
 #include <string>
-
-class I2C;
 class BAR
 {
 public:

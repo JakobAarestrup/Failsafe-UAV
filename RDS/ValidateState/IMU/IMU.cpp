@@ -294,17 +294,17 @@ void IMU::ComplementaryFilter()
     printf("Roll_filtered: %f, Pitch filtered: %f, GyroZangle: %f\n", CompRoll_, CompPitch_, CompYaw_);
 }
 
-float IMU::getRoll()
+float IMU::getRoll() const
 {
     return CompRoll_;
 }
 
-float IMU::getPitch()
+float IMU::getPitch() const
 {
     return CompPitch_;
 }
 
-float IMU::getYaw()
+float IMU::getYaw() const
 {
     return CompYaw_;
 }

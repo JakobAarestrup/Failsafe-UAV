@@ -13,9 +13,9 @@ public:
     void ConvertMagData();
     void ComplementaryFilter();
 
-    float getRoll();
-    float getPitch();
-    float getYaw();
+    float getRoll() const;
+    float getPitch() const;
+    float getYaw() const;
 
 private:
     float accCalibX_;

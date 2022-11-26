@@ -148,33 +148,30 @@ void GPS::convertData() // converts GPS serial data to decimal degrees
 
     double lat_Sec = (latitude_ - lat_Deg * 100) / 60;  // mm.mmmm(minutes) / 60 = seconds
     double lon_Sec = (longitude_ - lon_Deg * 100) / 60; // mm.mmmm(minutes) / 60 = seconds
-    char NS[1];
-    char EW[1];
-    getNorthSouth(NS);
-    getNorthSouth(EW);
+
     /*  NS_ = NS;
      EW_ = EW; */
 
-    if (strcmp(NS, "") == 0 | strcmp(EW, "") == 0) // is 1 of the arrays empty?
+    if (strcmp(NS_[0], "") == 0 | strcmp(EW[0], "") == 0) // is 1 of the arrays empty?
     {
         std::cout << "NS or EW returned N/A. Skipping conversion..." << std::endl;
     }
 
     else
     {
-        if (strcmp(NS, "S") == 0 & strcmp(EW, "E") == 0) // handles negative
+        if (strcmp(NS[0], "S") == 0 & strcmp(EW[0], "E") == 0) // handles negative
         {
             latitude_ = (lat_Deg + lat_Sec) * -1;
             longitude_ = lon_Deg + lon_Sec;
         }
-        else if (strcmp(NS, "N") == 0 & strcmp(EW, "W") == 0)
+        else if (strcmp(NS[0], "N") == 0 & strcmp(EW[0], "W") == 0)
         {
 
             latitude_ = lat_Deg + (lat_Sec);
             longitude_ = lon_Deg + (lon_Sec) * -1;
             printf("HELLO\n");
         }
-        else if (strcmp(NS, "S") == 0 & strcmp(EW, "W") == 0)
+        else if (strcmp(NS[0], "S") == 0 & strcmp(EW[0], "W") == 0)
         {
             latitude_ = lat_Deg + (lat_Sec) * -1;
             longitude_ = lon_Deg + (lon_Sec) * -1;
