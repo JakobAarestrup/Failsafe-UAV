@@ -68,6 +68,10 @@ void GPS::readGPS() // reads GPS serial data
     char *start_ptr, *end_ptr, *jump_ptr, *gps;
     int i = 0;
     // configAll();
+
+    /* OPEN UART */
+    serialPort_ = openUART(serialPort_);
+
     for (i; i < 200; i++)
     {
 
