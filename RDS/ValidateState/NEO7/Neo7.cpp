@@ -149,9 +149,8 @@ void GPS::readGPS() // reads GPS serial data
               configAll();
               end = 1;
            */
-
-        // serialClose(serialPort_);
     }
+    serialClose(serialPort_);
 }
 
 void GPS::convertData() // converts GPS serial data to decimal degrees
