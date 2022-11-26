@@ -131,17 +131,17 @@ void GPS::readGPS() // reads GPS serial data
             end = 1;
         }
 
-        if ((sd = serialDataAvail(serialPort_)) < 0)
-        {
-            printf("No data available from GPS\n");
-            configAll();
-            end = 1;
-        }
+        /*   if ((sd = serialDataAvail(serialPort_)) < 0)
+          {
+              printf("No data available from GPS\n");
+              configAll();
+              end = 1;
+          } */
 
         GGA_Check[0] = GGA_Check[1];
         GGA_Check[1] = GGA_Check[2];
         GGA_Check[2] = GPS_Data;
-        test = serialPort_.read();
+        test = read(serialPort_, "$", 1);
         printf("%c", test);
     }
 }
