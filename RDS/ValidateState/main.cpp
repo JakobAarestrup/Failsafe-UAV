@@ -29,13 +29,13 @@ int main()
   IMU IMU2;
   // IMU IMU2;
   BAR B1;
-  // B1.calibrateBAR();
+  B1.calibrateBAR();
   /**
    * @brief  Configuration of Sensors
    *
    */
-  G1.configAll(); // configs the GPS
-  // I1.initializeI2C(); // Initialize IMU1
+  G1.configAll();     // configs the GPS
+  I1.initializeI2C(); // Initialize IMU1
   //  I2.initializeI2C(); // Initialize IMU2
   /**
    * @brief Calibration..
@@ -68,7 +68,6 @@ int main()
     while (mymillis() - startofloop < 200)
     {
     }
-
     printf("Loop Time %d\n", mymillis() - startofloop);
   }
   return 0;
