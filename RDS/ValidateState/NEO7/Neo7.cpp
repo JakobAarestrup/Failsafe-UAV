@@ -135,17 +135,14 @@ void GPS::readGPS() // reads GPS serial data
         }
         else
         {
-            GGA_Check[0] = GGA_Check[1];
-            GGA_Check[1] = GGA_Check[2];
-            GGA_Check[2] = GPS_Data;
+            printf("No data available from GPS\n");
+            serialPort_ = openUART(serialPort_);
+            end = 1;
         }
 
-        /*      else
-             {
-                 printf("No data available from GPS\n");
-                 serialPort_ = openUART(serialPort_);
-                 end = 1;
-             } */
+        GGA_Check[0] = GGA_Check[1];
+        GGA_Check[1] = GGA_Check[2];
+        GGA_Check[2] = GPS_Data;
 
         printf("%c", GPS_Data);
     }
