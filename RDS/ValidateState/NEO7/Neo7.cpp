@@ -51,6 +51,7 @@ void GPS::configAll()
     write(serialPort_, UBX_protocol::RMC, UBX_protocol::GP_Length); // disable RMC
     write(serialPort_, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG
     printf("Configuration is done! \n");
+    serialClose(serialPort_);
 }
 
 void GPS::readGPS() // reads GPS serial data
@@ -146,13 +147,6 @@ void GPS::readGPS() // reads GPS serial data
             // end = 1;
             i = 200;
         }
-
-        /*   if ((sd = serialDataAvail(serialPort_)) < 0)
-
-              printf("No data available from GPS\n");
-              configAll();
-              end = 1;
-           */
     }
     serialClose(serialPort_);
 }
