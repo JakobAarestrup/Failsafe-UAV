@@ -56,7 +56,7 @@ int main()
    */
   while (1)
   {
-    startofloop = mymillis();
+    // startofloop = mymillis();
     RDS.UpdateSystemValues(G1, B1, IMU2); // gets all values from sensors
 
     // RDS.LogData(); // Sends sensor data to log file
