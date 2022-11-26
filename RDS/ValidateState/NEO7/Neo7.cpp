@@ -64,7 +64,7 @@ void GPS::readGPS() // reads GPS serial data
     unsigned char GPS_Data = 0;
     char sd;
     int end = 0;
-
+    char test;
     char *start_ptr, *end_ptr, *jump_ptr, *gps;
 
     while (end < 1)
@@ -141,8 +141,8 @@ void GPS::readGPS() // reads GPS serial data
         GGA_Check[0] = GGA_Check[1];
         GGA_Check[1] = GGA_Check[2];
         GGA_Check[2] = GPS_Data;
-
-        // printf("%c", GPS_Data);
+        test = serialPort_.read();
+        printf("%c", test);
     }
 }
 
