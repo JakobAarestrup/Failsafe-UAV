@@ -61,7 +61,7 @@ void GPS::readGPS() // reads GPS serial data
     unsigned char GGA_Flag = 0;
     unsigned char GGA_Index = 0;
     unsigned char GGA_Received = 0;
-    char GPS_Data = 0;
+    unsigned char GPS_Data = 0;
     char sd;
     int end = 0;
 
@@ -131,7 +131,6 @@ void GPS::readGPS() // reads GPS serial data
             SV_ = atoi(start_ptr);              // Convert char to int & store in variable
 
             printf("latitude: %f %s longitude: %f %s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
-
             end = 1;
         }
         else
