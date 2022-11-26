@@ -71,7 +71,7 @@ int main()
        }
 
        printf("Loop Time %d\n", mymillis() - startofloop); */
-    usleep(200000);
+    usleep(1000000);
     /*   if (N > 5)
       {
         break;
