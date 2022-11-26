@@ -136,7 +136,7 @@ void GPS::readGPS() // reads GPS serial data
         /*  else
          {
              printf("No data available from GPS\n");
-             serialPort_ = openUART(serialPort_);
+             configAll()
              end = 1;
          } */
 
