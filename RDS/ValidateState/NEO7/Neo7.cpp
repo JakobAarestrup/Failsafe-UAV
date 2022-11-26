@@ -69,88 +69,87 @@ void GPS::readGPS() // reads GPS serial data
 
     while (end < 1)
     {
-        if (serialDataAvail(serialPort_)) // check for any data available on serial port
+
+        ; // receive character serially
+
+        if ((GPS_Data = serialGetchar(serialPort_)) == '$') // check for start of NMEA message
         {
-            GPS_Data = serialGetchar(serialPort_); // receive character serially
+            GGA_Flag = 0;
+            GGA_Index = 0;
+        }
 
-            if (GPS_Data == '$') // check for start of NMEA message
+        else if (GGA_Flag == 1)
+        {
+            buff[GGA_Index++] = GPS_Data;
+
+            if (GPS_Data == '\r')
             {
-                GGA_Flag = 0;
-                GGA_Index = 0;
-            }
-
-            else if (GGA_Flag == 1)
-            {
-                buff[GGA_Index++] = GPS_Data;
-
-                if (GPS_Data == '\r')
-                {
-                    GGA_Received = 1;
-                }
-            }
-
-            else if (GGA_Check[0] == 'G' && GGA_Check[1] == 'G' && GGA_Check[2] == 'A')
-            {
-                GGA_Flag = 1;
-                GGA_Check[0] = 0;
-                GGA_Check[0] = 0;
-                GGA_Check[0] = 0;
-            }
-
-            else
-            {
-                GGA_Check[0] = GGA_Check[1];
-                GGA_Check[1] = GGA_Check[2];
-                GGA_Check[2] = GPS_Data;
+                GGA_Received = 1;
             }
         }
-        /*      else
-             {
-                 printf("No data available from GPS\n");
-                 serialPort_ = openUART(serialPort_);
-                 end = 1;
-             } */
 
-        if (GGA_Received == 1)
+        else if (GGA_Check[0] == 'G' && GGA_Check[1] == 'G' && GGA_Check[2] == 'A')
         {
-            // printf("GPGGA:%s\n", buff);
-            gps = buff;
-            start_ptr = strchr(gps, ',');       // find start of latitude field
-            end_ptr = strchr(++start_ptr, ','); // find end of field...
-            latitude_ = atof(start_ptr);        // Convert char to float & store in variable
-
-            start_ptr = strchr(start_ptr, ','); // find start of pole NS field
-            end_ptr = strchr(++start_ptr, ','); // find end of field... ¨
-            jump_ptr = end_ptr;
-            *end_ptr = '\0';
-            strcpy(NS_, start_ptr);
-
-            // printf(" lat: %f DDDDDDDDDD:%s\n",latitude,NS_);
-
-            start_ptr = jump_ptr;               // find start of longitude field
-            end_ptr = strchr(++start_ptr, ','); // find end of field...
-            jump_ptr = end_ptr;
-            *end_ptr = '\0'; // and zero terminate
-            longitude_ = atof(start_ptr);
-
-            // printf(" lat: %f D:%s long: %f\n",latitude,NS_,longitude);
-
-            start_ptr = jump_ptr;               // find start of pole EW field
-            end_ptr = strchr(++start_ptr, ','); // find end of field...
-            *end_ptr = '\0';                    // and zero terminate
-            strcpy(EW_, start_ptr);
-
-            start_ptr = strchr(++end_ptr, ','); // find start of satellite field
-            end_ptr = strchr(++start_ptr, ','); // find end of field...
-            *end_ptr = '\0';                    // and zero terminate
-            SV_ = atoi(start_ptr);              // Convert char to int & store in variable
-
-            printf("latitude: %f %s longitude: %f %s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
-
-            end = 1;
+            GGA_Flag = 1;
+            GGA_Check[0] = 0;
+            GGA_Check[0] = 0;
+            GGA_Check[0] = 0;
         }
-        printf("%c|", GPS_Data);
+
+        else
+        {
+            GGA_Check[0] = GGA_Check[1];
+            GGA_Check[1] = GGA_Check[2];
+            GGA_Check[2] = GPS_Data;
+        }
     }
+    /*      else
+         {
+             printf("No data available from GPS\n");
+             serialPort_ = openUART(serialPort_);
+             end = 1;
+         } */
+
+    if (GGA_Received == 1)
+    {
+        // printf("GPGGA:%s\n", buff);
+        gps = buff;
+        start_ptr = strchr(gps, ',');       // find start of latitude field
+        end_ptr = strchr(++start_ptr, ','); // find end of field...
+        latitude_ = atof(start_ptr);        // Convert char to float & store in variable
+
+        start_ptr = strchr(start_ptr, ','); // find start of pole NS field
+        end_ptr = strchr(++start_ptr, ','); // find end of field... ¨
+        jump_ptr = end_ptr;
+        *end_ptr = '\0';
+        strcpy(NS_, start_ptr);
+
+        // printf(" lat: %f DDDDDDDDDD:%s\n",latitude,NS_);
+
+        start_ptr = jump_ptr;               // find start of longitude field
+        end_ptr = strchr(++start_ptr, ','); // find end of field...
+        jump_ptr = end_ptr;
+        *end_ptr = '\0'; // and zero terminate
+        longitude_ = atof(start_ptr);
+
+        // printf(" lat: %f D:%s long: %f\n",latitude,NS_,longitude);
+
+        start_ptr = jump_ptr;               // find start of pole EW field
+        end_ptr = strchr(++start_ptr, ','); // find end of field...
+        *end_ptr = '\0';                    // and zero terminate
+        strcpy(EW_, start_ptr);
+
+        start_ptr = strchr(++end_ptr, ','); // find start of satellite field
+        end_ptr = strchr(++start_ptr, ','); // find end of field...
+        *end_ptr = '\0';                    // and zero terminate
+        SV_ = atoi(start_ptr);              // Convert char to int & store in variable
+
+        printf("latitude: %f %s longitude: %f %s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
+
+        end = 1;
+    }
+    printf("%c|", GPS_Data);
+}
 }
 
 void GPS::convertData() // converts GPS serial data to decimal degrees
