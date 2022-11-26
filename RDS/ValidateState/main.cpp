@@ -59,18 +59,18 @@ int main()
     startofloop = mymillis();
     RDS.UpdateSystemValues(G1, B1, IMU2); // gets all values from sensors
 
-    RDS.LogData(); // Sends sensor data to log file
-                   /*  RDS.AxisControl();   // Checks for Failure on the Axises
-                    RDS.RouteControl();  // Checks for Failure in the KML
-                    RDS.HeightControl(); // Checks for Failure for height
-                                         // N++; */
-                   /*
-                       while (mymillis() - startofloop < 100)
-                       {
-                         // usleep(100);
-                       }
-               
-                       printf("Loop Time %d\n", mymillis() - startofloop); */
+    // RDS.LogData(); // Sends sensor data to log file
+    /*  RDS.AxisControl();   // Checks for Failure on the Axises
+     RDS.RouteControl();  // Checks for Failure in the KML
+     RDS.HeightControl(); // Checks for Failure for height
+                          // N++; */
+    /*
+        while (mymillis() - startofloop < 100)
+        {
+          // usleep(100);
+        }
+
+        printf("Loop Time %d\n", mymillis() - startofloop); */
     usleep(200000);
     /*   if (N > 5)
       {
