@@ -61,6 +61,7 @@ void GPS::readGPS() // reads GPS serial data
     unsigned char GGA_Flag = 0;
     unsigned char GGA_Index = 0;
     unsigned char GGA_Received = 0;
+    int fd;
     int end = 0;
 
     char *start_ptr, *end_ptr, *jump_ptr, *gps;
@@ -107,7 +108,18 @@ void GPS::readGPS() // reads GPS serial data
         {
             printf("No data available from GPS\n");
             /* OPEN UART */
-            openUART(serialPort_);
+            if ((fd = serialOpen("/dev/ttyS0", 9600)) < 0) // open serial port with set baudrate
+            {
+                fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
+
+                return 1;
+            }
+
+            if (wiringPiSetup() == -1) // initializes wiringPi setup
+            {
+                fprintf(stdout, "Unable to start wiringPi: %s\n", strerror(errno)); // error handling
+                return 1;
+            }
             end = 1;
         }
 
