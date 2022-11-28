@@ -5,6 +5,7 @@
 #include "I2C.hpp"
 #include "LIS3MDL.hpp"
 #include "LSM6DSOX.hpp"
+#include <wiringPi.h>
 
 // Definitions
 #define PI 3.14159265358979323846
@@ -294,7 +295,7 @@ void IMU::ComplementaryFilter()
     printf("Roll_filtered: %f, Pitch filtered: %f, GyroZangle: %f\n", CompRoll_, CompPitch_, CompYaw_);
 }
 
-int ValidateState::freeFall(int IMU)
+int IMU::freeFall(int IMU)
 {
     int freeFall = 0;
     /**
@@ -307,22 +308,23 @@ int ValidateState::freeFall(int IMU)
 
     if (IMU == 1)
     {
-        fall_ = 1; // replace 1 with output of interrupt status on GPIO pin # for IMU1
+        fall_ = digitalRead(int 20);
+        ; // output of interrupt status on GPIO pin 20 for IMU1
         if (fall_ == 1)
         {
             I1.WriteI2C(LSM6DSOX_ADDR1, lSM6DSOX_WAKE_UP_DUR, 1, 0b00000000); // 0x00 - Set event duration (FF_DUR5 bit)
             I1.WriteI2C(LSM6DSOX_ADDR1, lSM6DSOX_FREE_FALL, 1, 0b00110000);   // 0x33 - Set FF threshold (FF_THS[2:0] = 156mg)
-            freeFall = 1;                                                     // replace 1 with output of interrupt status on GPIO pin # for IMU1                                                     // replace 1 with output of interrupt status on GPIO pin # for IMU1
+            freeFall = digitalRead(int 20);                                   // replace 1 with output of interrupt status on GPIO pin # for IMU1
         }
     }
     else if (IMU == 2)
     {
-        fall_ = 1; // replace 1 with output of interrupt status on GPIO pin # for IMU1
+        fall_ = digitalRead(int 21); // output of interrupt status on GPIO pin 21 for IMU2
         if (fall_ == 1)
         {
             I1.WriteI2C(LSM6DSOX_ADDR2, lSM6DSOX_WAKE_UP_DUR, 1, 0b00000000); // 0x00 - Set event duration (FF_DUR5 bit)
             I1.WriteI2C(LSM6DSOX_ADDR2, lSM6DSOX_FREE_FALL, 1, 0b00110000);   // 0x33 - Set FF threshold (FF_THS[2:0] = 156mg)
-            freeFall = 1;                                                     // replace 1 with output of interrupt status on GPIO pin # for IMU2
+            freeFall = digitalRead(int 21);                                   // output of interrupt status on GPIO pin 21 for IMU2
         }
     }
     return freeFall;
