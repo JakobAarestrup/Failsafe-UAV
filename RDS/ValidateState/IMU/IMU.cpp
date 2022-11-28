@@ -294,6 +294,40 @@ void IMU::ComplementaryFilter()
     printf("Roll_filtered: %f, Pitch filtered: %f, GyroZangle: %f\n", CompRoll_, CompPitch_, CompYaw_);
 }
 
+int ValidateState::freeFall(int IMU)
+{
+    int freeFall = 0;
+    /**
+     * @brief Setup free fall detection for both IMU1 and IMU2
+     */
+    I1.WriteI2C(LSM6DSOX_ADDR1, lSM6DSOX_WAKE_UP_DUR, 1, 0b00000000); // 0x00 - Set event duration (FF_DUR5 bit)
+    I1.WriteI2C(LSM6DSOX_ADDR1, lSM6DSOX_FREE_FALL, 1, 0b00110111);   // 0x33 - Set FF threshold (FF_THS[2:0] = 500mg)
+    I2.WriteI2C(LSM6DSOX_ADDR2, lSM6DSOX_WAKE_UP_DUR, 1, 0b00000000); // 0x00 - Set event duration (FF_DUR5 bit)
+    I2.WriteI2C(LSM6DSOX_ADDR2, lSM6DSOX_FREE_FALL, 1, 0b00110111);   // 0x33 - Set FF threshold (FF_THS[2:0] = 500mg)
+
+    if (IMU == 1)
+    {
+        fall_ = 1; // replace 1 with output of interrupt status on GPIO pin # for IMU1
+        if (fall_ == 1)
+        {
+            I1.WriteI2C(LSM6DSOX_ADDR1, lSM6DSOX_WAKE_UP_DUR, 1, 0b00000000); // 0x00 - Set event duration (FF_DUR5 bit)
+            I1.WriteI2C(LSM6DSOX_ADDR1, lSM6DSOX_FREE_FALL, 1, 0b00110000);   // 0x33 - Set FF threshold (FF_THS[2:0] = 156mg)
+            freeFall = 1;                                                     // replace 1 with output of interrupt status on GPIO pin # for IMU1                                                     // replace 1 with output of interrupt status on GPIO pin # for IMU1
+        }
+    }
+    else if (IMU == 2)
+    {
+        fall_ = 1; // replace 1 with output of interrupt status on GPIO pin # for IMU1
+        if (fall_ == 1)
+        {
+            I1.WriteI2C(LSM6DSOX_ADDR2, lSM6DSOX_WAKE_UP_DUR, 1, 0b00000000); // 0x00 - Set event duration (FF_DUR5 bit)
+            I1.WriteI2C(LSM6DSOX_ADDR2, lSM6DSOX_FREE_FALL, 1, 0b00110000);   // 0x33 - Set FF threshold (FF_THS[2:0] = 156mg)
+            freeFall = 1;                                                     // replace 1 with output of interrupt status on GPIO pin # for IMU2
+        }
+    }
+    return freeFall;
+}
+
 float IMU::getRoll() const
 {
     return CompRoll_;
