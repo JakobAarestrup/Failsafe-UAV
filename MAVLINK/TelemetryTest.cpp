@@ -1,17 +1,18 @@
 #include <iostream>
+#include <unistd.h>
 #include <mavsdk/mavsdk.h>
 
 int main()
 {
     mavsdk::Mavsdk mavsdk;
-    ConnectionResult conn_result = mavsdk.add_udp_connection();
+    mavsdk::ConnectionResult conn_result = mavsdk.add_udp_connection();
     // Wait for the system to connect via heartbeat
-    while (mavsdk.system().size() == 0)
+    while (mavsdk.systems().size() == 0)
     {
-        sleep_for(seconds(1));
+        usleep(1000000);
     }
     // System got discovered.
-    System system = mavsdk.systems()[0];
+    mavsdk::System system = mavsdk.systems()[0];
 
     return 0;
 }
