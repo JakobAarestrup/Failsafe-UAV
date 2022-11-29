@@ -5,6 +5,7 @@
 #include "I2C.hpp"
 #include "LIS3MDL.hpp"
 #include "LSM6DSOX.hpp"
+#include <wiringPi.h>
 
 // Definitions
 #define PI 3.14159265358979323846
@@ -292,6 +293,41 @@ void IMU::ComplementaryFilter()
     CompPitch_ = AA * (CompPitch_ + gyroCalibX_ * DT) + (1 - AA) * XL_Pitch_; // 97% Gyro 3% Accelerometer
     CompYaw_ = 0.5 * (CompYaw_ + gyroCalibZ_ * DT) + (1 - 0.5) * MAG_Yaw_;    // 50% Gyro 50% Magnometer
     printf("Roll_filtered: %f, Pitch filtered: %f, GyroZangle: %f\n", CompRoll_, CompPitch_, CompYaw_);
+}
+
+int IMU::freeFall(int IMU)
+{
+    int freeFall = 0;
+    /**
+     * @brief Setup free fall detection for both IMU1 and IMU2
+     */
+    I1.WriteI2C(LSM6DSOX_ADDR1, lSM6DSOX_WAKE_UP_DUR, 1, 0b00000000); // 0x00 - Set event duration (FF_DUR5 bit)
+    I1.WriteI2C(LSM6DSOX_ADDR1, lSM6DSOX_FREE_FALL, 1, 0b00110111);   // 0x33 - Set FF threshold (FF_THS[2:0] = 500mg)
+    I2.WriteI2C(LSM6DSOX_ADDR2, lSM6DSOX_WAKE_UP_DUR, 1, 0b00000000); // 0x00 - Set event duration (FF_DUR5 bit)
+    I2.WriteI2C(LSM6DSOX_ADDR2, lSM6DSOX_FREE_FALL, 1, 0b00110111);   // 0x33 - Set FF threshold (FF_THS[2:0] = 500mg)
+
+    if (IMU == 1)
+    {
+        fall_ = digitalRead(int 20);
+        ; // output of interrupt status on GPIO pin 20 for IMU1
+        if (fall_ == 1)
+        {
+            I1.WriteI2C(LSM6DSOX_ADDR1, lSM6DSOX_WAKE_UP_DUR, 1, 0b00000000); // 0x00 - Set event duration (FF_DUR5 bit)
+            I1.WriteI2C(LSM6DSOX_ADDR1, lSM6DSOX_FREE_FALL, 1, 0b00110000);   // 0x33 - Set FF threshold (FF_THS[2:0] = 156mg)
+            freeFall = digitalRead(int 20);                                   // replace 1 with output of interrupt status on GPIO pin # for IMU1
+        }
+    }
+    else if (IMU == 2)
+    {
+        fall_ = digitalRead(int 21); // output of interrupt status on GPIO pin 21 for IMU2
+        if (fall_ == 1)
+        {
+            I1.WriteI2C(LSM6DSOX_ADDR2, lSM6DSOX_WAKE_UP_DUR, 1, 0b00000000); // 0x00 - Set event duration (FF_DUR5 bit)
+            I1.WriteI2C(LSM6DSOX_ADDR2, lSM6DSOX_FREE_FALL, 1, 0b00110000);   // 0x33 - Set FF threshold (FF_THS[2:0] = 156mg)
+            freeFall = digitalRead(int 21);                                   // output of interrupt status on GPIO pin 21 for IMU2
+        }
+    }
+    return freeFall;
 }
 
 float IMU::getRoll() const
