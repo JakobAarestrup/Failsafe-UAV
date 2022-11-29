@@ -5,7 +5,7 @@
 int main()
 {
     mavsdk::Mavsdk mavsdk;
-    mavsdk::ConnectionResult conn_result = mavsdk.add_udp_connection();
+    mavsdk.add_udp_connection();
     // Wait for the system to connect via heartbeat
     while (mavsdk.systems().size() == 0)
     {
