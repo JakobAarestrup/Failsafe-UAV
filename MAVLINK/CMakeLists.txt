@@ -21,7 +21,6 @@ add_executable(Tele
 
 # Specify your app's executable name and a list of linked libraries
 target_link_libraries(Tele
-    MAVSDK::mavsdk             #All apps link against mavsdk library
-    MAVSDK::mavsdk_telemetry   #If telemetry plugin used by app ...
+MAVSDK::mavsdk
     # ... Any other linked libraries
 )
