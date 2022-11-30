@@ -11,7 +11,7 @@ int main()
 
     int fd;
     int data;
-    if ((fd = serialOpen("/dev/ttyS0", 9600)) < 0)
+    if ((fd = serialOpen("/dev/ttyS0", 57600)) < 0)
     {
         printf("Failed\n");
     }
