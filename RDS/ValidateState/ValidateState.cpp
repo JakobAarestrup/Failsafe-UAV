@@ -43,7 +43,7 @@ void ValidateState::configValidateState()
  * @brief Get the Values from MAVLink
  *
  */
-void ValidateState::SetMAVLinkValues(alt, long, lat, roll, pitch, yaw)
+void ValidateState::SetMAVLinkValues(float alt, float long, float lat, float roll, float pitch, float yaw)
 {
     altitudeSYS_ = alt;
     longitudeSYS_ = long;

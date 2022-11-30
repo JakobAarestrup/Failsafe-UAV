@@ -62,18 +62,14 @@ void GPS::readGPS() // reads GPS serial data
     unsigned char GGA_Flag = 0;
     unsigned char GGA_Index = 0;
     unsigned char GGA_Received = 0;
-    char GPS_Data = 0;
-    char sd;
-    int end = 0;
-    char test;
     char *start_ptr, *end_ptr, *jump_ptr, *gps;
-    int i = 0;
-    // configAll();
+    // int i = 0;
+    //  configAll();
 
     /* OPEN UART */
     serialPort_ = openUART(serialPort_);
 
-    for (i; i < 200; i++)
+    for (int i = 0; i < 200; i++)
     {
 
         GPS_Data_ = serialGetchar(serialPort_); /* receive character serially */

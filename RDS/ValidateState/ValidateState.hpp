@@ -18,7 +18,7 @@ public:
   void GetGPSValues(GPS NEO);
   void GetIMUValues(IMU sensor);
   void GetBaroValues(BAR barometer);
-  void SetMAVLinkValues(alt, long, lat, roll, pitch, yaw);
+  void SetMAVLinkValues(float alt, float lng, float lat, float roll, float pitch, float yaw);
 
   void UpdateSystemValues(GPS NEO, BAR barometer, IMU Sensor);
   void LogData();
