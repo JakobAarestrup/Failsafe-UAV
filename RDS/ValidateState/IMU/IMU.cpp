@@ -166,7 +166,7 @@ void IMU::readGYRO(int IMU)
      *
      */
     /*
-    /* hardcoded offset */
+    //hardcoded offset
     /*if (gx > 0)
     {
        gyroCalibX_ = gx - gyroDrift;   // Gyroscope X-angle in deg/s
@@ -298,7 +298,7 @@ void IMU::ComplementaryFilter()
 /**
  * @brief Free fall function
  */
-int IMU::freeFall(int IMU)
+/* int IMU::freeFall(int IMU)
 {
     /*  int freeFall = 0;
 
@@ -324,9 +324,11 @@ int IMU::freeFall(int IMU)
          }
      }
      return freeFall; */
+return 0;
 }
+* /
 
-float IMU::getRoll() const
+    float IMU::getRoll() const
 {
     return CompRoll_;
 }
