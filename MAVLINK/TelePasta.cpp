@@ -101,7 +101,8 @@ int main(int argc, char **argv)
     float latitude;
 
     // Set up callback to monitor altitude while the vehicle is in flight
-    telemetry.subscribe_position(Telemetry::Position position);
+    telemetry.subscribe_position((Telemetry::Position position));
+
     relative_alt = position.relative_altitude_m;
     longitude = position.longitude_deg;
     latitude = position.latitude_deg;
