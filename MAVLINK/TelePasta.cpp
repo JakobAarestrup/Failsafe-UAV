@@ -89,6 +89,13 @@ int main(int argc, char **argv)
         return 1;
     }
 
+    const auto set_rate_result1 = telemetry.set_rate_attitude_euler(0.5);
+    if (set_rate_result1 != Telemetry::Result::Success)
+    {
+        std::cerr << "Setting rate failed: " << set_rate_result1 << '\n';
+        return 1;
+    }
+
     // Set up callback to monitor altitude while the vehicle is in flight
     telemetry.subscribe_position([](Telemetry::Position position)
                                  { std::cout << "Altitude: " << position.relative_altitude_m << " m" << std::endl
