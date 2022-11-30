@@ -41,22 +41,27 @@ std::shared_ptr<System> get_system(Mavsdk &mavsdk)
 
 int main()
 {
-    mavsdk::Mavsdk mavsdk;
-    // ConnectionResult conn_result = mavsdk.add_udp_connection();
-    //  Wait for the system to connect via heartbeat
-    while (mavsdk.systems().size() == 0)
+    Mavsdk mavsdk;
+    ConnectionResult conn_result = mavsdk.add_udp_connection();
+
+    if (conn_result != ConnectionResult::Success)
     {
-        usleep(1000000);
+        std::cerr << "Connection failed: " << conn_result << '\n';
+        return 1;
+
+        //  Wait for the system to connect via heartbeat
+
+        while (mavsdk.systems().size() == 0)
+        {
+            usleep(1000000);
+        }
+
+        auto system = get_system(mavsdk);
+        if (!system)
+        {
+            return 1;
+        }
+        // System got discovered.
+        // mavsdk::System system = mavsdk.systems()[0];
+        return 0;
     }
-
-    // System got discovered.
-    mavsdk::System system = mavsdk.systems()[0];
-    return 0;
-}
-
-/*  Mavsdk mavsdk;
-   ConnectionResult connection_result = mavsdk.add_udp_connection();
-
-   if (connection_result != ConnectionResult::Success) {
-       std::cerr << "Connection failed: " << connection_result << '\n';
-       return 1; */
