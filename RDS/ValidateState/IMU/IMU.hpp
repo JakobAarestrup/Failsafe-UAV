@@ -12,7 +12,7 @@ public:
     void ConvertACCData();
     void ConvertMagData();
     void ComplementaryFilter();
-    int freeFall(int IMU);
+    // int freeFall(int IMU);
 
     float getRoll() const;
     float getPitch() const;
@@ -42,5 +42,5 @@ private:
     float CompPitch_;
     float CompYaw_;
 
-    int fall_;
+    // int fall_;
 };
