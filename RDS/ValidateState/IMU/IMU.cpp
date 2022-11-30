@@ -167,7 +167,7 @@ void IMU::readGYRO(int IMU)
      */
     /*
     //hardcoded offset
-    /*if (gx > 0)
+    if (gx > 0)
     {
        gyroCalibX_ = gx - gyroDrift;   // Gyroscope X-angle in deg/s
     }
@@ -300,7 +300,7 @@ void IMU::ComplementaryFilter()
  */
 /* int IMU::freeFall(int IMU)
 {
-    /*  int freeFall = 0;
+ int freeFall = 0;
 
      if (IMU == 1)
      {
@@ -323,12 +323,12 @@ void IMU::ComplementaryFilter()
              freeFall = digitalRead(int 29);                                   // output of interrupt status on GPIO pin 21 for IMU2
          }
      }
-     return freeFall; */
+     return freeFall;
 return 0;
 }
-* /
+*/
 
-    float IMU::getRoll() const
+float IMU::getRoll() const
 {
     return CompRoll_;
 }
