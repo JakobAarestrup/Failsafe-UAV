@@ -24,3 +24,9 @@ target_link_libraries(Tele
 MAVSDK::mavsdk
     # ... Any other linked libraries
 )
+
+if(NOT MSVC)
+    add_compile_options(Tele PRIVATE -Wall -Wextra)
+else()
+    add_compile_options(Tele PRIVATE -WX -W2)
+endif()
