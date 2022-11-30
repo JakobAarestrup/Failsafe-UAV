@@ -15,13 +15,12 @@ find_package(MAVSDK REQUIRED)
 
 # Specify your app's executable name, and list of source files used to create it.
 add_executable(RDS
-    TelePasta.cpp
+    main.cpp
     NEO7/Neo7.cpp
     IMU/IMU.cpp
     IMU/I2C.cpp
     IMU/I2Cdev.cpp
-    BAR.cpp
-    
+    BAR/BAR.cpp
     # ... any other source files
 )
 
