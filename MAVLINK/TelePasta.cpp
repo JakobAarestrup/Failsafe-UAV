@@ -116,6 +116,9 @@ int main(int argc, char **argv)
 
     while (1)
     {
+        std::cout << "Altitude: " << relative_alt << " m" << std::endl
+                  << "Latitude: " << longitude << std::endl
+                  << "Longitude: " << latitude << '\n';
         sleep_for(seconds(1));
     }
 
