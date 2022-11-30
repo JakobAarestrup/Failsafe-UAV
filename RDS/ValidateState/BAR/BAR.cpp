@@ -58,7 +58,7 @@ int BAR::getCalibration()
 void BAR::calibrateBAR()
 {
 
-    for (int i = 0;; i < 31; i++)
+    for (int i = 0; i < 31; i++)
     {
         if (calibration_ == 0)
         {
