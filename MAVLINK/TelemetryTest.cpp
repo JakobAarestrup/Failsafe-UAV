@@ -37,12 +37,10 @@ int main()
         std::cout << "Setting rate failed:" << set_rate_result << '\n';
     }
 
-    void mavsdk::Telemetry::subscribe_position(PositionCallback callback)
-
-        telemetry.subscribe_position([](Telemetry::Position position)
-                                     { std::cout << "Altitude: " << position.relative_altitude_m << " m" << std::endl
-                                                 << "Latitude: " << position.latitude_deg << std::endl
-                                                 << "Longitude: " << position.longitude_deg << '\n'; });
+    telemetry.subscribe_position([](Telemetry::Position position)
+                                 { std::cout << "Altitude: " << position.relative_altitude_m << " m" << std::endl
+                                             << "Latitude: " << position.latitude_deg << std::endl
+                                             << "Longitude: " << position.longitude_deg << '\n'; });
     // System got discovered.
     // mavsdk::System system = mavsdk.systems()[0];
     return 0;
