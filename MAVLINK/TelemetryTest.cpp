@@ -20,6 +20,7 @@ int main()
 
     while (mavsdk.systems().size() == 0)
     {
+        printf("Waiting to discover system...");
         usleep(1000000);
     }
 
