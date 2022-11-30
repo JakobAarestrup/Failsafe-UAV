@@ -99,7 +99,9 @@ int main(int argc, char **argv)
     float relative_alt;
     float longitude;
     float latitude;
-
+    float roll;
+    float pitch;
+    float yaw;
     // telemetry.attitude_euler(Telemetry::EulerAngler euler);  // Set up callback to monitor altitude while the vehicle is in flight
 
     /* telemetry.subscribe_attitude_euler([](Telemetry::EulerAngle euler){
@@ -116,6 +118,12 @@ int main(int argc, char **argv)
         std::cout << "Altitude: " << relative_alt << " m" << std::endl
                   << "Latitude: " << longitude << std::endl
                   << "Longitude: " << latitude << '\n';
+
+        const Telemetry::EulerAngle euler = telemetry.attitude_euler();
+        roll = euler.roll_deg;
+        pitch = euler.pitch_deg;
+        yaw = euler.yaw_deg;
+        std::cout << "Euler:     (" << roll << ", " << pitch << ", " << yaw << ")" << std::endl;
         sleep_for(seconds(1));
     }
 
