@@ -231,7 +231,6 @@ int8_t I2Cdev::readWords(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint1
 {
     int8_t count = 0;
     count = readBytes(devAddr, regAddr, length * 2, reinterpret_cast<uint8_t *>(data));
-    timeout = 0;
     return count / 2;
 }
 
