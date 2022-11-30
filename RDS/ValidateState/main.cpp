@@ -146,6 +146,9 @@ int main()
     return 1;
   }
 
+   telemetry.subscribe_position([](Telemetry::Position position);
+   
+
   /**
    * @brief starting loop for checking and logging sensor data
    *
@@ -155,6 +158,9 @@ int main()
     startofloop = mymillis();
     RDS.UpdateSystemValues(G1, B1, IMU2); // gets all values from sensors
 
+    /*Sets all values from MAVLINK*/
+    RDS.SetMavLinkValues(position.relative_altitude_m, position.latitude_deg, position.longitude_deg,
+                         euler.roll_deg, euler.pitch_deg, euler.yaw_deg);
     RDS.LogData();       // Sends sensor data to log file
     RDS.AxisControl();   // Checks for Failure on the Axises
     RDS.RouteControl();  // Checks for Failure in the KML
