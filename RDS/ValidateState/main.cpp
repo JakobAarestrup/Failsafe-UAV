@@ -5,12 +5,70 @@
 #include <sys/time.h>
 #include <time.h>
 
+/**
+ * Includes from telemetry example code
+ */
+#include <iostream>
+#include <future>
+#include <memory>
+#include <thread>
+#include <mavsdk/mavsdk.h>
+#include <mavsdk/plugins/action/action.h>
+#include <mavsdk/plugins/telemetry/telemetry.h>
+
+using namespace mavsdk;
+using std::chrono::seconds;
+using std::this_thread::sleep_for;
+
+std::shared_ptr<System> get_system(Mavsdk &mavsdk)
+{
+  std::cout << "Waiting to discover system...\n";
+  auto prom = std::promise<std::shared_ptr<System>>{};
+  auto fut = prom.get_future();
+
+  // We wait for new systems to be discovered, once we find one that has an
+  // autopilot, we decide to use it.
+  mavsdk.subscribe_on_new_system([&mavsdk, &prom]()
+                                 {
+        auto system = mavsdk.systems().back();
+
+        if (system->has_autopilot()) {
+            std::cout << "Discovered autopilot\n";
+
+            // Unsubscribe again as we only want to find one system.
+            mavsdk.subscribe_on_new_system(nullptr);
+            prom.set_value(system);
+        } });
+
+  // We usually receive heartbeats at 1Hz, therefore we should find a
+  // system after around 3 seconds max, surely.
+  if (fut.wait_for(seconds(3)) == std::future_status::timeout)
+  {
+    std::cerr << "No autopilot found.\n";
+    return {};
+  }
+
+  // Get discovered system now.
+  return fut.get();
+}
+
 int mymillis()
 {
   struct timeval tv;
   gettimeofday(&tv, NULL);
   return (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
 }
+
+/* int main(int argc, char **argv)
+{
+  ValidateState RDS; // System
+    if (argc != 2)
+    {
+        RDS.usage(argv[0]);
+        return 1;
+    }
+    RDS.configValidateState(argv[1]);
+    */
 
 int main()
 {
@@ -51,7 +109,45 @@ int main()
   int startofloop;
 
   /**
-   * @brief starting of loop for checking and logging sensor data
+   * @brief MAVLINK connection.
+   *
+   */
+  Mavsdk mavsdk;
+  ConnectionResult connection_result = mavsdk.add_any_connection("serial:///dev/ttyS0:57600");
+
+  if (connection_result != ConnectionResult::Success)
+  {
+    std::cerr << "Connection failed: " << connection_result << '\n';
+    return 1;
+  }
+
+  auto system = get_system(mavsdk);
+  if (!system)
+  {
+    return 1;
+  }
+
+  // Instantiate plugins.
+  auto telemetry = Telemetry{system};
+  auto action = Action{system};
+
+  // We want to listen to the altitude of the drone at 1 Hz.
+  const auto set_rate_result = telemetry.set_rate_position(1.0);
+  if (set_rate_result != Telemetry::Result::Success)
+  {
+    std::cerr << "Setting rate failed: " << set_rate_result << '\n';
+    return 1;
+  }
+
+  const auto set_rate_result1 = telemetry.set_rate_attitude_euler(1.0);
+  if (set_rate_result1 != Telemetry::Result::Success)
+  {
+    std::cerr << "Setting rate failed: " << set_rate_result1 << '\n';
+    return 1;
+  }
+
+  /**
+   * @brief starting loop for checking and logging sensor data
    *
    */
   while (1)

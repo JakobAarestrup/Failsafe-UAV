@@ -18,6 +18,40 @@ ValidateState::~ValidateState()
 }
 
 /**
+ * @brief Configuration argument for ValidateState
+ *
+ */
+void ValidateState::Usage(const std::string &bin_name)
+{
+    std::cerr << "Usage : " << bin_name << " <connection_url>\n"
+              << "Connection URL format should be :\n"
+              << " For TCP : tcp://[server_host][:server_port]\n"
+              << " For UDP : udp://[bind_host][:bind_port]\n"
+              << " For Serial : serial:///path/to/serial/dev[:baudrate]\n"
+              << "For example, to connect to the simulator use URL: udp://:14540\n";
+}
+
+/**
+ * @brief configures the state of the Validate State
+ *
+ */
+void ValidateState::configValidateState()
+{
+}
+
+/**
+ * @brief Get the Values from MAVLink
+ *
+ */
+void ValidateState::SetMAVLinkValues(alt, long, lat, roll, pitch, yaw)
+{
+
+    RollSYS_ = roll;
+    PitchSYS_ = pitch;
+    YawSYS_ = yaw;
+}
+
+/**
  * @brief Gets the available GPS data from the NEO7 sensor and asks the drone over mavlink for their data.
  *
  * @param NEO Class object of GPS class
@@ -90,10 +124,10 @@ void ValidateState::GetBaroValues(BAR barometer)
  */
 void ValidateState::UpdateSystemValues(GPS NEO, BAR barometer, IMU sensor)
 {
-    // printf("Hello there updating values...\n");
-    // GetGPSValues(NEO);
+    GetMAVLinkValues();
+    /* GetGPSValues(NEO);
     GetBaroValues(barometer);
-    GetIMUValues(sensor);
+    GetIMUValues(sensor); */
 }
 
 /**
@@ -108,14 +142,20 @@ void ValidateState::LogData()
     Logger(GPSBaro);
     std::string IMU = "Roll: " + std::to_string(RollRDS_) + " Pitch: " + std::to_string(PitchRDS_) + " Yaw: " + std::to_string(YawRDS_);
     Logger(IMU);
-    /*  Logger("Longitude: %f %c Latitude: %f %c Satellites: %d Altitude: %f \n", longitudeRDS_, longPoleRDS_, latitudeRDS_, latPoleRDS_, SatellitesRDS_, altitudeRDS_); // GPS Data + baro
-     printf("Roll: %f%c Pitch: %f%c  Yaw: %f%c \n", RollRDS_, 176, PitchRDS_, 176, YawRDS_, 176);  */
-    // IMU Data
 
     /*
-    printf("Longitude: %f %c Latitude: %f %c Satellites: %d Altitude: %f \n", longitudeSYS_, longPoleSYS_, latitudeSYS_, latPoleSYS_, SatellitesSYS_, altitudeSYS_); // GPS Data + baro
-    printf("Roll: %f%c Pitch: %f%c  Yaw: %f%c \n", RollSYS_, 176, PitchSYS_, 176, YawSYS_, 176);  */
-    // IMU Data
+    std::string GPSBaroSYS = "Longitude: " + std::to_string(longitudeSYS_) + " " + longPoleSYS_[0] + " Latitude: " + std::to_string(latitudeSYS_) + " " + latPoleSYS_ + " Satellites: " + std::to_string(SatellitesSYS_) + " Altitude: " + std::to_string(altitudeSYS_);
+    Logger(GPSBaroSYS);
+    std::string IMUSYS = "Roll: " + std::to_string(RollSYS_) + " Pitch: " + std::to_string(PitchSYS_) + " Yaw: " + std::to_string(YawSYS_);
+    Logger(IMUSYS);
+
+    /*
+    Send last data to Service Platform over UDP port
+    if (UDP = false)
+    {
+        printf("Couldn't connect to Service Platform");
+    }
+    */
 }
 
 /**

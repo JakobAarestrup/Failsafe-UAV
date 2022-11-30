@@ -13,9 +13,12 @@ class ValidateState
 public:
   ValidateState();
   ~ValidateState();
+  void Usage();
+  void configValidateState();
   void GetGPSValues(GPS NEO);
   void GetIMUValues(IMU sensor);
   void GetBaroValues(BAR barometer);
+  void SetMAVLinkValues(alt, long, lat, roll, pitch, yaw);
 
   void UpdateSystemValues(GPS NEO, BAR barometer, IMU Sensor);
   void LogData();
@@ -34,7 +37,6 @@ private:
    */
 
   float longitudeSYS_ = 0, latitudeSYS_ = 0;
-  char longPoleSYS_[1] = "", latPoleSYS_[1] = "";
   int SatellitesSYS_ = 0;
 
   /**
@@ -70,4 +72,15 @@ private:
   float RollRDS_ = 0, PitchRDS_ = 0, YawRDS_ = 0;
 
   int state_ = 0;
+
+  /*
+  compareAlt_ = 300 // default value
+  compareRoll_ = 300 // default value
+  comparePitch_ = 300 // default value
+  compareYaw_ = 300 // default value
+  compareLong_
+  compareLat_
+  compareVelocity
+
+  */
 };

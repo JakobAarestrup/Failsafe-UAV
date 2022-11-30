@@ -12,16 +12,6 @@ using namespace mavsdk;
 using std::chrono::seconds;
 using std::this_thread::sleep_for;
 
-void usage(const std::string &bin_name)
-{
-    std::cerr << "Usage : " << bin_name << " <connection_url>\n"
-              << "Connection URL format should be :\n"
-              << " For TCP : tcp://[server_host][:server_port]\n"
-              << " For UDP : udp://[bind_host][:bind_port]\n"
-              << " For Serial : serial:///path/to/serial/dev[:baudrate]\n"
-              << "For example, to connect to the simulator use URL: udp://:14540\n";
-}
-
 std::shared_ptr<System> get_system(Mavsdk &mavsdk)
 {
     std::cout << "Waiting to discover system...\n";
@@ -54,16 +44,11 @@ std::shared_ptr<System> get_system(Mavsdk &mavsdk)
     return fut.get();
 }
 
-int main(int argc, char **argv)
+int main()
 {
-    if (argc != 2)
-    {
-        usage(argv[0]);
-        return 1;
-    }
 
     Mavsdk mavsdk;
-    ConnectionResult connection_result = mavsdk.add_any_connection(argv[1]);
+    ConnectionResult connection_result = mavsdk.add_any_connection("serial:///dev/ttyS0:57600");
 
     if (connection_result != ConnectionResult::Success)
     {
@@ -101,13 +86,14 @@ int main(int argc, char **argv)
                                  { std::cout << "Altitude: " << position.relative_altitude_m << " m" << std::endl
                                              << "Latitude: " << position.latitude_deg << std::endl
                                              << "Longitude: " << position.longitude_deg << '\n'; });
-
+    altitudeSYS_ = position.relative_altitude_m;
     longitudeSYS_ = position.latitude_deg;
     latitudeSYS_ = position.longitude_deg;
 
     telemetry.subscribe_attitude_euler([](Telemetry::EulerAngle euler)
                                        { std::cout << "Euler: (" << euler.roll_deg << ", " << euler.pitch_deg << ", " << euler.yaw_deg << ")" << std::endl; });
-    longitudeSYS_ = position.latitude_deg;
 
-    return 0;
+    RollSYS_ = euler.roll_deg;
+    PitchSYS_ = euler.pitch_deg;
+    YawSYS_ = euler.yaw_deg;
 }
