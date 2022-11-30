@@ -95,6 +95,9 @@ int main(int argc, char **argv)
                                              << "Latitude: " << position.latitude_deg << std::endl
                                              << "Longitude: " << position.longitude_deg << '\n'; });
 
+    telemetry.subscribe_attitude_euler([](Telemetry::EulerAngler euler)
+                                       { std::cout << "Euler: (" << euler.roll_deg << ", " << euler.pitch_deg << ", " << euler.yaw_deg << ")" << std::endl; });
+
     while (1)
     {
         sleep_for(seconds(1));
