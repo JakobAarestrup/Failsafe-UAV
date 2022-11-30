@@ -28,7 +28,7 @@ I2Cdev::I2Cdev()
 int8_t I2Cdev::readBit(uint8_t devAddr, uint8_t regAddr, uint8_t bitNum, uint8_t *data, uint16_t timeout)
 {
     uint8_t b;
-    uint8_t count = readByte(devAddr, regAddr, &b, timeout);
+    uint8_t count = readByte(devAddr, regAddr, &b);
     *data = b & (1 << bitNum);
     return count;
 }
@@ -66,7 +66,7 @@ int8_t I2Cdev::readBits(uint8_t devAddr, uint8_t regAddr, uint8_t bitStart, uint
     //    010   masked
     //   -> 010 shifted
     uint8_t count, b;
-    if ((count = readByte(devAddr, regAddr, &b, timeout)) != 0)
+    if ((count = readByte(devAddr, regAddr, &b)) != 0)
     {
         uint8_t mask = ((1 << length) - 1) << (bitStart - length + 1);
         b &= mask;
@@ -94,7 +94,7 @@ int8_t I2Cdev::readBitsW(uint8_t devAddr, uint8_t regAddr, uint8_t bitStart, uin
     //           -> 010 shifted
     uint8_t count;
     uint16_t w;
-    if ((count = readWord(devAddr, regAddr, &w, timeout)) != 0)
+    if ((count = readWord(devAddr, regAddr, &w)) != 0)
     {
         uint16_t mask = ((1 << length) - 1) << (bitStart - length + 1);
         w &= mask;
