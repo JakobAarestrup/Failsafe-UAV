@@ -15,8 +15,8 @@ std::shared_ptr<System> get_system(Mavsdk &mavsdk)
 
     // We wait for new systems to be discovered, once we find one that has an
     // autopilot, we decide to use it.
-    Mavsdk::NewSystemHandle handle = mavsdk.subscribe_on_new_system([&mavsdk, &prom, &handle]()
-                                                                    {
+    NewSystemHandle handle = mavsdk.subscribe_on_new_system([&mavsdk, &prom, &handle]()
+                                                            {
         auto system = mavsdk.systems().back();
 
         if (system->has_autopilot()) {
@@ -48,20 +48,20 @@ int main()
     {
         std::cerr << "Connection failed: " << conn_result << '\n';
         return 1;
-
-        //  Wait for the system to connect via heartbeat
-
-        while (mavsdk.systems().size() == 0)
-        {
-            usleep(1000000);
-        }
-
-        auto system = get_system(mavsdk);
-        if (!system)
-        {
-            return 1;
-        }
-        // System got discovered.
-        // mavsdk::System system = mavsdk.systems()[0];
-        return 0;
     }
+    //  Wait for the system to connect via heartbeat
+
+    while (mavsdk.systems().size() == 0)
+    {
+        usleep(1000000);
+    }
+
+    auto system = get_system(mavsdk);
+    if (!system)
+    {
+        return 1;
+    }
+    // System got discovered.
+    // mavsdk::System system = mavsdk.systems()[0];
+    return 0;
+}
