@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <mavsdk/mavsdk.h>
+using namespace mavsdk;
 
 std::shared_ptr<System> get_system(Mavsdk &mavsdk)
 {
@@ -24,7 +25,7 @@ std::shared_ptr<System> get_system(Mavsdk &mavsdk)
 
     int main()
     {
-        mavsdk::Mavsdk mavsdk;
+        Mavsdk mavsdk;
         // ConnectionResult conn_result = mavsdk.add_udp_connection();
         //  Wait for the system to connect via heartbeat
         while (mavsdk.systems().size() == 0)
