@@ -46,11 +46,6 @@ std::shared_ptr<System> get_system(Mavsdk &mavsdk)
 
 int main()
 {
-    if (argc != 2)
-    {
-        usage(argv[0]);
-        return 1;
-    }
 
     Mavsdk mavsdk;
     ConnectionResult connection_result = mavsdk.add_any_connection(serial:///dev/ttyS0:57600);
