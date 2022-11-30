@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.10.2)
+cmake_minimum_required(VERSION 3.15.2)
 
 # Specify your project's name
-project(TelemetryTest)
+project(TelePasta)
 
 # Specify at least C++11, better C++17
 set(CMAKE_CXX_STANDARD 17)
@@ -15,7 +15,7 @@ find_package(MAVSDK REQUIRED)
 
 # Specify your app's executable name, and list of source files used to create it.
 add_executable(Tele
-    Telemetry2.cpp
+    TelePasta2.cpp
     # ... any other source files
 )
 
@@ -25,8 +25,8 @@ MAVSDK::mavsdk
     # ... Any other linked libraries
 )
 
-if(NOT MSVC)
-    add_compile_options(Tele PRIVATE -Wall -Wextra)
-else()
-    add_compile_options(Tele PRIVATE -WX -W2)
-endif()
+#if(NOT MSVC)
+#    add_compile_options(Tele PRIVATE -Wall -Wextra)
+#else()
+#    add_compile_options(Tele PRIVATE -WX -W2)
+#endif()
