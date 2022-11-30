@@ -159,25 +159,25 @@ void GPS::convertData() // converts GPS serial data to decimal degrees
     getNorthSouth(NS);
     getNorthSouth(EW);
 
-    if (strcmp(NS, "") == 0 | strcmp(EW, "") == 0) // is 1 of the arrays empty?
+    if ((strcmp(NS, "") == 0) | (strcmp(EW, "") == 0)) // is 1 of the arrays empty?
     {
         std::cout << "NS or EW returned N/A. Skipping conversion..." << std::endl;
     }
 
     else
     {
-        if (strcmp(NS, "S") == 0 & strcmp(EW, "E") == 0) // handles negative
+        if ((strcmp(NS, "S") == 0) & (strcmp(EW, "E") == 0)) // handles negative
         {
             latitude_ = (lat_Deg + lat_Sec) * -1;
             longitude_ = lon_Deg + lon_Sec;
         }
-        else if (strcmp(NS, "N") == 0 & strcmp(EW, "W") == 0)
+        else if ((strcmp(NS, "N") == 0) & (strcmp(EW, "W") == 0))
         {
 
             latitude_ = lat_Deg + (lat_Sec);
             longitude_ = lon_Deg + (lon_Sec) * -1;
         }
-        else if (strcmp(NS, "S") == 0 & strcmp(EW, "W") == 0)
+        else if ((strcmp(NS, "S") == 0) & (strcmp(EW, "W") == 0))
         {
             latitude_ = lat_Deg + (lat_Sec) * -1;
             longitude_ = lon_Deg + (lon_Sec) * -1;
