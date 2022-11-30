@@ -156,7 +156,7 @@ int main()
     const Telemetry::Position position = telemetry.position();      // returns struct with values from baro and GPS
     const Telemetry::EulerAngle euler = telemetry.attitude_euler(); // returns struct with euler angles
     /*Sets all values from MAVLINK*/
-    RDS.SetMavLinkValues(position.relative_altitude_m, position.latitude_deg, position.longitude_deg,
+    RDS.SetMAVLinkValues(position.relative_altitude_m, position.latitude_deg, position.longitude_deg,
                          euler.roll_deg, euler.pitch_deg, euler.yaw_deg);
     RDS.LogData();       // Sends sensor data to log file
     RDS.AxisControl();   // Checks for Failure on the Axises
