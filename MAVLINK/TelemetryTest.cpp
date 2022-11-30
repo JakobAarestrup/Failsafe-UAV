@@ -13,6 +13,6 @@ int main()
     }
 
     // System got discovered.
-    System system = mavsdk.systems()[0];
+    mavsdk::System system = mavsdk.systems()[0];
     return 0;
 }
