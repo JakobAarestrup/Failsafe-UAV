@@ -1,6 +1,8 @@
 #include <iostream>
 #include <unistd.h>
 #include <mavsdk/mavsdk.h>
+#include <mavsdk/plugins/action/action.h>
+#include <mavsdk/plugins/telemetry/telemetry.h>
 #include <future>
 
 using namespace mavsdk;
@@ -15,8 +17,8 @@ std::shared_ptr<System> get_system(Mavsdk &mavsdk)
 
     // We wait for new systems to be discovered, once we find one that has an
     // autopilot, we decide to use it.
-    NewSystemHandle handle = mavsdk.subscribe_on_new_system([&mavsdk, &prom, &handle]()
-                                                            {
+    Mavsdk::NewSystemHandle handle = mavsdk.subscribe_on_new_system([&mavsdk, &prom, &handle]()
+                                                                    {
         auto system = mavsdk.systems().back();
 
         if (system->has_autopilot()) {
@@ -56,11 +58,11 @@ int main()
         usleep(1000000);
     }
 
-    auto system = get_system(mavsdk);
-    if (!system)
-    {
-        return 1;
-    }
+    /*    auto system = get_system(mavsdk);
+       if (!system)
+       {
+           return 1;
+       } */
     // System got discovered.
     // mavsdk::System system = mavsdk.systems()[0];
     return 0;
