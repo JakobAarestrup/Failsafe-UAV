@@ -92,6 +92,10 @@ int main(int argc, char **argv)
     // Set up callback to monitor altitude while the vehicle is in flight
     telemetry.subscribe_position([](Telemetry::Position position)
                                  { std::cout << "Altitude: " << position.relative_altitude_m << " m\n"; });
+    while (1)
+    {
+        sleep_for(seconds(1));
+    }
 
     return 0;
 }
