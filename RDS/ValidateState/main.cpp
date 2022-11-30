@@ -131,23 +131,19 @@ int main()
   auto telemetry = Telemetry{system};
   auto action = Action{system};
 
-  // We want to listen to the altitude of the drone at 1 Hz.
-  const auto set_rate_result = telemetry.set_rate_position(1.0);
-  if (set_rate_result != Telemetry::Result::Success)
+  const auto set_rate_position = telemetry.set_rate_position(1.0);
+  if (set_rate_position != Telemetry::Result::Success)
   {
-    std::cerr << "Setting rate failed: " << set_rate_result << '\n';
+    std::cerr << "Setting rate failed: " << set_rate_position << '\n';
     return 1;
   }
 
-  const auto set_rate_result1 = telemetry.set_rate_attitude_euler(1.0);
-  if (set_rate_result1 != Telemetry::Result::Success)
+  const auto set_rate_euler = telemetry.set_rate_attitude_euler(1.0);
+  if (set_rate_euler != Telemetry::Result::Success)
   {
-    std::cerr << "Setting rate failed: " << set_rate_result1 << '\n';
+    std::cerr << "Setting rate failed: " << set_rate_euler << '\n';
     return 1;
   }
-
-   telemetry.subscribe_position([](Telemetry::Position position);
-   
 
   /**
    * @brief starting loop for checking and logging sensor data
@@ -156,8 +152,9 @@ int main()
   while (1)
   {
     startofloop = mymillis();
-    RDS.UpdateSystemValues(G1, B1, IMU2); // gets all values from sensors
-
+    RDS.UpdateSystemValues(G1, B1, IMU2);                           // gets all values from sensors
+    const Telemetry::Position position = telemetry.position();      // returns struct with values from baro and GPS
+    const Telemetry::EulerAngle euler = telemetry.attitude_euler(); // returns struct with euler angles
     /*Sets all values from MAVLINK*/
     RDS.SetMavLinkValues(position.relative_altitude_m, position.latitude_deg, position.longitude_deg,
                          euler.roll_deg, euler.pitch_deg, euler.yaw_deg);

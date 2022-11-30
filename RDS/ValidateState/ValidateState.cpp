@@ -145,7 +145,7 @@ void ValidateState::LogData()
     std::string IMU = "Roll: " + std::to_string(RollRDS_) + " Pitch: " + std::to_string(PitchRDS_) + " Yaw: " + std::to_string(YawRDS_);
     Logger(IMU);
 
-    std::string GPSBaroSYS = "Longitude: " + std::to_string(longitudeSYS_) + " " + longPoleSYS_[0] + " Latitude: " + std::to_string(latitudeSYS_) + " Altitude: " + std::to_string(altitudeSYS_);
+    std::string GPSBaroSYS = "Longitude: " + std::to_string(longitudeSYS_) + " " + longPoleSYS_[0] + " Latitude: " + std::to_string(latitudeSYS_) + " " + latPoleRDS_ + " Altitude: " + std::to_string(altitudeSYS_);
     Logger(GPSBaroSYS);
     std::string IMUSYS = "Roll: " + std::to_string(RollSYS_) + " Pitch: " + std::to_string(PitchSYS_) + " Yaw: " + std::to_string(YawSYS_);
     Logger(IMUSYS);
