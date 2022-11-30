@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <mavsdk/mavsdk.h>
+#include <future>
 
 using namespace mavsdk;
 using std::chrono::seconds;
