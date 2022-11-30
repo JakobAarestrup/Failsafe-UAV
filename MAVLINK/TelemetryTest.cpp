@@ -11,8 +11,10 @@ int main()
     {
         usleep(1000000);
     }
+
     // System got discovered.
-    mavsdk::System system = mavsdk.systems()[0];
+    mavsdk::System system;
+    system = mavsdk.systems()[0];
 
     return 0;
 }
