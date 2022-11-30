@@ -89,15 +89,14 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    printf("you have mail");
-
     // Set up callback to monitor altitude while the vehicle is in flight
     telemetry.subscribe_position([](Telemetry::Position position)
-                                 { std::cout << "Altitude: " << position.relative_altitude_m << std::endl; });
+                                 { std::cout << "Altitude: " << position.relative_altitude_m << " m" << std::endl
+                                             << "Latitude: " << position.latitude_deg << std::endl
+                                             << "Longitude: " << position.longitude_deg << '\n'; });
 
     while (1)
     {
-        print("Retrying...");
         sleep_for(seconds(1));
     }
 
