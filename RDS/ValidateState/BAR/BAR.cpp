@@ -57,8 +57,8 @@ int BAR::getCalibration()
 // Power on and prepare for general usage. This method reads coefficients stored in PROM.
 void BAR::calibrateBAR()
 {
-    int i = 0;
-    for (i; i < 31; i++)
+
+    for (int i = 0;; i < 31; i++)
     {
         if (calibration_ == 0)
         {
