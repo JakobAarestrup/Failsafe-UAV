@@ -152,7 +152,7 @@ int main()
   while (1)
   {
     startofloop = mymillis();
-    RDS.UpdateSystemValues(G1, B1, IMU2);                           // gets all values from sensors
+    // RDS.UpdateSystemValues(G1, B1, IMU2);                           // gets all values from sensors
     const Telemetry::Position position = telemetry.position();      // returns struct with values from baro and GPS
     const Telemetry::EulerAngle euler = telemetry.attitude_euler(); // returns struct with euler angles
     /*Sets all values from MAVLINK*/
