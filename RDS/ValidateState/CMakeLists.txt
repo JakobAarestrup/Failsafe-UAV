@@ -28,6 +28,8 @@ find_library(WIRINGPI_LIBRARIES NAMES wiringPi)
 # Specify your app's executable name and a list of linked libraries
 target_link_libraries(RDS
 MAVSDK::mavsdk
+MAVSDK::mavsdk_action
+MAVSDK::mavsdk_telemetry
 ${WIRINGPI_LIBRARIES}
     # ... Any other linked libraries
 )
