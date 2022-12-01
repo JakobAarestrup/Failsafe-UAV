@@ -73,8 +73,8 @@ private:
 
   int state_ = 0;
 
-  maxHeight_ = 300;
-  maxAcceleration_ = 15;
-  maxOrientation_ = 45;
-  maxDistance_ = 50;
+  float maxHeight_ = 300;
+  float maxAcceleration_ = 15;
+  float maxOrientation_ = 45;
+  float maxDistance_ = 50;
 };
