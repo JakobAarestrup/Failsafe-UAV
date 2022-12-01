@@ -2,14 +2,22 @@
 #include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <wiringPi.h>
 #include "I2C.hpp"
 #include "LIS3MDL.hpp"
 #include "LSM6DSOX.hpp"
 #include "I2Cdev.h"
-extern "C"
+#ifdef __cplusplus
+extern "C" 
 {
+#endif
+
 #include <wiringPi.h>
+
+#ifdef __cplusplus
 }
+#endif
+
 
 // Definitions
 #define PI 3.14159265358979323846

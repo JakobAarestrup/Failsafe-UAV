@@ -1,12 +1,21 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <iostream>
-#include <wiringPi.h>
 #include <stdbool.h>
 #include "I2C.hpp"
 #include "IMU.hpp"
 #include "LIS3MDL.hpp"
 #include "LSM6DSOX.hpp"
+#ifdef __cplusplus
+extern "C" 
+{
+#endif
+
+#include <wiringPi.h>
+
+#ifdef __cplusplus
+}
+#endif
 
 #define DT 0.02 // [s/loop] loop period. 20ms
 
