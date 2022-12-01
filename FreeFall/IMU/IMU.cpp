@@ -7,16 +7,8 @@
 #include "LIS3MDL.hpp"
 #include "LSM6DSOX.hpp"
 #include "I2Cdev.h"
-#ifdef __cplusplus
-extern "C" 
-{
-#endif
-
 #include <wiringPi.h>
 
-#ifdef __cplusplus
-}
-#endif
 
 
 // Definitions
