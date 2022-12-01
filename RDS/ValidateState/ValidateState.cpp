@@ -34,7 +34,7 @@ void ValidateState::Usage(const std::string &bin_name)
               << " - Max distance from border : 0-100 m\n"
               << " - Enter Default for : 300 m 15 m/s^2 45 degrees 50 m\n"
               << " - Enter 0s for default values.."
-              << " - Example for Serial and Critical Values : serial:///dev/ttyS0:57600 200 10 30 30\n"
+              << " - Example for Serial and Critical Values : serial:///dev/ttyS0:57600 200 10 30 30\n";
 }
 /**
  * @brief configures the state of the Validate State
@@ -175,7 +175,7 @@ void ValidateState::UpdateSystemValues(GPS NEO, BAR barometer) //, IMU sensor)
 {
     GetGPSValues(NEO);
     GetBaroValues(barometer);
-    //GetIMUValues(sensor);
+    // GetIMUValues(sensor);
 }
 
 /**

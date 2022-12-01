@@ -4,7 +4,7 @@
 #include "IMU/I2C.hpp"
 /* #include <sys/time.h>
 #include <time.h> */
-#include <vector.h>
+#include <vector>
 
 /**
  * Includes from telemetry example code

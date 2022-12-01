@@ -14,7 +14,7 @@ public:
   ValidateState();
   ~ValidateState();
   void Usage(const std::string &bin_name);
-  void configValidateState();
+  void configValidateState(char maxHeight[], char maxAcceleration[], char maxOrientation[], char maxDistance[]);
   void GetGPSValues(GPS NEO);
   void GetIMUValues(IMU sensor);
   void GetBaroValues(BAR barometer);
