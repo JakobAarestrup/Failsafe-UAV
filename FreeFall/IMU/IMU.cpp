@@ -7,10 +7,6 @@
 #include "LIS3MDL.hpp"
 #include "LSM6DSOX.hpp"
 #include "I2Cdev.h"
-extern "C"
-{
-#include <linux/i2c-dev.h>
-}
 
 // Definitions
 #define PI 3.14159265358979323846
@@ -313,8 +309,8 @@ void IMU::ComplementaryFilter()
 
          if (fall_ == 1)
          {
-             I2Cdev::writeByte(LSM6DSOX_ADDR1, lSM6DSOX_WAKE_UP_DUR, 1, 0b00000000); // 0x00 - Set event duration (FF_DUR5 bit)
-             I2Cdev::writeByte(LSM6DSOX_ADDR1, lSM6DSOX_FREE_FALL, 1, 0b00110000);   // 0x33 - Set FF threshold (FF_THS[2:0] = 156mg)
+             I2Cdev::writeByte(LSM6DSOX_ADDR1, lSM6DSOX_WAKE_UP_DUR, 0b00000000); // 0x00 - Set event duration (FF_DUR5 bit)
+             I2Cdev::writeByte(LSM6DSOX_ADDR1, lSM6DSOX_FREE_FALL, 0b00110000);   // 0x33 - Set FF threshold (FF_THS[2:0] = 156mg)
              freeFall = digitalRead(28);                                   // replace 1 with output of interrupt status on GPIO pin # for IMU1
          }
      }
