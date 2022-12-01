@@ -73,14 +73,8 @@ private:
 
   int state_ = 0;
 
-  /*
-  compareAlt_ = 300 // default value
-  compareRoll_ = 300 // default value
-  comparePitch_ = 300 // default value
-  compareYaw_ = 300 // default value
-  compareLong_
-  compareLat_
-  compareVelocity
-
-  */
+  maxHeight_ = 300;
+  maxAcceleration_ = 15;
+  maxOrientation_ = 45;
+  maxDistance_ = 50;
 };

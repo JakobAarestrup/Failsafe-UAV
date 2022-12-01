@@ -79,11 +79,11 @@ void ValidateState::configValidateState(char maxHeight[], char maxAcceleration[]
         }
     }
 
-    cout << "\n"
-         << maxHeight_ << "\n";
-    cout << maxAcceleration_ << "\n";
-    cout << maxOrientation_ << "\n";
-    cout << maxDistance_ << "\n";
+    std::cout << "\n"
+              << maxHeight_ << "\n";
+    std::cout << maxAcceleration_ << "\n";
+    std::cout << maxOrientation_ << "\n";
+    std::cout << maxDistance_ << "\n";
 }
 
 /**

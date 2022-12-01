@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "IMU/I2C.hpp"
-/* #include <sys/time.h>
-#include <time.h> */
+#include <sys/time.h>
+#include <time.h>
 #include <vector>
 
 /**
@@ -79,7 +79,7 @@ void mainloop(ValidateState RDS, NEO GPS, BAR Barometer)
     printf("Loop Time %d\n", mymillis() - startofloop);
 }
 
-void updateIMUValues(ValidateState RDS IMU IMU)
+void updateIMUValues(ValidateState RDS, IMU IMU)
 {
     RDS.GetIMUValues(IMU);
     std::this_thread::sleep_for(std::chrono::milliseconds(20));
@@ -127,12 +127,12 @@ int main(int argc, char **argv)
      * @brief Initialize used object variables
      *
      */
-    /*  GPS G1;
-     I2C I1;
-     // IMU IMU1;
-     IMU IMU2;
-     BAR B1;
-     B1.calibrateBAR(); */
+    GPS G1;
+    I2C I1;
+    // IMU IMU1;
+    IMU IMU2;
+    BAR B1;
+    B1.calibrateBAR();
     /**
      * @brief  Configuration of Sensors
      *
