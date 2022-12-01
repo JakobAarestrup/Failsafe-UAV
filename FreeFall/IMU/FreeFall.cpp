@@ -8,9 +8,6 @@
 #include "LSM6DSOX.hpp"
 #include <wiringPi.h>
 
-
-#endif
-
 #define DT 0.02 // [s/loop] loop period. 20ms
 
 
