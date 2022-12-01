@@ -18,25 +18,72 @@ ValidateState::~ValidateState()
 }
 
 /**
- * @brief Configuration argument for ValidateState
+ * @brief Configuration arguments for RDS.exe
  *
  */
 void ValidateState::Usage(const std::string &bin_name)
 {
-    std::cerr << "Usage : " << bin_name << " <connection_url>\n"
-              << "Connection URL format should be :\n"
-              << " For TCP : tcp://[server_host][:server_port]\n"
-              << " For UDP : udp://[bind_host][:bind_port]\n"
-              << " For Serial : serial:///path/to/serial/dev[:baudrate]\n"
-              << "For example, to connect to the simulator use URL: udp://:14540\n";
+    std::cerr << "Usage : " << bin_name << " <serial> <max_height> <max_acceleration> <max_orientation> <max_distance>\n\n"
+              << "Serial format should be :\n"
+              << " Serial : serial:///path/to/serial/dev[:baudrate]\n"
+              << "\n"
+              << "Critical Values format should be :\n"
+              << " - Max Height       : 0-300 m\n"
+              << " - Max Acceleration : 0-25 m/s^2\n"
+              << " - Max Orientation  : 0-45 degrees\n"
+              << " - Max distance from border : 0-100 m\n"
+              << " - Enter Default for : 300 m 15 m/s^2 45 degrees 50 m\n"
+              << " - Enter 0s for default values.."
+              << " - Example for Serial and Critical Values : serial:///dev/ttyS0:57600 200 10 30 30\n"
 }
-
 /**
  * @brief configures the state of the Validate State
  *
  */
-void ValidateState::configValidateState()
+void ValidateState::configValidateState(char maxHeight[], char maxAcceleration[], char maxOrientation[], char maxDistance[])
 {
+    if ((strcmp(maxHeight, "Default") == 0))
+    {
+        return;
+    }
+
+    else if (maxHeight != NULL)
+    {
+        if (atof(maxHeight) != 0)
+        {
+            maxHeight_ = atof(maxHeight);
+        }
+    }
+
+    if (maxAcceleration != NULL)
+    {
+        if (atof(maxAcceleration) != 0)
+        {
+            maxAcceleration_ = atof(maxAcceleration);
+        }
+    }
+
+    if (maxOrientation != NULL)
+    {
+        if (atof(maxOrientation) != 0)
+        {
+            maxOrientation_ = atof(maxOrientation);
+        }
+    }
+
+    if (maxDistance != NULL)
+    {
+        if (atof(maxDistance) != 0)
+        {
+            maxDistance_ = atof(maxDistance);
+        }
+    }
+
+    cout << "\n"
+         << maxHeight_ << "\n";
+    cout << maxAcceleration_ << "\n";
+    cout << maxOrientation_ << "\n";
+    cout << maxDistance_ << "\n";
 }
 
 /**
@@ -124,11 +171,11 @@ void ValidateState::GetBaroValues(BAR barometer)
  * @param barometer  Class object of BAR class
  * @param sensor Class object of IMU class
  */
-void ValidateState::UpdateSystemValues(GPS NEO, BAR barometer, IMU sensor)
+void ValidateState::UpdateSystemValues(GPS NEO, BAR barometer) //, IMU sensor)
 {
     GetGPSValues(NEO);
     GetBaroValues(barometer);
-    GetIMUValues(sensor);
+    //GetIMUValues(sensor);
 }
 
 /**
@@ -148,14 +195,6 @@ void ValidateState::LogData()
     Logger(GPSBaroSYS);
     std::string IMUSYS = "Roll: " + std::to_string(RollSYS_) + " Pitch: " + std::to_string(PitchSYS_) + " Yaw: " + std::to_string(YawSYS_);
     Logger(IMUSYS);
-
-    /*
-    Send last data to Service Platform over UDP port
-    if (UDP = false)
-    {
-        printf("Couldn't connect to Service Platform");
-    }
-    */
 }
 
 /**

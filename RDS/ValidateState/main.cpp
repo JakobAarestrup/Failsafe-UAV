@@ -70,13 +70,43 @@ int mymillis()
     RDS.configValidateState(argv[1]);
     */
 
-int main()
+int main(int argc, char **argv)
 {
   /**
    * @brief RDS initialized
    *
    */
   ValidateState RDS; // System
+
+  char NONE[1];
+
+  if (argc < 3) // minimum arguments 2
+  {
+    RDS.Usage(argv[0]);
+    return 1;
+  }
+
+  /* cout << "You have entered " << argc
+       << " arguments:"
+       << "\n";
+*/
+  for (int i = 0; i < argc; ++i)
+  {
+    cout << argv[i] << " plads: " << i << endl;
+  }
+  cout << "\n";
+  cout << argv[1] << "\n";
+  cout << argv[4] << "\n"
+       << endl;
+
+  if ((strcmp(argv[1], argv[4]) == 0)) // if you write 20 on serial it
+  {
+    RDS.configValidateState(argv[2], argv[3], NONE, NONE);
+  }
+  else
+  {
+    RDS.configValidateState(argv[2], argv[3], argv[4], argv[5]);
+  }
 
   /**
    * @brief Initialize used object variables
@@ -149,10 +179,24 @@ int main()
    * @brief starting loop for checking and logging sensor data
    *
    */
+
+  std::vector<std::thread> threads;
+  auto exec_IMU = []()
+  { while (true) RDS; };
+  auto exec_loop = []()
+  { while (true) run2(); };
+
+  threads.push_back(std::thread(exec_IMU));
+  threads.push_back(std::thread(exec_exec_loop));
+
+  for (auto &th : threads)
+  {
+    th.join();
+  }
   while (1)
   {
     startofloop = mymillis();
-    // RDS.UpdateSystemValues(G1, B1, IMU2);                           // gets all values from sensors
+    RDS.UpdateSystemValues(G1, B1, IMU2);                           // gets all values from sensors
     const Telemetry::Position position = telemetry.position();      // returns struct with values from baro and GPS
     const Telemetry::EulerAngle euler = telemetry.attitude_euler(); // returns struct with euler angles
     /*Sets all values from MAVLINK*/
