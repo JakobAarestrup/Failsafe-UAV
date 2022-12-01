@@ -23,7 +23,7 @@ int main()
   // Main loop
   while (1)
   {
-    freefall = IMU2.freeFall(2);
+    freeFall = IMU2.freeFall(2);
     printf("Free fall detection: \i\n",freeFall);
   }
 

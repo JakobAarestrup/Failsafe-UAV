@@ -308,8 +308,8 @@ void IMU::ComplementaryFilter()
 
          if (fall_ == 1)
          {
-             I1.writeI2C(LSM6DSOX_ADDR1, lSM6DSOX_WAKE_UP_DUR, 1, 0b00000000); // 0x00 - Set event duration (FF_DUR5 bit)
-             I1.writeI2C(LSM6DSOX_ADDR1, lSM6DSOX_FREE_FALL, 1, 0b00110000);   // 0x33 - Set FF threshold (FF_THS[2:0] = 156mg)
+             I2Cdev::writeByte(LSM6DSOX_ADDR1, lSM6DSOX_WAKE_UP_DUR, 1, 0b00000000); // 0x00 - Set event duration (FF_DUR5 bit)
+             I2Cdev::writeByte(LSM6DSOX_ADDR1, lSM6DSOX_FREE_FALL, 1, 0b00110000);   // 0x33 - Set FF threshold (FF_THS[2:0] = 156mg)
              freeFall = digitalRead(28);                                   // replace 1 with output of interrupt status on GPIO pin # for IMU1
          }
      }
@@ -318,8 +318,8 @@ void IMU::ComplementaryFilter()
          fall_ = digitalRead(29); // output of interrupt status on GPIO pin 21 for IMU2
          if (fall_ == 1)
          {
-             I1.writeI2C(LSM6DSOX_ADDR2, lSM6DSOX_WAKE_UP_DUR, 1, 0b00000000); // 0x00 - Set event duration (FF_DUR5 bit)
-             I1.writeI2C(LSM6DSOX_ADDR2, lSM6DSOX_FREE_FALL, 1, 0b00110000);   // 0x33 - Set FF threshold (FF_THS[2:0] = 156mg)
+             I2Cdev::writeByte(LSM6DSOX_ADDR2, lSM6DSOX_WAKE_UP_DUR, 1, 0b00000000); // 0x00 - Set event duration (FF_DUR5 bit)
+             I2Cdev::writeByte(LSM6DSOX_ADDR2, lSM6DSOX_FREE_FALL, 1, 0b00110000);   // 0x33 - Set FF threshold (FF_THS[2:0] = 156mg)
              freeFall = digitalRead(29);                                   // output of interrupt status on GPIO pin 21 for IMU2
          }
      }
