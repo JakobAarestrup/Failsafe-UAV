@@ -18,7 +18,7 @@ int main()
 
   I2.initializeI2C();
   wiringPiSetupGpio(); // Initializes wiringPi using the Broadcom GPIO pin numbers
-  pinMode(29, INPUT);
+  pinMode(27, INPUT);
 
   int freeFall = 0;
 
@@ -28,6 +28,7 @@ int main()
   {
     freeFall = IMU2.freeFall(2);
     printf("Free fall detection: %d\n",freeFall);
+    usleep(10000);
   }
 
   return 0;
