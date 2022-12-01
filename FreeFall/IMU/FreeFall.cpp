@@ -24,7 +24,7 @@ int main()
   while (1)
   {
     freeFall = IMU2.freeFall(2);
-    printf("Free fall detection: \i\n",freeFall);
+    printf("Free fall detection: \d\n",freeFall);
   }
 
   return 0;
