@@ -129,8 +129,8 @@ int main(int argc, char **argv)
      */
     /*  GPS G1;
      I2C I1;
+     // IMU IMU1;
      IMU IMU2;
-     // IMU IMU2;
      BAR B1;
      B1.calibrateBAR(); */
     /**
@@ -144,14 +144,8 @@ int main(int argc, char **argv)
      * @brief Calibration..
      *
      */
+    //  IMU1.calibrateGyro(1);
     // IMU2.calibrateGyro(2);
-    //  IMU2.calibrateGyro();
-
-    /**
-     * @brief Used variables
-     *
-     */
-    int startofloop;
 
     /**
      * @brief MAVLINK connection.
@@ -191,8 +185,7 @@ int main(int argc, char **argv)
     }
 
     /**
-     * @brief starting loop for checking and logging sensor data
-     *
+     * @brief starting two threads to do main loop and get the IMU data
      */
     std::vector<std::thread> threads;
     auto exec_IMU = []()
