@@ -17,6 +17,9 @@ int main()
   IMU IMU2;
 
   I2.initializeI2C();
+  wiringPiSetupGpio(); // Initializes wiringPi using the Broadcom GPIO pin numbers
+  pinMode(29, INPUT);
+
   int freeFall = 0;
 
 
