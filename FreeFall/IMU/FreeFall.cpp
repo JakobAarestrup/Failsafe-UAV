@@ -16,14 +16,14 @@ int main()
   I2C I2;
   IMU IMU2;
 
-  I1.initializeI2C();
+  I2.initializeI2C();
   int freeFall = 0;
 
 
   // Main loop
   while (1)
   {
-    free fall = IMU2.freeFall(2);
+    freefall = IMU2.freeFall(2);
     printf("Free fall detection: \i\n",freeFall);
   }
 
