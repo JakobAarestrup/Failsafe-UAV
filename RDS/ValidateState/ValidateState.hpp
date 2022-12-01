@@ -13,7 +13,7 @@ class ValidateState
 public:
   ValidateState();
   ~ValidateState();
-  void Usage();
+  void Usage(const std::string &bin_name);
   void configValidateState();
   void GetGPSValues(GPS NEO);
   void GetIMUValues(IMU sensor);
