@@ -1,66 +1,52 @@
 #include <stdio.h>
 #include <string.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <termios.h>
 #include <unistd.h>
+#include <fcntl.h>
+#include <termios.h>
 
 int main() {
-  int serial_port = open("/dev/ttySOFT0", O_RDWR);
+	int fd, len;
+	char text[255];
+	struct termios options; /* Serial ports setting */
 
-  struct termios tty;
+	fd = open("/dev/serial0", O_RDWR | O_NDELAY | O_NOCTTY);
+	if (fd < 0) {
+		perror("Error opening serial port");
+		return -1;
+	}
 
-  if(tcgetattr(serial_port, &tty) != 0) {
-      printf("Error %i from tcgetattr: %s\n", errno, strerror(errno));
-      return 1;
-  }
+	/* Read current serial port settings */
+	// tcgetattr(fd, &options);
+	
+	/* Set up serial port */
+	options.c_cflag = B4800 | CS8 | CLOCAL | CREAD;
+	options.c_iflag = IGNPAR;
+	options.c_oflag = 0;
+	options.c_lflag = 0;
 
-  tty.c_cflag &= ~PARENB;
-  tty.c_cflag &= ~CSTOPB;
-  tty.c_cflag &= ~CSIZE;
-  tty.c_cflag |= CS8;
-  tty.c_cflag &= ~CRTSCTS;
-  tty.c_cflag |= CREAD | CLOCAL;
+	/* Apply the settings */
+	tcflush(fd, TCIFLUSH);
+	tcsetattr(fd, TCSANOW, &options);
 
-  tty.c_lflag &= ~ICANON;
-  tty.c_lflag &= ~ECHO;
-  tty.c_lflag &= ~ECHOE;
-  tty.c_lflag &= ~ECHONL;
-  tty.c_lflag &= ~ISIG;
-  tty.c_iflag &= ~(IXON | IXOFF | IXANY);
-  tty.c_iflag &= ~(IGNBRK|BRKINT|PARMRK|ISTRIP|INLCR|IGNCR|ICRNL);
+	/* Write to serial port */
+	strcpy(text, "Hello from my RPi\n\r");
+	len = strlen(text);
+	len = write(fd, text, len);
+	printf("Wrote %d bytes over UART\n", len);
 
-  tty.c_oflag &= ~OPOST;
-  tty.c_oflag &= ~ONLCR;
+	printf("You have 5s to send me some input data...\n");
+	sleep(5);
 
-  tty.c_cc[VTIME] = 10;
-  tty.c_cc[VMIN] = 0;
+	/* Read from serial port */
+	while(1)
+	{
+	memset(text, 0, 255);
+	len = read(fd, text, 255);
+	printf("Received %d bytes\n", len);
+	printf("Received string: %s\n", text);
+	}
 
-  cfsetispeed(&tty, B4800);
-  cfsetospeed(&tty, B4800);
 
-  if (tcsetattr(serial_port, TCSANOW, &tty) != 0) {
-      printf("Error %i from tcsetattr: %s\n", errno, strerror(errno));
-      return 1;
-  }
-
-  unsigned char msg[] = { 'H', 'e', 'l', 'l', 'o', '\r' };
-  write(serial_port, "Hello, world!", sizeof(msg));
-
-  char read_buf [256];
-
+	close(fd);
+	return 0;
 }
-
-  memset(&read_buf, '\0', sizeof(read_buf));
-
-  int num_bytes = read(serial_port, &read_buf, sizeof(read_buf));
-
-  if (num_bytes < 0) {
-      printf("Error reading: %s", strerror(errno));
-      return 1;
-  }
-
-  printf("Read %i bytes. Received message: %s", num_bytes, read_buf);
-
-  close(serial_port);
-  return 0;
