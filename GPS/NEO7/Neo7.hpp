@@ -3,6 +3,7 @@
 #include <errno.h>
 #include <iostream>
 
+#include "UBX_Protocol_Constants.hpp"
 #include <wiringPi.h>
 #include <wiringSerial.h>
 

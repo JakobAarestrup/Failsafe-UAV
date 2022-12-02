@@ -38,13 +38,13 @@ void GPS::configAll(int fd)
     {
         fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
 
-        return 1;
+        return;
     }
 
     if (wiringPiSetup() == -1) // initializes wiringPi setup
     {
         fprintf(stdout, "Unable to start wiringPi: %s\n", strerror(errno)); // error handling
-        return 1;
+        return;
     }
 
     /* CONFIGURATION */
