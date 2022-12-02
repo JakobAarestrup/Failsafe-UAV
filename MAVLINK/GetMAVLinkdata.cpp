@@ -34,7 +34,7 @@ std::shared_ptr<System> get_system(Mavsdk &mavsdk)
 
     // We usually receive heartbeats at 1Hz, therefore we should find a
     // system after around 3 seconds max, surely.
-    if (fut.wait_for(seconds(10)) == std::future_status::timeout)
+    if (fut.wait_for(seconds(3)) == std::future_status::timeout)
     {
         std::cerr << "No autopilot found.\n";
         return {};
