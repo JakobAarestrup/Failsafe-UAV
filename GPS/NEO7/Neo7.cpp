@@ -55,18 +55,18 @@ void GPS::configAll(int fd)
     /*Update Rate*/
     write(serialPort_, UBX_protocol::RATE, UBX_protocol::RATE_Length); // Measurement frequency: 10 hz, navigation frequency 10 hz
 
-    /*BAUDRATE */
-    write(serialPort_, UBX_protocol::BAUDRATE, UBX_protocol::BAUD)
-
     /*NMEA messages*/
     write(serialPort_, UBX_protocol::GLL, UBX_protocol::GP_Length); // disable GPGLL
     write(serialPort_, UBX_protocol::GSA, UBX_protocol::GP_Length); // disable GSA
     write(serialPort_, UBX_protocol::GSV, UBX_protocol::GP_Length); // disable GPGSV
     write(serialPort_, UBX_protocol::RMC, UBX_protocol::GP_Length); // disable RMC
     write(serialPort_, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG
+    /*BAUDRATE */
+    write(serialPort_, UBX_protocol::BAUDRATE, UBX_protocol::BAUD_Length);
+
     printf("Configuration is done! \n");
+
     serialClose(serialPort_);
-    return fd;
 }
 
 void GPS::readGPS() // reads GPS serial data
