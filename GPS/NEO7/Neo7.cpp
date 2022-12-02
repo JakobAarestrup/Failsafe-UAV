@@ -30,10 +30,10 @@ int GPS::openUART(int fd) // open UART serial port
     return fd;
 }
 
-int GPS::configAll()
+int GPS::configAll(int serial)
 {
     /*OPEN UART*/
-    if ((serialPort_ = serialOpen("/dev/ttyS0", 9600)) < 0) // open serial port with set baudrate
+    if ((serial = serialOpen("/dev/ttyS0", 9600)) < 0) // open serial port with set baudrate
     {
         fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
 
@@ -49,24 +49,24 @@ int GPS::configAll()
     /* CONFIGURATION */
 
     /*NMEA Config*/
-    write(serialPort_, UBX_protocol::NMEA_CFG, UBX_protocol::NMEA_CFG_Length); // disable SBAS QZSS GLONASS BeiDou Galileo
+    write(serial, UBX_protocol::NMEA_CFG, UBX_protocol::NMEA_CFG_Length); // disable SBAS QZSS GLONASS BeiDou Galileo
 
     /*Update Rate*/
-    write(serialPort_, UBX_protocol::RATE, UBX_protocol::RATE_Length); // Measurement frequency: 10 hz, navigation frequency 10 hz
+    write(serial, UBX_protocol::RATE, UBX_protocol::RATE_Length); // Measurement frequency: 10 hz, navigation frequency 10 hz
 
     /*NMEA messages*/
-    write(serialPort_, UBX_protocol::GLL, UBX_protocol::GP_Length); // disable GPGLL
-    write(serialPort_, UBX_protocol::GSA, UBX_protocol::GP_Length); // disable GSA
-    write(serialPort_, UBX_protocol::GSV, UBX_protocol::GP_Length); // disable GPGSV
-    write(serialPort_, UBX_protocol::RMC, UBX_protocol::GP_Length); // disable RMC
-    write(serialPort_, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG
+    write(serial, UBX_protocol::GLL, UBX_protocol::GP_Length); // disable GPGLL
+    write(serial, UBX_protocol::GSA, UBX_protocol::GP_Length); // disable GSA
+    write(serial, UBX_protocol::GSV, UBX_protocol::GP_Length); // disable GPGSV
+    write(serial, UBX_protocol::RMC, UBX_protocol::GP_Length); // disable RMC
+    write(serial, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG
     /*BAUDRATE */
-    write(serialPort_, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
+    write(serial, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
 
     printf("Configuration is done! \n");
 
-    serialClose(serialPort_);
-    return serialPort_;
+    serialClose(serial);
+    return serial;
 }
 
 void GPS::readGPS() // reads GPS serial data
@@ -83,7 +83,6 @@ void GPS::readGPS() // reads GPS serial data
 
     /* OPEN UART */
     serialPort_ = openUART(serialPort_);
-    printf("HELLO");
     for (int i = 0; i < 200; i++)
     {
 
