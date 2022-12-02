@@ -49,6 +49,8 @@ int main() {
 
   char read_buf [256];
 
+}
+
   memset(&read_buf, '\0', sizeof(read_buf));
 
   int num_bytes = read(serial_port, &read_buf, sizeof(read_buf));
@@ -60,5 +62,5 @@ int main() {
 
   printf("Read %i bytes. Received message: %s", num_bytes, read_buf);
 
-  close(serial_port)
+  close(serial_port);
   return 0;
