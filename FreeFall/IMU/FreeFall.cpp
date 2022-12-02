@@ -10,7 +10,6 @@
 
 #define DT 0.02 // [s/loop] loop period. 20ms
 
-
 int main()
 {
   I2C I2;
@@ -18,16 +17,15 @@ int main()
 
   I2.initializeI2C();
   wiringPiSetupGpio(); // Initializes wiringPi using the Broadcom GPIO pin numbers
-  pinMode(27, INPUT);
+  pinMode(29, INPUT);
 
   int freeFall = 0;
-
 
   // Main loop
   while (1)
   {
     freeFall = IMU2.freeFall(2);
-    printf("Free fall detection: %d\n",freeFall);
+    printf("Free fall detection: %d\n", freeFall);
     usleep(10000);
   }
 
