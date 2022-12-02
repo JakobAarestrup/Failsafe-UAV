@@ -40,13 +40,7 @@ int main()
   while (1)
   {
 
-    NEO1.readGPS(); // reads NMEA message
-
-    Long = NEO1.getLongitude(); // returns longitude
-    Lat = NEO1.getLatitude();   // returns latitude
-    NEO1.getNorthSouth(NS);     // returns either a north pole or south pole
-    NEO1.getEastWest(EW);       // returns either a East pole or West pole
-
+    NEO1.readGPS();     // reads NMEA message
     NEO1.convertData(); // converts to decimal degrees format
 
     usleep(1000000); // delay 1 second
