@@ -15,7 +15,7 @@ GPS::~GPS() // destructor
 int GPS::openUART(int fd) // open UART serial port
 {
 
-    if ((fd = serialOpen("/dev/ttySOFT0", 9600)) < 0) // open serial port with set baudrate
+    if ((fd = serialOpen("/dev/ttySOFT0", 4800)) < 0) // open serial port with set baudrate
     {
         fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
 
@@ -31,10 +31,21 @@ int GPS::openUART(int fd) // open UART serial port
     return fd;
 }
 
-void GPS::configAll()
+void GPS::configAll(int fd)
 {
-    /* OPEN UART */
-    serialPort_ = openUART(serialPort_);
+    /*OPEN UART*/
+    if ((fd = serialOpen("/dev/ttyS0", 9600)) < 0) // open serial port with set baudrate
+    {
+        fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
+
+        return 1;
+    }
+
+    if (wiringPiSetup() == -1) // initializes wiringPi setup
+    {
+        fprintf(stdout, "Unable to start wiringPi: %s\n", strerror(errno)); // error handling
+        return 1;
+    }
 
     /* CONFIGURATION */
 
@@ -44,6 +55,9 @@ void GPS::configAll()
     /*Update Rate*/
     write(serialPort_, UBX_protocol::RATE, UBX_protocol::RATE_Length); // Measurement frequency: 10 hz, navigation frequency 10 hz
 
+    /*BAUDRATE */
+    write(serialPort_, UBX_protocol::BAUDRATE, UBX_protocol::BAUD)
+
     /*NMEA messages*/
     write(serialPort_, UBX_protocol::GLL, UBX_protocol::GP_Length); // disable GPGLL
     write(serialPort_, UBX_protocol::GSA, UBX_protocol::GP_Length); // disable GSA
@@ -52,6 +66,7 @@ void GPS::configAll()
     write(serialPort_, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG
     printf("Configuration is done! \n");
     serialClose(serialPort_);
+    return fd;
 }
 
 void GPS::readGPS() // reads GPS serial data
