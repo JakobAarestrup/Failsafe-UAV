@@ -29,9 +29,8 @@ int main()
   GPS NEO1;
 
   /* OPEN UART */
-  serial_port = NEO1.configAll(serial_port);
+  serial_port = NEO1.configAll();
   /* CONFIGURATION */
-  printf("Serial port is open! %d \n", serial_port);
 
   printf("STARTING LOOP\n");
   /* STARTING LOOP*/
