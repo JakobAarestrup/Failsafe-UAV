@@ -65,9 +65,9 @@ void mainloop(ValidateState RDS, GPS NEO, BAR Barometer, Telemetry &telemetry)
     while (1)
     {
         int startofloop = mymillis();
-        RDS.UpdateSystemValues(NEO, Barometer);                         // gets all values from sensors
-        const Telemetry::Position position = telemetry.position();      // returns struct with values from baro and GPS
-        const Telemetry::EulerAngle euler = telemetry.attitude_euler(); // returns struct with euler angles
+        RDS.UpdateSystemValues(NEO, Barometer);                    // gets all values from sensors
+        const Telemetry::Position position = telemetry.position(); // returns struct with values from baro and GPS
+        // const Telemetry::EulerAngle euler = telemetry.attitude_euler(); // returns struct with euler angles
         /*Sets all values from MAVLINK*/
         RDS.SetMAVLinkValues(position.relative_altitude_m, position.latitude_deg, position.longitude_deg,
                              euler.roll_deg, euler.pitch_deg, euler.yaw_deg);
@@ -138,7 +138,7 @@ int main(int argc, char **argv)
     // IMU IMU1;
     IMU IMU2;
     BAR B1;
-    B1.calibrateBAR();
+    // B1.calibrateBAR();
     /**
      * @brief  Configuration of Sensors
      *
@@ -184,12 +184,12 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    const auto set_rate_euler = telemetry.set_rate_attitude_euler(1.0);
-    if (set_rate_euler != Telemetry::Result::Success)
-    {
-        std::cerr << "Setting rate failed: " << set_rate_euler << '\n';
-        return 1;
-    }
+    /*   const auto set_rate_euler = telemetry.set_rate_attitude_euler(1.0);
+      if (set_rate_euler != Telemetry::Result::Success)
+      {
+          std::cerr << "Setting rate failed: " << set_rate_euler << '\n';
+          return 1;
+      } */
 
     /**
      * @brief starting two threads to do main loop and get the IMU data
