@@ -49,7 +49,7 @@ int main() {
 
   char read_buf [256];
 
-  memset(&read_buf, '\0', sizeof(read_buf);
+  memset(&read_buf, '\0', sizeof(read_buf));
 
   int num_bytes = read(serial_port, &read_buf, sizeof(read_buf));
 
