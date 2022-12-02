@@ -17,7 +17,7 @@ find_package(Threads REQUIRED)
 
 # Specify your app's executable name, and list of source files used to create it.
 add_executable(RDS
-    main.cpp
+    sussy.cpp
     NEO7/Neo7.cpp
     IMU/IMU.cpp
     IMU/I2C.cpp
