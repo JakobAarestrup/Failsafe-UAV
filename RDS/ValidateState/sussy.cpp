@@ -60,12 +60,12 @@ int mymillis()
     return (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
 }
 
-void mainloop(ValidateState RDS, NEO GPS, BAR Barometer)
+void mainloop(ValidateState RDS, GPS NEO, BAR Barometer, Telemetry &telemetry)
 {
     while (1)
     {
         int startofloop = mymillis();
-        RDS.UpdateSystemValues(GPS, Barometer);                         // gets all values from sensors
+        RDS.UpdateSystemValues(NEO, Barometer);                         // gets all values from sensors
         const Telemetry::Position position = telemetry.position();      // returns struct with values from baro and GPS
         const Telemetry::EulerAngle euler = telemetry.attitude_euler(); // returns struct with euler angles
         /*Sets all values from MAVLINK*/
@@ -195,8 +195,8 @@ int main(int argc, char **argv)
      */
     std::vector<std::thread> threads;
 
-    threads.push_back(std::thread(mainloop, RDS, G1, B1, telemetry));
-    threads.push_back(std::thread(updateIMUValues, RDS, IMU2));
+    threads.push_back(std::thread(mainloop, std::ref(RDS), std::ref(G1), std::ref(B1), std::ref(telemetry)));
+    threads.push_back(std::thread(updateIMUValues, std::ref(RDS), std::ref(IMU2)));
 
     for (auto &th : threads)
     {
