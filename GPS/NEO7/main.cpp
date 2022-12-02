@@ -33,8 +33,6 @@ int main()
   /* CONFIGURATION */
   printf("Serial port is open! %d \n", serial_port);
 
-  printf("Configuration is done! \n");
-
   printf("STARTING LOOP\n");
   /* STARTING LOOP*/
   while (1)
