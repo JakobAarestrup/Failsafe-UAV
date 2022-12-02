@@ -62,7 +62,7 @@ int GPS::configAll(int fd)
     write(serialPort_, UBX_protocol::RMC, UBX_protocol::GP_Length); // disable RMC
     write(serialPort_, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG
     /*BAUDRATE */
-    write(serialPort_, UBX_protocol::BAUDRATE, UBX_protocol::BAUD_Length);
+    write(serialPort_, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
 
     printf("Configuration is done! \n");
 
