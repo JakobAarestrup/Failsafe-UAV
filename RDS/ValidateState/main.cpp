@@ -89,15 +89,15 @@ int main(int argc, char **argv)
   /* cout << "You have entered " << argc
        << " arguments:"
        << "\n";
-*/
+  */
   for (int i = 0; i < argc; ++i)
   {
-    cout << argv[i] << " plads: " << i << endl;
+    std::cout << argv[i] << " plads: " << i << std::endl;
   }
-  cout << "\n";
-  cout << argv[1] << "\n";
-  cout << argv[4] << "\n"
-       << endl;
+  std::cout << "\n";
+  std::cout << argv[1] << "\n";
+  std::cout << argv[4] << "\n"
+            << std::endl;
 
   if ((strcmp(argv[1], argv[4]) == 0)) // if you write 20 on serial it
   {
@@ -107,7 +107,6 @@ int main(int argc, char **argv)
   {
     RDS.configValidateState(argv[2], argv[3], argv[4], argv[5]);
   }
-
   /**
    * @brief Initialize used object variables
    *
