@@ -160,3 +160,87 @@ void GPS::readGPS() // reads GPS serial data
     }
     serialClose(serialPort_);
 }
+
+void GPS::convertData() // converts GPS serial data to decimal degrees
+{
+    char NS[1];
+    char EW[1];
+
+    double lat_Deg = int(latitude_) / 100;  // (d)dd(deg)
+    double lon_Deg = int(longitude_) / 100; // (d)dd(deg)
+
+    double lat_Sec = (latitude_ - lat_Deg * 100) / 60;  // mm.mmmm(minutes) / 60 = seconds
+    double lon_Sec = (longitude_ - lon_Deg * 100) / 60; // mm.mmmm(minutes) / 60 = seconds
+
+    getNorthSouth(NS);
+    getNorthSouth(EW);
+
+    if ((strcmp(NS, "") == 0) | (strcmp(EW, "") == 0)) // is 1 of the arrays empty?
+    {
+        std::cout << "NS or EW returned N/A. Skipping conversion..." << std::endl;
+    }
+
+    else
+    {
+        if ((strcmp(NS, "S") == 0) & (strcmp(EW, "E") == 0)) // handles negative
+        {
+            latitude_ = (lat_Deg + lat_Sec) * -1;
+            longitude_ = lon_Deg + lon_Sec;
+        }
+        else if ((strcmp(NS, "N") == 0) & (strcmp(EW, "W") == 0))
+        {
+
+            latitude_ = lat_Deg + (lat_Sec);
+            longitude_ = lon_Deg + (lon_Sec) * -1;
+        }
+        else if ((strcmp(NS, "S") == 0) & (strcmp(EW, "W") == 0))
+        {
+            latitude_ = lat_Deg + (lat_Sec) * -1;
+            longitude_ = lon_Deg + (lon_Sec) * -1;
+        }
+        else
+        {
+            latitude_ = lat_Deg + lat_Sec;
+            longitude_ = lon_Deg + lon_Sec;
+        }
+
+        // std::cout << "" << latitude_ << "," << NS_[1] << " " << longitude_ << "," << EW_[1] << " Satellites:" << SV_ << std::endl;
+    }
+}
+
+/* GET FUNCTIONS */
+
+int GPS::getSV() const // returns amount of satellites
+{
+    return SV_;
+}
+
+double GPS::getLongitude() const // returns longitude
+{
+    return longitude_;
+}
+
+double GPS::getLatitude() const // returns latitude
+{
+    return latitude_;
+}
+
+void GPS::getNorthSouth(char NS[]) // returns either a East pole or West pole
+{
+    int strLength = strlen(NS_); // finds length of the array
+    for (int i = 0; i < strLength; i++)
+    {
+        NS[i] = NS_[strLength - 1 - i]; // copies UserInput in reverse to TempInput
+    }
+    NS[strLength] = '\0'; // adds NULL character at end
+}
+
+void GPS::getEastWest(char EW[]) // returns either a East pole or West pole
+{
+    int strLength = strlen(EW_); // finds length of the array
+    for (int i = 0; i < strLength; i++)
+    {
+        EW[i] = EW_[strLength - 1 - i]; // copies UserInput in reverse to TempInput
+    }
+    EW[strLength] = '\0'; // adds NULL character at end
+}

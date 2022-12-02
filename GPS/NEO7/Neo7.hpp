@@ -16,9 +16,8 @@ public:
     ~GPS();               // destructor
     int openUART(int fd); // open UART serial port
     int configAll(int fd);
-    void readGPS();      // reads GPS serial data
-    void convertData();  // converts GPS data
-    void startLogging(); // sends private data to a log file
+    void readGPS();     // reads GPS serial data
+    void convertData(); // converts GPS data
 
     int getSV() const;             // returns amount of satellites
     double getLongitude() const;   // returns longitude
@@ -33,5 +32,5 @@ private:     // Coordinates from the GPS
     char EW_[10];
     char NS_[10];
     int serialPort_;
-    char GPS_Data_
+    char GPS_Data_;
 };
