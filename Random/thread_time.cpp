@@ -30,29 +30,30 @@ int main()
     return 0;
 }
  */
-void run()
+void run(int number)
 {
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    std::cout << "good morning" << std::endl;
+    while (1)
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(20));
+        std::cout << number << std::endl;
+    }
 }
 
 void run2()
 {
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    std::cout << "Gamer time" << std::endl;
+    while (1)
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::cout << "Gamer time" << std::endl;
+    }
 }
 
 int main()
 {
     std::vector<std::thread> threads;
-    auto exec_IMU = []()
-    { while (true) run(); };
-    auto exec_loop = []()
-    { while (true) run2(); };
-
-    threads.push_back(std::thread(exec_imu));
-    threads.push_back(std::thread(exec_imu2));
-
+    int gamer = 0;
+    threads.push_back(std::thread(run, gamer));
+    threads.push_back(std::thread(run2));
     for (auto &th : threads)
     {
         th.join();
