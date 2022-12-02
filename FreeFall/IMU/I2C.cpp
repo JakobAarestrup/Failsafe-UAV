@@ -39,8 +39,11 @@ void I2C::initializeI2C()
      I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG4, 0b00001100);// OMZ = 11 (ultra-high-performance mode for Z)
 
      // Setup free fall detection
-     I2Cdev::writeByte(LSM6DSOX_ADDR1, lSM6DSOX_WAKE_UP_DUR, 0b00000000); // 0x00 - Set event duration (FF_DUR5 bit)
-     I2Cdev::writeByte(LSM6DSOX_ADDR1, lSM6DSOX_FREE_FALL, 0b00110111);   // 0x33 - Set FF threshold (FF_THS[2:0] = 500mg)
+     I2Cdev::writeByte(LSM6DSOX_ADDR1, lSM6DSOX_TAP_CFG0, 0b01000001);    // 0x41 Clear on read & Latched interrupt
+    I2Cdev::writeByte(LSM6DSOX_ADDR1, lSM6DSOX_TAP_CFG2, 0b10000000);    // 0x80 Enable interrupt
+    I2Cdev::writeByte(LSM6DSOX_ADDR1, lSM6DSOX_WAKE_UP_DUR, 0b00000000); // 0x00 Set event duration (FF_DUR5 bit)
+    I2Cdev::writeByte(LSM6DSOX_ADDR1, lSM6DSOX_FREE_FALL, 0b00110111);   // 0x33 Set FF threshold (FF_THS[2:0] = 500mg)
+    I2Cdev::writeByte(LSM6DSOX_ADDR1, lSM6DSOX_MD1_CFG, 0b00010000);     // 0x10 Route of free fall event on INT1
   */
     // Second IMU:
     I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_INT1_CTRL, 0b00000011); // Enable gyroscope and accelerometer data interrupt
@@ -56,8 +59,11 @@ void I2C::initializeI2C()
     I2Cdev::writeByte(LIS3MDL_ADDR2, LIS3MDL_CTRL_REG4, 0b00001100); // OMZ = 11 (ultra-high-performance mode for Z)
 
     // Setup free fall detection
-    I2Cdev::writeByte(LSM6DSOX_ADDR2, lSM6DSOX_WAKE_UP_DUR, 0b00000000); // 0x00 - Set event duration (FF_DUR5 bit)
-    I2Cdev::writeByte(LSM6DSOX_ADDR2, lSM6DSOX_FREE_FALL, 0b00110111);   // 0x33 - Set FF threshold (FF_THS[2:0] = 500mg)
+    I2Cdev::writeByte(LSM6DSOX_ADDR2, lSM6DSOX_TAP_CFG0, 0b01000001);    // 0x41 Clear on read & Latched interrupt
+    I2Cdev::writeByte(LSM6DSOX_ADDR2, lSM6DSOX_TAP_CFG2, 0b10000000);    // 0x80 Enable interrupt
+    I2Cdev::writeByte(LSM6DSOX_ADDR2, lSM6DSOX_WAKE_UP_DUR, 0b00000000); // 0x00 Set event duration (FF_DUR5 bit)
+    I2Cdev::writeByte(LSM6DSOX_ADDR2, lSM6DSOX_FREE_FALL, 0b00110111);   // 0x33 Set FF threshold (FF_THS[2:0] = 500mg)
+    I2Cdev::writeByte(LSM6DSOX_ADDR2, lSM6DSOX_MD1_CFG, 0b00010000);     // 0x10 Route of free fall event on INT1
 }
 
 // Write to I2C device register
