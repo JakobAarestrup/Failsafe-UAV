@@ -62,27 +62,33 @@ int mymillis()
 
 void mainloop(ValidateState RDS, NEO GPS, BAR Barometer)
 {
-    int startofloop = mymillis();
-    RDS.UpdateSystemValues(GPS, Barometer);                         // gets all values from sensors
-    const Telemetry::Position position = telemetry.position();      // returns struct with values from baro and GPS
-    const Telemetry::EulerAngle euler = telemetry.attitude_euler(); // returns struct with euler angles
-    /*Sets all values from MAVLINK*/
-    RDS.SetMAVLinkValues(position.relative_altitude_m, position.latitude_deg, position.longitude_deg,
-                         euler.roll_deg, euler.pitch_deg, euler.yaw_deg);
-    RDS.LogData();       // Sends sensor data to log file
-    RDS.AxisControl();   // Checks for Failure on the Axises
-    RDS.RouteControl();  // Checks for Failure in the KML
-    RDS.HeightControl(); // Checks for Failure for height
-    while (mymillis() - startofloop < 100)
+    while (1)
     {
+        int startofloop = mymillis();
+        RDS.UpdateSystemValues(GPS, Barometer);                         // gets all values from sensors
+        const Telemetry::Position position = telemetry.position();      // returns struct with values from baro and GPS
+        const Telemetry::EulerAngle euler = telemetry.attitude_euler(); // returns struct with euler angles
+        /*Sets all values from MAVLINK*/
+        RDS.SetMAVLinkValues(position.relative_altitude_m, position.latitude_deg, position.longitude_deg,
+                             euler.roll_deg, euler.pitch_deg, euler.yaw_deg);
+        RDS.LogData();       // Sends sensor data to log file
+        RDS.AxisControl();   // Checks for Failure on the Axises
+        RDS.RouteControl();  // Checks for Failure in the KML
+        RDS.HeightControl(); // Checks for Failure for height
+        while (mymillis() - startofloop < 100)
+        {
+        }
+        printf("Loop Time %d\n", mymillis() - startofloop);
     }
-    printf("Loop Time %d\n", mymillis() - startofloop);
 }
 
 void updateIMUValues(ValidateState RDS, IMU IMU)
 {
-    RDS.GetIMUValues(IMU);
-    std::this_thread::sleep_for(std::chrono::milliseconds(20));
+    while (1)
+    {
+        RDS.GetIMUValues(IMU);
+        std::this_thread::sleep_for(std::chrono::milliseconds(20));
+    }
 }
 
 int main(int argc, char **argv)
@@ -188,13 +194,9 @@ int main(int argc, char **argv)
      * @brief starting two threads to do main loop and get the IMU data
      */
     std::vector<std::thread> threads;
-    auto exec_IMU = []()
-    { while (true) updateIMUValues(RDS, IMU2); };
-    auto exec_loop = []()
-    { while (true) mainloop(RDS, G1, B1); };
 
-    threads.push_back(std::thread(exec_IMU));
-    threads.push_back(std::thread(exec_loop));
+    threads.push_back(std::thread(mainloop, RDS, G1, B1));
+    threads.push_back(std::thread(updateIMUValues, RDS, IMU2));
 
     for (auto &th : threads)
     {

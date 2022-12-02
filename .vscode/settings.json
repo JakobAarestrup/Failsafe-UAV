@@ -123,7 +123,8 @@
     "syncstream": "cpp",
     "typeindex": "cpp",
     "valarray": "cpp",
-    "variant": "cpp"
+    "variant": "cpp",
+    "resumable": "cpp"
   },
   "cmake.configureOnOpen": false
 }
