@@ -143,22 +143,23 @@ int main(int argc, char **argv)
      * @brief  Configuration of Sensors
      *
      */
-    /*  G1.configAll();     // configs the GPS
-     I1.initializeI2C(); // Initialize IMU1 */
-    //  I2.initializeI2C(); // Initialize IMU2
+    /* G1.configAll();     // configs the GPS
+     I1.initializeI2C(); // Initialize IMU2 right now but will do both */
+    G1.configAll();     // configs the GPS
+    I1.initializeI2C(); // Initialize IMU2 right now but will do both
     /**
      * @brief Calibration..
      *
      */
     //  IMU1.calibrateGyro(1);
-    // IMU2.calibrateGyro(2);
+    IMU2.calibrateGyro(2);
 
     /**
      * @brief MAVLINK connection.
      *
      */
     Mavsdk mavsdk;
-    ConnectionResult connection_result = mavsdk.add_any_connection("serial:///dev/ttyS0:57600");
+    ConnectionResult connection_result = mavsdk.add_any_connection(argv[1]);
 
     if (connection_result != ConnectionResult::Success)
     {
