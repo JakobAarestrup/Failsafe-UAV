@@ -31,10 +31,10 @@ int GPS::openUART(int fd) // open UART serial port
     return fd;
 }
 
-int GPS::configAll(int fd)
+void GPS::configAll()
 {
     /*OPEN UART*/
-    if ((fd = serialOpen("/dev/ttyS0", 9600)) < 0) // open serial port with set baudrate
+    if ((serialPort_ = serialOpen("/dev/ttyS0", 9600)) < 0) // open serial port with set baudrate
     {
         fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
 
@@ -62,7 +62,7 @@ int GPS::configAll(int fd)
     write(serialPort_, UBX_protocol::RMC, UBX_protocol::GP_Length); // disable RMC
     write(serialPort_, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG
     /*BAUDRATE */
-    // write(serialPort_, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
+    write(serialPort_, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
 
     printf("Configuration is done! \n");
 
