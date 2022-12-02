@@ -6,7 +6,7 @@
 #include <unistd.h>
 
 int main() {
-  int serial_port = open("/dev/ttyUSB0", O_RDWR);
+  int serial_port = open("/dev/ttySOFT0", O_RDWR);
 
   struct termios tty;
 
@@ -36,8 +36,8 @@ int main() {
   tty.c_cc[VTIME] = 10;
   tty.c_cc[VMIN] = 0;
 
-  cfsetispeed(&tty, B9600);
-  cfsetospeed(&tty, B9600);
+  cfsetispeed(&tty, B4800);
+  cfsetospeed(&tty, B4800);
 
   if (tcsetattr(serial_port, TCSANOW, &tty) != 0) {
       printf("Error %i from tcsetattr: %s\n", errno, strerror(errno));
