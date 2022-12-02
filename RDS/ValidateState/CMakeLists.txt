@@ -31,7 +31,8 @@ add_executable(RDS
 find_library(WIRINGPI_LIBRARIES NAMES wiringPi)
 # Specify your app's executable name and a list of linked libraries
 target_link_libraries(RDS
-MAVSDK::mavsdk
 PRIVATE Threads::Threads
+MAVSDK::mavsdk
+
 ${WIRINGPI_LIBRARIES}    # ... Any other linked libraries
 )
