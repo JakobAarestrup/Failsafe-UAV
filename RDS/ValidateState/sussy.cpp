@@ -195,7 +195,7 @@ int main(int argc, char **argv)
      */
     std::vector<std::thread> threads;
 
-    threads.push_back(std::thread(mainloop, RDS, G1, B1));
+    threads.push_back(std::thread(mainloop, RDS, G1, B1, telemetry));
     threads.push_back(std::thread(updateIMUValues, RDS, IMU2));
 
     for (auto &th : threads)
