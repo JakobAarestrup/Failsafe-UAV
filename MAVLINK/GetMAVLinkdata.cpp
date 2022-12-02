@@ -90,5 +90,8 @@ int main()
     /*   telemetry.subscribe_attitude_euler([](Telemetry::EulerAngle euler)
                                          { std::cout << "Euler: (" << euler.roll_deg << ", " << euler.pitch_deg << ", " << euler.yaw_deg << ")" << std::endl; });
    */
+    while (1)
+    {
+    }
     return 0;
 }
