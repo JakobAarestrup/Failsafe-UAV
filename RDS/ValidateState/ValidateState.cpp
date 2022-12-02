@@ -171,11 +171,11 @@ void ValidateState::GetBaroValues(BAR barometer)
  * @param barometer  Class object of BAR class
  * @param sensor Class object of IMU class
  */
-void ValidateState::UpdateSystemValues(GPS NEO, BAR barometer, IMU sensor)
+void ValidateState::UpdateSystemValues(GPS NEO, BAR barometer) //, IMU sensor)
 {
     GetGPSValues(NEO);
     GetBaroValues(barometer);
-    GetIMUValues(sensor);
+    // GetIMUValues(sensor);
 }
 
 /**
