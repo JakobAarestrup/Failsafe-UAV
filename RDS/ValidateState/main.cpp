@@ -112,24 +112,24 @@ int main(int argc, char **argv)
    * @brief Initialize used object variables
    *
    */
-  /*  GPS G1;
-   I2C I1;
-   IMU IMU2;
-   // IMU IMU2;
-   BAR B1;
-   B1.calibrateBAR(); */
+  GPS G1;
+  I2C I1;
+  IMU IMU2;
+  // IMU IMU2;
+  BAR B1;
+  B1.calibrateBAR();
   /**
    * @brief  Configuration of Sensors
    *
    */
-  /*  G1.configAll();     // configs the GPS
-   I1.initializeI2C(); // Initialize IMU1 */
+  G1.configAll();     // configs the GPS
+  I1.initializeI2C(); // Initialize IMU1 */
   //  I2.initializeI2C(); // Initialize IMU2
   /**
    * @brief Calibration..
    *
    */
-  // IMU2.calibrateGyro(2);
+  IMU2.calibrateGyro(2);
   //  IMU2.calibrateGyro();
 
   /**
