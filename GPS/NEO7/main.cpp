@@ -31,7 +31,7 @@ int main()
   /* OPEN UART */
   // serial_port = NEO1.configAll(serial_port);
   /* CONFIGURATION */
-  printf("Serial port is open! %d \n", serial_port);
+  // printf("Serial port is open! %d \n", serial_port);
 
   printf("STARTING LOOP\n");
   /* STARTING LOOP*/
