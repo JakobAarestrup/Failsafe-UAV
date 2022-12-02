@@ -180,19 +180,6 @@ int main(int argc, char **argv)
    *
    */
 
-  std::vector<std::thread> threads;
-  auto exec_IMU = []()
-  { while (true) RDS; };
-  auto exec_loop = []()
-  { while (true) run2(); };
-
-  threads.push_back(std::thread(exec_IMU));
-  threads.push_back(std::thread(exec_exec_loop));
-
-  for (auto &th : threads)
-  {
-    th.join();
-  }
   while (1)
   {
     startofloop = mymillis();
