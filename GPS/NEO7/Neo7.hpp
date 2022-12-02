@@ -15,7 +15,7 @@ public:
     GPS();                // default constructor
     ~GPS();               // destructor
     int openUART(int fd); // open UART serial port
-    void configAll();
+    int configAll();
     void readGPS();     // reads GPS serial data
     void convertData(); // converts GPS data
 

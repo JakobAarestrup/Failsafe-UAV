@@ -67,7 +67,7 @@ void GPS::configAll()
     printf("Configuration is done! \n");
 
     serialClose(serialPort_);
-    return fd;
+    return serialPort_;
 }
 
 void GPS::readGPS() // reads GPS serial data
