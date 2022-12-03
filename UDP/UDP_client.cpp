@@ -37,7 +37,7 @@ int main(int argc , char *argv[]){
 	}
 	puts("Data Send\n");
 
-	n = recvfrom(socket_desc, (char *)buffer, MAXLINE, MSG_WAITALL, (struct sockaddr *) &server.sin_addr.s_addr, &len); 
+	n = recvfrom(socket_desc, (char *)buffer, MAXLINE, MSG_WAITALL, (struct sockaddr *) &server.sin_addr.s_addr, len); 
     buffer[n] = '\0';
     printf("Server : %s\n", buffer);
 
