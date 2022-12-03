@@ -7,9 +7,10 @@
 int main() {
 	int fd, len;
 	char text[255];
+	int count = 0;
 	struct termios options; /* Serial ports setting */
 
-	fd = open("/dev/ttySOFT0", O_RDWR | O_NDELAY | O_NOCTTY);
+	fd = open("/dev/ttySOFT0", O_RDONLY | O_NDELAY | O_NOCTTY);
 	if (fd < 0) {
 		perror("Error opening serial port");
 		return -1;
@@ -40,9 +41,12 @@ int main() {
 	memset(text, 0, 255);
 	len = read(fd, text, 255);
 	printf("%s", text);
+	close(fd);
+	count++;
+	if (count == 200)
+	break;
 	}
 
 
-	close(fd);
 	return 0;
 }
