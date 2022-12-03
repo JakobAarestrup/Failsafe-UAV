@@ -7,7 +7,7 @@ int main(int argc , char *argv[]){
 	int socket_desc;
 	struct sockaddr_in server;
     char *message;
-	int* TestData = 69;
+	int *TestData = 69;
 	
 	//Create socket
 	socket_desc = socket(AF_INET , SOCK_DGRAM , 0);
