@@ -3,11 +3,14 @@
 #include<arpa/inet.h>	//inet_addr
 #include<string.h>	    //strlen
 
+#define MAXLINE 1024 
+
 int main(int argc , char *argv[]){
 	int socket_desc;
 	struct sockaddr_in server;
     char *message;
-	//int *TestData = 69;
+	int n, len;
+	char buffer[MAXLINE]; 
 	
 	//Create socket
 	socket_desc = socket(AF_INET , SOCK_DGRAM , 0);
@@ -34,6 +37,9 @@ int main(int argc , char *argv[]){
 	}
 	puts("Data Send\n");
 
+	n = recvfrom(sockfd, (char *)buffer, MAXLINE, MSG_WAITALL, (struct sockaddr *) &server.sin_addr.s_addr, &len); 
+    buffer[n] = '\0';
+    printf("Server : %s\n", buffer);
 
 	return 0;
 }
