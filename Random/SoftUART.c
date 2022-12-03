@@ -9,7 +9,7 @@ int main() {
 	char text[255];
 	struct termios options; /* Serial ports setting */
 
-	fd = open("/dev/ttySOFT0", O_RDWR | O_NDELAY | O_NOCTTY);
+	fd = open("/dev/ttyS0", O_RDWR | O_NDELAY | O_NOCTTY);
 	if (fd < 0) {
 		perror("Error opening serial port");
 		return -1;
