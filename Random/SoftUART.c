@@ -41,9 +41,12 @@ int main() {
 	memset(text, 0, 255);
 	len = read(fd, text, 255);
 	printf("%s", text);
-	close(fd);
+	count++;
+	printf("%d\n",count);
+	if (count == 1000)
+	break;
 	}
-
+	close(fd);
 
 	return 0;
 }
