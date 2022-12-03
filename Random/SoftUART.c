@@ -42,8 +42,7 @@ int main() {
 	{
 	memset(text, 0, 255);
 	len = read(fd, text, 255);
-	printf("Received %d bytes\n", len);
-	printf("Received string: %s\n", text);
+	printf("%s\n", text);
 	}
 
 
