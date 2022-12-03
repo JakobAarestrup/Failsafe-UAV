@@ -42,8 +42,8 @@ int main() {
 	len = read(fd, text, 255);
 	printf("%s", text);
 	count++;
-	printf("%d\n",count);
-	if (count == 1000)
+	printf("%d",count);
+	if (count == 100000)
 	break;
 	}
 	close(fd);
