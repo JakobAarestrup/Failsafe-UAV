@@ -9,7 +9,7 @@ int main(int argc, char **argv)
 {
     int fd;
     // Open the Port. We want read/write, no "controlling tty" status, and open it no matter what state DCD is in
-    fd = open("/dev/SOFT0", O_RDWR | O_NOCTTY | O_NDELAY);
+    fd = open("/dev/ttyS0", O_RDWR | O_NOCTTY | O_NDELAY);
     if (fd == -1)
     {
         perror("open_port: Unable to open /dev/ttySOFT0 - ");
