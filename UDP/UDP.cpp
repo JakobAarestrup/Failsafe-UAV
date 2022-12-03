@@ -7,7 +7,7 @@ int main(int argc , char *argv[]){
 	struct sockaddr_in server;
 	
 	//Create socket
-	socket_desc = socket(AF_INET , SOCK_STREAM , 0);
+	socket_desc = socket(AF_INET , SOCK_DGRAM , 0);
 	if (socket_desc == -1) printf("Could not create socket");
 			
 	server.sin_addr.s_addr = inet_addr("127.0.0.1");
