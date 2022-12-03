@@ -1,7 +1,7 @@
 obj-m := softuart.o
 PWD := $(shell pwd)
 
-KERNEL_SRC_DIR := /usr/lib/arm-linux gnueabihf
+KERNEL_SRC_DIR := /usr/lib/arm-linux-gnueabihf
 GCC_PREFIX := arm-bcmrpi-linux-gnueabihf-
 
 all:
