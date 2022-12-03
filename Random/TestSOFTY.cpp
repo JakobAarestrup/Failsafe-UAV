@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 
     // Turn off blocking for reads, use (fd, F_SETFL, FNDELAY) if you want that
     fcntl(fd, F_SETFL, 0);
-
+    int n;
     // Write to the port
     /*    int n = write("Hello Peripheral\n");
        if (n < 0)
