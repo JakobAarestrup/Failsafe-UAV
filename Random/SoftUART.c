@@ -10,7 +10,7 @@ int main() {
 	int count = 0;
 	struct termios options; /* Serial ports setting */
 
-	fd = open("/dev/ttySOFT0", O_RDRW | O_NDELAY | O_NOCTTY);
+	fd = open("/dev/ttySOFT0", O_RDONLY);
 	if (fd < 0) {
 		perror("Error opening serial port");
 		return -1;
@@ -19,15 +19,15 @@ int main() {
 	/* Read current serial port settings */
 	// tcgetattr(fd, &options);
 	
-	/* Set up serial port */
+	/*
 	options.c_cflag = B9600 | CS8 | CLOCAL | CREAD;
 	options.c_iflag = IGNPAR;
 	options.c_oflag = 0;
 	options.c_lflag = 0;
 
-	/* Apply the settings */
+
 	tcflush(fd, TCIFLUSH);
-	tcsetattr(fd, TCSANOW, &options);
+	tcsetattr(fd, TCSANOW, &options); */
 
 	/* /* Write to serial port */
 	/*strcpy(text, "Hello from my RPi\n\r");
