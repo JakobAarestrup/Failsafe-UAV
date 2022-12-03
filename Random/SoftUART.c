@@ -42,7 +42,6 @@ int main() {
 	len = read(fd, text, 255);
 	printf("%s", text);
 	count++;
-	printf("%d",count);
 	}
 	close(fd);
 
