@@ -25,7 +25,7 @@ int main(int argc , char *argv[]){
 	puts("Connected");
 
     //Send some data
-	message = "GET / HTTP/1.1\r\n\r\n";
+	message = "Hello from RDS";
 	if( send(socket_desc , message , strlen(message) , 0) < 0)
 	{
 		puts("Send failed");
