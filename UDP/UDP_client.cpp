@@ -9,7 +9,8 @@ int main(int argc , char *argv[]){
 	int socket_desc;
 	struct sockaddr_in server;
     char *message;
-	int n, len;
+	int n;
+	unsigned int* len;
 	char buffer[MAXLINE]; 
 	
 	//Create socket
