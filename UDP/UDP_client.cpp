@@ -7,7 +7,7 @@ int main(int argc , char *argv[]){
 	int socket_desc;
 	struct sockaddr_in server;
     char *message;
-	float TestData = 15.93;
+	float *TestData = 15.93;
 	
 	//Create socket
 	socket_desc = socket(AF_INET , SOCK_DGRAM , 0);
@@ -27,7 +27,7 @@ int main(int argc , char *argv[]){
 
     //Send some data
 	message = "Hello from RDS";
-	if( send(socket_desc , TestData , length(TestData) , 0) < 0)
+	if( send(socket_desc , TestData , sizeof(TestData) , 0) < 0)
 	{
 		puts("Send failed");
 		return 1;
