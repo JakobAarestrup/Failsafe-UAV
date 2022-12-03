@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<sys/socket.h>
 #include<arpa/inet.h>	//inet_addr
+#include<string.h>	    //strlen
 
 int main(int argc , char *argv[]){
 	int socket_desc;
