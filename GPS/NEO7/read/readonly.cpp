@@ -38,8 +38,8 @@ int main()
     while (1)
     {
 
-        NEO1.readGPS();     // reads NMEA message
-        NEO1.convertData(); // converts to decimal degrees format
+        NEO1.readGPS(); // reads NMEA message
+        // NEO1.convertData(); // converts to decimal degrees format
 
         usleep(500000); // delay 1 second
     }
