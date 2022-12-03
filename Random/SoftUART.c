@@ -42,7 +42,7 @@ int main() {
 	{
 	memset(text, 0, 255);
 	len = read(fd, text, 255);
-	printf("%s\n", text);
+	printf("%s", text);
 	}
 
 
