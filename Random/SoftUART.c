@@ -42,9 +42,6 @@ int main() {
 	len = read(fd, text, 255);
 	printf("%s", text);
 	close(fd);
-	count++;
-	if (count == 200)
-	break;
 	}
 
 
