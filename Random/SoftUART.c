@@ -9,7 +9,7 @@ int main() {
 	char text[255];
 	struct termios options; /* Serial ports setting */
 
-	fd = open("/dev/ttyS0", O_RDWR | O_NDELAY | O_NOCTTY);
+	fd = open("/dev/ttySOFT0", O_RDWR | O_NDELAY | O_NOCTTY);
 	if (fd < 0) {
 		perror("Error opening serial port");
 		return -1;
@@ -19,7 +19,7 @@ int main() {
 	// tcgetattr(fd, &options);
 	
 	/* Set up serial port */
-	options.c_cflag = B4800 | CS8 | CLOCAL | CREAD;
+	options.c_cflag = B9600 | CS8 | CLOCAL | CREAD;
 	options.c_iflag = IGNPAR;
 	options.c_oflag = 0;
 	options.c_lflag = 0;
