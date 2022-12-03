@@ -36,15 +36,13 @@ int main() {
 	printf("Wrote %d bytes over UART\n", len); */
 
 	/* Read from serial port */
-	while(1)
+	while(count < 100000)
 	{
 	memset(text, 0, 255);
 	len = read(fd, text, 255);
 	printf("%s", text);
 	count++;
 	printf("%d",count);
-	if (count == 100000)
-	break;
 	}
 	close(fd);
 
