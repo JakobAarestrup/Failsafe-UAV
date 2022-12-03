@@ -20,12 +20,12 @@ int main(int argc, char **argv)
     fcntl(fd, F_SETFL, 0);
 
     // Write to the port
-    int n = write("Hello Peripheral\n");
-    if (n < 0)
-    {
-        perror("Write failed - ");
-        return -1;
-    }
+    /*    int n = write("Hello Peripheral\n");
+       if (n < 0)
+       {
+           perror("Write failed - ");
+           return -1;
+       } */
 
     // Read up to 255 characters from the port if they are there
     char buf[256];
