@@ -74,26 +74,24 @@ int main()
         return 1;
     }
 
-    const auto set_rate_result1 = telemetry.set_rate_attitude_euler(1.0);
-    if (set_rate_result1 != Telemetry::Result::Success)
-    {
-        std::cerr << "Setting rate failed: " << set_rate_result1 << '\n';
-        return 1;
-    }
+    /*   const auto set_rate_result1 = telemetry.set_rate_attitude_euler(1.0);
+      if (set_rate_result1 != Telemetry::Result::Success)
+      {
+          std::cerr << "Setting rate failed: " << set_rate_result1 << '\n';
+          return 1;
+      } */
 
-    float relative_alt
-    float latitude
     // Set up callback to monitor altitude while the vehicle is in flight
     telemetry.subscribe_position([](Telemetry::Position position)
                                  { std::cout << "Altitude: " << position.relative_altitude_m << " m" << std::endl
                                              << "Latitude: " << position.latitude_deg << std::endl
                                              << "Longitude: " << position.longitude_deg << '\n'; });
-    
 
-    telemetry.subscribe_attitude_euler([](Telemetry::EulerAngle euler)
-                                       { std::cout << "Euler: (" << euler.roll_deg << ", " << euler.pitch_deg << ", " << euler.yaw_deg << ")" << std::endl; });
-
-    RollSYS_ = euler.roll_deg;
-    PitchSYS_ = euler.pitch_deg;
-    YawSYS_ = euler.yaw_deg;
+    /*   telemetry.subscribe_attitude_euler([](Telemetry::EulerAngle euler)
+                                         { std::cout << "Euler: (" << euler.roll_deg << ", " << euler.pitch_deg << ", " << euler.yaw_deg << ")" << std::endl; });
+   */
+    while (1)
+    {
+    }
+    return 0;
 }

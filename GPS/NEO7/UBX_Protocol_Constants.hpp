@@ -12,6 +12,9 @@ namespace UBX_protocol
     inline constexpr char RATE[] = "\xB5\x62\x06\x08\x06\x00\x64\x00\x01\x00\x01\x00\x7A\x12";
     inline constexpr size_t RATE_Length = 15; // sizeof RATE / sizeof RATE[0]; // length of RATE CFG Message
 
+    /*BAUDRATE 4800*/
+    inline constexpr char BAUD[] = "\xB5\x62\x06\x00\x14\x00\x01\x00\x00\x00\xD0\x08\x00\x00\xC0\x12\x00\x00\x07\x00\x03\x00\x00\x00\x00\x00\xCF\xE4";
+    inline constexpr size_t BAUD_Length = 29; // sizeof BAUD / sizeof BAUD[0]; // length of BAUD CFG Message
     /*NMEA MESSAGES*/
     inline constexpr char GLL[] = "\xB5\x62\x06\x01\x08\x00\xF0\x01\x00\x00\x00\x00\x00\x00\x00\x2A"; // disable GPGLL
     inline constexpr char GSA[] = "\xB5\x62\x06\x01\x08\x00\xF0\x02\x00\x00\x00\x00\x00\x00\x01\x31"; // disable GSA

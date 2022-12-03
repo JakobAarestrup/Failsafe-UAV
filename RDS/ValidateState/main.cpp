@@ -89,15 +89,15 @@ int main(int argc, char **argv)
   /* cout << "You have entered " << argc
        << " arguments:"
        << "\n";
-*/
+  */
   for (int i = 0; i < argc; ++i)
   {
-    cout << argv[i] << " plads: " << i << endl;
+    std::cout << argv[i] << " plads: " << i << std::endl;
   }
-  cout << "\n";
-  cout << argv[1] << "\n";
-  cout << argv[4] << "\n"
-       << endl;
+  std::cout << "\n";
+  std::cout << argv[1] << "\n";
+  std::cout << argv[4] << "\n"
+            << std::endl;
 
   if ((strcmp(argv[1], argv[4]) == 0)) // if you write 20 on serial it
   {
@@ -107,29 +107,28 @@ int main(int argc, char **argv)
   {
     RDS.configValidateState(argv[2], argv[3], argv[4], argv[5]);
   }
-
   /**
    * @brief Initialize used object variables
    *
    */
-  /*  GPS G1;
-   I2C I1;
-   IMU IMU2;
-   // IMU IMU2;
-   BAR B1;
-   B1.calibrateBAR(); */
+  GPS G1;
+  I2C I1;
+  IMU IMU2;
+  // IMU IMU2;
+  BAR B1;
+  B1.calibrateBAR();
   /**
    * @brief  Configuration of Sensors
    *
    */
-  /*  G1.configAll();     // configs the GPS
-   I1.initializeI2C(); // Initialize IMU1 */
+  G1.configAll();     // configs the GPS
+  I1.initializeI2C(); // Initialize IMU1 */
   //  I2.initializeI2C(); // Initialize IMU2
   /**
    * @brief Calibration..
    *
    */
-  // IMU2.calibrateGyro(2);
+  IMU2.calibrateGyro(2);
   //  IMU2.calibrateGyro();
 
   /**
@@ -180,19 +179,6 @@ int main(int argc, char **argv)
    *
    */
 
-  std::vector<std::thread> threads;
-  auto exec_IMU = []()
-  { while (true) RDS; };
-  auto exec_loop = []()
-  { while (true) run2(); };
-
-  threads.push_back(std::thread(exec_IMU));
-  threads.push_back(std::thread(exec_exec_loop));
-
-  for (auto &th : threads)
-  {
-    th.join();
-  }
   while (1)
   {
     startofloop = mymillis();

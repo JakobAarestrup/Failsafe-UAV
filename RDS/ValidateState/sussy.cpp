@@ -60,12 +60,12 @@ int mymillis()
     return (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
 }
 
-void mainloop(ValidateState RDS, NEO GPS, BAR Barometer)
+void mainloop(ValidateState RDS, GPS NEO, BAR Barometer, Telemetry &telemetry)
 {
     while (1)
     {
         int startofloop = mymillis();
-        RDS.UpdateSystemValues(GPS, Barometer);                         // gets all values from sensors
+        RDS.UpdateSystemValues(NEO, Barometer);                         // gets all values from sensors
         const Telemetry::Position position = telemetry.position();      // returns struct with values from baro and GPS
         const Telemetry::EulerAngle euler = telemetry.attitude_euler(); // returns struct with euler angles
         /*Sets all values from MAVLINK*/
@@ -113,12 +113,12 @@ int main(int argc, char **argv)
     */
     for (int i = 0; i < argc; ++i)
     {
-        cout << argv[i] << " plads: " << i << endl;
+        std::cout << argv[i] << " plads: " << i << std::endl;
     }
-    cout << "\n";
-    cout << argv[1] << "\n";
-    cout << argv[4] << "\n"
-         << endl;
+    std::cout << "\n";
+    std::cout << argv[1] << "\n";
+    std::cout << argv[4] << "\n"
+              << std::endl;
 
     if ((strcmp(argv[1], argv[4]) == 0)) // if you write 20 on serial it
     {
@@ -138,27 +138,28 @@ int main(int argc, char **argv)
     // IMU IMU1;
     IMU IMU2;
     BAR B1;
-    B1.calibrateBAR();
+    // B1.calibrateBAR();
     /**
      * @brief  Configuration of Sensors
      *
      */
-    /*  G1.configAll();     // configs the GPS
-     I1.initializeI2C(); // Initialize IMU1 */
-    //  I2.initializeI2C(); // Initialize IMU2
+    /* G1.configAll();     // configs the GPS
+     I1.initializeI2C(); // Initialize IMU2 right now but will do both */
+    G1.configAll();     // configs the GPS
+    I1.initializeI2C(); // Initialize IMU2 right now but will do both
     /**
      * @brief Calibration..
      *
      */
     //  IMU1.calibrateGyro(1);
-    // IMU2.calibrateGyro(2);
+    IMU2.calibrateGyro(2);
 
     /**
      * @brief MAVLINK connection.
      *
      */
     Mavsdk mavsdk;
-    ConnectionResult connection_result = mavsdk.add_any_connection("serial:///dev/ttyS0:57600");
+    ConnectionResult connection_result = mavsdk.add_any_connection(argv[1]);
 
     if (connection_result != ConnectionResult::Success)
     {
@@ -195,8 +196,8 @@ int main(int argc, char **argv)
      */
     std::vector<std::thread> threads;
 
-    threads.push_back(std::thread(mainloop, RDS, G1, B1));
-    threads.push_back(std::thread(updateIMUValues, RDS, IMU2));
+    threads.push_back(std::thread(mainloop, std::ref(RDS), std::ref(G1), std::ref(B1), std::ref(telemetry)));
+    threads.push_back(std::thread(updateIMUValues, std::ref(RDS), std::ref(IMU2)));
 
     for (auto &th : threads)
     {
