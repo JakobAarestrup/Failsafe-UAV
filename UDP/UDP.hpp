@@ -5,7 +5,7 @@ class UDP
 public:
     int initUDP();
     int sendUDP(char* message);
-    char receiveUDP();
+    char* receiveUDP();
 private:
     int socket_desc_;
     int n_;
