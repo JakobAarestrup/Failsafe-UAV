@@ -90,7 +90,7 @@ void GPS::readGPS() // reads GPS serial data
 
         GPS_Data_ = serialGetchar(serialPort_); /* receive character serially */
         // printf("%c", GPS_Data_);
-        //   read(serialPort_, &GPS_Data, 1);
+        //     read(serialPort_, &GPS_Data, 1);
         if (GPS_Data_ == '$') // check for start of NMEA message
         {
             GGA_Flag = 0;
@@ -153,7 +153,7 @@ void GPS::readGPS() // reads GPS serial data
             *end_ptr = '\0';                    // and zero terminate
             SV_ = atoi(start_ptr);              // Convert char to int & store in variable
 
-            // printf("latitude: %f %s longitude: %f %s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
+            printf("latitude: %f %s longitude: %f %s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
             //   end = 1;
             i = 200;
         }
@@ -173,7 +173,7 @@ void GPS::convertData() // converts GPS serial data to decimal degrees
     double lon_Sec = (longitude_ - lon_Deg * 100) / 60; // mm.mmmm(minutes) / 60 = seconds
 
     getNorthSouth(NS);
-    getNorthSouth(EW);
+    getEastWest(EW);
 
     if ((strcmp(NS, "") == 0) | (strcmp(EW, "") == 0)) // is 1 of the arrays empty?
     {
