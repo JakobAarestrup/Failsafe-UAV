@@ -22,6 +22,7 @@ int GPS::openUART(int fd) // open UART serial port
         perror("Error opening serial port");
         return -1;
     }
+    return fd;
 }
 
 int GPS::configAll(int serial)
