@@ -68,13 +68,12 @@ void GPS::readGPS() // reads GPS serial data
 {
 
     /*VARIABLES*/
-    /* char buff[100], GGA_Check[3];
+    char buff[255], GGA_Check[3];
     unsigned char GGA_Flag = 0;
     unsigned char GGA_Index = 0;
     unsigned char GGA_Received = 0;
-    char *start_ptr, *end_ptr, *jump_ptr, *gps; */
+    char *start_ptr, *end_ptr, *jump_ptr, *gps;
 
-    char buff[255];
     int len;
 
     // int i = 0;
@@ -90,8 +89,8 @@ void GPS::readGPS() // reads GPS serial data
         // GPS_Data_ = serialGetchar(serialPort_); /* receive character serially */
         //  printf("%c", GPS_Data_);
         //      read(serialPort_, &GPS_Data, 1);
-        /*
-        if (GPS_Data_ == '$') // check for start of NMEA message
+
+        if (buff == '$') // check for start of NMEA message
         {
             GGA_Flag = 0;
             GGA_Index = 0;
@@ -156,7 +155,7 @@ void GPS::readGPS() // reads GPS serial data
             printf("latitude: %f %s longitude: %f %s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
             //   end = 1;
             i = 200;
-        } */
+        }
     }
     close(serialPort_);
 }
