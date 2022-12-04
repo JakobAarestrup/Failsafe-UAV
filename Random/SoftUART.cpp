@@ -10,7 +10,7 @@ int main()
 	char text[255];
 	int count = 0;
 	printf("YOYO!\n");
-	fd = open("/dev/ttySOFT0", O_RDONLY);
+	fd = open("/dev/ttySOFT0", O_RDWR);
 	if (fd < 0)
 	{
 		perror("Error opening serial port");
