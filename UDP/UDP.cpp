@@ -5,10 +5,11 @@
 #include<string.h>		//strlen	
 
 #define MAXLINE 1024
-	
+struct sockaddr_in server;
+
 int UDP::initUDP()
 {
-	struct sockaddr_in server;
+	
 	//Create socket
 	socket_desc_ = socket(AF_INET , SOCK_DGRAM , 0);
 	if (socket_desc_ == -1) printf("Could not create socket");
