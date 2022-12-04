@@ -164,7 +164,7 @@ void GPS::readGPS() // reads GPS serial data
 void GPS::convertData() // converts GPS serial data to decimal degrees
 {
     char NS[1];
-    char EW[1];
+    char EW[2];
 
     double lat_Deg = int(latitude_) / 100;  // (d)dd(deg)
     double lon_Deg = int(longitude_) / 100; // (d)dd(deg)
