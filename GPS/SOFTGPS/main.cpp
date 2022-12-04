@@ -31,7 +31,7 @@ int main()
   GPS NEO1;
 
   /* OPEN UART */
-  // serial_port = NEO1.configAll(serial_port);
+  serial_port = NEO1.configAll(serial_port);
   /* CONFIGURATION */
   // printf("Serial port is open! %d \n", serial_port);
 
@@ -42,7 +42,6 @@ int main()
 
     NEO1.readGPS();     // reads NMEA message
     NEO1.convertData(); // converts to decimal degrees format
-    
   }
 
   return 0;
