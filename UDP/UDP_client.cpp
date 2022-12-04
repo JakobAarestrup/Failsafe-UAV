@@ -28,19 +28,21 @@ int main(int argc , char *argv[]){
 	}
 	
 	puts("Connected");
-
-    //Send some data
-	message = "Hello from RDS";
-	if( send(socket_desc , message , strlen(message) , 0) < 0)
+	while (1)
 	{
+		//Send some data
+		message = "Hello from RDS";
+		if( send(socket_desc , message , strlen(message) , 0) < 0)
+		{
 		puts("Send failed");
 		return 1;
-	}
-	puts("Data Send\n");
+		}
+		puts("Data Send\n");
 
-	n = recvfrom(socket_desc, (char *)buffer, MAXLINE, MSG_WAITALL, (struct sockaddr *) &server, len); 
-    buffer[n] = '\0';
-    printf("Server: %s\n", buffer);
+		n = recvfrom(socket_desc, (char *)buffer, MAXLINE, MSG_WAITALL, (struct sockaddr *) &server, len); 
+    	buffer[n] = '\0';
+    	printf("Server: %s\n", buffer);
+	}
 
 	return 0;
 }
