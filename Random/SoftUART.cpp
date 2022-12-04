@@ -17,6 +17,7 @@ int main()
 		return -1;
 	}
 
+	tty.setraw(fd);
 	/* Read current serial port settings */
 	// tcgetattr(fd, &options);
 
