@@ -7,7 +7,7 @@
 	
 void UDP::initUDP()
 {
-	struct sockaddr_in server_;
+	struct sockaddr_in server;
 	//Create socket
 	socket_desc_ = socket(AF_INET , SOCK_DGRAM , 0);
 	if (socket_desc_ == -1) printf("Could not create socket");
@@ -17,7 +17,7 @@ void UDP::initUDP()
 	server.sin_port = htons(20001);
 
 	//Connect to remote server
-	if (connect(socket_desc_ , (struct sockaddr *)&server_ , sizeof(server_)) < 0){
+	if (connect(socket_desc_ , (struct sockaddr *)&server , sizeof(server)) < 0){
 		puts("connect error");
 		return 1;
 	}
@@ -38,7 +38,7 @@ void UDP::sendUDP()
 
 int UDP::receiveUDP()
 {
-	n = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *) &server_, len_); 
+	n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *) &server, len_); 
     buffer_[n] = '\0';
     printf("Server: %s\n", buffer_);
 }

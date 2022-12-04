@@ -10,7 +10,7 @@ int main()
     while (1)
     {
         u1.sendUDP();
-        u1.reciveUDP();
+        u1.receiveUDP();
         usleep(200000);
     }
 
