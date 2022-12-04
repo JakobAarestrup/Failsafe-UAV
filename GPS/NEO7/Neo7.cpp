@@ -16,7 +16,7 @@ int GPS::openUART(int fd) // open UART serial port
 {
     printf("openUART called \n");
 
-    if ((fd = serialOpen("/dev/ttySOFT0")) < 0) // open serial port with set baudrate
+    if ((fd = serialOpen("/dev/ttySOFT0", 4800)) < 0) // open serial port with set baudrate
     {
         fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
 
@@ -89,13 +89,12 @@ void GPS::readGPS() // reads GPS serial data
     {
 
         GPS_Data_ = serialGetchar(serialPort_); /* receive character serially */
-        // printf("%c", GPS_Data_);
+        printf("%c", GPS_Data_);
         //    read(serialPort_, &GPS_Data, 1);
         if (GPS_Data_ == '$') // check for start of NMEA message
         {
             GGA_Flag = 0;
             GGA_Index = 0;
-            printf("yo");
         }
 
         else if (GGA_Flag == 1)
