@@ -49,7 +49,7 @@ void UDP::getUDP(char receiveMsg[])
     int strLength = strlen(buffer_); // finds length of the array
     for (int i = 0; i < strLength; i++)
     {
-        receiveMsg[i] = buffer_[strLength - i]; // copies UserInput in reverse to TempInput
+        receiveMsg[i] = buffer_[i]; // copies UserInput in reverse to TempInput
     }
     receiveMsg[strLength] = '\0'; // adds NULL character at end
 }
