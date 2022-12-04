@@ -74,9 +74,6 @@ void GPS::readGPS() // reads GPS serial data
     unsigned char GGA_Index = 0;
     unsigned char GGA_Received = 0;
     char *start_ptr, *end_ptr, *jump_ptr, *gps;
-
-    int len;
-
     // int i = 0;
     //  configAll();
 
@@ -84,14 +81,7 @@ void GPS::readGPS() // reads GPS serial data
     serialPort_ = openUART(serialPort_);
     for (int i = 0; i < 200; i++)
     {
-        // memset(buff, 0, 255);
-        len = read(serialPort_, buff, 255);
-        // printf("%s|", buff);
-        // printf("%c|", buff[0]);
-        // GPS_Data_ = buff[0];
-        // GPS_Data_ = serialGetchar(serialPort_); /* receive character serially */
-        //  printf("%c", GPS_Data_);
-        //      read(serialPort_, &GPS_Data, 1);
+        read(serialPort_, buff, 255);
 
         if (buff[0] == '$') // check for start of NMEA message
         {
