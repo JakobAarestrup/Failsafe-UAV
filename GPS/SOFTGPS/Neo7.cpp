@@ -1,5 +1,7 @@
 #include "Neo7.hpp"
 #include "unistd.h"
+#include <fcntl.h>
+#include <termios.h>
 
 GPS::GPS() // default constructor
 {
