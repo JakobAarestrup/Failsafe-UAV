@@ -26,26 +26,20 @@ int UDP::initUDP()
 	puts("Connected");
 }
 
-int UDP::sendUDP(char *message)
+void UDP::UDP_COM(char *message, char receiveMsg[])
 {
 	//Send some data
 	if( send(socket_desc_ , message, strlen(message), 0) < 0)
 	{
 		puts("Send failed");
-		return 1;
+		return;
 	}
 	puts("Data Send\n");
-}
 
-void UDP::receiveUDP()
-{
+	//Receive message
 	n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *) &server, len_); 
     buffer_[n_] = '\0';
-    //printf("Server: %s\n", buffer_);
-}
 
-void UDP::getUDP(char receiveMsg[]) 
-{
     int strLength = strlen(buffer_); // finds length of the array
     for (int i = 0; i < strLength; i++)
     {
