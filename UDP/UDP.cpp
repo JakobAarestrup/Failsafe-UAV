@@ -6,7 +6,7 @@
 
 #define MAXLINE 1024
 	
-void UDP::initUDP()
+int UDP::initUDP()
 {
 	struct sockaddr_in server;
 	//Create socket
@@ -25,7 +25,7 @@ void UDP::initUDP()
 	puts("Connected");
 }
 
-void UDP::sendUDP()
+int UDP::sendUDP()
 {
 	//Send some data
 	message_ = "Hello from RDS";

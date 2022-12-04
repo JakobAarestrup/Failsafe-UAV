@@ -3,8 +3,8 @@
 class UDP
 {
 public:
-    void initUDP();
-    void sendUDP();
+    int initUDP();
+    int sendUDP();
     int  receiveUDP();
 private:
     int socket_desc_;
