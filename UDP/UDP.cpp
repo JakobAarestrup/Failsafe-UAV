@@ -26,11 +26,10 @@ int UDP::initUDP()
 	puts("Connected");
 }
 
-int UDP::sendUDP()
+int UDP::sendUDP(char *message)
 {
 	//Send some data
-	message_ = "Hello from RDS";
-	if( send(socket_desc_ , message_ , strlen(message_) , 0) < 0)
+	if( send(socket_desc_ , message, strlen(message), 0) < 0)
 	{
 		puts("Send failed");
 		return 1;
@@ -38,9 +37,10 @@ int UDP::sendUDP()
 	puts("Data Send\n");
 }
 
-int UDP::receiveUDP()
+char UDP::receiveUDP()
 {
 	n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *) &server, len_); 
     buffer_[n_] = '\0';
-    printf("Server: %s\n", buffer_);
+    //printf("Server: %s\n", buffer_);
+	return buffer_
 }

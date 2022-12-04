@@ -4,11 +4,10 @@ class UDP
 {
 public:
     int initUDP();
-    int sendUDP();
-    int  receiveUDP();
+    int sendUDP(char* message);
+    char receiveUDP();
 private:
     int socket_desc_;
-    char *message_;
     int n_;
     unsigned int* len_;
     char buffer_[MAXLINE];
