@@ -7,7 +7,7 @@ class UDP
 public:
     void initUDP();
     void sendUDP();
-    int  recieveUDP();
+    int  receiveUDP();
 private:
     int socket_desc_;
     char *message_;
