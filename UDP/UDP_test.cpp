@@ -12,7 +12,7 @@ int main()
     while (1)
     {
         u1.sendUDP(message);
-        &receivedMsg = u1.receiveUDP();
+        receivedMsg = u1.receiveUDP();
         printf("Server: %s\n",receivedMsg);
         usleep(200000);
     }
