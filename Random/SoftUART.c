@@ -8,7 +8,6 @@ int main() {
 	int fd, len;
 	char text[255];
 	int count = 0;
-	struct termios options; /* Serial ports setting */
 
 	fd = open("/dev/ttySOFT0", O_RDONLY);
 	if (fd < 0) {
