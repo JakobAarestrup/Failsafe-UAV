@@ -4,7 +4,7 @@ class UDP
 {
 public:
     int initUDP();
-    void UDP_COM(char *message, char receiveMsg[])
+    void UDP_COM(char *message, char receiveMsg[]);
 private:
     int socket_desc_;
     int n_;
