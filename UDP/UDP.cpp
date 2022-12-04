@@ -37,10 +37,19 @@ int UDP::sendUDP(char *message)
 	puts("Data Send\n");
 }
 
-char UDP::receiveUDP()
+void UDP::receiveUDP()
 {
 	n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *) &server, len_); 
     buffer_[n_] = '\0';
     //printf("Server: %s\n", buffer_);
-	return buffer_;
+}
+
+void UDP::getUDP(char receiveMsg[]) 
+{
+    int strLength = strlen(buffer_); // finds length of the array
+    for (int i = 0; i < strLength; i++)
+    {
+        receiveMsg[i] = buffer_[strLength - 1 - i]; // copies UserInput in reverse to TempInput
+    }
+    receiveMsg[strLength] = '\0'; // adds NULL character at end
 }

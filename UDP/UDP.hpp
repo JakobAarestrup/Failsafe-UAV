@@ -6,6 +6,7 @@ public:
     int initUDP();
     int sendUDP(char* message);
     char receiveUDP();
+    void getUDP(char receiveMsg[]);
 private:
     int socket_desc_;
     int n_;
