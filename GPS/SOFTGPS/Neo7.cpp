@@ -166,7 +166,7 @@ void GPS::readGPS() // reads GPS serial data
 void GPS::convertData() // converts GPS serial data to decimal degrees
 {
     char NS[1];
-    char EW[2];
+    char EW[1];
 
     double lat_Deg = int(latitude_) / 100;  // (d)dd(deg)
     double lon_Deg = int(longitude_) / 100; // (d)dd(deg)
@@ -175,8 +175,7 @@ void GPS::convertData() // converts GPS serial data to decimal degrees
     double lon_Sec = (longitude_ - lon_Deg * 100) / 60; // mm.mmmm(minutes) / 60 = seconds
 
     getNorthSouth(NS);
-    getNorthSouth(EW);
-    printf("EW: %c", EW[0]);
+    getEastWest(EW);
 
     if ((strcmp(NS, "") == 0) | (strcmp(EW, "") == 0)) // is 1 of the arrays empty?
     {
