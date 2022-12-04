@@ -69,7 +69,7 @@ void GPS::readGPS() // reads GPS serial data
 
     /*VARIABLES*/
     char buff[255], GGA_Check[3];
-    char john[255];
+    char GPS_buffer[255];
     unsigned char GGA_Flag = 0;
     unsigned char GGA_Index = 0;
     unsigned char GGA_Received = 0;
@@ -84,7 +84,7 @@ void GPS::readGPS() // reads GPS serial data
     serialPort_ = openUART(serialPort_);
     for (int i = 0; i < 200; i++)
     {
-        memset(buff, 0, 255);
+        // memset(buff, 0, 255);
         len = read(serialPort_, buff, 255);
         // printf("%s|", buff);
         // printf("%c|", buff[0]);
@@ -101,7 +101,7 @@ void GPS::readGPS() // reads GPS serial data
 
         else if (GGA_Flag == 1)
         {
-            john[GGA_Index++] = buff[0];
+            GPS_buffer[GGA_Index++] = buff[0];
 
             if (buff[0] == '\r')
             {
@@ -124,7 +124,7 @@ void GPS::readGPS() // reads GPS serial data
 
         if (GGA_Received == 1)
         {
-            gps = john;
+            gps = GPS_buffer;
             start_ptr = strchr(gps, ',');       // find start of latitude field
             end_ptr = strchr(++start_ptr, ','); // find end of field...
             latitude_ = atof(start_ptr);        // Convert char to float & store in variable
