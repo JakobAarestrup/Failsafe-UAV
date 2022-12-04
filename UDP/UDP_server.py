@@ -1,40 +1,31 @@
 import socket
 
 localIP = ""
-
 localPort = 20001
-
 bufferSize = 1024
-
-msgFromServer = "Hello UDP Client"
-
+msgFromServer = "Hello RDS"
 bytesToSend = str.encode(msgFromServer)
 
 # Create a datagram socket
-
 UDPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
 
 # Bind to address and ip
-
 UDPServerSocket.bind((localIP, localPort))
 
 print("UDP server up and listening")
 
 # Listen for incoming datagrams
-
 while (True):
     bytesAddressPair = UDPServerSocket.recvfrom(bufferSize)
-
-    message = bytesAddressPair[0]
-
+    message = bytesAddressPair[0].decode()
     address = bytesAddressPair[1]
+    #print(message.decode())
 
-    clientMsg = "Message from Client:{}".format(message)
+    clientMsg = "{}, ".format(message)
     clientIP = "Client IP Address:{}".format(address)
-
+    
     print(clientMsg)
     print(clientIP)
 
     # Sending a reply to client
-
     UDPServerSocket.sendto(bytesToSend, address)
