@@ -55,6 +55,7 @@ int GPS::configAll(int serial)
     write(serial, UBX_protocol::GSV, UBX_protocol::GP_Length); // disable GPGSV
     write(serial, UBX_protocol::RMC, UBX_protocol::GP_Length); // disable RMC
     write(serial, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG
+
     /*BAUDRATE */
     write(serial, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
 
@@ -225,7 +226,7 @@ void GPS::getNorthSouth(char NS[]) // returns either a East pole or West pole
     int strLength = strlen(NS_); // finds length of the array
     for (int i = 0; i < strLength; i++)
     {
-        NS[i] = NS_[strLength - 1 - i]; // copies UserInput in reverse to TempInput
+        NS[i] = NS_[i]; // copies UserInput in reverse to TempInput
     }
     NS[strLength] = '\0'; // adds NULL character at end
 }
@@ -235,7 +236,7 @@ void GPS::getEastWest(char EW[]) // returns either a East pole or West pole
     int strLength = strlen(EW_); // finds length of the array
     for (int i = 0; i < strLength; i++)
     {
-        EW[i] = EW_[strLength - 1 - i]; // copies UserInput in reverse to TempInput
+        EW[i] = EW_[i]; // copies UserInput in reverse to TempInput
     }
     EW[strLength] = '\0'; // adds NULL character at end
 }
