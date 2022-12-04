@@ -5,6 +5,8 @@
 #include <wiringSerial.h>
 #include <cstddef>
 #include <unistd.h>
+#include <fcntl.h>
+#include <termios.h>
 
 /*Ownlibraries*/
 #include "UBX_Protocol_Constants.hpp"
@@ -29,7 +31,7 @@ int main()
   GPS NEO1;
 
   /* OPEN UART */
-  serial_port = NEO1.configAll(serial_port);
+  // serial_port = NEO1.configAll(serial_port);
   /* CONFIGURATION */
   // printf("Serial port is open! %d \n", serial_port);
 
