@@ -176,6 +176,7 @@ void GPS::convertData() // converts GPS serial data to decimal degrees
 
     getNorthSouth(NS);
     getNorthSouth(EW);
+    print("EW: %c", EW);
 
     if ((strcmp(NS, "") == 0) | (strcmp(EW, "") == 0)) // is 1 of the arrays empty?
     {
