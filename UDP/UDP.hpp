@@ -1,4 +1,5 @@
-#include<string.h>	    //strlen
+#include<string>	    //strlen
+#include<iostream>
 #define MAXLINE 1024
 
 class UDP
@@ -9,7 +10,6 @@ public:
     int  recieveUDP();
 private:
     int socket_desc_;
-    struct sockaddr_in server_;
     char *message_;
     int n_;
     unsigned int* len_;

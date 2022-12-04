@@ -3,10 +3,11 @@
 #include<sys/socket.h>
 #include<arpa/inet.h>	//inet_addr
 
-#define MAXLINE 1024 
+#define MAXLINE 1024
 	
 void UDP::initUDP()
 {
+	struct sockaddr_in server_;
 	//Create socket
 	socket_desc_ = socket(AF_INET , SOCK_DGRAM , 0);
 	if (socket_desc_ == -1) printf("Could not create socket");
