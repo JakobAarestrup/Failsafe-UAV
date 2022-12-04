@@ -2,6 +2,8 @@
 #include <string.h>
 #include <errno.h>
 #include <iostream>
+#include <fcntl.h>
+#include <termios.h>
 
 #include "UBX_Protocol_Constants.hpp"
 #include <wiringPi.h>

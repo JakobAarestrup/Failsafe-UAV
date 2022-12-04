@@ -42,6 +42,7 @@ int main()
 
     NEO1.readGPS();     // reads NMEA message
     NEO1.convertData(); // converts to decimal degrees format
+    
   }
 
   return 0;
