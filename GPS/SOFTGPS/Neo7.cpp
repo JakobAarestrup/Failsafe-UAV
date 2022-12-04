@@ -86,7 +86,6 @@ void GPS::readGPS() // reads GPS serial data
         memset(buff, 0, 255);
         len = read(serialPort_, buff, 255);
         printf("%s|", buff);
-        GPS_Data_ = buff[0];
         // GPS_Data_ = serialGetchar(serialPort_); /* receive character serially */
         //  printf("%c", GPS_Data_);
         //      read(serialPort_, &GPS_Data, 1);
