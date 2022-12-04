@@ -82,7 +82,7 @@ void GPS::readGPS() // reads GPS serial data
 
     /* OPEN UART */
     serialPort_ = openUART(serialPort_);
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < 200; i++)
     {
         memset(buff, 0, 255);
         len = read(serialPort_, buff, 255);
@@ -155,8 +155,8 @@ void GPS::readGPS() // reads GPS serial data
             *end_ptr = '\0';                    // and zero terminate
             SV_ = atoi(start_ptr);              // Convert char to int & store in variable
 
-            printf("latitude: %f %s longitude: %f %s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
-            //   end = 1;
+            // printf("latitude: %f %s longitude: %f %s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
+            //    end = 1;
             i = 200;
         }
     }
