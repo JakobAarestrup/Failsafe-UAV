@@ -3,7 +3,7 @@ import socket
 localIP = ""
 localPort = 20001
 bufferSize = 1024
-msgFromServer = "Hello RDS"
+msgFromServer = "Message received from RDS"
 bytesToSend = str.encode(msgFromServer)
 
 # Create a datagram socket
