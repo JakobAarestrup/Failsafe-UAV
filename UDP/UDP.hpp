@@ -1,8 +1,7 @@
-class UDP
-
 #include<string.h>	    //strlen
 #define MAXLINE 1024
 
+class UDP
 {
 public:
     void initUDP();
