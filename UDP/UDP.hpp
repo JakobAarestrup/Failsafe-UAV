@@ -14,5 +14,5 @@ private:
     int n_;
     unsigned int* len_;
     char buffer_[MAXLINE];
-    string IP = "192.168.0.234";
+    std::string IP = "192.168.0.234";
 };
