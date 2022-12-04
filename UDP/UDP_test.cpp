@@ -8,7 +8,7 @@ int main()
     UDP u1;
     u1.initUDP();
     char *message = "Hello from RDS";
-    char receivedMsg[];
+    char receivedMsg[1024];
 
     while (1)
     {
