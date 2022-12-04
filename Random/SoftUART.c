@@ -10,7 +10,7 @@ int main() {
 	int count = 0;
 	struct termios options; /* Serial ports setting */
 
-	fd = open("/dev/ttySOFT0", O_RDONLY);
+	fd = open("/dev/ttySOFT0");
 	if (fd < 0) {
 		perror("Error opening serial port");
 		return -1;

@@ -1,7 +1,7 @@
 obj-m := softuart.o
 PWD := $(shell pwd)
 
-KERNEL_SRC_DIR := /root/raspberry/linux
+KERNEL_SRC_DIR := /root/usr/src
 GCC_PREFIX := arm-bcmrpi-linux-gnueabihf-
 
 all:
