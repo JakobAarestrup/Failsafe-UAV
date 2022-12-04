@@ -40,6 +40,6 @@ void UDP::sendUDP()
 int UDP::receiveUDP()
 {
 	n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *) &server, len_); 
-    buffer_[n] = '\0';
+    buffer_[n_] = '\0';
     printf("Server: %s\n", buffer_);
 }
