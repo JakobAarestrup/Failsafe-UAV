@@ -9,9 +9,7 @@ namespace UBX_protocol
     inline constexpr size_t NMEA_CFG_Length = 21; // sizeof NMEA / sizeof NMEA[0]; // length of NMEA CFG Message
 
     /*RATE*/ // Measurement frequency: 10 hz, navigation frequency 10 hz
-    // inline constexpr char RATE[] = "\xB5\x62\x06\x08\x06\x00\x64\x00\x01\x00\x01\x00\x7A\x12";
-    inline constexpr char RATE[] = "\xB5\x62\x06\x08\x06\x00\xE8\x03\x05\x00\x01\x00\x05\x49";
-
+    inline constexpr char RATE[] = "\xB5\x62\x06\x08\x06\x00\x64\x00\x01\x00\x01\x00\x7A\x12";
     inline constexpr size_t RATE_Length = 15; // sizeof RATE / sizeof RATE[0]; // length of RATE CFG Message
 
     /*BAUDRATE 4800*/
