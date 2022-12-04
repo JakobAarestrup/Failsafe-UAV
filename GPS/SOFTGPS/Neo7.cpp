@@ -206,7 +206,7 @@ void GPS::convertData() // converts GPS serial data to decimal degrees
             longitude_ = lon_Deg + lon_Sec;
         }
 
-        std::cout << "" << latitude_ << "," << NS[0] << " " << longitude_ << "," << EW << " Satellites:" << SV_ << std::endl;
+        std::cout << "" << latitude_ << "," << NS[0] << " " << longitude_ << "," << EW[0] << " Satellites:" << SV_ << std::endl;
     }
 }
 
