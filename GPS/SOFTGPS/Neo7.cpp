@@ -69,6 +69,7 @@ void GPS::readGPS() // reads GPS serial data
 
     /*VARIABLES*/
     char buff[255], GGA_Check[3];
+    char john[255];
     unsigned char GGA_Flag = 0;
     unsigned char GGA_Index = 0;
     unsigned char GGA_Received = 0;
@@ -100,9 +101,9 @@ void GPS::readGPS() // reads GPS serial data
 
         else if (GGA_Flag == 1)
         {
-            buff[GGA_Index++] = buff[0];
+            john[GGA_Index++] = buff[0];
 
-            if (GPS_Data_ == '\r')
+            if (buff[0] == '\r')
             {
                 GGA_Received = 1;
             }
