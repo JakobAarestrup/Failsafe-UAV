@@ -55,5 +55,5 @@ void UDP::UDP_COM(char *message, char receiveMsg[])
 		receiveMsg[i] = buffer_[i]; // copies UserInput in reverse to TempInput
 	}
 	receiveMsg[strLength] = '\0'; // adds NULL character at end */
-	receiveMsg[0] = 'PISS'; // adds NULL character at end */
+	receiveMsg[0] = 'P'; // adds NULL character at end */
 }
