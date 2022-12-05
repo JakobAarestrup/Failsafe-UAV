@@ -180,7 +180,7 @@ void ValidateState::GetBaroValues(BAR barometer)
  */
 void ValidateState::UpdateSystemValues(GPS NEO, BAR barometer, int loops) //, IMU sensor)
 {
-    if (loops = 1)
+    if (loops == 1)
         GetGPSValues(NEO);
     GetBaroValues(barometer);
 
