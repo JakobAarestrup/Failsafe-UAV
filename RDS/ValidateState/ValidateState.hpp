@@ -7,6 +7,7 @@
 #include <fstream>
 #include <sstream>
 #include "UDP/UDP.hpp"
+#include <mutex>
 
 class ValidateState
 {
@@ -17,7 +18,7 @@ public:
   void Usage(const std::string &bin_name);
   void configValidateState(char maxHeight[], char maxAcceleration[], char maxOrientation[], char maxDistance[]);
   void GetGPSValues(GPS NEO);
-  void GetIMUValues(IMU sensor);
+  void GetIMUValues(IMU &sensor);
   void GetBaroValues(BAR barometer);
   void SetMAVLinkValues(float alt, float lng, float lat, float roll, float pitch, float yaw);
 

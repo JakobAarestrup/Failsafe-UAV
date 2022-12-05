@@ -130,17 +130,24 @@ void ValidateState::GetGPSValues(GPS NEO)
  *
  * @param sensor Class object of IMU class
  */
-void ValidateState::GetIMUValues(IMU sensor) // void ValidateState::GetIMUValues(IMU sensor)
+void ValidateState::GetIMUValues(IMU &sensor) // void ValidateState::GetIMUValues(IMU sensor)
 {
-
+    float roll, pitch, yaw;
     sensor.readIMU(2);
     sensor.ConvertACCData();
     sensor.ConvertMagData();
     sensor.ComplementaryFilter();
 
-    RollRDS_ = sensor.getRoll();
-    PitchRDS_ = sensor.getPitch();
-    YawRDS_ = sensor.getYaw();
+    roll = sensor.getRoll();
+    pitch = sensor.getPitch();
+    yaw = sensor.getYaw();
+
+    {
+        std::scope_lock<std::mutex> lock(m);
+        RollRDS_ = roll;
+        PitchRDS_ = pitch;
+        YawRDS_ = yaw;
+    }
 
     /*MAVLINK GET IMU DATA FROM DRONE*/
     // RollSYS_ =;
@@ -184,12 +191,22 @@ void ValidateState::UpdateSystemValues(GPS NEO, BAR barometer) //, IMU sensor)
  */
 void ValidateState::LogData() // UDP Client)
 {
+    float RollRDS, PitchRDS, YawRDS;
+
+    {
+        std::scope_lock<std::mutex> lock(m);
+        RollRDS = RollSYS_;
+        PitchRDS = PitchSYS_;
+        YawRDS = YawSYS_;
+    }
+
     /*START logging*/
     printf("Logging data called..\n");
     /*RDS sensors*/
     std::string GPSBaro = "Longitude: " + std::to_string(longitudeRDS_) + " " + longPoleRDS_[0] + " Latitude: " + std::to_string(latitudeRDS_) + " " + latPoleRDS_ + " Satellites: " + std::to_string(SatellitesRDS_) + " Altitude: " + std::to_string(altitudeRDS_);
     Logger(GPSBaro);
-    std::string IMU = "Roll: " + std::to_string(RollRDS_) + " Pitch: " + std::to_string(PitchRDS_) + " Yaw: " + std::to_string(YawRDS_);
+
+    std::string IMU = "Roll: " + std::to_string(RollRDS) + " Pitch: " + std::to_string(PitchRDS) + " Yaw: " + std::to_string(YawRDS);
     Logger(IMU);
 
     std::string GPSBaroSYS = "LongitudeSYS: " + std::to_string(longitudeSYS_) + " " + longPoleRDS_[0] + " LatitudeSYS: " + std::to_string(latitudeSYS_) + " " + latPoleRDS_ + " AltitudeSYS: " + std::to_string(altitudeSYS_);
