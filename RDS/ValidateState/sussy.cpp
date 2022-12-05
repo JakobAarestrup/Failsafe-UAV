@@ -60,7 +60,7 @@ int mymillis()
     return (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
 }
 
-void mainloop(ValidateState &RDS, GPS &NEO, BAR &Barometer, Telemetry &telemetry, UDP &Client)
+void mainloop(ValidateState &RDS, GPS &NEO, BAR &Barometer, Telemetry &telemetry) //, UDP &Client)
 {
     while (1)
     {
@@ -71,10 +71,10 @@ void mainloop(ValidateState &RDS, GPS &NEO, BAR &Barometer, Telemetry &telemetry
         /*Sets all values from MAVLINK*/
         RDS.SetMAVLinkValues(position.relative_altitude_m, position.latitude_deg, position.longitude_deg,
                              euler.roll_deg, euler.pitch_deg, euler.yaw_deg);
-        RDS.LogData(Client); // Sends sensor data to log file
-        RDS.AxisControl();   // Checks for Failure on the Axises
+        RDS.LogData(); // Sends sensor data to log file
+        /* RDS.AxisControl();   // Checks for Failure on the Axises
         RDS.RouteControl();  // Checks for Failure in the KML
-        RDS.HeightControl(); // Checks for Failure for height
+        RDS.HeightControl(); // Checks for Failure for height */
         printf("Loop Time %d\n", mymillis() - startofloop);
     }
 }
@@ -128,7 +128,7 @@ int main(int argc, char **argv)
      */
 
     UDP Client;
-    Client.initUDP();
+    // Client.initUDP();
 
     GPS G1;
     I2C I1;
@@ -173,14 +173,14 @@ int main(int argc, char **argv)
     auto telemetry = Telemetry{system};
     auto action = Action{system};
 
-    const auto set_rate_position = telemetry.set_rate_position(10.0);
+    const auto set_rate_position = telemetry.set_rate_position(2.0);
     if (set_rate_position != Telemetry::Result::Success)
     {
         std::cerr << "Setting rate failed: " << set_rate_position << '\n';
         return 1;
     }
 
-    const auto set_rate_euler = telemetry.set_rate_attitude_euler(10.0);
+    const auto set_rate_euler = telemetry.set_rate_attitude_euler(2.0);
     if (set_rate_euler != Telemetry::Result::Success)
     {
         std::cerr << "Setting rate failed: " << set_rate_euler << '\n';
