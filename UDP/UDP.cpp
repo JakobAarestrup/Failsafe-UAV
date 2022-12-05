@@ -49,10 +49,10 @@ void UDP::UDP_COM(char *message, char receiveMsg[])
 
 	buffer_[n_] = '\0';
 
-	int strLength = strlen(buffer_); // finds length of the array
+	/* int strLength = strlen(buffer_); // finds length of the array
 	for (int i = 0; i < strLength; i++)
 	{
 		receiveMsg[i] = buffer_[i]; // copies UserInput in reverse to TempInput
 	}
-	receiveMsg[strLength] = '\0'; // adds NULL character at end
+	receiveMsg[strLength] = '\0'; // adds NULL character at end */
 }
