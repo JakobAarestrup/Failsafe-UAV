@@ -73,11 +73,14 @@ int GPS::configAll(int serial)
         fprintf(stdout, "Unable to start wiringPi: %s\n", strerror(errno)); // error handling
         return 1;
     } */
-
+    int count;
     write(serial2, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
 
     printf("Configuration is part 1 done! \n");
-
+    while (count < 100)
+    {
+        printf("--------------------------------");
+    }
     serialClose(serial);
     return serial2;
 }
