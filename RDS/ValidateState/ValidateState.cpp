@@ -189,7 +189,7 @@ void ValidateState::UpdateSystemValues(GPS NEO, BAR barometer) //, IMU sensor)
  * @brief logs all read data from the available sensors.
  *
  */
-void ValidateState::LogData(UDP) // &Client)
+void ValidateState::LogData() // &Client)
 {
     float RollRDS, PitchRDS, YawRDS;
 
