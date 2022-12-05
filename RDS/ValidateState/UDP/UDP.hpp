@@ -13,5 +13,5 @@ private:
     int n_;
     unsigned int *len_;
     char buffer_[MAXLINE];
-    const char *IP = "172.20.10.4";
+    const char *IP = "192.168.0.150";
 };
