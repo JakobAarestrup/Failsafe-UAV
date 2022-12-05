@@ -44,21 +44,19 @@ void UDP::UDP_COM(char *message, char receiveMsg[])
 	}
 	puts("Data Send\n");
 	// Receive message
-	if ((n = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, 0, (struct sockaddr *)&server, len_)) <= 0)
+	if ((n = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_PEEK, (struct sockaddr *)&server, len_)) <= 0)
 	{
 		receiveMsg[0] = '0';
 		puts("Receive failed\n");
 		return;
 	}
-	printf("Gamer JOHNNY\n");
 
-	// buffer_[n_] = '\0';
+	buffer_[n_] = '\0';
 
-	/* int strLength = strlen(buffer_); // finds length of the array
+	int strLength = strlen(buffer_); // finds length of the array
 	for (int i = 0; i < strLength; i++)
 	{
 		receiveMsg[i] = buffer_[i]; // copies UserInput in reverse to TempInput
 	}
 	receiveMsg[strLength] = '\0'; // adds NULL character at end */
-	// adds NULL character at end */
 }
