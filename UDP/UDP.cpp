@@ -51,10 +51,12 @@ void UDP::UDP_COM(char *message, char receiveMsg[])
 	puts("Data Send\n");
 	// Receive message
 
-	struct timeval timeout;
-	timeout.tv_sec = 0;
-	timeout.tv_usec = 50000;
-	setsockopt(socket_desc_, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
+	/*
+		struct timeval timeout;
+		timeout.tv_sec = 0;
+		timeout.tv_usec = 50000;
+		setsockopt(socket_desc_, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
+	*/
 
 	if ((n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&addr_Dest, len_)) < 0)
 	{
