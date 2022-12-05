@@ -28,7 +28,7 @@ int GPS::openUART(int fd) // open UART serial port
 int GPS::configAll(int serial)
 {
     /*OPEN UART*/
-    if ((serial = serialOpen("/dev/ttyS0", 4800)) < 0) // open serial port with set baudrate
+    if ((serial = serialOpen("/dev/ttyS0", 9600)) < 0) // open serial port with set baudrate
     {
         fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
 
@@ -55,22 +55,13 @@ int GPS::configAll(int serial)
     write(serial, UBX_protocol::GSV, UBX_protocol::GP_Length); // disable GPGSV
     write(serial, UBX_protocol::RMC, UBX_protocol::GP_Length); // disable RMC
     write(serial, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG
-    write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
 
     /*BAUDRATE */
-    /*write(serial, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
-     */
-
-    printf("Configuration is part 1 done! \n");
+    write(serial, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
     serialClose(serial);
-
-    return serial;
-}
-
-int GPS::configAgane(int serial)
-{
+    int serial2;
     /*OPEN UART*/
-    if ((serial = serialOpen("/dev/ttyS0", 4800)) < 0) // open serial port with set baudrate
+    if ((serial2 = serialOpen("/dev/ttyS0", 4800)) < 0) // open serial port with set baudrate
     {
         fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
 
@@ -83,12 +74,11 @@ int GPS::configAgane(int serial)
         return 1;
     }
 
-    /*SAVE CONFIG*/
-    printf("Configuration is part 2 done! \n");
-    write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
-    serialClose(serial);
+    write(serial2, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
 
-    return serial;
+    printf("Configuration is part 1 done! \n");
+
+    return serial2;
 }
 
 void GPS::readGPS() // reads GPS serial data
