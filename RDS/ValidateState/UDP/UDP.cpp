@@ -47,7 +47,12 @@ void UDP::UDP_COM(const char *message, char receiveMsg[])
 	puts("Data Send\n");
 
 	// Receive message
-	n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&server, len_);
+	if ((n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&server, len_)) <= 0)
+	{
+		puts("Receive failed");
+		return;
+	}
+
 	buffer_[n_] = '\0';
 
 	int strLength = strlen(buffer_); // finds length of the array
