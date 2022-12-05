@@ -80,9 +80,10 @@ private:
   float maxAcceleration_ = 15;
   float maxOrientation_ = 45;
   float maxDistance_ = 50;
-  float maxFallSpeed = 9.82;
+  float maxFallSpeed = -8;
   float altitudeRef_ 0 = 0;
-  float refTime_ = 0;
+  float timeRef_ = 0;
+  int FF_IMU_ = 0;
 
   std::mutex m;
 };
