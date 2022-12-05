@@ -79,4 +79,6 @@ private:
   float maxAcceleration_ = 15;
   float maxOrientation_ = 45;
   float maxDistance_ = 50;
+
+  std::mutex m;
 };
