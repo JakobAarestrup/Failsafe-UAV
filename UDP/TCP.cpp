@@ -1,3 +1,12 @@
+#include <unistd.h>
+#include <stdio.h>
+#include <sys/socket.h>
+#include <arpa/inet.h> //inet_addr
+#include <string.h>    //strlen
+#include <fcntl.h>
+#include <cerrno>
+#include <poll.h>
+
 #define BUFLEN 100 // Max length of buffer
 #define PORT 42069 // The port on which to listen for incoming data
 
