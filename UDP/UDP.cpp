@@ -54,8 +54,11 @@ void UDP::UDP_COM(char *message, char receiveMsg[])
 	puts("Data Send\n");
 	// Receive message
 
-	struct pollfd pfd = {socket_desc_ = s, .events = POLLIN};
-	poll(&pfd, 1, 50);
+	struct timeval timeout;
+	timeout.tv_sec = SOCKET_READ_TIMEOUT_SEC;
+	timeout.tv_usec = 50;
+	setsockopt(socket_desc_, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
+
 	if ((n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&server, len_)) < 0)
 	{
 		fprintf(stdout, "Unable to receive: %s\n", strerror(errno)); // error handling
