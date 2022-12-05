@@ -44,7 +44,7 @@ int GPS::configAll(int serial)
     /* CONFIGURATION */
 
     /*NMEA Config*/
-    // write(serial, UBX_protocol::NMEA_CFG, UBX_protocol::NMEA_CFG_Length); // disable SBAS QZSS GLONASS BeiDou Galileo
+    write(serial, UBX_protocol::NMEA_CFG, UBX_protocol::NMEA_CFG_Length); // disable SBAS QZSS GLONASS BeiDou Galileo
 
     /*Update Rate*/
     write(serial, UBX_protocol::RATE, UBX_protocol::RATE_Length); // Measurement frequency: 10 hz, navigation frequency 10 hz
@@ -57,7 +57,7 @@ int GPS::configAll(int serial)
     write(serial, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG */
 
     /*BAUDRATE */
-    // write(serial, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
+    write(serial, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
     int serial2;
 
     /* /*OPEN UART*/
@@ -74,11 +74,12 @@ int GPS::configAll(int serial)
         return 1;
     } */
     int count;
-    write(serial2, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
+    write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
 
     printf("Configuration is part 1 done! \n");
-    while (count < 100)
+    while (count < 1000)
     {
+        count++;
         printf("--------------------------------");
     }
     serialClose(serial);
