@@ -197,14 +197,13 @@ void ValidateState::LogData(UDP Client)
     Logger(IMUSYS);
 
     // UDP SEND PART
-
     char receivedServerMSG[1024];
 
     std::string RDSData = GPSBaro + IMU;
     std::string SYSData = GPSBaroSYS + IMUSYS;
 
-    char *RDS = RDSData;
-    char *SYS = SYSData;
+    const char *RDS = RDSData.c_str();
+    const char *SYS = SYSData.c_str();
 
     // char *message
     Client.UDP_COM(RDS, receivedServerMSG);
