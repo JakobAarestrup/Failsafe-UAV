@@ -26,6 +26,7 @@ int UDP::initUDP()
 		return 1;
 	}
 	puts("Connected");
+	return 0;
 }
 
 void UDP::UDP_COM(char *message, char receiveMsg[])
