@@ -26,31 +26,35 @@ int UDP::initUDP()
 		return 1;
 	}
 	puts("Connected");
+	return 0;
 }
 
 void UDP::UDP_COM(char *message, char receiveMsg[])
 {
+	int n;
 	// Send some data
 	if (send(socket_desc_, message, strlen(message), 0) < 0)
 	{
-		puts("Send failed");
+		puts("Send failed\n");
 		return;
 	}
 	puts("Data Send\n");
-
 	// Receive message
-	if ((n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&server, len_)) <= 0)
+	if ((n = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&server, len_)) <= 0)
 	{
-		puts("Receive failed");
+		receiveMsg[0] = '0';
+		puts("Receive failed\n");
 		return;
 	}
+	printf("Gamer JOHNNY\n");
 
-	buffer_[n_] = '\0';
+	// buffer_[n_] = '\0';
 
-	int strLength = strlen(buffer_); // finds length of the array
+	/* int strLength = strlen(buffer_); // finds length of the array
 	for (int i = 0; i < strLength; i++)
 	{
 		receiveMsg[i] = buffer_[i]; // copies UserInput in reverse to TempInput
 	}
-	receiveMsg[strLength] = '\0'; // adds NULL character at end
+	receiveMsg[strLength] = '\0'; // adds NULL character at end */
+	// adds NULL character at end */
 }
