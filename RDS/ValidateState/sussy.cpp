@@ -60,7 +60,7 @@ int mymillis()
     return (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
 }
 
-void mainloop(ValidateState &RDS, GPS &NEO, BAR &Barometer, Telemetry &telemetry) // UDP &Client)
+void mainloop(ValidateState &RDS, GPS &NEO, BAR &Barometer, Telemetry &telemetry, UDP &Client)
 {
     while (1)
     {
@@ -173,14 +173,14 @@ int main(int argc, char **argv)
     auto telemetry = Telemetry{system};
     auto action = Action{system};
 
-    const auto set_rate_position = telemetry.set_rate_position(1.0);
+    const auto set_rate_position = telemetry.set_rate_position(10.0);
     if (set_rate_position != Telemetry::Result::Success)
     {
         std::cerr << "Setting rate failed: " << set_rate_position << '\n';
         return 1;
     }
 
-    const auto set_rate_euler = telemetry.set_rate_attitude_euler(1.0);
+    const auto set_rate_euler = telemetry.set_rate_attitude_euler(10.0);
     if (set_rate_euler != Telemetry::Result::Success)
     {
         std::cerr << "Setting rate failed: " << set_rate_euler << '\n';
@@ -192,7 +192,7 @@ int main(int argc, char **argv)
      */
     std::vector<std::thread> threads;
 
-    threads.push_back(std::thread(mainloop, std::ref(RDS), std::ref(G1), std::ref(B1), std::ref(telemetry))); //, std::ref(Client)));
+    threads.push_back(std::thread(mainloop, std::ref(RDS), std::ref(G1), std::ref(B1), std::ref(telemetry), std::ref(Client)));
     threads.push_back(std::thread(updateIMUValues, std::ref(RDS), std::ref(IMU2)));
 
     for (auto &th : threads)

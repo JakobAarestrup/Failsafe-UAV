@@ -23,7 +23,7 @@ public:
   void SetMAVLinkValues(float alt, float lng, float lat, float roll, float pitch, float yaw);
 
   void UpdateSystemValues(GPS NEO, BAR barometer); //, IMU Sensor);
-  void LogData();                                  // UDP Client);
+  void LogData(UDP &Client);                       // UDP Client);
 
   void AxisControl();
   void RouteControl();
