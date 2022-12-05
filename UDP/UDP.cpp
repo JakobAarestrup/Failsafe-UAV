@@ -23,14 +23,14 @@ int UDP::initUDP()
 	server.sin_family = AF_INET;
 	server.sin_port = htons(42069);
 
-	// Connect to remote server
+	/* // Connect to remote server
 	if (connect(socket_desc_, (struct sockaddr *)&server, sizeof(server)) < 0)
 	{
 		puts("connect error");
 		return 1;
 	}
 	puts("Connected");
-
+ */
 	// bind
 	if (bind(socket_desc_, (struct sockaddr *)&server, sizeof(server)) < 0)
 	{
