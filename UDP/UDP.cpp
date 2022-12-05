@@ -42,6 +42,7 @@ void UDP::UDP_COM(char *message, char receiveMsg[])
 	// Receive message
 	if ((n = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&server, len_)) <= 0)
 	{
+		receiveMsg[0] = '0';
 		puts("Receive failed\n");
 		return;
 	}
@@ -55,5 +56,5 @@ void UDP::UDP_COM(char *message, char receiveMsg[])
 		receiveMsg[i] = buffer_[i]; // copies UserInput in reverse to TempInput
 	}
 	receiveMsg[strLength] = '\0'; // adds NULL character at end */
-	receiveMsg[0] = 'P'; // adds NULL character at end */
+	// adds NULL character at end */
 }
