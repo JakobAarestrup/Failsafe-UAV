@@ -6,7 +6,7 @@ public:
     UDP();
     ~UDP();
     void initUDP();
-    void UDP_COM(const char *message, char receiveMsg[]);
+    void UDP_COM(const char *message);
 
 private:
     int socket_desc_;

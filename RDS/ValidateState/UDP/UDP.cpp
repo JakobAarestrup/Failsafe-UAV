@@ -36,7 +36,7 @@ void UDP::initUDP()
 	puts("Connected");
 }
 
-void UDP::UDP_COM(const char *message, char receiveMsg[])
+void UDP::UDP_COM(const char *message)
 {
 	// Send some data
 	if (send(socket_desc_, message, strlen(message), 0) < 0)
