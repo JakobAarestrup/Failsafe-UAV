@@ -6,12 +6,11 @@ from datetime import datetime
 RDSData = '76.0304, 26.0405, 9, 0.5, 20.0, 0.0, 10.0, 69.0420, 25.0420, 0.5, 20.0, 0.0, 10.0'  
 
 # get current date and time
-current_datetime = datetime.now().replace(microsecond=0)
-date = datetime.strptime(sourceStamp.replace(' ', ''), '%M/%d/%y')
-print("Current date & time : ", current_datetime)
+now = datetime.now()
+current_time = now.strftime("%Y-%m-%d-%H%M")
   
 # convert datetime obj to string
-str_current_datetime = str(current_datetime)
+str_current_datetime = str(current_time)
 
 # create a file object along with extension
 file_name = "ServerLOG_" + str_current_datetime + ".txt"
