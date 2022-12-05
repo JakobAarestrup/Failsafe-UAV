@@ -85,6 +85,8 @@ int GPS::configAgane(int serial)
     write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
     printf("Configuration is part 2 done! \n");
     serialClose(serial);
+
+    return serial;
 }
 
 void GPS::readGPS() // reads GPS serial data
