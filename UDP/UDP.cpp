@@ -18,7 +18,7 @@ int UDP::initUDP()
 	if (socket_desc_ == -1)
 		printf("Could not create socket");
 
-		server.sin_addr.s_addr = inet_addr(IP);
+	server.sin_addr.s_addr = inet_addr(IP);
 	server.sin_family = AF_INET;
 	server.sin_port = htons(42069);
 
@@ -46,7 +46,7 @@ int UDP::initUDP()
 	// bind
 	if (bind(socket_desc_, (struct sockaddr *)&server, sizeof(server)) < 0)
 	{
-		printf("Bind failed");
+		fprintf(stdout, "Unable to bind: %s\n", strerror(errno)); // error handling
 		return 1;
 	}
 	puts("Bind done.");
