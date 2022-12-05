@@ -5,6 +5,7 @@
 #include <string.h>	   //strlen
 #include <fcntl.h>
 #include <cerrno>
+#include <poll.h>
 
 #define MAXLINE 1024
 struct sockaddr_in server;
@@ -53,7 +54,7 @@ void UDP::UDP_COM(char *message, char receiveMsg[])
 	puts("Data Send\n");
 	// Receive message
 
-	struct pollfd pfd = {.socket_desc_ = s, .events = POLLIN};
+	struct pollfd pfd = {socket_desc_ = s, .events = POLLIN};
 	poll(&pfd, 1, 50);
 	if ((n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&server, len_)) < 0)
 	{
