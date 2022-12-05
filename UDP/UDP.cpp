@@ -9,7 +9,7 @@
 
 #define MAXLINE 1024
 struct sockaddr_in server;
-unsigned long int noBlock; // Non-blocking flag
+struct sockaddr_in addr_Dest;
 
 int UDP::initUDP()
 {
@@ -19,33 +19,38 @@ int UDP::initUDP()
 	if (socket_desc_ == -1)
 		printf("Could not create socket");
 
-	server.sin_addr.s_addr = inet_addr(IP);
+	// server.sin_addr.s_addr = inet_addr(IP);
 	server.sin_family = AF_INET;
 	server.sin_port = htons(42069);
+	server.sin_addr.s_addr = INADDR_ANY;
 
-	/* // Connect to remote server
-	if (connect(socket_desc_, (struct sockaddr *)&server, sizeof(server)) < 0)
+	addr_Dest.sin_family = AF_INET;
+	addr_Dest.sin_port = htons(42069);
+	addr_Dest.sin_addr.s_addr = inet_addr(IP);
+
+	// bind
+	if (bind(socket_desc_, (struct sockaddr *)&server, sizeof(server)) < 0)
+	{
+		fprintf(stdout, "Unable to bind: %s\n", strerror(errno)); // error handling
+		return 1;
+	}
+	puts("Bind done.");
+
+	// Connect to remote server
+	if (connect(socket_desc_, (struct sockaddr *)&addr_Dest, sizeof(addr_Dest)) < 0)
 	{
 		puts("connect error");
 		return 1;
 	}
 	puts("Connected");
- */
-	// bind
-	if (bind(socket_desc_, (struct sockaddr *)&server, sizeof(server)) < 0)
-	{
-		printf("Bind failed");
-		return 1;
-	}
-	puts("Bind done.");
-
 	return 0;
 }
 
 void UDP::UDP_COM(char *message, char receiveMsg[])
 {
+
 	// Send some data
-	if (send(socket_desc_, message, strlen(message), 0) < 0)
+	if (sendto(socket_desc_, message, strlen(message), 0, (struct sockaddr *)&addr_Dest, sizeof(addr_Dest)) < 0)
 	{
 		puts("Send failed\n");
 		return;
@@ -53,16 +58,20 @@ void UDP::UDP_COM(char *message, char receiveMsg[])
 	puts("Data Send\n");
 	// Receive message
 
-	struct timeval timeout;
-	timeout.tv_sec = 0;
-	timeout.tv_usec = 50000;
-	setsockopt(socket_desc_, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
+	/*
+		struct timeval timeout;
+		timeout.tv_sec = 0;
+		timeout.tv_usec = 50000;
+		setsockopt(socket_desc_, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
+	*/
 
-	if ((n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&server, len_)) < 0)
-	{
-		fprintf(stdout, "Unable to receive: %s\n", strerror(errno)); // error handling
-		return;
-	}
+	n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&addr_Dest, len_);
+
+	/* 		if ((n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&addr_Dest, len_)) < 0)
+		{
+			fprintf(stdout, "Unable to receive: %s\n", strerror(errno)); // error handling
+			return;
+		} */
 
 	buffer_[n_] = '\0';
 
