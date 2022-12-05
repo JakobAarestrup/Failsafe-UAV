@@ -35,7 +35,6 @@ int UDP::initUDP()
 
 void UDP::UDP_COM(char *message, char receiveMsg[])
 {
-	int n;
 	// Send some data
 	if (send(socket_desc_, message, strlen(message), 0) < 0)
 	{
@@ -44,13 +43,13 @@ void UDP::UDP_COM(char *message, char receiveMsg[])
 	}
 	puts("Data Send\n");
 	// Receive message
-	if ((n = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&server, len_)) < 0)
+	if ((n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&server, len_)) < 0)
 	{
 		puts("Receive failed\n");
 		return;
 	}
 
-	buffer_[n] = '\0';
+	buffer_[n_] = '\0';
 
 	int strLength = strlen(buffer_); // finds length of the array
 	for (int i = 0; i < strLength; i++)
