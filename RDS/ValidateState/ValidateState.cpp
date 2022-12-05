@@ -185,6 +185,7 @@ void ValidateState::UpdateSystemValues(GPS NEO, BAR barometer) //, IMU sensor)
 void ValidateState::LogData(UDP Client)
 {
     /*START logging*/
+    printf("Logging data called..\n");
     /*RDS sensors*/
     std::string GPSBaro = "Longitude: " + std::to_string(longitudeRDS_) + " " + longPoleRDS_[0] + " Latitude: " + std::to_string(latitudeRDS_) + " " + latPoleRDS_ + " Satellites: " + std::to_string(SatellitesRDS_) + " Altitude: " + std::to_string(altitudeRDS_);
     Logger(GPSBaro);
