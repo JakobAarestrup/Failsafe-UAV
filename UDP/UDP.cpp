@@ -32,6 +32,14 @@ int UDP::initUDP()
 	}
 	puts("Connected");
 	return 0;
+
+	// bind
+	if (bind(server_socket, (sockaddr *)&server, sizeof(server)) == SOCKET_ERROR)
+	{
+		printf("Bind failed with error code: %d", WSAGetLastError());
+		exit(EXIT_FAILURE);
+	}
+	puts("Bind done.");
 }
 
 void UDP::UDP_COM(char *message, char receiveMsg[])
@@ -44,6 +52,9 @@ void UDP::UDP_COM(char *message, char receiveMsg[])
 	}
 	puts("Data Send\n");
 	// Receive message
+
+	struct pollfd pfd = {.socket_desc_ = s, .events = POLLIN};
+	poll(&pfd, 1, 50);
 	if ((n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&server, len_)) < 0)
 	{
 		fprintf(stdout, "Unable to receive: %s\n", strerror(errno)); // error handling
