@@ -3,6 +3,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h> //inet_addr
 #include <string.h>	   //strlen
+#include <fcntl.h>
 
 #define MAXLINE 1024
 struct sockaddr_in server;
@@ -43,7 +44,7 @@ void UDP::UDP_COM(char *message, char receiveMsg[])
 	}
 	puts("Data Send\n");
 	// Receive message
-	if ((n = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_PEEK, (struct sockaddr *)&server, len_)) <= 0)
+	if ((n = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, 0, (struct sockaddr *)&server, len_)) <= 0)
 	{
 		receiveMsg[0] = '0';
 		puts("Receive failed\n");
