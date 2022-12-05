@@ -25,7 +25,7 @@ void UDP::initUDP()
 
 	server.sin_addr.s_addr = inet_addr(IP);
 	server.sin_family = AF_INET;
-	server.sin_port = htons(20001);
+	server.sin_port = htons(42069);
 
 	// Connect to remote server
 	if (connect(socket_desc_, (struct sockaddr *)&server, sizeof(server)) < 0)
