@@ -205,55 +205,25 @@ void ValidateState::LogData(UDP Client)
 
     const char *RDS = RDSData.c_str();
     const char *SYS = SYSData.c_str();
-
-    // char *message
+    /*
     Client.UDP_COM(RDS, receivedServerMSG);
     Client.UDP_COM(SYS, receivedServerMSG);
+    * /
 }
 
 /**
  * @brief Checks for critical failure for orientation
  *
  */
-void ValidateState::AxisControl()
-{
+    void ValidateState::AxisControl()
+    {
 
-    /*  if (state_ == 1)
-         printf("Critical State\n");
-     else
-         printf("Normal State \n"); */
+        /*  if (state_ == 1)
+             printf("Critical State\n");
+         else
+             printf("Normal State \n"); */
 
-    /*   if(altitudeSYS_ > 300 | altitudeRDS_ > 300)
-  {
-      landDrone();
-  }
-
-  else if (altitudeSYS_ > 200 | altitudeRDS_ > 200)
-  {
-      state_ = 1;
-      printf("Closing in on ERROR!!! Changing state... to Critical\n");
-  }
-
-  else if (altitudeSYS_ < 200 | altitudeRDS_ < 200)
-  {
-      state_ = 0;
-      printf("Changing state... to Normal\n");
-  }
-*/
-}
-
-/**
- * @brief Checks if the drone is following the correct path
- *
- */
-void ValidateState::RouteControl()
-{
-    /* if (state_ == 1)
-        printf("Critical State\n");
-    else
-        printf("Normal State \n"); */
-
-    /*   if(altitudeSYS_ > 300 | altitudeRDS_ > 300)
+        /*   if(altitudeSYS_ > 300 | altitudeRDS_ > 300)
       {
           landDrone();
       }
@@ -269,73 +239,103 @@ void ValidateState::RouteControl()
           state_ = 0;
           printf("Changing state... to Normal\n");
       }
-   */
-}
+    */
+    }
 
-/**
- * @brief Checks if drone is flying too high.
- *
- */
-void ValidateState::HeightControl()
-{
-    /*     if (state_ == 1)
+    /**
+     * @brief Checks if the drone is following the correct path
+     *
+     */
+    void ValidateState::RouteControl()
+    {
+        /* if (state_ == 1)
             printf("Critical State\n");
         else
-            printf("Normal State \n");
+            printf("Normal State \n"); */
 
-        if (altitudeSYS_ > 300 | altitudeRDS_ > 300)
-        {
-            landDrone();
-        }
+        /*   if(altitudeSYS_ > 300 | altitudeRDS_ > 300)
+          {
+              landDrone();
+          }
 
-        else if (altitudeSYS_ > 200 | altitudeRDS_ > 200)
-        {
-            state_ = 1;
-            printf("Closing in on ERROR!!! Changing state... to Critical\n");
-        }
+          else if (altitudeSYS_ > 200 | altitudeRDS_ > 200)
+          {
+              state_ = 1;
+              printf("Closing in on ERROR!!! Changing state... to Critical\n");
+          }
 
-        else if (altitudeSYS_ < 200 & state_ == 1 | altitudeRDS_ < 200 & state_ == 1) // In Critical State and under 200 m
-        {
-            state_ = 0;
-            printf("Changing state... to Normal\n");
-        } */
-}
+          else if (altitudeSYS_ < 200 | altitudeRDS_ < 200)
+          {
+              state_ = 0;
+              printf("Changing state... to Normal\n");
+          }
+       */
+    }
 
-void ValidateState::landDrone()
-{
-    printf("Landing drone immediately...\n");
-    /*MAVLINK MESSAGE TO LAND*/
-}
+    /**
+     * @brief Checks if drone is flying too high.
+     *
+     */
+    void ValidateState::HeightControl()
+    {
+        /*     if (state_ == 1)
+                printf("Critical State\n");
+            else
+                printf("Normal State \n");
 
-/**
- * @brief Gets current date
- *
- * @param str string value
- * @return std::string returns current date
- */
-inline std::string ValidateState::getCurrentDateTime(std::string str)
-{
-    time_t now = time(0);
-    struct tm tstruct;
-    char buffer[80];
-    tstruct = *localtime(&now);
-    if (str == "now")
-        strftime(buffer, sizeof(buffer), "%Y-%m-%d %X", &tstruct);
-    else if (str == "date")
-        strftime(buffer, sizeof(buffer), "%Y-%m-%d", &tstruct);
-    return std::string(buffer);
-};
+            if (altitudeSYS_ > 300 | altitudeRDS_ > 300)
+            {
+                landDrone();
+            }
 
-/**
- * @brief Prints inserted string to log file.
- *
- * @param logMsg string value printed to log file
- */
-inline void ValidateState::Logger(std::string logMessage)
-{
-    std::string filePath = "Database/log_" + getCurrentDateTime("date") + ".txt";
-    std::string now = getCurrentDateTime("now");
-    std::ofstream ofs(filePath.c_str(), std::ios_base::out | std::ios_base::app);
-    ofs << now << '\t' << logMessage << '\n';
-    ofs.close();
-}
+            else if (altitudeSYS_ > 200 | altitudeRDS_ > 200)
+            {
+                state_ = 1;
+                printf("Closing in on ERROR!!! Changing state... to Critical\n");
+            }
+
+            else if (altitudeSYS_ < 200 & state_ == 1 | altitudeRDS_ < 200 & state_ == 1) // In Critical State and under 200 m
+            {
+                state_ = 0;
+                printf("Changing state... to Normal\n");
+            } */
+    }
+
+    void ValidateState::landDrone()
+    {
+        printf("Landing drone immediately...\n");
+        /*MAVLINK MESSAGE TO LAND*/
+    }
+
+    /**
+     * @brief Gets current date
+     *
+     * @param str string value
+     * @return std::string returns current date
+     */
+    inline std::string ValidateState::getCurrentDateTime(std::string str)
+    {
+        time_t now = time(0);
+        struct tm tstruct;
+        char buffer[80];
+        tstruct = *localtime(&now);
+        if (str == "now")
+            strftime(buffer, sizeof(buffer), "%Y-%m-%d %X", &tstruct);
+        else if (str == "date")
+            strftime(buffer, sizeof(buffer), "%Y-%m-%d", &tstruct);
+        return std::string(buffer);
+    };
+
+    /**
+     * @brief Prints inserted string to log file.
+     *
+     * @param logMsg string value printed to log file
+     */
+    inline void ValidateState::Logger(std::string logMessage)
+    {
+        std::string filePath = "Database/log_" + getCurrentDateTime("date") + ".txt";
+        std::string now = getCurrentDateTime("now");
+        std::ofstream ofs(filePath.c_str(), std::ios_base::out | std::ios_base::app);
+        ofs << now << '\t' << logMessage << '\n';
+        ofs.close();
+    }
