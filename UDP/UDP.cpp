@@ -18,9 +18,10 @@ int UDP::initUDP()
 	if (socket_desc_ == -1)
 		printf("Could not create socket");
 
-	server.sin_addr.s_addr = inet_addr(IP);
+	// server.sin_addr.s_addr = inet_addr(IP);
 	server.sin_family = AF_INET;
 	server.sin_port = htons(42069);
+	server.sin_addr.s_addr = INADDR_ANY;
 
 	/*
 	int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
