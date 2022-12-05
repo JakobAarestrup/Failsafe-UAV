@@ -9,7 +9,6 @@
 
 #define MAXLINE 1024
 struct sockaddr_in server;
-unsigned long int noBlock; // Non-blocking flag
 
 int UDP::initUDP()
 {
@@ -23,6 +22,7 @@ int UDP::initUDP()
 	server.sin_family = AF_INET;
 	server.sin_port = htons(42069);
 
+	/*
 	// Connect to remote server
 	if (connect(socket_desc_, (struct sockaddr *)&server, sizeof(server)) < 0)
 	{
@@ -31,9 +31,10 @@ int UDP::initUDP()
 	}
 	puts("Connected");
 	return 0;
+	*/
 
 	// bind
-	if (bind(socket_desc_, (sockaddr *)&server, sizeof(server)) == -1)
+	if (bind(socket_desc_, (server *)&server, sizeof(server)) == -1)
 	{
 		printf("Bind failed");
 		return 1;
