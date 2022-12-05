@@ -8,6 +8,7 @@ RDSData = '76.0304, 26.0405, 9, 0.5, 20.0, 0.0, 10.0, 69.0420, 25.0420, 0.5, 20.
 # get current date and time
 now = datetime.now()
 current_time = now.strftime("%Y-%m-%d-%H%M")
+current_clock = now.strftime("%H:%M:%S")
   
 # convert datetime obj to string
 str_current_datetime = str(current_time)
@@ -17,25 +18,23 @@ file_name = "ServerLOG_" + str_current_datetime + ".txt"
 file = open(file_name, 'w')
 
 print("Log file created: ", file.name)
-file.close()
-
-# Logging the data
-#logging.basicConfig(filename="log.txt")
 
 # Splitting the values into variables
-RDSLon, RDSLat, RDSSat, RDSAltitude, RDSRoll, RDSPitch, RDSYaw, SYSLon, SYSLat, SYSAlt, SYSRoll, SYSPitch, SYSYaw  = RDSData.split(", ",13) 
+RDSLon, RDSLat, RDSSat, RDSAlt, RDSRoll, RDSPitch, RDSYaw, SYSLon, SYSLat, SYSAlt, SYSRoll, SYSPitch, SYSYaw  = RDSData.split(", ",13) 
 
-# Displaying the data
-print ("1. " + RDSLon)
-print ("2. " + RDSLat)
-print ("3. " + RDSSat)
-print ("4. " + RDSAltitude)
-print ("5. " + RDSRoll)
-print ("6. " + RDSPitch)
-print ("7. " + RDSYaw)
-print ("8. " + SYSLon)
-print ("9. " + SYSLat)
-print ("10. " + SYSAlt)
-print ("11. " + RDSRoll)
-print ("12. " + RDSPitch)
-print ("13. " + RDSYaw)
+# Logging the data
+file.write(current_clock + ': ')
+file.write('Longitude: ' + RDSLon + ", ")
+file.write('Latitude: ' + RDSLat + ", ")
+file.write('Satellites: ' + RDSSat + ", ")
+file.write('Altitude: ' + RDSAlt + ", ")
+file.write('Roll: ' + RDSRoll + ", ")
+file.write('Pitch: ' + RDSPitch + ", ")
+file.write('Yaw: ' + RDSYaw + ", ")
+file.write('SYS_Longitude: ' + SYSLon + ", ")
+file.write('SYS_Latitude: ' + SYSLat + ", ")
+file.write('SYS_Altitude: ' + SYSAlt + ", ")
+file.write('SYS_Roll: ' + SYSRoll + ", ")
+file.write('SYS_Pitch: ' + SYSPitch + ", ")
+file.write('SYS_Yaw: ' + SYSYaw + "\n")
+file.close()
