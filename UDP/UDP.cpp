@@ -40,11 +40,11 @@ void UDP::UDP_COM(char *message, char receiveMsg[])
 	puts("Data Send\n");
 
 	// Receive message
-	/* if ((n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&server, len_)) <= 0)
+	if ((n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&server, len_)) <= 0)
 	{
 		puts("Receive failed");
 		return;
-	} */
+	}
 	printf("Gamer JOHNNY");
 
 	// buffer_[n_] = '\0';
