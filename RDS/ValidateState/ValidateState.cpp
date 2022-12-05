@@ -191,9 +191,9 @@ void ValidateState::LogData(UDP Client)
     std::string IMU = "Roll: " + std::to_string(RollRDS_) + " Pitch: " + std::to_string(PitchRDS_) + " Yaw: " + std::to_string(YawRDS_);
     Logger(IMU);
 
-    std::string GPSBaroSYS = "Longitude: " + std::to_string(longitudeSYS_) + " " + longPoleRDS_[0] + " Latitude: " + std::to_string(latitudeSYS_) + " " + latPoleRDS_ + " Altitude: " + std::to_string(altitudeSYS_);
+    std::string GPSBaroSYS = "LongitudeSYS: " + std::to_string(longitudeSYS_) + " " + longPoleRDS_[0] + " LatitudeSYS: " + std::to_string(latitudeSYS_) + " " + latPoleRDS_ + " AltitudeSYS: " + std::to_string(altitudeSYS_);
     Logger(GPSBaroSYS);
-    std::string IMUSYS = "Roll: " + std::to_string(RollSYS_) + " Pitch: " + std::to_string(PitchSYS_) + " Yaw: " + std::to_string(YawSYS_);
+    std::string IMUSYS = "RollSYS: " + std::to_string(RollSYS_) + " PitchSYS: " + std::to_string(PitchSYS_) + " YawSYS: " + std::to_string(YawSYS_);
     Logger(IMUSYS);
 
     // UDP SEND PART
