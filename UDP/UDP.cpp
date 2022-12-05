@@ -45,7 +45,7 @@ void UDP::UDP_COM(char *message, char receiveMsg[])
 	// Receive message
 	if ((n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&server, len_)) < 0)
 	{
-		puts("Receive failed\n");
+		fprintf(stdout, "Unable to receive: %s\n", strerror(errno)); // error handling
 		return;
 	}
 
