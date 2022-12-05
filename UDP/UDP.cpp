@@ -24,7 +24,7 @@ int UDP::initUDP()
 	server.sin_port = htons(42069);
 	server.sin_addr.s_addr = INADDR_ANY;
 
-	addr_Dest.sin_family = AF_IN;
+	addr_Dest.sin_family = AF_INET;
 	addr_Dest.sin_port = htons(42069);
 	addr_Dest.sin_addr.s_addr = inet_addr(IP);
 
