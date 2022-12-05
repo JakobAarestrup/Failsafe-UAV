@@ -58,15 +58,15 @@ void UDP::UDP_COM(char *message, char receiveMsg[])
 		setsockopt(socket_desc_, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
 	*/
 
-	n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&addr_Dest, len_)
+	n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&addr_Dest, len_);
 
-		/* 		if ((n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&addr_Dest, len_)) < 0)
-			{
-				fprintf(stdout, "Unable to receive: %s\n", strerror(errno)); // error handling
-				return;
-			} */
+	/* 		if ((n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&addr_Dest, len_)) < 0)
+		{
+			fprintf(stdout, "Unable to receive: %s\n", strerror(errno)); // error handling
+			return;
+		} */
 
-		buffer_[n_] = '\0';
+	buffer_[n_] = '\0';
 
 	int strLength = strlen(buffer_); // finds length of the array
 	for (int i = 0; i < strLength; i++)
