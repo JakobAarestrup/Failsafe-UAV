@@ -58,7 +58,7 @@ void UDP::UDP_COM(char *message, char receiveMsg[])
 		setsockopt(socket_desc_, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
 	*/
 
-	n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&addr_Dest, len_);
+	n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&server, len_);
 
 	/* 		if ((n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&addr_Dest, len_)) < 0)
 		{
