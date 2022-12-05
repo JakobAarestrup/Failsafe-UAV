@@ -30,7 +30,6 @@ int UDP::initUDP()
 		return 1;
 	}
 	puts("Connected");
-	return 0;
 
 	// bind
 	if (bind(socket_desc_, (sockaddr *)&server, sizeof(server)) == -1)
@@ -39,6 +38,8 @@ int UDP::initUDP()
 		return 1;
 	}
 	puts("Bind done.");
+
+	return 0;
 }
 
 void UDP::UDP_COM(char *message, char receiveMsg[])
