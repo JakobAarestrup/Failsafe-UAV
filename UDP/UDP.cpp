@@ -47,7 +47,7 @@ void UDP::UDP_COM(char *message, char receiveMsg[])
 	} */
 	printf("Gamer JOHNNY");
 
-	buffer_[n_] = '\0';
+	// buffer_[n_] = '\0';
 
 	/* int strLength = strlen(buffer_); // finds length of the array
 	for (int i = 0; i < strLength; i++)
