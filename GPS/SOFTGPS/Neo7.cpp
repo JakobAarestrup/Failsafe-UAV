@@ -44,33 +44,24 @@ int GPS::configAll(int serial)
     /* CONFIGURATION */
 
     /*NMEA Config*/
-    write(serial, UBX_protocol::NMEA_CFG, UBX_protocol::NMEA_CFG_Length); // disable SBAS QZSS GLONASS BeiDou Galileo
+    // write(serial, UBX_protocol::NMEA_CFG, UBX_protocol::NMEA_CFG_Length); // disable SBAS QZSS GLONASS BeiDou Galileo
 
     /*Update Rate*/
     write(serial, UBX_protocol::RATE, UBX_protocol::RATE_Length); // Measurement frequency: 10 hz, navigation frequency 10 hz
 
-    /*NMEA messages*/
-    write(serial, UBX_protocol::GLL, UBX_protocol::GP_Length); // disable GPGLL
+    /*  /*NMEA messages*/
+    /* write(serial, UBX_protocol::GLL, UBX_protocol::GP_Length); // disable GPGLL
     write(serial, UBX_protocol::GSA, UBX_protocol::GP_Length); // disable GSA
     write(serial, UBX_protocol::GSV, UBX_protocol::GP_Length); // disable GPGSV
     write(serial, UBX_protocol::RMC, UBX_protocol::GP_Length); // disable RMC
-    write(serial, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG
-    write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
+    write(serial, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG */
 
     /*BAUDRATE */
-    /*write(serial, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
-     */
+    write(serial, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
+    // int serial2;
 
-    printf("Configuration is part 1 done! \n");
-    serialClose(serial);
-
-    return serial;
-}
-
-int GPS::configAgane(int serial)
-{
-    /*OPEN UART*/
-    if ((serial = serialOpen("/dev/ttyS0", 4800)) < 0) // open serial port with set baudrate
+    /* /*OPEN UART*/
+    /* if ((serial2 = serialOpen("/dev/ttyS0", 4800)) < 0) // open serial port with set baudrate
     {
         fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
 
@@ -81,13 +72,21 @@ int GPS::configAgane(int serial)
     {
         fprintf(stdout, "Unable to start wiringPi: %s\n", strerror(errno)); // error handling
         return 1;
-    }
-
-    /*SAVE CONFIG*/
-    printf("Configuration is part 2 done! \n");
+    } */
+    int count = 0;
     write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
-    serialClose(serial);
+    write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
+    write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
+    write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
+    write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
 
+    printf("Configuration is part 1 done! \n");
+    while (count < 100)
+    {
+        count++;
+        printf("%d\n", count);
+    }
+    serialClose(serial);
     return serial;
 }
 

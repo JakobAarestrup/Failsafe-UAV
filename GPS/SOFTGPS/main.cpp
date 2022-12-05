@@ -33,7 +33,6 @@ int main()
 
   /* OPEN UART */
   serial_port = NEO1.configAll(serial_port);
-  serial_port2 = NEO1.configAgane(serial_port2);
   /* CONFIGURATION */
   // printf("Serial port is open! %d \n", serial_port);
 

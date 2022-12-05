@@ -62,12 +62,22 @@ int mymillis()
 
 void mainloop(ValidateState &RDS, GPS &NEO, BAR &Barometer, Telemetry &telemetry) //, UDP &Client)
 {
+    int loops = 1;
+    int startofloop = mymillis();
+
+    Telemetry::Position position;
+    Telemetry::EulerAngle euler;
+
     while (1)
     {
-        int startofloop = mymillis();
-        RDS.UpdateSystemValues(NEO, Barometer);                         // gets all values from sensors
-        const Telemetry::Position position = telemetry.position();      // returns struct with values from baro and GPS
-        const Telemetry::EulerAngle euler = telemetry.attitude_euler(); // returns struct with euler angles
+        startofloop = mymillis();
+        if (loops == 5)
+        {
+            loops = 1;
+        }
+        RDS.UpdateSystemValues(NEO, Barometer, loops); // gets all values from sensors
+        position = telemetry.position();               // returns struct with values from baro and GPS
+        euler = telemetry.attitude_euler();            // returns struct with euler angles
         /*Sets all values from MAVLINK*/
         RDS.SetMAVLinkValues(position.relative_altitude_m, position.latitude_deg, position.longitude_deg,
                              euler.roll_deg, euler.pitch_deg, euler.yaw_deg);
@@ -76,6 +86,7 @@ void mainloop(ValidateState &RDS, GPS &NEO, BAR &Barometer, Telemetry &telemetry
         RDS.RouteControl();  // Checks for Failure in the KML
         RDS.HeightControl(); // Checks for Failure for height */
         printf("Loop Time %d\n", mymillis() - startofloop);
+        loops++;
     }
 }
 

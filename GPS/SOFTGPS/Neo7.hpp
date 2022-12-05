@@ -20,7 +20,6 @@ public:
     int configAll(int serial);
     void readGPS();     // reads GPS serial data
     void convertData(); // converts GPS data
-    int configAgane(int seiral);
 
     int getSV() const;             // returns amount of satellites
     double getLongitude() const;   // returns longitude
