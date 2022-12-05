@@ -8,6 +8,7 @@
 #include <poll.h>
 
 #define MAXLINE 1024
+struct sockaddr_in server;
 
 int UDP::initUDP()
 {
@@ -17,8 +18,7 @@ int UDP::initUDP()
 	if (socket_desc_ == -1)
 		printf("Could not create socket");
 
-	struct sockaddr_in server;
-	server.sin_addr.s_addr = inet_addr(IP);
+		server.sin_addr.s_addr = inet_addr(IP);
 	server.sin_family = AF_INET;
 	server.sin_port = htons(42069);
 
