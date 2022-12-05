@@ -1,7 +1,7 @@
 import socket
 
 localIP = ""
-localPort = 20001
+localPort = 42069
 bufferSize = 1024
 msgFromServer = "Message received from RDS"
 bytesToSend = str.encode(msgFromServer)
