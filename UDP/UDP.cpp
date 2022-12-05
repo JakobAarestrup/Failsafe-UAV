@@ -4,6 +4,7 @@
 #include <arpa/inet.h> //inet_addr
 #include <string.h>	   //strlen
 #include <fcntl.h>
+#include <cerrno>
 
 #define MAXLINE 1024
 struct sockaddr_in server;
