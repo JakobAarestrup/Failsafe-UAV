@@ -33,7 +33,7 @@ int UDP::initUDP()
 	*/
 
 	// bind
-	if (bind(socket_desc_, (server *)&server, sizeof(server)) < 0)
+	if (bind(socket_desc_, (sockaddr_in *)&server, sizeof(server)) < 0)
 	{
 		printf("Bind failed");
 		return 1;
