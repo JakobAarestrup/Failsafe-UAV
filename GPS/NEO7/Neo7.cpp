@@ -62,6 +62,7 @@ int GPS::configAll(int serial)
     write(serial, UBX_protocol::GSV, UBX_protocol::GP_Length); // disable GPGSV
     write(serial, UBX_protocol::RMC, UBX_protocol::GP_Length); // disable RMC
     write(serial, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG
+
     /*BAUDRATE */
     write(serial, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
 
@@ -83,6 +84,7 @@ int GPS::configAll(int serial)
 
     /*SAVE CONFIG*/
     write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
+
     printf("Configuration is done! \n");
 
     serialClose(serial);
