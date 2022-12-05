@@ -35,12 +35,20 @@ int CreateSocket()
     {
         die("bind");
     }
-
+    char *message = "Hello from RDS";
     // keep listening for data
     while (1)
     {
         printf("Waiting for data...");
         fflush(stdout);
+
+        // Send some data
+        if (send(acceptSocket) message, strlen(message), 0) < 0)
+            {
+                puts("Send failed\n");
+                return;
+            }
+        puts("Data Send\n");
 
         // try to receive some data, this is a blocking call
         if ((recv_len = recvfrom(acceptSocket, buf, BUFLEN, 0, (struct sockaddr *)&si_other, &slen)) == -1) // read datagram from server socket
