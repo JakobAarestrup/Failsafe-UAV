@@ -1,28 +1,30 @@
 import logging
-import datetime
+from datetime import datetime
 
 # Python split() method example  
 # Variable declaration  
-str = '76.0304, 26.0405, 9, 0.5, 20.0, 0.0, 10.0, 69.0420, 25.0420, 0.5, 20.0, 0.0, 10.0'  
+RDSData = '76.0304, 26.0405, 9, 0.5, 20.0, 0.0, 10.0, 69.0420, 25.0420, 0.5, 20.0, 0.0, 10.0'  
 
-# Creating log file
-#f = open('ServicePlatform_log.txt','w') as f # path_to_file = path on server side to place log file, mode = mode
+# get current date and time
+current_datetime = datetime.now().replace(microsecond=0)
+date = datetime.strptime(sourceStamp.replace(' ', ''), '%M/%d/%y')
+print("Current date & time : ", current_datetime)
+  
+# convert datetime obj to string
+str_current_datetime = str(current_datetime)
 
-def timeStamped(fname, fmt='%d-%m-%Y-%H-%M-%S_{ServicePlatform_log.txt}'):
-    return datetime.datetime.now().strftime(fmt).format(fname=fname)
+# create a file object along with extension
+file_name = "ServerLOG_" + str_current_datetime + ".txt"
+file = open(file_name, 'w')
 
-with open(timeStamped('ServicePlatform_log.txt'),'w') as outf:
-    outf.write('data!')
+print("Log file created: ", file.name)
+file.close()
 
 # Logging the data
-logging.basicConfig(filename="log.txt")
+#logging.basicConfig(filename="log.txt")
 
 # Splitting the values into variables
-RDSLon, RDSLat, RDSSat, RDSAltitude, RDSRoll, RDSPitch, RDSYaw, SYSLon, SYSLat, SYSAlt, SYSRoll, SYSPitch, SYSYaw  = str.split(", ",13) 
-
-
-
-
+RDSLon, RDSLat, RDSSat, RDSAltitude, RDSRoll, RDSPitch, RDSYaw, SYSLon, SYSLat, SYSAlt, SYSRoll, SYSPitch, SYSYaw  = RDSData.split(", ",13) 
 
 # Displaying the data
 print ("1. " + RDSLon)
