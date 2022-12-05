@@ -83,7 +83,7 @@ int GPS::configAll(int serial)
         printf("%d\n", count);
     }
     serialClose(serial);
-    return serial2;
+    return serial;
 }
 
 void GPS::readGPS() // reads GPS serial data
