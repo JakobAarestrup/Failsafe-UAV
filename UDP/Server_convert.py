@@ -23,7 +23,7 @@ print("Log file created: ", file.name)
 RDSLon, RDSLat, RDSSat, RDSAlt, RDSRoll, RDSPitch, RDSYaw, SYSLon, SYSLat, SYSAlt, SYSRoll, SYSPitch, SYSYaw  = RDSData.split(", ",13) 
 
 # Logging the data
-file.write(current_clock + ': ')
+file.write(current_clock + ' - ')
 file.write('Longitude: ' + RDSLon + ", ")
 file.write('Latitude: ' + RDSLat + ", ")
 file.write('Satellites: ' + RDSSat + ", ")
