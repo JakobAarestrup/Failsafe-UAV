@@ -25,6 +25,7 @@ int main()
   float Long = 0.0, Lat = 0.0;
 
   int serial_port;
+  int serial_port2;
   char NS[1];
   char EW[1];
 
@@ -32,6 +33,7 @@ int main()
 
   /* OPEN UART */
   serial_port = NEO1.configAll(serial_port);
+  serial_port2 = NEO1.configAgane(serial_port2);
   /* CONFIGURATION */
   // printf("Serial port is open! %d \n", serial_port);
 

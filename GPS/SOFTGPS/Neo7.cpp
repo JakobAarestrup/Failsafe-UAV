@@ -62,6 +62,11 @@ int GPS::configAll(int serial)
     printf("Configuration is part 1 done! \n");
     serialClose(serial);
 
+    return serial;
+}
+
+int GPS::configAgane(int serial)
+{
     /*OPEN UART*/
     if ((serial = serialOpen("/dev/ttyS0", 4800)) < 0) // open serial port with set baudrate
     {
@@ -80,8 +85,6 @@ int GPS::configAll(int serial)
     write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
     printf("Configuration is part 2 done! \n");
     serialClose(serial);
-
-    return serial;
 }
 
 void GPS::readGPS() // reads GPS serial data
