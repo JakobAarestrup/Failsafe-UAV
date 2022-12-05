@@ -143,7 +143,7 @@ void ValidateState::GetIMUValues(IMU &sensor) // void ValidateState::GetIMUValue
     yaw = sensor.getYaw();
 
     {
-        std::scope_lock<std::mutex> lock(m);
+        std::scoped_lock<std::mutex> lock(m);
         RollRDS_ = roll;
         PitchRDS_ = pitch;
         YawRDS_ = yaw;
@@ -194,7 +194,7 @@ void ValidateState::LogData() // UDP Client)
     float RollRDS, PitchRDS, YawRDS;
 
     {
-        std::scope_lock<std::mutex> lock(m);
+        std::scoped_lock<std::mutex> lock(m);
         RollRDS = RollSYS_;
         PitchRDS = PitchSYS_;
         YawRDS = YawSYS_;
