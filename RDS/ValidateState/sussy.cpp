@@ -75,9 +75,6 @@ void mainloop(ValidateState RDS, GPS NEO, BAR Barometer, Telemetry &telemetry, U
         RDS.AxisControl();   // Checks for Failure on the Axises
         RDS.RouteControl();  // Checks for Failure in the KML
         RDS.HeightControl(); // Checks for Failure for height
-        while (mymillis() - startofloop < 100)
-        {
-        }
         printf("Loop Time %d\n", mymillis() - startofloop);
     }
 }

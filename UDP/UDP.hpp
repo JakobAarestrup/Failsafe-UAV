@@ -5,10 +5,11 @@ class UDP
 public:
     int initUDP();
     void UDP_COM(char *message, char receiveMsg[]);
+
 private:
     int socket_desc_;
     int n_;
-    unsigned int* len_;
+    unsigned int *len_;
     char buffer_[MAXLINE];
-    const char* IP = "192.168.0.234";
+    const char *IP = "172.20.10.4";
 };
