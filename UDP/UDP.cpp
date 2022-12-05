@@ -19,8 +19,6 @@ int UDP::initUDP()
 	if (socket_desc_ == -1)
 		printf("Could not create socket");
 
-	int flags = fcntl(socket_desc_, F_GETFL, 0);
-	fcntl(socket_desc_, F_SETFL, flags | O_NONBLOCK);
 	server.sin_addr.s_addr = inet_addr(IP);
 	server.sin_family = AF_INET;
 	server.sin_port = htons(42069);
