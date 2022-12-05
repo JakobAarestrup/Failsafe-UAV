@@ -59,7 +59,7 @@ void UDP::UDP_COM(char *message, char receiveMsg[])
 {
 
 	// Send some data
-	if (sendto(socket_desc_, message, strlen(message), 0, sockaddr_in * IP, sizeof(server)) < 0)
+	if (sendto(socket_desc_, message, strlen(message), 0, (struct sockaddr2 *)&IP, sizeof(IP)) < 0)
 	{
 		puts("Send failed\n");
 		return;
