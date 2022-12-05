@@ -8,7 +8,6 @@
 #include <poll.h>
 
 #define MAXLINE 1024
-struct sockaddr_in server;
 
 int UDP::initUDP()
 {
@@ -18,9 +17,20 @@ int UDP::initUDP()
 	if (socket_desc_ == -1)
 		printf("Could not create socket");
 
+	struct sockaddr_in server;
 	server.sin_addr.s_addr = inet_addr(IP);
 	server.sin_family = AF_INET;
 	server.sin_port = htons(42069);
+
+	/*
+	int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+
+	struct sockaddr_in sin = { 0 };
+	sin.sin_family = AF_INET;
+	sin.sin_port = htons(25);
+	sin.sin_addr.s_addr = INADDR_ANY;
+	bind(sockfd, (struct sockaddr *) &sin, sizeof(sin));
+	*/
 
 	/*
 	// Connect to remote server
@@ -30,10 +40,11 @@ int UDP::initUDP()
 		return 1;
 	}
 	puts("Connected");
+
 	*/
 
 	// bind
-	if (bind(socket_desc_, (sockaddr_in *)&server, sizeof(server)) < 0)
+	if (bind(socket_desc_, (struct sockaddr *)&server, sizeof(server)) < 0)
 	{
 		printf("Bind failed");
 		return 1;
