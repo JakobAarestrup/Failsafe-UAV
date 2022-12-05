@@ -35,17 +35,17 @@ void UDP::UDP_COM(char *message, char receiveMsg[])
 	// Send some data
 	if (send(socket_desc_, message, strlen(message), 0) < 0)
 	{
-		puts("Send failed");
+		puts("Send failed\n");
 		return;
 	}
 	puts("Data Send\n");
 	// Receive message
 	if ((n = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&server, len_)) <= 0)
 	{
-		puts("Receive failed");
+		puts("Receive failed\n");
 		return;
 	}
-	printf("Gamer JOHNNY");
+	printf("Gamer JOHNNY\n");
 
 	// buffer_[n_] = '\0';
 
