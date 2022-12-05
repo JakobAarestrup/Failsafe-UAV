@@ -195,9 +195,9 @@ void ValidateState::LogData() // UDP Client)
 
     {
         std::scoped_lock<std::mutex> lock(m);
-        RollRDS = RollSYS_;
-        PitchRDS = PitchSYS_;
-        YawRDS = YawSYS_;
+        RollRDS = RollRDS_;
+        PitchRDS = PitchRDS_;
+        YawRDS = YawRDS_;
     }
 
     /*START logging*/
