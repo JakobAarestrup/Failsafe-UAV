@@ -9,6 +9,7 @@
 
 #define MAXLINE 1024
 struct sockaddr_in server;
+struct sockaddr_in addr_Dest;
 
 int UDP::initUDP()
 {
@@ -23,26 +24,9 @@ int UDP::initUDP()
 	server.sin_port = htons(42069);
 	server.sin_addr.s_addr = INADDR_ANY;
 
-	/*
-	int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
-
-	struct sockaddr_in sin = { 0 };
-	sin.sin_family = AF_INET;
-	sin.sin_port = htons(25);
-	sin.sin_addr.s_addr = INADDR_ANY;
-	bind(sockfd, (struct sockaddr *) &sin, sizeof(sin));
-	*/
-
-	/*
-	// Connect to remote server
-	if (connect(socket_desc_, (struct sockaddr *)&server, sizeof(server)) < 0)
-	{
-		puts("connect error");
-		return 1;
-	}
-	puts("Connected");
-
-	*/
+	addr_Dest.sin_family = AF_IN;
+	addr_Dest.sin_port = htons(42069);
+	addr_Dest.sin_addr.s_addr = inet_addr(IP);
 
 	// bind
 	if (bind(socket_desc_, (struct sockaddr *)&server, sizeof(server)) < 0)
@@ -59,7 +43,7 @@ void UDP::UDP_COM(char *message, char receiveMsg[])
 {
 
 	// Send some data
-	if (sendto(socket_desc_, message, strlen(message), 0, (struct sockaddr2 *)&IP, sizeof(IP)) < 0)
+	if (sendto(socket_desc_, message, strlen(message), 0, (struct sockaddr *)&addr_Dest, sizeof(addr_Dest)) < 0)
 	{
 		puts("Send failed\n");
 		return;
