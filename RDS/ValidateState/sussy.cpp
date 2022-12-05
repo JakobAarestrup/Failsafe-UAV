@@ -65,8 +65,8 @@ void mainloop(ValidateState &RDS, GPS &NEO, BAR &Barometer, Telemetry &telemetry
     int loops = 1;
     int startofloop = mymillis();
 
-    const Telemetry::Position position;
-    const Telemetry::EulerAngle euler;
+    Telemetry::Position position;
+    Telemetry::EulerAngle euler;
 
     while (1)
     {
