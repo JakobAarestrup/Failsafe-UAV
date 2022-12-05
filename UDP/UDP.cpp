@@ -32,7 +32,7 @@ int UDP::initUDP()
 	puts("Connected");
 
 	// bind
-	if (bind(socket_desc_, (sockaddr *)&server, sizeof(server)) == -1)
+	if (bind(socket_desc_, (struct sockaddr *)&server, sizeof(server)) < 0)
 	{
 		printf("Bind failed");
 		return 1;
