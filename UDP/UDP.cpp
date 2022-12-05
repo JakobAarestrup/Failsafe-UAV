@@ -55,8 +55,8 @@ void UDP::UDP_COM(char *message, char receiveMsg[])
 	// Receive message
 
 	struct timeval timeout;
-	timeout.tv_sec = SOCKET_READ_TIMEOUT_SEC;
-	timeout.tv_usec = 50;
+	timeout.tv_sec = 0;
+	timeout.tv_usec = 50000;
 	setsockopt(socket_desc_, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
 
 	if ((n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&server, len_)) < 0)
