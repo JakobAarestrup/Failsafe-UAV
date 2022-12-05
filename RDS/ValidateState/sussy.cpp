@@ -60,7 +60,7 @@ int mymillis()
     return (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
 }
 
-void mainloop(ValidateState RDS, GPS NEO, BAR Barometer, Telemetry &telemetry, UDP Client)
+void mainloop(ValidateState &RDS, GPS &NEO, BAR &Barometer, Telemetry &telemetry, UDP &Client)
 {
     while (1)
     {
@@ -79,7 +79,7 @@ void mainloop(ValidateState RDS, GPS NEO, BAR Barometer, Telemetry &telemetry, U
     }
 }
 
-void updateIMUValues(ValidateState RDS, IMU IMU)
+void updateIMUValues(ValidateState &RDS, IMU &IMU)
 {
     while (1)
     {
