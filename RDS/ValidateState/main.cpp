@@ -59,17 +59,6 @@ int mymillis()
   return (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
 }
 
-/* int main(int argc, char **argv)
-{
-  ValidateState RDS; // System
-    if (argc != 2)
-    {
-        RDS.usage(argv[0]);
-        return 1;
-    }
-    RDS.configValidateState(argv[1]);
-    */
-
 int main(int argc, char **argv)
 {
   /**

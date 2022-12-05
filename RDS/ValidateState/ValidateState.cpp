@@ -182,7 +182,7 @@ void ValidateState::UpdateSystemValues(GPS NEO, BAR barometer) //, IMU sensor)
  * @brief logs all read data from the available sensors.
  *
  */
-void ValidateState::LogData()
+void ValidateState::LogData(UDP Client)
 {
     /*START logging*/
     /*RDS sensors*/
@@ -195,6 +195,20 @@ void ValidateState::LogData()
     Logger(GPSBaroSYS);
     std::string IMUSYS = "Roll: " + std::to_string(RollSYS_) + " Pitch: " + std::to_string(PitchSYS_) + " Yaw: " + std::to_string(YawSYS_);
     Logger(IMUSYS);
+
+    // UDP SEND PART
+
+    char receivedServerMSG[1024];
+
+    std::string RDSData = GPSBaro + IMU;
+    std::string SYSData = GPSBaroSYS + IMUSYS;
+
+    char *RDS = RDSData;
+    char *SYS = SYSData;
+
+    // char *message
+    Client.UDP_COM(RDS, receivedServerMSG);
+    Client.UDP_COM(SYS, receivedServerMSG);
 }
 
 /**

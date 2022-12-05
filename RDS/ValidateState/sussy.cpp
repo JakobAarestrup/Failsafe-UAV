@@ -60,7 +60,7 @@ int mymillis()
     return (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
 }
 
-void mainloop(ValidateState RDS, GPS NEO, BAR Barometer, Telemetry &telemetry)
+void mainloop(ValidateState RDS, GPS NEO, BAR Barometer, Telemetry &telemetry, UDP Client)
 {
     while (1)
     {
@@ -71,7 +71,7 @@ void mainloop(ValidateState RDS, GPS NEO, BAR Barometer, Telemetry &telemetry)
         /*Sets all values from MAVLINK*/
         RDS.SetMAVLinkValues(position.relative_altitude_m, position.latitude_deg, position.longitude_deg,
                              euler.roll_deg, euler.pitch_deg, euler.yaw_deg);
-        RDS.LogData();       // Sends sensor data to log file
+        RDS.LogData(Client); // Sends sensor data to log file
         RDS.AxisControl();   // Checks for Failure on the Axises
         RDS.RouteControl();  // Checks for Failure in the KML
         RDS.HeightControl(); // Checks for Failure for height
@@ -107,10 +107,6 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    /* cout << "You have entered " << argc
-         << " arguments:"
-         << "\n";
-    */
     for (int i = 0; i < argc; ++i)
     {
         std::cout << argv[i] << " plads: " << i << std::endl;
@@ -133,19 +129,22 @@ int main(int argc, char **argv)
      * @brief Initialize used object variables
      *
      */
+
+    UDP Client;
+    Client.initUDP();
+
     GPS G1;
     I2C I1;
     // IMU IMU1;
     IMU IMU2;
     BAR B1;
-    // B1.calibrateBAR();
+    B1.calibrateBAR();
     /**
      * @brief  Configuration of Sensors
      *
      */
     /* G1.configAll();     // configs the GPS
      I1.initializeI2C(); // Initialize IMU2 right now but will do both */
-    G1.configAll();     // configs the GPS
     I1.initializeI2C(); // Initialize IMU2 right now but will do both
     /**
      * @brief Calibration..
@@ -196,7 +195,7 @@ int main(int argc, char **argv)
      */
     std::vector<std::thread> threads;
 
-    threads.push_back(std::thread(mainloop, std::ref(RDS), std::ref(G1), std::ref(B1), std::ref(telemetry)));
+    threads.push_back(std::thread(mainloop, std::ref(RDS), std::ref(G1), std::ref(B1), std::ref(telemetry), std::ref(Client)));
     threads.push_back(std::thread(updateIMUValues, std::ref(RDS), std::ref(IMU2)));
 
     for (auto &th : threads)

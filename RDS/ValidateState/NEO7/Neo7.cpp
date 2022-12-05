@@ -1,5 +1,7 @@
 #include "Neo7.hpp"
 #include "unistd.h"
+#include <fcntl.h>
+#include <termios.h>
 
 GPS::GPS() // default constructor
 {
@@ -14,8 +16,19 @@ GPS::~GPS() // destructor
 
 int GPS::openUART(int fd) // open UART serial port
 {
+    fd = open("/dev/ttySOFT0", O_RDWR);
+    if (fd < 0)
+    {
+        perror("Error opening serial port");
+        return -1;
+    }
+    return fd;
+}
 
-    if ((fd = serialOpen("/dev/ttyS0", 9600)) < 0) // open serial port with set baudrate
+int GPS::configAll(int serial)
+{
+    /*OPEN UART*/
+    if ((serial = serialOpen("/dev/ttyS0", 9600)) < 0) // open serial port with set baudrate
     {
         fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
 
@@ -28,37 +41,61 @@ int GPS::openUART(int fd) // open UART serial port
         return 1;
     }
 
-    return fd;
-}
-
-void GPS::configAll()
-{
-    /* OPEN UART */
-    serialPort_ = openUART(serialPort_);
-
     /* CONFIGURATION */
 
     /*NMEA Config*/
-    write(serialPort_, UBX_protocol::NMEA_CFG, UBX_protocol::NMEA_CFG_Length); // disable SBAS QZSS GLONASS BeiDou Galileo
+    write(serial, UBX_protocol::NMEA_CFG, UBX_protocol::NMEA_CFG_Length); // disable SBAS QZSS GLONASS BeiDou Galileo
 
     /*Update Rate*/
-    write(serialPort_, UBX_protocol::RATE, UBX_protocol::RATE_Length); // Measurement frequency: 10 hz, navigation frequency 10 hz
+    write(serial, UBX_protocol::RATE, UBX_protocol::RATE_Length); // Measurement frequency: 10 hz, navigation frequency 10 hz
 
     /*NMEA messages*/
-    write(serialPort_, UBX_protocol::GLL, UBX_protocol::GP_Length); // disable GPGLL
-    write(serialPort_, UBX_protocol::GSA, UBX_protocol::GP_Length); // disable GSA
-    write(serialPort_, UBX_protocol::GSV, UBX_protocol::GP_Length); // disable GPGSV
-    write(serialPort_, UBX_protocol::RMC, UBX_protocol::GP_Length); // disable RMC
-    write(serialPort_, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG
-    printf("Configuration is done! \n");
-    serialClose(serialPort_);
+    write(serial, UBX_protocol::GLL, UBX_protocol::GP_Length); // disable GPGLL
+    write(serial, UBX_protocol::GSA, UBX_protocol::GP_Length); // disable GSA
+    write(serial, UBX_protocol::GSV, UBX_protocol::GP_Length); // disable GPGSV
+    write(serial, UBX_protocol::RMC, UBX_protocol::GP_Length); // disable RMC
+    write(serial, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG
+    write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
+
+    /*BAUDRATE */
+    write(serial, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
+
+    printf("Configuration is part 1 done! \n");
+    serialClose(serial);
+
+    return serial;
+}
+
+int GPS::configAgane(int serial)
+{
+    /*OPEN UART*/
+    if ((serial = serialOpen("/dev/ttyS0", 4800)) < 0) // open serial port with set baudrate
+    {
+        fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
+
+        return 1;
+    }
+
+    if (wiringPiSetup() == -1) // initializes wiringPi setup
+    {
+        fprintf(stdout, "Unable to start wiringPi: %s\n", strerror(errno)); // error handling
+        return 1;
+    }
+
+    /*SAVE CONFIG*/
+    printf("Configuration is part 2 done! \n");
+    write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
+    serialClose(serial);
+
+    return serial;
 }
 
 void GPS::readGPS() // reads GPS serial data
 {
 
     /*VARIABLES*/
-    char buff[100], GGA_Check[3];
+    char buff[255], GGA_Check[3];
+    char GPS_buffer[255];
     unsigned char GGA_Flag = 0;
     unsigned char GGA_Index = 0;
     unsigned char GGA_Received = 0;
@@ -68,14 +105,11 @@ void GPS::readGPS() // reads GPS serial data
 
     /* OPEN UART */
     serialPort_ = openUART(serialPort_);
-
     for (int i = 0; i < 200; i++)
     {
+        read(serialPort_, buff, 255);
 
-        GPS_Data_ = serialGetchar(serialPort_); /* receive character serially */
-        // printf("%c", GPS_Data_);
-        //  read(serialPort_, &GPS_Data, 1);
-        if (GPS_Data_ == '$') // check for start of NMEA message
+        if (buff[0] == '$') // check for start of NMEA message
         {
             GGA_Flag = 0;
             GGA_Index = 0;
@@ -83,9 +117,9 @@ void GPS::readGPS() // reads GPS serial data
 
         else if (GGA_Flag == 1)
         {
-            buff[GGA_Index++] = GPS_Data_;
+            GPS_buffer[GGA_Index++] = buff[0];
 
-            if (GPS_Data_ == '\r')
+            if (buff[0] == '\r')
             {
                 GGA_Received = 1;
             }
@@ -101,12 +135,12 @@ void GPS::readGPS() // reads GPS serial data
         {
             GGA_Check[0] = GGA_Check[1];
             GGA_Check[1] = GGA_Check[2];
-            GGA_Check[2] = GPS_Data_;
+            GGA_Check[2] = buff[0];
         }
 
         if (GGA_Received == 1)
         {
-            gps = buff;
+            gps = GPS_buffer;
             start_ptr = strchr(gps, ',');       // find start of latitude field
             end_ptr = strchr(++start_ptr, ','); // find end of field...
             latitude_ = atof(start_ptr);        // Convert char to float & store in variable
@@ -138,11 +172,11 @@ void GPS::readGPS() // reads GPS serial data
             SV_ = atoi(start_ptr);              // Convert char to int & store in variable
 
             // printf("latitude: %f %s longitude: %f %s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
-            //  end = 1;
+            //    end = 1;
             i = 200;
         }
     }
-    serialClose(serialPort_);
+    close(serialPort_);
 }
 
 void GPS::convertData() // converts GPS serial data to decimal degrees
@@ -188,7 +222,7 @@ void GPS::convertData() // converts GPS serial data to decimal degrees
             longitude_ = lon_Deg + lon_Sec;
         }
 
-        // std::cout << "" << latitude_ << "," << NS_[1] << " " << longitude_ << "," << EW_[1] << " Satellites:" << SV_ << std::endl;
+        std::cout << "" << latitude_ << "," << NS[0] << " " << longitude_ << "," << EW[0] << " Satellites:" << SV_ << std::endl;
     }
 }
 
@@ -214,7 +248,7 @@ void GPS::getNorthSouth(char NS[]) // returns either a East pole or West pole
     int strLength = strlen(NS_); // finds length of the array
     for (int i = 0; i < strLength; i++)
     {
-        NS[i] = NS_[strLength - 1 - i]; // copies UserInput in reverse to TempInput
+        NS[i] = NS_[i];
     }
     NS[strLength] = '\0'; // adds NULL character at end
 }
@@ -224,7 +258,7 @@ void GPS::getEastWest(char EW[]) // returns either a East pole or West pole
     int strLength = strlen(EW_); // finds length of the array
     for (int i = 0; i < strLength; i++)
     {
-        EW[i] = EW_[strLength - 1 - i]; // copies UserInput in reverse to TempInput
+        EW[i] = EW_[i];
     }
     EW[strLength] = '\0'; // adds NULL character at end
 }

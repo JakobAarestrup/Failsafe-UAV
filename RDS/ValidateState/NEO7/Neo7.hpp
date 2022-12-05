@@ -2,6 +2,8 @@
 #include <string.h>
 #include <errno.h>
 #include <iostream>
+#include <fcntl.h>
+#include <termios.h>
 
 #include "UBX_Protocol_Constants.hpp"
 #include <wiringPi.h>
@@ -15,9 +17,11 @@ public:
     GPS();                // default constructor
     ~GPS();               // destructor
     int openUART(int fd); // open UART serial port
-    void configAll();
-    void readGPS();                // reads GPS serial data
-    void convertData();            // converts GPS data
+    int configAll(int serial);
+    void readGPS();     // reads GPS serial data
+    void convertData(); // converts GPS data
+    int configAgane(int seiral);
+
     int getSV() const;             // returns amount of satellites
     double getLongitude() const;   // returns longitude
     double getLatitude() const;    // returns latitude
