@@ -34,10 +34,10 @@ int UDP::initUDP()
 	return 0;
 
 	// bind
-	if (bind(server_socket, (sockaddr *)&server, sizeof(server)) == SOCKET_ERROR)
+	if (bind(socket_desc_, (sockaddr *)&server, sizeof(server)) == -1)
 	{
-		printf("Bind failed with error code: %d", WSAGetLastError());
-		exit(EXIT_FAILURE);
+		printf("Bind failed");
+		return 1;
 	}
 	puts("Bind done.");
 }
