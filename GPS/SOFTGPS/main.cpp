@@ -25,6 +25,7 @@ int main()
   float Long = 0.0, Lat = 0.0;
 
   int serial_port;
+  int serial_port2;
   char NS[1];
   char EW[1];
 
@@ -32,17 +33,18 @@ int main()
 
   /* OPEN UART */
   serial_port = NEO1.configAll(serial_port);
+  serial_port2 = NEO1.configAgane(serial_port2);
   /* CONFIGURATION */
   // printf("Serial port is open! %d \n", serial_port);
 
   printf("STARTING LOOP\n");
   /* STARTING LOOP*/
-  while (1)
-  {
+  /*   while (1)
+    {
 
-    NEO1.readGPS();     // reads NMEA message
-    NEO1.convertData(); // converts to decimal degrees format
-  }
+      NEO1.readGPS();     // reads NMEA message
+      NEO1.convertData(); // converts to decimal degrees format
+    } */
 
   return 0;
 }
