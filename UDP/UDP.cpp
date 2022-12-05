@@ -36,6 +36,13 @@ int UDP::initUDP()
 	}
 	puts("Bind done.");
 
+	// Connect to remote server
+	if (connect(socket_desc_, (struct sockaddr *)&addr_Dest, sizeof(addr_Dest)) < 0)
+	{
+		puts("connect error");
+		return;
+	}
+	puts("Connected");
 	return 0;
 }
 
@@ -58,7 +65,7 @@ void UDP::UDP_COM(char *message, char receiveMsg[])
 		setsockopt(socket_desc_, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
 	*/
 
-	n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&server, len_);
+	n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&addr_Dest, len_);
 
 	/* 		if ((n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&addr_Dest, len_)) < 0)
 		{
