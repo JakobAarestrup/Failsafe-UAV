@@ -40,7 +40,7 @@ int UDP::initUDP()
 	if (connect(socket_desc_, (struct sockaddr *)&addr_Dest, sizeof(addr_Dest)) < 0)
 	{
 		puts("connect error");
-		return;
+		return 1;
 	}
 	puts("Connected");
 	return 0;
