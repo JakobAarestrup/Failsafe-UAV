@@ -25,7 +25,7 @@ while (True):
     clientIP = "Client IP Address:{}".format(address)
     
     print(clientMsg)
-    print(clientIP)
+    #print(clientIP)
 
     # Sending a reply to client
     UDPServerSocket.sendto(bytesToSend, address)
