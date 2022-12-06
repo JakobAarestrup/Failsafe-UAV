@@ -1,29 +1,3 @@
-Skip to content
-		Search or
-	jump to…
-				Pull requests
-					Issues
-						Codespaces
-							Marketplace
-								Explore
-
-			@JakobAarestrup
-				JakobAarestrup /
-			Failsafe -
-		UAV
-			Public
-				Code
-					Issues
-						Pull requests
-							Actions
-								Projects
-									Wiki
-										Security
-											Insights
-												Settings
-													Failsafe -
-		UAV / UDP / UDP.cpp @Fjolte Fjolte Update UDP.cpp Latest commit e9ec36a 18 hours ago History 2 contributors @JakobAarestrup @Fjolte 62 lines(54 sloc) 1.42 KB
-
 #include "UDP.hpp"
 #include <stdio.h>
 #include <sys/socket.h>
@@ -32,7 +6,7 @@ Skip to content
 #include <fcntl.h>
 
 #define MAXLINE 1024
-					struct sockaddr_in server;
+struct sockaddr_in server;
 
 int UDP::initUDP()
 {
