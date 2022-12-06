@@ -237,7 +237,7 @@ void ValidateState::AxisControl()
     {
         landDrone();
     }
-    else if ((StateRoll_ < errorOrientation) & state_ == 1 | (StatePitch_ < errorOrientation) & state_ == 1)
+    else if (((StateRoll_ < errorOrientation) & state_ == 1) | ((StatePitch_ < errorOrientation) & state_ == 1))
     {
         state_ = 0;
         printf("Changing state... to Normal\n");
@@ -296,7 +296,7 @@ void ValidateState::HeightControl()
     {
         landDrone();
     }
-    else if ((altitudeSYS_ < errorHeight) & state_ == 1 | (altitudeRDS_ < errorHeight) & state_ == 1) // In Error_State State and under 200 m
+    else if (((altitudeSYS_ < errorHeight) & state_ == 1) | ((altitudeRDS_ < errorHeight) & state_ == 1)) // In Error_State State and under 200 m
     {
         state_ = 0;
         printf("Changing state... to Normal\n");

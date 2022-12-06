@@ -88,7 +88,7 @@ void mainloop(ValidateState &RDS, BAR &Barometer, Telemetry &telemetry, UDP &Cli
         // RDS.RouteControl(); // checks velocity and point and polygon
 
         printf("Loop Time %d\n", mymillis() - startofloop);
-        loops++;
+        // loops++;
     }
 }
 
