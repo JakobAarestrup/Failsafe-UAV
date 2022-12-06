@@ -322,10 +322,9 @@ void ValidateState::FreeFall()
     float altitude = (altitudeRDS_ + altitudeSYS_) / 2;
     int time = mymillis();
 
-    float distance = altitudeRef_ - altitude;
-    float initVelocity = altitudeRef_ / timeRef_;
+    float distance = altitude - altitudeRef_;
     float velocity = distance / (time - timeRef_);
-    float acceleration = ((pow{initVelocity, 2} - pow{velocity, 2}) / 2 * distance);
+    float acceleration = (velocity - velocityRef_ / time - timeRef_);
 
     if (state_ == 1)
         printf("Critical State\n");
@@ -347,6 +346,7 @@ void ValidateState::FreeFall()
 
     altitudeRef_ = altitude;
     timeRef_ = time;
+    velocityRef_ = velocity;
 }
 
 void ValidateState::landDrone()
