@@ -32,7 +32,7 @@ add_executable(RDSV2
 
 find_library(WIRINGPI_LIBRARIES NAMES wiringPi)
 # Specify your app's executable name and a list of linked libraries
-target_link_libraries(RDS
+target_link_libraries(RDSV2
 PRIVATE Threads::Threads
 MAVSDK::mavsdk
 
