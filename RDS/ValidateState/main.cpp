@@ -75,9 +75,9 @@ void mainloop(ValidateState &RDS, BAR &Barometer, Telemetry &telemetry, UDP &Cli
         {
             loops = 1;
         } */
-        RDS.UpdateSystemValues(Barometer);        // gets all values from sensors
-        position = telemetry.position();          // returns struct with values from baro and GPS
-        euler = telemetry.attitude_euler_angle(); // returns struct with euler angles
+        RDS.UpdateSystemValues(Barometer);  // gets all values from sensors
+        position = telemetry.position();    // returns struct with values from baro and GPS
+        euler = telemetry.attitude_euler(); // returns struct with euler angles
         /*Sets all values from MAVLINK*/
         RDS.SetMAVLinkValues(position.relative_altitude_m, position.latitude_deg, position.longitude_deg,
                              euler.roll_deg, euler.pitch_deg, euler.yaw_deg);
@@ -154,16 +154,16 @@ int main(int argc, char **argv)
      * @brief Initialize used object variables
      *
      */
-
     UDP Client;
-    Client.initUDP();
-
     GPS G1;
     I2C I1;
     // IMU IMU1;
     IMU IMU2;
     BAR B1;
-    B1.calibrateBAR();
+    B1.calibrateBAR(); // 30 seconds from calibration wait time for barometer
+
+    Client.initUDP(); // raspberry pi zero w should get wifi by this time
+
     /**
      * @brief  Configuration of Sensors
      *
