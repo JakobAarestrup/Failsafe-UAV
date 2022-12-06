@@ -223,6 +223,8 @@ void ValidateState::LogData() // &Client)
  */
 void ValidateState::AxisControl()
 {
+    float errorOrientation = (maxOrientation_ * (2 / 3));
+
     StateRoll_ = (StateRoll_ + RollSYS_) / 2;
     StatePitch_ = (StatePitch_ + PitchSYS_) / 2;
 
@@ -235,12 +237,12 @@ void ValidateState::AxisControl()
     {
         landDrone();
     }
-    else if (StateRoll_ < 30 & state_ == 1 | StatePitch_ < 30 & state_ == 1)
+    else if (StateRoll_ < errorOrientation & state_ == 1 | StatePitch_ < errorOrientation & state_ == 1)
     {
         state_ = 0;
         printf("Changing state... to Normal\n");
     }
-    else if (StateRoll_ > 30 | StatePitch_ > 30)
+    else if (StateRoll_ > errorOrientation | StatePitch_ > errorOrientation)
     {
         state_ = 1;
         printf("Changing state... to Error_State\n");
@@ -283,22 +285,23 @@ void ValidateState::RouteControl()
  */
 void ValidateState::HeightControl()
 {
+    float errorHeight = (maxHeight_ * (2 / 3));
     /*
     if (state_ == 1)
         printf("Error_State\n");
     else
         printf("Normal State \n");
 
-    if (altitudeSYS_ > 300 | altitudeRDS_ > 300)
+    if (altitudeSYS_ > maxHeight_ | altitudeRDS_ > MaxHeight_)
     {
         landDrone();
     }
-    else if (altitudeSYS_ < 200 & state_ == 1 | altitudeRDS_ < 200 & state_ == 1) // In Error_State State and under 200 m
+    else if (altitudeSYS_ < errorHeight & state_ == 1 | altitudeRDS_ < errorHeight & state_ == 1) // In Error_State State and under 200 m
     {
         state_ = 0;
         printf("Changing state... to Normal\n");
     }
-    else if (altitudeSYS_ > 200 | altitudeRDS_ > 200)
+    else if (altitudeSYS_ > errorHeight | altitudeRDS_ > errorHeight)
     {
         state_ = 1;
         printf("Closing in on ERROR!!! Changing state... to  Error_State\n");
