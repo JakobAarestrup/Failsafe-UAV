@@ -17,7 +17,7 @@ find_package(Threads REQUIRED)
 
 # Specify your app's executable name, and list of source files used to create it.
 # change first and last line in add_executable to the desired configuration for RDS with or without GPS
-add_executable(RDS
+add_executable(RDSV2
     main.cpp
     NEO7/Neo7.cpp
     IMU/IMU.cpp
