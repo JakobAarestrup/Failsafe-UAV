@@ -1,4 +1,4 @@
-#include "ValidateState.hpp"
+#include "ValidateStateGPS.hpp"
 #include <stdio.h>
 #include <unistd.h>
 #include "IMU/I2C.hpp"
@@ -63,7 +63,7 @@ int mymillis()
 void mainloop(ValidateState &RDS, GPS &NEO, BAR &Barometer, Telemetry &telemetry) //, UDP &Client)
 {
     int loops = 1;
-    int startofloop = mymillis();
+    int startofloop = 0;
 
     Telemetry::Position position;
     Telemetry::EulerAngle euler;
@@ -81,10 +81,12 @@ void mainloop(ValidateState &RDS, GPS &NEO, BAR &Barometer, Telemetry &telemetry
         /*Sets all values from MAVLINK*/
         RDS.SetMAVLinkValues(position.relative_altitude_m, position.latitude_deg, position.longitude_deg,
                              euler.roll_deg, euler.pitch_deg, euler.yaw_deg);
-        RDS.LogData(); // Sends sensor data to log file
-        /* RDS.AxisControl();   // Checks for Failure on the Axises
-        RDS.RouteControl();  // Checks for Failure in the KML
-        RDS.HeightControl(); // Checks for Failure for height */
+        RDS.LogData();       // Sends sensor data to log file
+        RDS.FreeFall();      // Checks error for free fall (acceleration)
+        RDS.AxisControl();   // Checks for error for roll, pitch, and yaw
+        RDS.HeightControl(); // Checks for error for height
+        // RDS.RouteControl(); // checks velocity and point and polygon
+
         printf("Loop Time %d\n", mymillis() - startofloop);
         loops++;
     }

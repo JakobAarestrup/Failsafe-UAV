@@ -1,4 +1,4 @@
-#include "ValidateState.hpp"
+#include "ValidateStateGPS.hpp"
 
 /**
  * @brief Construct a Validate State object
@@ -170,11 +170,10 @@ void ValidateState::GetBaroValues(BAR barometer)
  * @param barometer  Class object of BAR class
  * @param sensor Class object of IMU class
  */
-void ValidateState::UpdateSystemValues(BAR barometer) //, IMU sensor)
+void ValidateState::UpdateSystemValues(GPS NEO, BAR barometer) //, IMU sensor)
 {
-    // GetGPSValues(NEO);
+    GetGPSValues(NEO);
     GetBaroValues(barometer);
-    // GetIMUValues(sensor);
 }
 
 /**
@@ -195,7 +194,6 @@ void ValidateState::LogData() // &Client)
     /*RDS sensors*/
     std::string GPSBaro = "Longitude: " + std::to_string(longitudeRDS_) + " " + longPoleRDS_[0] + " Latitude: " + std::to_string(latitudeRDS_) + " " + latPoleRDS_ + " Satellites: " + std::to_string(SatellitesRDS_) + " Altitude: " + std::to_string(altitudeRDS_);
     Logger(GPSBaro);
-
     std::string IMU = "Roll: " + std::to_string(StateRoll_) + " Pitch: " + std::to_string(StatePitch_) + " Yaw: " + std::to_string(StateYaw_);
     Logger(IMU);
 
