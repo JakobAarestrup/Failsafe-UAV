@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15.2)
 
 # Specify your project's name
-project(RDS)
+project(RDSV2)
 
 # Specify at least C++11, better C++17
 set(CMAKE_CXX_STANDARD 17)
