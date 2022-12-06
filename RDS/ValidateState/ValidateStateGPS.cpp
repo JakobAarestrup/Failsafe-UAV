@@ -203,16 +203,16 @@ void ValidateState::LogData() // &Client)
     Logger(IMUSYS);
 
     // UDP SEND PART
-    // char receivedServerMSG[1024];
+    char receivedServerMSG[1024];
 
-    /* std::string RDSData = GPSBaro + IMU;
+    std::string RDSData = GPSBaro + IMU;
     std::string SYSData = GPSBaroSYS + IMUSYS;
 
     const char *RDS = RDSData.c_str();
     const char *SYS = SYSData.c_str();
 
     Client.UDP_COM(RDS);
-    Client.UDP_COM(SYS); */
+    Client.UDP_COM(SYS);
 }
 
 /**

@@ -141,7 +141,7 @@ int main(int argc, char **argv)
      */
 
     UDP Client;
-    // Client.initUDP();
+    Client.initUDP();
 
     GPS G1;
     I2C I1;
