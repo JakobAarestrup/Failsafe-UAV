@@ -225,8 +225,9 @@ void ValidateState::AxisControl()
 {
     float errorOrientation = (maxOrientation_ * (2 / 3));
 
-    StateRoll_ = (StateRoll_ + RollSYS_) / 2;
-    StatePitch_ = (StatePitch_ + PitchSYS_) / 2;
+    // Handler til hvis det ikke er et tal?
+    /* StateRoll_ = (StateRoll_ + RollSYS_) / 2;
+    StatePitch_ = (StatePitch_ + PitchSYS_) / 2; */
 
     if (state_ == 1)
         printf("Error State\n");
@@ -350,6 +351,7 @@ void ValidateState::landDrone()
     }
     logger("Critical Value Detected for " + +" Switching to Critical State...\n"); */
     Logger("Landing drone immediately!\n");
+    printf("Landing Drone!!\n");
 }
 
 int ValidateState::mymillis()
