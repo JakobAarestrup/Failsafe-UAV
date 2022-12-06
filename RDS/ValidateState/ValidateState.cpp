@@ -303,6 +303,7 @@ void ValidateState::HeightControl()
     }
     else if ((altitudeSYS_ > errorHeight) | (altitudeRDS_ > errorHeight))
     {
+        printf("Altitude from pixhawk: %f , Error_Height: %f ", altitudeSYS_, errorHeight);
         state_ = 1;
         printf("Closing in on ERROR!!! Changing state... Height to Error_State\n");
     }
