@@ -75,13 +75,13 @@ void mainloop(ValidateState &RDS, BAR &Barometer, Telemetry &telemetry, UDP &Cli
         {
             loops = 1;
         } */
-        RDS.UpdateSystemValues(Barometer, loops); // gets all values from sensors
-        position = telemetry.position();          // returns struct with values from baro and GPS
-        euler = telemetry.attitude_euler();       // returns struct with euler angles
+        RDS.UpdateSystemValues(Barometer);  // gets all values from sensors
+        position = telemetry.position();    // returns struct with values from baro and GPS
+        euler = telemetry.attitude_euler(); // returns struct with euler angles
         /*Sets all values from MAVLINK*/
         RDS.SetMAVLinkValues(position.relative_altitude_m, position.latitude_deg, position.longitude_deg,
                              euler.roll_deg, euler.pitch_deg, euler.yaw_deg);
-        RDS.LogData();       // Sends sensor data to log file
+        RDS.LogData(Client); // Sends sensor data to log file
         RDS.FreeFall();      // Checks error for free fall (acceleration)
         RDS.AxisControl();   // Checks for error for roll, pitch, and yaw
         RDS.HeightControl(); // Checks for error for height

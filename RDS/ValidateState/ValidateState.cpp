@@ -348,7 +348,7 @@ void ValidateState::landDrone()
         char criticalValue = "Altitude...."
     }
     logger("Critical Value Detected for " + +" Switching to Critical State...\n"); */
-    logger("Landing drone immediately!\n");
+    Logger("Landing drone immediately!\n");
 }
 
 int ValidateState::mymillis()
