@@ -254,7 +254,6 @@ void ValidateState::AxisControl()
         state_ = 0;
         printf("Changing state... to Normal\n");
     }
-
 }
 
 /**
@@ -314,43 +313,41 @@ void ValidateState::HeightControl()
     {
         state_ = 0;
         printf("Changing state... to Normal\n");
-    } 
+    }
     */
 }
 
 void ValidateState::FreeFall()
 {
-    float altitude = (altitudeRDS_ + altitudeSYS_) /2;
+    float altitude = (altitudeRDS_ + altitudeSYS_) / 2;
     int time = mymillis();
-    
 
-        if (state_ == 1)
-            printf("Critical State\n");
-        else
-            printf("Normal State \n");
+    float distance = altitudeRef_ - altitude;
+    float velocity = distance / (time - timeRef_);
+    float initVelocity = 0;
+    float acceleration = ((pow{initVelocity, 2} - pow{velocity, 2}) / 2 * distance);
 
-        if (altitudeSYS_ > 300 | altitudeRDS_ > 300)
-        {
-            landDrone();
-        }
+    if (state_ == 1)
+        printf("Critical State\n");
+    else
+        printf("Normal State \n");
 
-        else if (altitudeSYS_ > 200 | altitudeRDS_ > 200)
-        {
-            state_ = 1;
-            printf("Closing in on ERROR!!! Changing state... to Critical\n");
-        }
+    if (acceleration < maxAcceleration_ && FF_IMU == 1)
+    {
+        landDrone(); // Maybe parachute() function here
+        state_ = 1;
+        printf("Closing in on ERROR!!! Changing state... to Critical\n");
+    }
 
-        else if (altitudeSYS_ < 200 & state_ == 1 | altitudeRDS_ < 200 & state_ == 1) // In Critical State and under 200 m
-        {
+    else if (acceleration < maxAcceleration_ | FF_IMU_ == 1) // In Critical State and under 200 m
+    {
         state_ = 0;
         printf("Changing state... to Normal\n");
     }
 
     altitudeRef_ = altitude;
-    refTime_ = time;
-    
+    timeRef_ = time;
 }
-
 
 void ValidateState::landDrone()
 {
