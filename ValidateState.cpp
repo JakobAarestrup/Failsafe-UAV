@@ -323,8 +323,8 @@ void ValidateState::FreeFall()
     int time = mymillis();
 
     float distance = altitudeRef_ - altitude;
+    float initVelocity = altitudeRef_ / timeRef_;
     float velocity = distance / (time - timeRef_);
-    float initVelocity = 0;
     float acceleration = ((pow{initVelocity, 2} - pow{velocity, 2}) / 2 * distance);
 
     if (state_ == 1)
