@@ -23,6 +23,7 @@ public:
   void GetIMUValues(IMU &sensor);
   void GetBaroValues(BAR barometer);
   void SetMAVLinkValues(float alt, float lng, float lat, float roll, float pitch, float yaw);
+  ind mymillis();
 
   void UpdateSystemValues(BAR barometer); //, IMU Sensor);
   void LogData(UDP Client);               // UDP &Client);                       // UDP Client);

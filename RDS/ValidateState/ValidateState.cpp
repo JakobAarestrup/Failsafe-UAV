@@ -205,7 +205,7 @@ void ValidateState::LogData(UDP Client) // &Client)
     Logger(IMUSYS);
 
     // UDP SEND PART
-    char receivedServerMSG[1024];
+    // char receivedServerMSG[1024];
 
     std::string RDSData = GPSBaro + IMU;
     std::string SYSData = GPSBaroSYS + IMUSYS;
@@ -237,7 +237,7 @@ void ValidateState::AxisControl()
     {
         landDrone();
     }
-    else if ((StateRoll_ < errorOrientation & state_ == 1) | (StatePitch_ < errorOrientation & state_ == 1))
+    else if ((StateRoll_ < errorOrientation) & state_ == 1 | (StatePitch_ < errorOrientation) & state_ == 1)
     {
         state_ = 0;
         printf("Changing state... to Normal\n");
@@ -292,11 +292,11 @@ void ValidateState::HeightControl()
     else
         printf("Normal State \n");
 
-    if ((altitudeSYS_ > maxHeight_) | (altitudeRDS_ > MaxHeight_))
+    if ((altitudeSYS_ > maxHeight_) | (altitudeRDS_ > maxHeight_))
     {
         landDrone();
     }
-    else if ((altitudeSYS_ < errorHeight & state_ == 1) | (altitudeRDS_ < errorHeight & state_ == 1)) // In Error_State State and under 200 m
+    else if ((altitudeSYS_ < errorHeight) & state_ == 1 | (altitudeRDS_ < errorHeight) & state_ == 1) // In Error_State State and under 200 m
     {
         state_ = 0;
         printf("Changing state... to Normal\n");
@@ -351,7 +351,7 @@ void ValidateState::landDrone()
     logger("Landing drone immediately!\n");
 }
 
-int mymillis()
+int ValidateState::mymillis()
 {
     struct timeval tv;
     gettimeofday(&tv, NULL);
