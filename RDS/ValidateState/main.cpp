@@ -81,10 +81,10 @@ void mainloop(ValidateState &RDS, BAR &Barometer, Telemetry &telemetry, UDP &Cli
         /*Sets all values from MAVLINK*/
         RDS.SetMAVLinkValues(position.relative_altitude_m, position.latitude_deg, position.longitude_deg,
                              euler.roll_deg, euler.pitch_deg, euler.yaw_deg);
-        RDS.LogData(Client);        // Sends sensor data to log file
-        RDS.FreeFall(critical);     // Checks error for free fall (acceleration)
-        RDS.AxisControl(critical);  // Checks for error for roll, pitch, and yaw
-        RDS.HeightControl(critcal); // Checks for error for height
+        RDS.LogData(Client);         // Sends sensor data to log file
+        RDS.FreeFall(critical);      // Checks error for free fall (acceleration)
+        RDS.AxisControl(critical);   // Checks for error for roll, pitch, and yaw
+        RDS.HeightControl(critical); // Checks for error for height
         // RDS.RouteControl(critical); // checks velocity and point and polygon
 
         printf("Loop Time %d\n", mymillis() - startofloop);
