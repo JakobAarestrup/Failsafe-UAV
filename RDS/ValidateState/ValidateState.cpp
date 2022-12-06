@@ -181,7 +181,7 @@ void ValidateState::UpdateSystemValues(BAR barometer) //, IMU sensor)
  * @brief logs all read data from the available sensors.
  *
  */
-void ValidateState::LogData() // &Client)
+void ValidateState::LogData(UDP Client) // &Client)
 {
     {
         std::scoped_lock<std::mutex> lock(m);
