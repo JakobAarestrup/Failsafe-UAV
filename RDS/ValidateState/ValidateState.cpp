@@ -221,9 +221,9 @@ void ValidateState::LogData(UDP Client) // &Client)
  * @brief Checks for critical failure for orientation
  *
  */
-void ValidateState::AxisControl()
+int ValidateState::AxisControl(int critical)
 {
-    float errorOrientation = (maxOrientation_ * (2 / 3));
+    float errorOrientation = (maxOrientation_ * 0.66666666);
 
     // Handler til hvis det ikke er et tal?
     /* StateRoll_ = (StateRoll_ + RollSYS_) / 2;
@@ -237,6 +237,7 @@ void ValidateState::AxisControl()
     if ((StateRoll_ > 45) | (StateRoll_ > 45))
     {
         landDrone();
+        critical = 1;
     }
     else if (((StateRoll_ < errorOrientation) & (state_ == 1)) | ((StatePitch_ < errorOrientation) & (state_ == 1)))
     {
@@ -248,13 +249,14 @@ void ValidateState::AxisControl()
         state_ = 1;
         printf("Changing state... to Error_State Axis\n");
     }
+    return critical;
 }
 
 /**
  * @brief Checks if the drone is following the correct path
  *
  */
-void ValidateState::RouteControl()
+int ValidateState::RouteControl(int critical)
 {
     /* if (state_ == 1)
         printf("Error_State\n");
@@ -264,6 +266,7 @@ void ValidateState::RouteControl()
     /*   if(altitudeSYS_ > 300 | altitudeRDS_ > 300)
       {
           landDrone();
+          critical = 1;
       }
 
       else if (altitudeSYS_ > 200 | altitudeRDS_ > 200)
@@ -277,6 +280,7 @@ void ValidateState::RouteControl()
           state_ = 0;
           printf("Changing state... to Normal\n");
       }
+      return critical;
    */
 }
 
@@ -284,7 +288,7 @@ void ValidateState::RouteControl()
  * @brief Checks if drone is flying too high.
  *
  */
-void ValidateState::HeightControl()
+int ValidateState::HeightControl(int critical)
 {
     float errorHeight = (maxHeight_ * 0.66666666);
 
@@ -296,6 +300,7 @@ void ValidateState::HeightControl()
     if ((altitudeSYS_ > maxHeight_) | (altitudeRDS_ > maxHeight_))
     {
         landDrone();
+        critical = 1;
     }
     else if (((altitudeSYS_ < errorHeight) & (state_ == 1)) | ((altitudeRDS_ < errorHeight) & (state_ == 1))) // In Error_State State and under 200 m
     {
@@ -304,13 +309,14 @@ void ValidateState::HeightControl()
     }
     else if ((altitudeSYS_ > errorHeight) | (altitudeRDS_ > errorHeight))
     {
-        printf("Altitude from pixhawk: %f , Error_Height: %f\n", altitudeSYS_, errorHeight);
+        // printf("Altitude from pixhawk: %f , Error_Height: %f\n", altitudeSYS_, errorHeight);
         state_ = 1;
         printf("Closing in on ERROR!!! Changing state... Height to Error_State\n");
     }
+    return critical;
 }
 
-void ValidateState::FreeFall()
+int ValidateState::FreeFall(int critical)
 {
     float altitude = (altitudeRDS_ + altitudeSYS_) / 2;
     int time = mymillis();
@@ -327,7 +333,7 @@ void ValidateState::FreeFall()
     if (acceleration < maxAcceleration_ && FF_IMU_ == 1)
     {
         landDrone(); // Maybe parachute() function here
-        state_ = 1;
+        critical = 1;
         printf("Closing in on ERROR!!! Changing state... FreeFall to ERROR\n");
     }
 
@@ -340,6 +346,7 @@ void ValidateState::FreeFall()
     altitudeRef_ = altitude;
     timeRef_ = time;
     velocityRef_ = velocity;
+    return critical;
 }
 
 void ValidateState::landDrone()
@@ -349,9 +356,10 @@ void ValidateState::landDrone()
     {
         char criticalValue = "Altitude...."
     }
+
     logger("Critical Value Detected for " + +" Switching to Critical State...\n"); */
+
     Logger("Landing drone immediately!\n");
-    printf("Landing Drone!!\n");
 }
 
 int ValidateState::mymillis()

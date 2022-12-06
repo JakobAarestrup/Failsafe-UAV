@@ -67,8 +67,8 @@ void mainloop(ValidateState &RDS, BAR &Barometer, Telemetry &telemetry, UDP &Cli
 
     Telemetry::Position position;
     Telemetry::EulerAngle euler;
-
-    while (1)
+    int critical = 0;
+    while (critical = 0)
     {
         startofloop = mymillis();
         /* if (loops == 5)
@@ -81,14 +81,29 @@ void mainloop(ValidateState &RDS, BAR &Barometer, Telemetry &telemetry, UDP &Cli
         /*Sets all values from MAVLINK*/
         RDS.SetMAVLinkValues(position.relative_altitude_m, position.latitude_deg, position.longitude_deg,
                              euler.roll_deg, euler.pitch_deg, euler.yaw_deg);
-        RDS.LogData(Client); // Sends sensor data to log file
-        RDS.FreeFall();      // Checks error for free fall (acceleration)
-        RDS.AxisControl();   // Checks for error for roll, pitch, and yaw
-        RDS.HeightControl(); // Checks for error for height
-        // RDS.RouteControl(); // checks velocity and point and polygon
+        RDS.LogData(Client);        // Sends sensor data to log file
+        RDS.FreeFall(critical);     // Checks error for free fall (acceleration)
+        RDS.AxisControl(critical);  // Checks for error for roll, pitch, and yaw
+        RDS.HeightControl(critcal); // Checks for error for height
+        // RDS.RouteControl(critical); // checks velocity and point and polygon
 
         printf("Loop Time %d\n", mymillis() - startofloop);
         // loops++;
+    }
+
+    while (1)
+    {
+        printf("DRONE IS LANDING!\n");
+        RDS.UpdateSystemValues(Barometer);  // gets all values from sensors
+        position = telemetry.position();    // returns struct with values from baro and GPS
+        euler = telemetry.attitude_euler(); // returns struct with euler angles
+        /*Sets all values from MAVLINK*/
+        RDS.SetMAVLinkValues(position.relative_altitude_m, position.latitude_deg, position.longitude_deg,
+                             euler.roll_deg, euler.pitch_deg, euler.yaw_deg);
+        RDS.LogData(Client); // Sends sensor data to log file
+        /* if{mavdsk register =1)
+        exit();
+        } */
     }
 }
 
