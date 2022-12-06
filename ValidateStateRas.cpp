@@ -254,7 +254,7 @@ void ValidateState::AxisControl()
 void ValidateState::RouteControl()
 {
     /* if (state_ == 1)
-        printf("Critical State\n");
+        printf("Error_State\n");
     else
         printf("Normal State \n"); */
 
@@ -266,7 +266,7 @@ void ValidateState::RouteControl()
       else if (altitudeSYS_ > 200 | altitudeRDS_ > 200)
       {
           state_ = 1;
-          printf("Closing in on ERROR!!! Changing state... to Critical\n");
+          printf("Closing in on ERROR!!! Changing state... to Error_State\n");
       }
 
       else if (altitudeSYS_ < 200 | altitudeRDS_ < 200)
@@ -285,7 +285,7 @@ void ValidateState::HeightControl()
 {
     /*
     if (state_ == 1)
-        printf("Critical State\n");
+        printf("Error_State\n");
     else
         printf("Normal State \n");
 
@@ -293,7 +293,7 @@ void ValidateState::HeightControl()
     {
         landDrone();
     }
-    else if (altitudeSYS_ < 200 & state_ == 1 | altitudeRDS_ < 200 & state_ == 1) // In Critical State and under 200 m
+    else if (altitudeSYS_ < 200 & state_ == 1 | altitudeRDS_ < 200 & state_ == 1) // In Error_State State and under 200 m
     {
         state_ = 0;
         printf("Changing state... to Normal\n");
@@ -301,7 +301,7 @@ void ValidateState::HeightControl()
     else if (altitudeSYS_ > 200 | altitudeRDS_ > 200)
     {
         state_ = 1;
-        printf("Closing in on ERROR!!! Changing state... to Critical\n");
+        printf("Closing in on ERROR!!! Changing state... to  Error_State\n");
     }
 
     */
@@ -313,7 +313,7 @@ void ValidateState::FreeFall()
     int time = mymillis();
 
     if (state_ == 1)
-        printf("Critical State\n");
+        printf("Error_State\n");
     else
         printf("Normal State \n");
 
@@ -325,10 +325,10 @@ void ValidateState::FreeFall()
     else if (altitudeSYS_ > 200 | altitudeRDS_ > 200)
     {
         state_ = 1;
-        printf("Closing in on ERROR!!! Changing state... to Critical\n");
+        printf("Closing in on ERROR! Changing state... to Error_State\n");
     }
 
-    else if (altitudeSYS_ < 200 & state_ == 1 | altitudeRDS_ < 200 & state_ == 1) // In Critical State and under 200 m
+    else if (altitudeSYS_ < 200 & state_ == 1 | altitudeRDS_ < 200 & state_ == 1) // In Error_State State and under 200 m
     {
         state_ = 0;
         printf("Changing state... to Normal\n");
@@ -340,8 +340,13 @@ void ValidateState::FreeFall()
 
 void ValidateState::landDrone()
 {
-    logger("Landing drone immediately...\n");
     /*MAVLINK MESSAGE TO LAND*/
+    /* if (fail == 3)
+    {
+        char criticalValue = "Altitude...."
+    }
+    logger("Critical Value Detected for " + +" Switching to Critical State...\n"); */
+    logger("Landing drone immediately!\n");
 }
 
 /**
