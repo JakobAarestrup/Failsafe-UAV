@@ -31,7 +31,7 @@ public:
   int AxisControl(int critical);
   int RouteControl(int critical);
   int HeightControl(int critical);
-  void FreeFall(int critical);
+  int FreeFall(int critical);
   void landDrone();
   inline void Logger(std::string logMsg);
   inline std::string getCurrentDateTime(std::string s);

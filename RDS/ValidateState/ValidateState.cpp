@@ -282,6 +282,8 @@ int ValidateState::RouteControl(int critical)
       }
       return critical;
    */
+
+    return critical;
 }
 
 /**
