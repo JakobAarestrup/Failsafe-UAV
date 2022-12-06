@@ -245,7 +245,7 @@ void ValidateState::AxisControl()
     else if ((StateRoll_ > errorOrientation) | (StatePitch_ > errorOrientation))
     {
         state_ = 1;
-        printf("Changing state... to Error_State\n");
+        printf("Changing state... to Error_State Axis\n");
     }
 }
 
@@ -304,7 +304,7 @@ void ValidateState::HeightControl()
     else if ((altitudeSYS_ > errorHeight) | (altitudeRDS_ > errorHeight))
     {
         state_ = 1;
-        printf("Closing in on ERROR!!! Changing state... to  Error_State\n");
+        printf("Closing in on ERROR!!! Changing state... Height to Error_State\n");
     }
 }
 
@@ -326,7 +326,7 @@ void ValidateState::FreeFall()
     {
         landDrone(); // Maybe parachute() function here
         state_ = 1;
-        printf("Closing in on ERROR!!! Changing state... to ERROR\n");
+        printf("Closing in on ERROR!!! Changing state... FreeFall to ERROR\n");
     }
 
     else if ((acceleration < maxAcceleration_) | (FF_IMU_ == 1)) // In Critical State and under 200 m
