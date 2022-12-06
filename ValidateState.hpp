@@ -81,6 +81,7 @@ private:
   float maxOrientation_ = 45;
   float maxDistance_ = 50;
   float maxFallSpeed = -8;
+
   float altitudeRef_ = 0;
   float velocityRef_ = 0;
   float timeRef_ = 0;
