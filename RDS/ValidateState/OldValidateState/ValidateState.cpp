@@ -114,6 +114,15 @@ void ValidateState::GetGPSValues(GPS NEO)
     NEO.getNorthSouth(longPoleRDS_);    // returns either a north pole or south pole
     NEO.getEastWest(latPoleRDS_);       // returns either a East pole or West pole
     SatellitesRDS_ = NEO.getSV();
+
+    /*MAVLINK GET GPS DATA FROM DRONE*/
+
+    /* longitudeSYS_ =
+    latitudeSYS_ =
+    longPoleSYS_ =
+    latPoleSYS_ =
+    SatellitesSYS_ =
+    */
 }
 
 /**
@@ -121,26 +130,17 @@ void ValidateState::GetGPSValues(GPS NEO)
  *
  * @param sensor Class object of IMU class
  */
-void ValidateState::GetIMUValues(IMU &sensor_one) //, IMU &sensor_two) IMU void ValidateState::GetIMUValues(IMU sensor)
+void ValidateState::GetIMUValues(IMU &sensor) // void ValidateState::GetIMUValues(IMU sensor)
 {
     float roll, pitch, yaw;
-    sensor_one.readIMU(1);
-    sensor_one.ConvertACCData();
-    sensor_one.ConvertMagData();
-    sensor_one.ComplementaryFilter();
+    sensor.readIMU(2);
+    sensor.ConvertACCData();
+    sensor.ConvertMagData();
+    sensor.ComplementaryFilter();
 
-    roll = sensor_one.getRoll();
-    pitch = sensor_one.getPitch();
-    yaw = sensor_one.getYaw();
-
-    /* sensor_two.readIMU(2);
-    sensor_two.ConvertACCData();
-    sensor_two.ConvertMagData();
-    sensor_two.ComplementaryFilter();
-
-    roll = roll + sensor_two.getRoll();
-    pitch = pitch + sensor_two.getPitch();
-    yaw = yaw + sensor_two.getYaw(); */
+    roll = sensor.getRoll();
+    pitch = sensor.getPitch();
+    yaw = sensor.getYaw();
 
     {
         std::scoped_lock<std::mutex> lock(m);
@@ -148,6 +148,11 @@ void ValidateState::GetIMUValues(IMU &sensor_one) //, IMU &sensor_two) IMU void 
         PitchRDS_ = pitch;
         YawRDS_ = yaw;
     }
+
+    /*MAVLINK GET IMU DATA FROM DRONE*/
+    // RollSYS_ =;
+    // PitchSYS_ =;
+    // YawSYS_ =;
 }
 
 /**
@@ -161,6 +166,9 @@ void ValidateState::GetBaroValues(BAR barometer)
     barometer.readTemperature();
     barometer.calculatePressureAndTemperature();
     altitudeRDS_ = barometer.getHeight();
+
+    /*MAVLINK GET BARO DATA FROM DRONE*/
+    // altitudeSYS_ =;
 }
 
 /**
@@ -170,10 +178,12 @@ void ValidateState::GetBaroValues(BAR barometer)
  * @param barometer  Class object of BAR class
  * @param sensor Class object of IMU class
  */
-void ValidateState::UpdateSystemValues(BAR barometer) //, IMU sensor)
+void ValidateState::UpdateSystemValues(GPS NEO, BAR barometer, int loops) //, IMU sensor)
 {
-    // GetGPSValues(NEO);
+    if (loops == 1)
+        GetGPSValues(NEO);
     GetBaroValues(barometer);
+
     // GetIMUValues(sensor);
 }
 
@@ -183,11 +193,13 @@ void ValidateState::UpdateSystemValues(BAR barometer) //, IMU sensor)
  */
 void ValidateState::LogData() // &Client)
 {
+    float RollRDS, PitchRDS, YawRDS;
+
     {
         std::scoped_lock<std::mutex> lock(m);
-        StateRoll_ = RollRDS_;
-        StatePitch_ = PitchRDS_;
-        StateYaw_ = YawRDS_;
+        RollRDS = RollRDS_;
+        PitchRDS = PitchRDS_;
+        YawRDS = YawRDS_;
     }
 
     /*START logging*/
@@ -196,7 +208,7 @@ void ValidateState::LogData() // &Client)
     std::string GPSBaro = "Longitude: " + std::to_string(longitudeRDS_) + " " + longPoleRDS_[0] + " Latitude: " + std::to_string(latitudeRDS_) + " " + latPoleRDS_ + " Satellites: " + std::to_string(SatellitesRDS_) + " Altitude: " + std::to_string(altitudeRDS_);
     Logger(GPSBaro);
 
-    std::string IMU = "Roll: " + std::to_string(StateRoll_) + " Pitch: " + std::to_string(StatePitch_) + " Yaw: " + std::to_string(StateYaw_);
+    std::string IMU = "Roll: " + std::to_string(RollRDS) + " Pitch: " + std::to_string(PitchRDS) + " Yaw: " + std::to_string(YawRDS);
     Logger(IMU);
 
     std::string GPSBaroSYS = "LongitudeSYS: " + std::to_string(longitudeSYS_) + " " + longPoleRDS_[0] + " LatitudeSYS: " + std::to_string(latitudeSYS_) + " " + latPoleRDS_ + " AltitudeSYS: " + std::to_string(altitudeSYS_);
@@ -223,30 +235,29 @@ void ValidateState::LogData() // &Client)
  */
 void ValidateState::AxisControl()
 {
-    float errorOrientation = (maxOrientation_ * (2 / 3));
 
-    StateRoll_ = (StateRoll_ + RollSYS_) / 2;
-    StatePitch_ = (StatePitch_ + PitchSYS_) / 2;
+    /*  if (state_ == 1)
+         printf("Critical State\n");
+     else
+         printf("Normal State \n"); */
 
-    if (state_ == 1)
-        printf("Error State\n");
-    else
-        printf("Normal State \n");
+    /*   if(altitudeSYS_ > 300 | altitudeRDS_ > 300)
+  {
+      landDrone();
+  }
 
-    if (StateRoll_ > 45 | StateRoll_ > 45)
-    {
-        landDrone();
-    }
-    else if (StateRoll_ < errorOrientation & state_ == 1 | StatePitch_ < errorOrientation & state_ == 1)
-    {
-        state_ = 0;
-        printf("Changing state... to Normal\n");
-    }
-    else if (StateRoll_ > errorOrientation | StatePitch_ > errorOrientation)
-    {
-        state_ = 1;
-        printf("Changing state... to Error_State\n");
-    }
+  else if (altitudeSYS_ > 200 | altitudeRDS_ > 200)
+  {
+      state_ = 1;
+      printf("Closing in on ERROR!!! Changing state... to Critical\n");
+  }
+
+  else if (altitudeSYS_ < 200 | altitudeRDS_ < 200)
+  {
+      state_ = 0;
+      printf("Changing state... to Normal\n");
+  }
+*/
 }
 
 /**
@@ -256,7 +267,7 @@ void ValidateState::AxisControl()
 void ValidateState::RouteControl()
 {
     /* if (state_ == 1)
-        printf("Error_State\n");
+        printf("Critical State\n");
     else
         printf("Normal State \n"); */
 
@@ -268,7 +279,7 @@ void ValidateState::RouteControl()
       else if (altitudeSYS_ > 200 | altitudeRDS_ > 200)
       {
           state_ = 1;
-          printf("Closing in on ERROR!!! Changing state... to Error_State\n");
+          printf("Closing in on ERROR!!! Changing state... to Critical\n");
       }
 
       else if (altitudeSYS_ < 200 | altitudeRDS_ < 200)
@@ -285,79 +296,33 @@ void ValidateState::RouteControl()
  */
 void ValidateState::HeightControl()
 {
-    float errorHeight = (maxHeight_ * (2 / 3));
-    /*
-    if (state_ == 1)
-        printf("Error_State\n");
-    else
-        printf("Normal State \n");
+    /*     if (state_ == 1)
+            printf("Critical State\n");
+        else
+            printf("Normal State \n");
 
-    if (altitudeSYS_ > maxHeight_ | altitudeRDS_ > MaxHeight_)
-    {
-        landDrone();
-    }
-    else if (altitudeSYS_ < errorHeight & state_ == 1 | altitudeRDS_ < errorHeight & state_ == 1) // In Error_State State and under 200 m
-    {
-        state_ = 0;
-        printf("Changing state... to Normal\n");
-    }
-    else if (altitudeSYS_ > errorHeight | altitudeRDS_ > errorHeight)
-    {
-        state_ = 1;
-        printf("Closing in on ERROR!!! Changing state... to  Error_State\n");
-    }
+        if (altitudeSYS_ > 300 | altitudeRDS_ > 300)
+        {
+            landDrone();
+        }
 
-    */
-}
+        else if (altitudeSYS_ > 200 | altitudeRDS_ > 200)
+        {
+            state_ = 1;
+            printf("Closing in on ERROR!!! Changing state... to Critical\n");
+        }
 
-void ValidateState::FreeFall()
-{
-    float altitude = (altitudeRDS_ + altitudeSYS_) / 2;
-    int time = mymillis();
-
-    float distance = altitude - altitudeRef_;
-    float velocity = distance / (time - timeRef_);
-    float acceleration = (velocity - velocityRef_ / time - timeRef_);
-
-    if (state_ == 1)
-        printf("Critical State\n");
-    else
-        printf("Normal State \n");
-
-    if (acceleration < maxAcceleration_ && FF_IMU == 1)
-    {
-        landDrone(); // Maybe parachute() function here
-        state_ = 1;
-        printf("Closing in on ERROR!!! Changing state... to Critical\n");
-    }
-
-    else if (acceleration < maxAcceleration_ | FF_IMU_ == 1) // In Critical State and under 200 m
-    {
-        state_ = 0;
-        printf("Changing state... to Normal\n");
-    }
-
-    altitudeRef_ = altitude;
-    timeRef_ = time;
-    velocityRef_ = velocity;
+        else if (altitudeSYS_ < 200 & state_ == 1 | altitudeRDS_ < 200 & state_ == 1) // In Critical State and under 200 m
+        {
+            state_ = 0;
+            printf("Changing state... to Normal\n");
+        } */
 }
 
 void ValidateState::landDrone()
 {
+    printf("Landing drone immediately...\n");
     /*MAVLINK MESSAGE TO LAND*/
-    /* if (fail == 3)
-    {
-        char criticalValue = "Altitude...."
-    }
-    logger("Critical Value Detected for " + +" Switching to Critical State...\n"); */
-    logger("Landing drone immediately!\n");
-}
-
-int mymillis()
-{
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-    return (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
 }
 
 /**

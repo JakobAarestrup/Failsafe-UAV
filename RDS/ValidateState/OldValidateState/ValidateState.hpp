@@ -22,13 +22,12 @@ public:
   void GetBaroValues(BAR barometer);
   void SetMAVLinkValues(float alt, float lng, float lat, float roll, float pitch, float yaw);
 
-  void UpdateSystemValues(BAR barometer); //, IMU Sensor);
-  void LogData();                         // UDP &Client);                       // UDP Client);
+  void UpdateSystemValues(GPS NEO, BAR barometer, int loops); //, IMU Sensor);
+  void LogData();                                             // UDP &Client);
 
   void AxisControl();
   void RouteControl();
   void HeightControl();
-  void FreeFall();
   void landDrone();
   inline void Logger(std::string logMsg);
   inline std::string getCurrentDateTime(std::string s);
@@ -73,7 +72,6 @@ private:
    *
    */
   float RollRDS_ = 0, PitchRDS_ = 0, YawRDS_ = 0;
-  float StateRoll_ = 0, StatePitch_ = 0, StateYaw_ = 0;
 
   int state_ = 0;
 
@@ -81,12 +79,6 @@ private:
   float maxAcceleration_ = 15;
   float maxOrientation_ = 45;
   float maxDistance_ = 50;
-  float maxFallSpeed = 9.82;
-
-  float altitudeRef_ = 0;
-  float velocityRef_ = 0;
-  float timeRef_ = 0;
-  int FF_IMU_ = 0;
 
   std::mutex m;
 };
