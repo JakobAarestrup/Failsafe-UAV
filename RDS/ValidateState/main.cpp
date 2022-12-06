@@ -68,7 +68,7 @@ void mainloop(ValidateState &RDS, BAR &Barometer, Telemetry &telemetry, UDP &Cli
     Telemetry::Position position;
     Telemetry::EulerAngle euler;
     int critical = 0;
-    while (critical = 0)
+    while (critical > 0)
     {
         startofloop = mymillis();
         /* if (loops == 5)
