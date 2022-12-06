@@ -8,6 +8,8 @@
 #include <sstream>
 #include "UDP/UDP.hpp"
 #include <mutex>
+#include <sys/time.h>
+#include <time.h>
 
 class ValidateState
 {

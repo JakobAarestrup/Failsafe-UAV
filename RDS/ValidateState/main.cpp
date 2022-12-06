@@ -60,7 +60,7 @@ int mymillis()
     return (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
 }
 
-void mainloop(ValidateState &RDS, BAR &Barometer, Telemetry &telemetry) //, UDP &Client)
+void mainloop(ValidateState &RDS, BAR &Barometer, Telemetry &telemetry, UDP &Client)
 {
     /*  int loops = 1; */
     int startofloop;
@@ -205,7 +205,7 @@ int main(int argc, char **argv)
      */
     std::vector<std::thread> threads;
 
-    threads.push_back(std::thread(mainloop, std::ref(RDS), std::ref(B1), std::ref(telemetry))); //, std::ref(Client)));
+    threads.push_back(std::thread(mainloop, std::ref(RDS), std::ref(B1), std::ref(telemetry), std::ref(Client))); //, std::ref(Client)));
     threads.push_back(std::thread(updateIMUValues, std::ref(RDS), std::ref(IMU2)));
 
     for (auto &th : threads)

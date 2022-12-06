@@ -233,16 +233,16 @@ void ValidateState::AxisControl()
     else
         printf("Normal State \n");
 
-    if (StateRoll_ > 45 | StateRoll_ > 45)
+    if ((StateRoll_ > 45) | (StateRoll_ > 45))
     {
         landDrone();
     }
-    else if (StateRoll_ < errorOrientation & state_ == 1 | StatePitch_ < errorOrientation & state_ == 1)
+    else if ((StateRoll_ < errorOrientation & state_ == 1) | (StatePitch_ < errorOrientation & state_ == 1))
     {
         state_ = 0;
         printf("Changing state... to Normal\n");
     }
-    else if (StateRoll_ > errorOrientation | StatePitch_ > errorOrientation)
+    else if ((StateRoll_ > errorOrientation) | (StatePitch_ > errorOrientation))
     {
         state_ = 1;
         printf("Changing state... to Error_State\n");
@@ -286,28 +286,26 @@ void ValidateState::RouteControl()
 void ValidateState::HeightControl()
 {
     float errorHeight = (maxHeight_ * (2 / 3));
-    /*
+
     if (state_ == 1)
         printf("Error_State\n");
     else
         printf("Normal State \n");
 
-    if (altitudeSYS_ > maxHeight_ | altitudeRDS_ > MaxHeight_)
+    if ((altitudeSYS_ > maxHeight_) | (altitudeRDS_ > MaxHeight_))
     {
         landDrone();
     }
-    else if (altitudeSYS_ < errorHeight & state_ == 1 | altitudeRDS_ < errorHeight & state_ == 1) // In Error_State State and under 200 m
+    else if ((altitudeSYS_ < errorHeight & state_ == 1) | (altitudeRDS_ < errorHeight & state_ == 1)) // In Error_State State and under 200 m
     {
         state_ = 0;
         printf("Changing state... to Normal\n");
     }
-    else if (altitudeSYS_ > errorHeight | altitudeRDS_ > errorHeight)
+    else if ((altitudeSYS_ > errorHeight) | (altitudeRDS_ > errorHeight))
     {
         state_ = 1;
         printf("Closing in on ERROR!!! Changing state... to  Error_State\n");
     }
-
-    */
 }
 
 void ValidateState::FreeFall()
@@ -324,14 +322,14 @@ void ValidateState::FreeFall()
     else
         printf("Normal State \n");
 
-    if (acceleration < maxAcceleration_ && FF_IMU == 1)
+    if (acceleration < maxAcceleration_ && FF_IMU_ == 1)
     {
         landDrone(); // Maybe parachute() function here
         state_ = 1;
         printf("Closing in on ERROR!!! Changing state... to Critical\n");
     }
 
-    else if (acceleration < maxAcceleration_ | FF_IMU_ == 1) // In Critical State and under 200 m
+    else if ((acceleration < maxAcceleration_) | (FF_IMU_ == 1)) // In Critical State and under 200 m
     {
         state_ = 0;
         printf("Changing state... to Normal\n");
