@@ -124,7 +124,7 @@ void ValidateState::GetGPSValues(GPS NEO)
 void ValidateState::GetIMUValues(IMU &sensor_one) //, IMU &sensor_two) IMU void ValidateState::GetIMUValues(IMU sensor)
 {
     float roll, pitch, yaw;
-    sensor_one.readIMU(1);
+    sensor_one.readIMU(2);
     sensor_one.ConvertACCData();
     sensor_one.ConvertMagData();
     sensor_one.ComplementaryFilter();
