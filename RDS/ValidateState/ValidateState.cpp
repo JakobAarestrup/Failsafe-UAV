@@ -318,7 +318,7 @@ void ValidateState::FreeFall()
     float acceleration = (velocity - velocityRef_ / time - timeRef_);
 
     if (state_ == 1)
-        printf("Critical State\n");
+        printf("Error State\n");
     else
         printf("Normal State \n");
 
@@ -326,7 +326,7 @@ void ValidateState::FreeFall()
     {
         landDrone(); // Maybe parachute() function here
         state_ = 1;
-        printf("Closing in on ERROR!!! Changing state... to Critical\n");
+        printf("Closing in on ERROR!!! Changing state... to ERROR\n");
     }
 
     else if ((acceleration < maxAcceleration_) | (FF_IMU_ == 1)) // In Critical State and under 200 m
