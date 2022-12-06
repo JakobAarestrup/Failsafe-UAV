@@ -285,7 +285,7 @@ void ValidateState::RouteControl()
  */
 void ValidateState::HeightControl()
 {
-    float errorHeight = (maxHeight_ * (2 / 3));
+    float errorHeight = (maxHeight_ * 0.66666666);
 
     if (state_ == 1)
         printf("Error_State\n");
@@ -303,7 +303,7 @@ void ValidateState::HeightControl()
     }
     else if ((altitudeSYS_ > errorHeight) | (altitudeRDS_ > errorHeight))
     {
-        printf("Altitude from pixhawk: %f , Error_Height: %f ", altitudeSYS_, errorHeight);
+        printf("Altitude from pixhawk: %f , Error_Height: %f\n", altitudeSYS_, errorHeight);
         state_ = 1;
         printf("Closing in on ERROR!!! Changing state... Height to Error_State\n");
     }
