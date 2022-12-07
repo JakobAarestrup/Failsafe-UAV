@@ -1,3 +1,4 @@
+#pragma once
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
@@ -9,18 +10,15 @@
 #include <wiringPi.h>
 #include <wiringSerial.h>
 
-//#pragma once // skal denne bruges?
-
 class GPS
 {
 public:
     GPS();                // default constructor
     ~GPS();               // destructor
     int openUART(int fd); // open UART serial port
-    int configAll(int serial);
+    int configAll();
     void readGPS();     // reads GPS serial data
     void convertData(); // converts GPS data
-    int configAgane(int seiral);
 
     int getSV() const;             // returns amount of satellites
     double getLongitude() const;   // returns longitude

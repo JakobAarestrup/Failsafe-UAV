@@ -20,15 +20,15 @@ int GPS::openUART(int fd) // open UART serial port
     if (fd < 0)
     {
         perror("Error opening serial port");
-        return -1;
+        return 1;
     }
     return fd;
 }
 
-int GPS::configAll(int serial)
+int GPS::configAll()
 {
     /*OPEN UART*/
-    if ((serial = serialOpen("/dev/ttyS0", 9600)) < 0) // open serial port with set baudrate
+    if ((serialPort_ = serialOpen("/dev/ttyS0", 4800)) < 0) // open serial port with set baudrate
     {
         fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
 
@@ -44,50 +44,31 @@ int GPS::configAll(int serial)
     /* CONFIGURATION */
 
     /*NMEA Config*/
-    write(serial, UBX_protocol::NMEA_CFG, UBX_protocol::NMEA_CFG_Length); // disable SBAS QZSS GLONASS BeiDou Galileo
+    write(serialPort_, UBX_protocol::NMEA_CFG, UBX_protocol::NMEA_CFG_Length); // disable SBAS QZSS GLONASS BeiDou Galileo
 
     /*Update Rate*/
-    write(serial, UBX_protocol::RATE, UBX_protocol::RATE_Length); // Measurement frequency: 10 hz, navigation frequency 10 hz
+    write(serialPort_, UBX_protocol::RATE, UBX_protocol::RATE_Length); // Measurement frequency: 5 hz, navigation frequency 10 hz
 
     /*NMEA messages*/
-    write(serial, UBX_protocol::GLL, UBX_protocol::GP_Length); // disable GPGLL
-    write(serial, UBX_protocol::GSA, UBX_protocol::GP_Length); // disable GSA
-    write(serial, UBX_protocol::GSV, UBX_protocol::GP_Length); // disable GPGSV
-    write(serial, UBX_protocol::RMC, UBX_protocol::GP_Length); // disable RMC
-    write(serial, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG
-    write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
+    write(serialPort_, UBX_protocol::GLL, UBX_protocol::GP_Length); // disable GPGLL
+    write(serialPort_, UBX_protocol::GSA, UBX_protocol::GP_Length); // disable GSA
+    write(serialPort_, UBX_protocol::GSV, UBX_protocol::GP_Length); // disable GPGSV
+    write(serialPort_, UBX_protocol::RMC, UBX_protocol::GP_Length); // disable RMC
+    write(serialPort_, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG
 
     /*BAUDRATE */
-    write(serial, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
+    write(serialPort_, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
 
-    printf("Configuration is part 1 done! \n");
-    serialClose(serial);
+    int count = 0;
+    write(serialPort_, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
+    write(serialPort_, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
+    write(serialPort_, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
+    write(serialPort_, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
+    write(serialPort_, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
 
-    return serial;
-}
+    printf("Configuration is done! \n");
 
-int GPS::configAgane(int serial)
-{
-    /*OPEN UART*/
-    if ((serial = serialOpen("/dev/ttyS0", 4800)) < 0) // open serial port with set baudrate
-    {
-        fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
-
-        return 1;
-    }
-
-    if (wiringPiSetup() == -1) // initializes wiringPi setup
-    {
-        fprintf(stdout, "Unable to start wiringPi: %s\n", strerror(errno)); // error handling
-        return 1;
-    }
-
-    /*SAVE CONFIG*/
-    printf("Configuration is part 2 done! \n");
-    write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
-    serialClose(serial);
-
-    return serial;
+    serial_Close(serialPort_);
 }
 
 void GPS::readGPS() // reads GPS serial data
@@ -170,9 +151,6 @@ void GPS::readGPS() // reads GPS serial data
             end_ptr = strchr(++start_ptr, ','); // find end of field...
             *end_ptr = '\0';                    // and zero terminate
             SV_ = atoi(start_ptr);              // Convert char to int & store in variable
-
-            // printf("latitude: %f %s longitude: %f %s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
-            //    end = 1;
             i = 200;
         }
     }
@@ -221,8 +199,6 @@ void GPS::convertData() // converts GPS serial data to decimal degrees
             latitude_ = lat_Deg + lat_Sec;
             longitude_ = lon_Deg + lon_Sec;
         }
-
-        // std::cout << "" << latitude_ << "," << NS[0] << " " << longitude_ << "," << EW[0] << " Satellites:" << SV_ << std::endl;
     }
 }
 
