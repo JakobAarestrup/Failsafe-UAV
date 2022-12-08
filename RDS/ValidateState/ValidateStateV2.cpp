@@ -87,137 +87,6 @@ void ValidateState::configValidateState(char maxHeight[], char maxAcceleration[]
 }
 
 /**
- * @brief Get the Values from MAVLink
- *
- */
-void ValidateState::SetMAVLinkValues(float alt, float lng, float lat, float roll, float pitch, float yaw)
-{
-    altitudeSYS_ = alt;
-    longitudeSYS_ = lng;
-    latitudeSYS_ = lat;
-    RollSYS_ = roll;
-    PitchSYS_ = pitch;
-    YawSYS_ = yaw;
-}
-
-/**
- * @brief Gets the available GPS data from the NEO7 sensor and asks the drone over mavlink for their data.
- *
- * @param NEO Class object of GPS class
- */
-void ValidateState::GetGPSValues(GPS NEO)
-{
-    NEO.readGPS();                      // reads NMEA message
-    NEO.convertData();                  // converts to decimal degrees format
-    longitudeRDS_ = NEO.getLongitude(); // returns longitude
-    latitudeRDS_ = NEO.getLatitude();   // returns latitude
-    NEO.getNorthSouth(longPoleRDS_);    // returns either a north pole or south pole
-    NEO.getEastWest(latPoleRDS_);       // returns either a East pole or West pole
-    SatellitesRDS_ = NEO.getSV();
-}
-
-/**
- * @brief Gets Roll, Pitch and YAW from IMU object and over MAVLINK from Drone
- *
- * @param sensor Class object of IMU class
- */
-void ValidateState::GetIMUValues(IMU &sensor_one) //, IMU &sensor_two) IMU void ValidateState::GetIMUValues(IMU sensor)
-{
-    float roll, pitch, yaw;
-    sensor_one.readIMU(2);
-    sensor_one.ConvertACCData();
-    sensor_one.ConvertMagData();
-    sensor_one.ComplementaryFilter();
-
-    roll = sensor_one.getRoll();
-    pitch = sensor_one.getPitch();
-    yaw = sensor_one.getYaw();
-
-    /* sensor_two.readIMU(2);
-    sensor_two.ConvertACCData();
-    sensor_two.ConvertMagData();
-    sensor_two.ComplementaryFilter();
-
-    roll = roll + sensor_two.getRoll();
-    pitch = pitch + sensor_two.getPitch();
-    yaw = yaw + sensor_two.getYaw(); */
-
-    {
-        std::scoped_lock<std::mutex> lock(m);
-        RollRDS_ = roll;
-        PitchRDS_ = pitch;
-        YawRDS_ = yaw;
-    }
-}
-
-/**
- * @brief Gets all barometer values needed to get height
- *
- * @param barometer Class object of BAR class
- */
-void ValidateState::GetBaroValues(BAR barometer)
-{
-    barometer.readPressure();
-    barometer.readTemperature();
-    barometer.calculatePressureAndTemperature();
-    altitudeRDS_ = barometer.getHeight();
-}
-
-/**
- * @brief Updates all private variables in ValidateState for critical failure status.
- *
- * @param NEO Class object of GPS class
- * @param barometer  Class object of BAR class
- * @param sensor Class object of IMU class
- */
-void ValidateState::UpdateSystemValues(BAR barometer) //, IMU sensor)
-{
-    // GetGPSValues(NEO);
-    GetBaroValues(barometer);
-    // GetIMUValues(sensor);
-}
-
-/**
- * @brief logs all read data from the available sensors.
- *
- */
-void ValidateState::LogData(UDP Client) // &Client)
-{
-    {
-        std::scoped_lock<std::mutex> lock(m);
-        StateRoll_ = RollRDS_;
-        StatePitch_ = PitchRDS_;
-        StateYaw_ = YawRDS_;
-    }
-
-    /*START logging*/
-    printf("Logging data called..\n");
-    /*RDS sensors*/
-    std::string GPSBaro = "Longitude: " + std::to_string(longitudeRDS_) + " " + longPoleRDS_[0] + " Latitude: " + std::to_string(latitudeRDS_) + " " + latPoleRDS_ + " Satellites: " + std::to_string(SatellitesRDS_) + " Altitude: " + std::to_string(altitudeRDS_);
-    Logger(GPSBaro);
-
-    std::string IMU = "Roll: " + std::to_string(StateRoll_) + " Pitch: " + std::to_string(StatePitch_) + " Yaw: " + std::to_string(StateYaw_);
-    Logger(IMU);
-
-    std::string GPSBaroSYS = "LongitudeSYS: " + std::to_string(longitudeSYS_) + " " + longPoleRDS_[0] + " LatitudeSYS: " + std::to_string(latitudeSYS_) + " " + latPoleRDS_ + " AltitudeSYS: " + std::to_string(altitudeSYS_);
-    Logger(GPSBaroSYS);
-    std::string IMUSYS = "RollSYS: " + std::to_string(RollSYS_) + " PitchSYS: " + std::to_string(PitchSYS_) + " YawSYS: " + std::to_string(YawSYS_);
-    Logger(IMUSYS);
-
-    // UDP SEND PART
-    // char receivedServerMSG[1024];
-
-    std::string RDSData = GPSBaro + IMU;
-    std::string SYSData = GPSBaroSYS + IMUSYS;
-
-    const char *RDS = RDSData.c_str();
-    const char *SYS = SYSData.c_str();
-
-    Client.UDP_COM(RDS);
-    Client.UDP_COM(SYS);
-}
-
-/**
  * @brief Checks for critical failure for orientation
  *
  */
@@ -290,7 +159,7 @@ int ValidateState::RouteControl(int critical)
  * @brief Checks if drone is flying too high.
  *
  */
-int ValidateState::HeightControl(int critical)
+int ValidateState::HeightControl(int critical, float altitudeRDS, float altitudeSYS)
 {
     float errorHeight = (maxHeight_ * 0.66666666);
 
@@ -299,17 +168,17 @@ int ValidateState::HeightControl(int critical)
     else
         printf("Normal State \n");
 
-    if ((altitudeSYS_ > maxHeight_) | (altitudeRDS_ > maxHeight_))
+    if ((altitudeSYS > maxHeight_) | (altitudeRDS > maxHeight_))
     {
         landDrone();
         critical = 1;
     }
-    else if (((altitudeSYS_ < errorHeight) & (state_ == 1)) | ((altitudeRDS_ < errorHeight) & (state_ == 1))) // In Error_State State and under 200 m
+    else if (((altitudeSYS < errorHeight) & (state_ == 1)) | ((altitudeRDS < errorHeight) & (state_ == 1))) // In Error_State State and under 200 m
     {
         state_ = 0;
         printf("Changing state... to Normal\n");
     }
-    else if ((altitudeSYS_ > errorHeight) | (altitudeRDS_ > errorHeight))
+    else if ((altitudeSYS > errorHeight) | (altitudeRDS_ > errorHeight))
     {
         // printf("Altitude from pixhawk: %f , Error_Height: %f\n", altitudeSYS_, errorHeight);
         state_ = 1;
@@ -318,9 +187,9 @@ int ValidateState::HeightControl(int critical)
     return critical;
 }
 
-int ValidateState::FreeFall(int critical)
+int ValidateState::FreeFall(int critical, float altitudeRDS, float altitudeSYS)
 {
-    float altitude = (altitudeRDS_ + altitudeSYS_) / 2;
+    float altitude = (altitudeRDS + altitudeSYS) / 2;
     int time = mymillis();
 
     float distance = altitude - altitudeRef_;
@@ -369,37 +238,4 @@ int ValidateState::mymillis()
     struct timeval tv;
     gettimeofday(&tv, NULL);
     return (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
-}
-
-/**
- * @brief Gets current date
- *
- * @param str string value
- * @return std::string returns current date
- */
-inline std::string ValidateState::getCurrentDateTime(std::string str)
-{
-    time_t now = time(0);
-    struct tm tstruct;
-    char buffer[80];
-    tstruct = *localtime(&now);
-    if (str == "now")
-        strftime(buffer, sizeof(buffer), "%Y-%m-%d %X", &tstruct);
-    else if (str == "date")
-        strftime(buffer, sizeof(buffer), "%Y-%m-%d", &tstruct);
-    return std::string(buffer);
-};
-
-/**
- * @brief Prints inserted string to log file.
- *
- * @param logMsg string value printed to log file
- */
-inline void ValidateState::Logger(std::string logMessage)
-{
-    std::string filePath = "Database/log_" + getCurrentDateTime("date") + ".txt";
-    std::string now = getCurrentDateTime("now");
-    std::ofstream ofs(filePath.c_str(), std::ios_base::out | std::ios_base::app);
-    ofs << now << '\t' << logMessage << '\n';
-    ofs.close();
 }

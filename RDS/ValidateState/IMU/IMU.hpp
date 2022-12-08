@@ -1,4 +1,11 @@
 #pragma once
+#include <mutex>
+
+struct Orientation
+{
+    float roll, pitch, yaw;
+};
+
 class IMU
 {
 public:
@@ -12,8 +19,8 @@ public:
     void ConvertACCData();
     void ConvertMagData();
     void ComplementaryFilter();
-    // int freeFall(int IMU);
 
+    Orientation getOrientation() const;
     float getRoll() const;
     float getPitch() const;
     float getYaw() const;
@@ -41,6 +48,6 @@ private:
     float CompRoll_;
     float CompPitch_;
     float CompYaw_;
-
+    std::mutex m;
     // int fall_;
 };

@@ -288,10 +288,12 @@ void IMU::ComplementaryFilter()
     /* printf("XL_Roll_ %f XL_Pitch_%f\n", XL_Roll_, XL_Pitch_);
     printf("YAW: %f\n", MAG_Yaw_); */
     /*Complementary Filter*/
-
-    CompRoll_ = AA * (CompRoll_ + gyroCalibY_ * DT) + (1 - AA) * XL_Roll_;    // 97% Gyro 3% Accelerometer
-    CompPitch_ = AA * (CompPitch_ + gyroCalibX_ * DT) + (1 - AA) * XL_Pitch_; // 97% Gyro 3% Accelerometer
-    CompYaw_ = 0.5 * (CompYaw_ + gyroCalibZ_ * DT) + (1 - 0.5) * MAG_Yaw_;    // 50% Gyro 50% Magnometer
+    {
+        std::scoped_lock<std::mutex> lock(m);
+        CompRoll_ = AA * (CompRoll_ + gyroCalibY_ * DT) + (1 - AA) * XL_Roll_;    // 97% Gyro 3% Accelerometer
+        CompPitch_ = AA * (CompPitch_ + gyroCalibX_ * DT) + (1 - AA) * XL_Pitch_; // 97% Gyro 3% Accelerometer
+        CompYaw_ = 0.5 * (CompYaw_ + gyroCalibZ_ * DT) + (1 - 0.5) * MAG_Yaw_;    // 50% Gyro 50% Magnometer
+    }
     // printf("Roll_filtered: %f, Pitch filtered: %f, GyroZangle: %f\n", CompRoll_, CompPitch_, CompYaw_);
 }
 
@@ -327,6 +329,21 @@ void IMU::ComplementaryFilter()
 return 0;
 }
 */
+
+Orientation IMU::getOrientation() const
+{
+
+    float roll, pitch, yaw;
+
+    {
+        std::scoped_lock<std::mutex> lock(m);
+        roll = getRoll();
+        pitch = getPitch();
+        yaw = getYaw();
+    }
+
+    return { roll, pitch, yaw }
+}
 
 float IMU::getRoll() const
 {

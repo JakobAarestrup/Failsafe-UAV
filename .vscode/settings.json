@@ -124,7 +124,10 @@
     "typeindex": "cpp",
     "valarray": "cpp",
     "variant": "cpp",
-    "resumable": "cpp"
+    "resumable": "cpp",
+    "queue": "cpp",
+    "stack": "cpp",
+    "xtree": "cpp"
   },
   "cmake.configureOnOpen": false
 }

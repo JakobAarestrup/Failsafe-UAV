@@ -1,10 +1,16 @@
-#include "ValidateState.hpp"
 #include <stdio.h>
 #include <unistd.h>
-#include "IMU/I2C.hpp"
 #include <sys/time.h>
 #include <time.h>
 #include <vector>
+#include <mutex>
+
+#include "ValidateStateV2.hpp"
+#include "IMU/I2C.hpp"
+#include "UDP/UDP.hpp"
+#include "BAR/BAR.hpp"
+#include "NEO7/Neo7.hpp"
+#include "IMU/IMU.hpp"
 
 /**
  * Includes from telemetry example code
@@ -60,13 +66,87 @@ int mymillis()
     return (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
 }
 
-void mainloop(ValidateState &RDS, BAR &Barometer, Telemetry &telemetry, UDP &Client)
+/**
+ * @brief logs all read data from the available sensors.
+ *
+ */
+
+void LogData(struct GPSData, struct IMUData, float altitude, UDP Client) // &Client)
+{
+
+    /*START logging*/
+    printf("Logging data called..\n");
+    /*RDS sensors*/
+    std::string GPSBaro = "Longitude: " + std::to_string(longitudeRDS_) + " " + longPoleRDS_[0] + " Latitude: " + std::to_string(latitudeRDS_) + " " + latPoleRDS_ + " Satellites: " + std::to_string(SatellitesRDS_) + " Altitude: " + std::to_string(altitudeRDS_);
+    Logger(GPSBaro);
+
+    std::string IMU = "Roll: " + std::to_string(StateRoll_) + " Pitch: " + std::to_string(StatePitch_) + " Yaw: " + std::to_string(StateYaw_);
+    Logger(IMU);
+
+    std::string GPSBaroSYS = "LongitudeSYS: " + std::to_string(longitudeSYS_) + " " + longPoleRDS_[0] + " LatitudeSYS: " + std::to_string(latitudeSYS_) + " " + latPoleRDS_ + " AltitudeSYS: " + std::to_string(altitudeSYS_);
+    Logger(GPSBaroSYS);
+    std::string IMUSYS = "RollSYS: " + std::to_string(RollSYS_) + " PitchSYS: " + std::to_string(PitchSYS_) + " YawSYS: " + std::to_string(YawSYS_);
+    Logger(IMUSYS);
+
+    // UDP SEND PART
+    // char receivedServerMSG[1024];
+
+    std::string RDSData = GPSBaro + IMU;
+    std::string SYSData = GPSBaroSYS + IMUSYS;
+
+    const char *RDS = RDSData.c_str();
+    const char *SYS = SYSData.c_str();
+
+    Client.UDP_COM(RDS);
+    Client.UDP_COM(SYS);
+}
+
+/**
+ * @brief Gets current date
+ *
+ * @param str string value
+ * @return std::string returns current date
+ */
+inline std::string ValidateState::getCurrentDateTime(std::string str)
+{
+    time_t now = time(0);
+    struct tm tstruct;
+    char buffer[80];
+    tstruct = *localtime(&now);
+    if (str == "now")
+        strftime(buffer, sizeof(buffer), "%Y-%m-%d %X", &tstruct);
+    else if (str == "date")
+        strftime(buffer, sizeof(buffer), "%Y-%m-%d", &tstruct);
+    return std::string(buffer);
+};
+
+/**
+ * @brief Prints inserted string to log file.
+ *
+ * @param logMsg string value printed to log file
+ */
+inline void ValidateState::Logger(std::string logMessage)
+{
+    std::string filePath = "Database/log_" + getCurrentDateTime("date") + ".txt";
+    std::string now = getCurrentDateTime("now");
+    std::ofstream ofs(filePath.c_str(), std::ios_base::out | std::ios_base::app);
+    ofs << now << '\t' << logMessage << '\n';
+    ofs.close();
+}
+
+void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G1, IMU &IMU2, UDP &Client) // IMU &IMU2
 {
     /*  int loops = 1; */
     int startofloop;
 
     Telemetry::Position position;
     Telemetry::EulerAngle euler;
+
+    Orientation IMUDATA1;
+    Orientation IMUDATA2;
+    GPSPosition GPSDATA;
+
+    int Altitude = 0;
     int critical = 0;
 
     while (critical > 0)
@@ -76,17 +156,24 @@ void mainloop(ValidateState &RDS, BAR &Barometer, Telemetry &telemetry, UDP &Cli
         {
             loops = 1;
         } */
-        RDS.UpdateSystemValues(Barometer);  // gets all values from sensors
+
+        // IMUDATA1 = IMU1.getIMUValues();
+        IMUDATA2 = IMU2.GetOrientation();
+        GPSDATA = G1.getGPSPosition();
+        Altitude = Barometer.getHeight();
+
         position = telemetry.position();    // returns struct with values from baro and GPS
         euler = telemetry.attitude_euler(); // returns struct with euler angles
+
         /*Sets all values from MAVLINK*/
+
         RDS.SetMAVLinkValues(position.relative_altitude_m, position.latitude_deg, position.longitude_deg,
                              euler.roll_deg, euler.pitch_deg, euler.yaw_deg);
-        RDS.LogData(Client);         // Sends sensor data to log file
-        RDS.FreeFall(critical);      // Checks error for free fall (acceleration)
-        RDS.AxisControl(critical);   // Checks for error for roll, pitch, and yaw
-        RDS.HeightControl(critical); // Checks for error for height
-        // RDS.RouteControl(critical); // checks velocity and point and polygon
+        LogData(Client);               // Sends sensor data to log file
+        State.FreeFall(critical);      // Checks error for free fall (acceleration)
+        State.AxisControl(critical);   // Checks for error for roll, pitch, and yaw
+        State.HeightControl(critical); // Checks for error for height
+        // State.RouteControl(critical); // checks velocity and point and polygon
 
         printf("Loop Time %d\n", mymillis() - startofloop);
         // loops++;
@@ -95,41 +182,40 @@ void mainloop(ValidateState &RDS, BAR &Barometer, Telemetry &telemetry, UDP &Cli
     while (1)
     {
         printf("DRONE IS LANDING!\n");
-        RDS.UpdateSystemValues(Barometer);  // gets all values from sensors
-        position = telemetry.position();    // returns struct with values from baro and GPS
-        euler = telemetry.attitude_euler(); // returns struct with euler angles
+        State.UpdateSystemValues(Barometer); // gets all values from sensors
+        position = telemetry.position();     // returns struct with values from baro and GPS
+        euler = telemetry.attitude_euler();  // returns struct with euler angles
         /*Sets all values from MAVLINK*/
-        RDS.SetMAVLinkValues(position.relative_altitude_m, position.latitude_deg, position.longitude_deg,
-                             euler.roll_deg, euler.pitch_deg, euler.yaw_deg);
-        RDS.LogData(Client); // Sends sensor data to log file
+        State.SetMAVLinkValues(position.relative_altitude_m, position.latitude_deg, position.longitude_deg,
+                               euler.roll_deg, euler.pitch_deg, euler.yaw_deg);
+        State.LogData(Client); // Sends sensor data to log file
         /* if{mavdsk register =1)
         exit();
         } */
     }
 }
 
-void updateIMUValues(ValidateState &RDS, IMU &IMU)
+void updateIMUValues(ValidateState &State, IMU &IMU)
 {
     while (1)
     {
-        RDS.GetIMUValues(IMU);
+        // IMU1.GetIMUValues();
+        IMU.GetIMUValues();
+
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
     }
 }
 
 int main(int argc, char **argv)
 {
-    /**
-     * @brief RDS initialized
-     *
-     */
-    ValidateState RDS; // System
+
+    ValidateState State;
 
     char NONE[1];
 
     if (argc < 3) // minimum arguments 2
     {
-        RDS.Usage(argv[0]);
+        State.Usage(argv[0]);
         return 1;
     }
 
@@ -144,11 +230,11 @@ int main(int argc, char **argv)
 
     if ((strcmp(argv[1], argv[4]) == 0)) // if you write 20 on serial it
     {
-        RDS.configValidateState(argv[2], argv[3], NONE, NONE);
+        State.configValidateState(argv[2], argv[3], NONE, NONE);
     }
     else
     {
-        RDS.configValidateState(argv[2], argv[3], argv[4], argv[5]);
+        State.configValidateState(argv[2], argv[3], argv[4], argv[5]);
     }
 
     /**
@@ -158,6 +244,7 @@ int main(int argc, char **argv)
     UDP Client;
     GPS G1;
     I2C I1;
+
     // IMU IMU1;
     IMU IMU2;
     BAR B1;
@@ -169,9 +256,9 @@ int main(int argc, char **argv)
      * @brief  Configuration of Sensors
      *
      */
-    /* G1.configAll();     // configs the GPS
-     I1.initializeI2C(); // Initialize IMU2 right now but will do both */
+    G1.configAll();     // configs the GPS
     I1.initializeI2C(); // Initialize IMU2 right now but will do both
+
     /**
      * @brief Calibration..
      *
@@ -219,10 +306,13 @@ int main(int argc, char **argv)
     /**
      * @brief starting two threads to do main loop and get the IMU data
      */
+
     std::vector<std::thread> threads;
 
-    threads.push_back(std::thread(mainloop, std::ref(RDS), std::ref(B1), std::ref(telemetry), std::ref(Client))); //, std::ref(Client)));
-    threads.push_back(std::thread(updateIMUValues, std::ref(RDS), std::ref(IMU2)));
+    std::mutex m;
+
+    threads.push_back(std::thread(mainloop, std::ref(State), std::ref(B1), std::ref(telemetry), std::ref(G1), std::ref(IMU2) std::ref(Client), &m));
+    threads.push_back(std::thread(updateIMUValues, std::ref(State), std::ref(IMU2), &m));
 
     for (auto &th : threads)
     {
