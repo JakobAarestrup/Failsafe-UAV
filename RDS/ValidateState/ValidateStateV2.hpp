@@ -35,4 +35,5 @@ private:
   float altitudeRef_ = 0;
   float velocityRef_ = 0;
   float timeRef_ = 0;
+  int FF_IMU_ = 0;
 };

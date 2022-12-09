@@ -97,6 +97,8 @@ int ValidateState::AxisControl(float RollRDS, float RollSYS, float PitchRDS, flo
     // Handler til hvis det ikke er et tal?
     /* float Roll = (RollRDS + RollSYS) / 2;
     float Pitch = (PitchRDS + PitchSYS) / 2; */
+    float PitchSYS = 0;
+    float RollSYS = 0;
     float Roll = RollRDS;
     float Pitch = PitchRDS;
 
@@ -180,7 +182,7 @@ int ValidateState::HeightControl(float altitudeRDS, float altitudeSYS, int criti
         state_ = 0;
         printf("Changing state... to Normal\n");
     }
-    else if ((altitudeSYS > errorHeight) | (altitudeRDS_ > errorHeight))
+    else if ((altitudeSYS > errorHeight) | (altitudeRDS > errorHeight))
     {
         // printf("Altitude from pixhawk: %f , Error_Height: %f\n", altitudeSYS_, errorHeight);
         state_ = 1;
@@ -232,7 +234,7 @@ void ValidateState::landDrone()
 
     logger("Critical Value Detected for " + +" Switching to Critical State...\n"); */
 
-    Logger("Landing drone immediately!\n");
+    // Logger("Landing drone immediately!\n");
 }
 
 int ValidateState::mymillis()
