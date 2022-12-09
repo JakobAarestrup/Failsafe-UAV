@@ -71,21 +71,37 @@ int mymillis()
  *
  */
 
-void LogData(struct GPSData, struct IMUData, float altitude, UDP Client) // &Client)
+void LogData(Orientation GPSData, GPSPosition IMUData, float altitude, Telemetry::Position position, Telemetry::EulerAngle euler, UDP Client)
 {
+    /*Values from RDS*/
+    float altitudeRDS = altitude;
+    float longitudeRDS = GPSPosition.longitude;
+    float latitudeRDS = GPSPosition.latitude;
+    float SatellitesRDS = GPSPosition.SV;
+    float RollRDS = Orientation.roll;
+    float PitchRDS = euler.pitch;
+    float YawRDS = euler.yaw;
+
+    /*Values over MAVLINK*/
+    float altitudeSYS = position.relative_altitude_m;
+    float longitudeSYS = position.longitude_deg;
+    float latitudeSYS = position.latitude_deg;
+    float RollSYS = euler.roll_deg;
+    float PitchSYS = euler.pitch_deg;
+    float YawSYS = euler.yaw_deg;
 
     /*START logging*/
     printf("Logging data called..\n");
     /*RDS sensors*/
-    std::string GPSBaro = "Longitude: " + std::to_string(longitudeRDS_) + " " + longPoleRDS_[0] + " Latitude: " + std::to_string(latitudeRDS_) + " " + latPoleRDS_ + " Satellites: " + std::to_string(SatellitesRDS_) + " Altitude: " + std::to_string(altitudeRDS_);
+    std::string GPSBaro = "Longitude: " + std::to_string(longitudeRDS) + " " + GPSPosition.NS[0] + " Latitude: " + std::to_string(latitudeRDS) + " " + GPSPosition.EW[0] + " Satellites: " + std::to_string(SatellitesRDS_) + " Altitude: " + std::to_string(altitudeRDS_);
     Logger(GPSBaro);
 
-    std::string IMU = "Roll: " + std::to_string(StateRoll_) + " Pitch: " + std::to_string(StatePitch_) + " Yaw: " + std::to_string(StateYaw_);
+    std::string IMU = "Roll: " + std::to_string(RollSYS) + " Pitch: " + std::to_string(PitchSYS) + " Yaw: " + std::to_string(YawSYS);
     Logger(IMU);
 
-    std::string GPSBaroSYS = "LongitudeSYS: " + std::to_string(longitudeSYS_) + " " + longPoleRDS_[0] + " LatitudeSYS: " + std::to_string(latitudeSYS_) + " " + latPoleRDS_ + " AltitudeSYS: " + std::to_string(altitudeSYS_);
+    std::string GPSBaroSYS = "LongitudeSYS: " + std::to_string(longitudeSYS) + " " + GPSPosition.NS[0] + " LatitudeSYS: " + std::to_string(latitudeSYS) + " " + latPoleRDS + " AltitudeSYS: " + std::to_string(altitudeSYS);
     Logger(GPSBaroSYS);
-    std::string IMUSYS = "RollSYS: " + std::to_string(RollSYS_) + " PitchSYS: " + std::to_string(PitchSYS_) + " YawSYS: " + std::to_string(YawSYS_);
+    std::string IMUSYS = "RollSYS: " + std::to_string(RollSYS) + " PitchSYS: " + std::to_string(PitchSYS) + " YawSYS: " + std::to_string(YawSYS);
     Logger(IMUSYS);
 
     // UDP SEND PART
@@ -154,25 +170,23 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         startofloop = mymillis();
         /* if (loops == 5)
         {
+            GPSDATA = G1.getGPSPosition();
             loops = 1;
         } */
 
         // IMUDATA1 = IMU1.getIMUValues();
-        IMUDATA2 = IMU2.GetOrientation();
-        GPSDATA = G1.getGPSPosition();
-        Altitude = Barometer.getHeight();
+        IMUDATA2 = IMU2.GetOrientation(); // returns IMU Class Struct
+        GPSDATA = G1.getGPSPosition();    // returns GPS Class Struc
+        Altitude = Barometer.getHeight(); // returns altitude
 
+        /*MAVLINK*/
         position = telemetry.position();    // returns struct with values from baro and GPS
         euler = telemetry.attitude_euler(); // returns struct with euler angles
 
-        /*Sets all values from MAVLINK*/
-
-        RDS.SetMAVLinkValues(position.relative_altitude_m, position.latitude_deg, position.longitude_deg,
-                             euler.roll_deg, euler.pitch_deg, euler.yaw_deg);
-        LogData(Client);               // Sends sensor data to log file
-        State.FreeFall(critical);      // Checks error for free fall (acceleration)
-        State.AxisControl(critical);   // Checks for error for roll, pitch, and yaw
-        State.HeightControl(critical); // Checks for error for height
+        LogData(GPSDATA, IMUDATA2, Altitude, position, euler, Client); // Sends sensor data to log file
+        State.FreeFall(critical);                                      // Checks error for free fall (acceleration)
+        State.AxisControl(critical);                                   // Checks for error for roll, pitch, and yaw
+        State.HeightControl(critical);                                 // Checks for error for height
         // State.RouteControl(critical); // checks velocity and point and polygon
 
         printf("Loop Time %d\n", mymillis() - startofloop);

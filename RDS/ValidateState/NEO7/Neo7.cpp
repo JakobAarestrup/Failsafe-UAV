@@ -204,6 +204,12 @@ void GPS::convertData() // converts GPS serial data to decimal degrees
 
 /* GET FUNCTIONS */
 
+GPSPosition GPS::getGPSPosition() const
+{
+
+    return { longitude_, latitude_, SV_ }
+}
+
 int GPS::getSV() const // returns amount of satellites
 {
     return SV_;
