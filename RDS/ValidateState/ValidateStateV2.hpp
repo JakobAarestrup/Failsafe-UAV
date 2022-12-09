@@ -18,10 +18,10 @@ public:
   void landDrone();
 
   int mymillis();
-  int AxisControl(int critical);
+  int AxisControl(float RollRDS, float RollSYS, float PitchRDS, float PitchSYS, int critical);
   int RouteControl(int critical);
-  int HeightControl(int critical);
-  int FreeFall(int critical);
+  int HeightControl(float altitudeRDS, float altitudeSYS, int critical);
+  int FreeFall(float altitudeRDS, float altitudeSYS, int critical);
 
 private:
   int state_ = 0;
