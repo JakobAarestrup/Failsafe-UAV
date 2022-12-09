@@ -58,10 +58,12 @@ int GPS::configAll(int serial)
 
     /*BAUDRATE */
     write(serial, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
-    // int serial2;
+    seroaæClose(serial);
+
+    int serial2;
 
     /* /*OPEN UART*/
-    /* if ((serial2 = serialOpen("/dev/ttyS0", 4800)) < 0) // open serial port with set baudrate
+    if ((serial2 = serialOpen("/dev/ttyS0", 4800)) < 0) // open serial port with set baudrate
     {
         fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
 
@@ -72,10 +74,10 @@ int GPS::configAll(int serial)
     {
         fprintf(stdout, "Unable to start wiringPi: %s\n", strerror(errno)); // error handling
         return 1;
-    } */
+    }
     int count = 0;
     write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
-    // write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
+    write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
 
     printf("Configuration is part 1 done! \n");
     while (count < 10000)
