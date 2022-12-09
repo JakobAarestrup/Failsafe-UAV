@@ -75,12 +75,13 @@ void LogData(Orientation GPSData, GPSPosition IMUData, float altitude, Telemetry
 {
     /*Values from RDS*/
     float altitudeRDS = altitude;
-    float longitudeRDS = GPSPosition.longitude;
-    float latitudeRDS = GPSPosition.latitude;
-    float SatellitesRDS = GPSPosition.SV;
-    float RollRDS = Orientation.roll;
-    float PitchRDS = Orientation.pitch;
-    float YawRDS = Orientation.yaw;
+    float longitudeRDS = GPSData.longitude;
+    float latitudeRDS = GPSData.latitude;
+    float SatellitesRDS = GPS.SV;
+
+    float RollRDS = IMUData.roll;
+    float PitchRDS = IMUData.pitch;
+    float YawRDS = IMUData.yaw;
 
     /*Values over MAVLINK*/
     float altitudeSYS = position.relative_altitude_m;
@@ -164,6 +165,8 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
 
     int altitude = 0;
     int critical = 0;
+    float Roll = 0;
+    float Pitch = 0;
 
     while (critical > 0)
     {

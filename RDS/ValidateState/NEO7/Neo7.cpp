@@ -59,7 +59,6 @@ int GPS::configAll()
     /*BAUDRATE */
     write(serialPort_, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
 
-    int count = 0;
     write(serialPort_, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
     write(serialPort_, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
     write(serialPort_, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
@@ -68,7 +67,7 @@ int GPS::configAll()
 
     printf("Configuration is done! \n");
 
-    serial_Close(serialPort_);
+    serialClose(serialPort_);
 }
 
 void GPS::readGPS() // reads GPS serial data
@@ -207,7 +206,7 @@ void GPS::convertData() // converts GPS serial data to decimal degrees
 GPSPosition GPS::getGPSPosition() const
 {
 
-    return { longitude_, latitude_, SV_ }
+    return {longitude_, latitude_, SV_};
 }
 
 int GPS::getSV() const // returns amount of satellites
