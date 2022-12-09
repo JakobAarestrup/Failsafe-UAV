@@ -71,7 +71,7 @@ int mymillis()
  *
  */
 
-void LogData(Orientation GPSData, GPSPosition IMUData, float altitude, Telemetry::Position position, Telemetry::EulerAngle euler, UDP Client)
+void LogData(Orientation IMUData, GPSPosition GPSData, float altitude, Telemetry::Position position, Telemetry::EulerAngle euler, UDP Client)
 {
     /*Values from RDS*/
     float altitudeRDS = altitude;
@@ -200,9 +200,9 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         Roll = IMUDATA2.roll;                                          // +IMUDATA1) / 2  // returns
         Pitch = IMUDATA2.pitch;                                        // +IMUDATA1) / 2 // returns
 
-        State.FreeFall(altitude, position.relative_altitude_m, critical);             // Checks error for free fall (acceleration)
-        State.AxisControl(RollRDS, euler.roll_deg, Pitch, euler.pitch_deg, critical); // Checks for error for roll, pitch, and yaw
-        State.HeightControl(altitude, position.relative_altitude_m, critical);        // Checks for error for height
+        State.FreeFall(altitude, position.relative_altitude_m, critical);          // Checks error for free fall (acceleration)
+        State.AxisControl(Roll, euler.roll_deg, Pitch, euler.pitch_deg, critical); // Checks for error for roll, pitch, and yaw
+        State.HeightControl(altitude, position.relative_altitude_m, critical);     // Checks for error for height
         // State.RouteControl(critical); // checks velocity and point and polygon
 
         printf("Loop Time %d\n", mymillis() - startofloop);
