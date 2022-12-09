@@ -67,6 +67,39 @@ int mymillis()
 }
 
 /**
+ * @brief Gets current date
+ *
+ * @param str string value
+ * @return std::string returns current date
+ */
+inline std::string getCurrentDateTime(std::string str)
+{
+    time_t now = time(0);
+    struct tm tstruct;
+    char buffer[80];
+    tstruct = *localtime(&now);
+    if (str == "now")
+        strftime(buffer, sizeof(buffer), "%Y-%m-%d %X", &tstruct);
+    else if (str == "date")
+        strftime(buffer, sizeof(buffer), "%Y-%m-%d", &tstruct);
+    return std::string(buffer);
+};
+
+/**
+ * @brief Prints inserted string to log file.
+ *
+ * @param logMsg string value printed to log file
+ */
+inline void Logger(std::string logMessage)
+{
+    std::string filePath = "Database/log_" + getCurrentDateTime("date") + ".txt";
+    std::string now = getCurrentDateTime("now");
+    std::ofstream ofs(filePath.c_str(), std::ios_base::out | std::ios_base::app);
+    ofs << now << '\t' << logMessage << '\n';
+    ofs.close();
+}
+
+/**
  * @brief logs all read data from the available sensors.
  *
  */
@@ -77,7 +110,7 @@ void LogData(Orientation IMUData, GPSPosition GPSData, float altitude, Telemetry
     float altitudeRDS = altitude;
     float longitudeRDS = GPSData.longitude;
     float latitudeRDS = GPSData.latitude;
-    float SatellitesRDS = GPS.SV;
+    float SatellitesRDS = GPSData.SV;
 
     float RollRDS = IMUData.roll;
     float PitchRDS = IMUData.pitch;
@@ -116,39 +149,6 @@ void LogData(Orientation IMUData, GPSPosition GPSData, float altitude, Telemetry
 
     Client.UDP_COM(RDS);
     Client.UDP_COM(SYS);
-}
-
-/**
- * @brief Gets current date
- *
- * @param str string value
- * @return std::string returns current date
- */
-inline std::string ValidateState::getCurrentDateTime(std::string str)
-{
-    time_t now = time(0);
-    struct tm tstruct;
-    char buffer[80];
-    tstruct = *localtime(&now);
-    if (str == "now")
-        strftime(buffer, sizeof(buffer), "%Y-%m-%d %X", &tstruct);
-    else if (str == "date")
-        strftime(buffer, sizeof(buffer), "%Y-%m-%d", &tstruct);
-    return std::string(buffer);
-};
-
-/**
- * @brief Prints inserted string to log file.
- *
- * @param logMsg string value printed to log file
- */
-inline void ValidateState::Logger(std::string logMessage)
-{
-    std::string filePath = "Database/log_" + getCurrentDateTime("date") + ".txt";
-    std::string now = getCurrentDateTime("now");
-    std::ofstream ofs(filePath.c_str(), std::ios_base::out | std::ios_base::app);
-    ofs << now << '\t' << logMessage << '\n';
-    ofs.close();
 }
 
 void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G1, IMU &IMU1, IMU &IMU2, UDP &Client)
