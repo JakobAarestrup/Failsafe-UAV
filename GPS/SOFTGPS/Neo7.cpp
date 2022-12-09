@@ -78,10 +78,10 @@ int GPS::configAll(int serial)
     // write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
 
     printf("Configuration is part 1 done! \n");
-    while (count < 100)
+    while (count < 10000)
     {
         count++;
-        printf("%d\n", count);
+        printf("%d", count);
     }
     serialClose(serial);
     return serial;
