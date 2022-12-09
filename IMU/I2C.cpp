@@ -26,18 +26,19 @@ I2C::~I2C()
 // Open i2c communication
 void I2C::initializeI2C()
 {
-    /*  //First IMU:
-     I2Cdev::writeByte(LSM6DSOX_ADDR1, LSM6DSOX_INT1_CTRL, 0b00000011); // Enable gyroscope and accelerometer data interrupt
-     I2Cdev::writeByte(LSM6DSOX_ADDR1, LSM6DSOX_CTRL2_G, 0b10011100); // Gyro = 416 Hz (High-Performance mode)
-     I2Cdev::writeByte(LIS3MDL_ADDR1, LSM6DSOX_CTRL1_XL, 0b011000000); // Acc = 416 Hz (High-Performance mode)
-     I2Cdev::writeByte(LIS3MDL_ADDR1, LSM6DSOX_CTRL3_C, 0b01000000); // Enable BDU
-     I2Cdev::writeByte(LIS3MDL_ADDR1, LSM6DSOX_CTRL7_G, 0b10000000); // Enable High-Performance mode for Gyro
+    // First IMU:
+    I2Cdev::writeByte(LSM6DSOX_ADDR1, LSM6DSOX_CTRL2_G, 0b01001000);   // Gyro = 208 Hz (normal mode) 1000 dps
+    I2Cdev::writeByte(LSM6DSOX_ADDR1, LSM6DSOX_CTRL1_XL, 0b011000000); // Acc = 416 Hz (High-Performance mode) 2g
+    I2Cdev::writeByte(LSM6DSOX_ADDR1, LSM6DSOX_CTRL3_C, 0b01000000);   // Enable BDU
+    I2Cdev::writeByte(LSM6DSOX_ADDR1, LSM6DSOX_CTRL7_G, 0b01000000);   // enable HPF // default HPF (00) 16 Hz
+                                                                       // I2Cdev::writeByte(LIS3MDL_ADDR1, LSM6DSOX_CTRL7_G, 0b10000000); // Enable High-Performance mode for Gyro
 
-     I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG1, 0b01100010);// OM = 11 (ultra-high-performance mode for X and Y) FAST_ODR = 1 (155Hz ODR)
-    I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG2, 0b00000000);// FS = 00 (+/- 4 gauss full scale) Default
-    I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG3, 0b00000000);// MD = 00 (continuous-conversion mode)
-    I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG4, 0b00001100);// OMZ = 11 (ultra-high-performance mode for Z)
-    */
+    // Enable magnetometer from IMU1
+    I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG1, 0b01100010); // OM = 11 (ultra-high-performance mode for X and Y) FAST_ODR = 1 (155Hz ODR)
+    I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG2, 0b00000000); // FS = 00 (+/- 4 gauss full scale) Default
+    I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG3, 0b00000000); // MD = 00 (continuous-conversion mode)
+    I2Cdev::writeByte(LIS3MDL_ADDR1, LIS3MDL_CTRL_REG4, 0b00001100); // OMZ = 11 (ultra-high-performance mode for Z)
+
     // Second IMU:
     // I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_INT1_CTRL, 0b00000011); // Enable gyroscope and accelerometer data interrupt
     I2Cdev::writeByte(LSM6DSOX_ADDR2, LSM6DSOX_CTRL2_G, 0b01001000);   // Gyro = 208 Hz (normal mode) 1000 dps

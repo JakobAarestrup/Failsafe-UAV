@@ -212,7 +212,7 @@ GPSPosition GPS::getGPSPosition() const
     getNorthSouth(NS);
     getEastWest(EW);
 
-    return {longitude_, latitude_, SV_, NS, EW};
+    return {longitude_, latitude_, SV_, NS[0], EW[0]};
 }
 
 int GPS::getSV() const // returns amount of satellites

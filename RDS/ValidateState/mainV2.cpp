@@ -127,10 +127,10 @@ void LogData(Orientation IMUData, GPSPosition GPSData, float altitude, Telemetry
     /*START logging*/
     printf("Logging data called..\n");
     /*RDS sensors*/
-    std::string GPSBaro = "Longitude: " + std::to_string(longitudeRDS) + " " + GPSData.NS[0] + " Latitude: " + std::to_string(latitudeRDS) + " " + GPSData.EW[0] + " Satellites: " + std::to_string(SatellitesRDS_) + " Altitude: " + std::to_string(altitudeRDS_);
+    std::string GPSBaro = "Longitude: " + std::to_string(longitudeRDS) + " " + GPSData.NS[0] + " Latitude: " + std::to_string(latitudeRDS) + " " + GPSData.EW[0] + " Satellites: " + std::to_string(SatellitesRDS) + " Altitude: " + std::to_string(altitudeRDS);
     Logger(GPSBaro);
 
-    std::string IMU = "Roll: " + std::to_string(RollSYS) + " Pitch: " + std::to_string(PitchSYS) + " Yaw: " + std::to_string(YawSYS);
+    std::string IMU = "Roll: " + std::to_string(RollRDS) + " Pitch: " + std::to_string(PitchRDS) + " Yaw: " + std::to_string(YawRDS);
     Logger(IMU);
 
     std::string GPSBaroSYS = "LongitudeSYS: " + std::to_string(longitudeSYS) + " " + GPSData.NS[0] + " LatitudeSYS: " + std::to_string(latitudeSYS) + " " + GPSData.EW[0] + " AltitudeSYS: " + std::to_string(altitudeSYS);
@@ -177,13 +177,51 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         Barometer.readTemperature();
         Barometer.calculatePressureAndTemperature();
 
-        /* if (loops == 5)
+        if (loops == 5)
         {
-            G1.readGPS();                      // reads NMEA message
+            G1.readGPS(); // reads NMEA message
             G1.convertData();
             GPSDATA = G1.getGPSPosition();
             loops = 1;
-        } */
+        }
+        // loops++;
+
+        /*Get Data from Sensors*/
+        IMUDATA1 = IMU1.getOrientation();
+        IMUDATA2 = IMU2.getOrientation(); // returns IMU Class Struct
+        GPSDATA = G1.getGPSPosition();    // returns GPS Class Struc
+        altitude = Barometer.getHeight(); // returns altitude
+
+        /*MAVLINK*/
+        position = telemetry.position();    // returns struct with values from baro and GPS
+        euler = telemetry.attitude_euler(); // returns struct with euler angles
+
+        LogData(GPSDATA, IMUDATA2, altitude, position, euler, Client); // Sends sensor data to log file
+        Roll = (IMUDATA2.roll + IMUDATA1.roll) / 2                     // returns
+               Pitch = (IMUDATA2.pitch + IMUDATA1.pitch) / 2           // returns
+
+                                                           State.FreeFall(altitude, position.relative_altitude_m, critical); // Checks error for free fall (acceleration)
+        State.AxisControl(Roll, euler.roll_deg, Pitch, euler.pitch_deg, critical);                                           // Checks for error for roll, pitch, and yaw
+        State.HeightControl(altitude, position.relative_altitude_m, critical);                                               // Checks for error for height
+        // State.RouteControl(critical); // checks velocity and point and polygon
+
+        printf("Loop Time %d\n", mymillis() - startofloop);
+    }
+
+    while (1)
+    {
+        /*Reads data from Barometer and GPS if fifth loop*/
+        Barometer.readPressure();
+        Barometer.readTemperature();
+        Barometer.calculatePressureAndTemperature();
+
+        if (loops == 5)
+        {
+            G1.readGPS(); // reads NMEA message
+            G1.convertData();
+            GPSDATA = G1.getGPSPosition();
+            loops = 1;
+        }
         // loops++;
 
         /*Get Data from Sensors*/
@@ -198,26 +236,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
 
         LogData(GPSDATA, IMUDATA2, altitude, position, euler, Client); // Sends sensor data to log file
         Roll = IMUDATA2.roll;                                          // +IMUDATA1) / 2  // returns
-        Pitch = IMUDATA2.pitch;                                        // +IMUDATA1) / 2 // returns
-
-        State.FreeFall(altitude, position.relative_altitude_m, critical);          // Checks error for free fall (acceleration)
-        State.AxisControl(Roll, euler.roll_deg, Pitch, euler.pitch_deg, critical); // Checks for error for roll, pitch, and yaw
-        State.HeightControl(altitude, position.relative_altitude_m, critical);     // Checks for error for height
-        // State.RouteControl(critical); // checks velocity and point and polygon
-
-        printf("Loop Time %d\n", mymillis() - startofloop);
-    }
-
-    while (1)
-    {
-        printf("DRONE IS LANDING!\n");
-        State.UpdateSystemValues(Barometer); // gets all values from sensors
-        position = telemetry.position();     // returns struct with values from baro and GPS
-        euler = telemetry.attitude_euler();  // returns struct with euler angles
-        /*Sets all values from MAVLINK*/
-        State.SetMAVLinkValues(position.relative_altitude_m, position.latitude_deg, position.longitude_deg,
-                               euler.roll_deg, euler.pitch_deg, euler.yaw_deg);
-        State.LogData(Client); // Sends sensor data to log file
+        Pitch = IMUDATA2.pitch;
         /* if{mavdsk register =1)
         exit();
         } */
@@ -230,10 +249,10 @@ void updateIMUValues(ValidateState &State, IMU &IMU1, IMU &IMU2)
     {
 
         /*Gets Data from first IMU*/
-        /* IMU1.readIMU(1);
+        IMU1.readIMU(1);
         IMU1.ConvertACCData();
         IMU1.ConvertMagData();
-        IMU1.ComplementaryFilter(); */
+        IMU1.ComplementaryFilter();
 
         /*Gets Data from second IMU*/
         IMU2.readIMU(2);
@@ -302,7 +321,7 @@ int main(int argc, char **argv)
      * @brief Calibration..
      *
      */
-    //  IMU1.calibrateGyro(1);
+    IMU1.calibrateGyro(1);
     IMU2.calibrateGyro(2);
 
     /**
