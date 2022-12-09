@@ -28,7 +28,7 @@ int GPS::openUART(int fd) // open UART serial port
 int GPS::configAll(int serial)
 {
     /*OPEN UART*/
-    if ((serial = serialOpen("/dev/ttyS0", 4800)) < 0) // open serial port with set baudrate
+    if ((serial = serialOpen("/dev/ttyS0", 8600)) < 0) // open serial port with set baudrate
     {
         fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
 
@@ -50,11 +50,11 @@ int GPS::configAll(int serial)
     write(serial, UBX_protocol::RATE, UBX_protocol::RATE_Length); // Measurement frequency: 10 hz, navigation frequency 10 hz
 
     /*  /*NMEA messages*/
-    /* write(serial, UBX_protocol::GLL, UBX_protocol::GP_Length); // disable GPGLL
+    write(serial, UBX_protocol::GLL, UBX_protocol::GP_Length); // disable GPGLL
     write(serial, UBX_protocol::GSA, UBX_protocol::GP_Length); // disable GSA
     write(serial, UBX_protocol::GSV, UBX_protocol::GP_Length); // disable GPGSV
     write(serial, UBX_protocol::RMC, UBX_protocol::GP_Length); // disable RMC
-    write(serial, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG */
+    write(serial, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG
 
     /*BAUDRATE */
     write(serial, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
@@ -141,7 +141,7 @@ void GPS::readGPS() // reads GPS serial data
         if (GGA_Received == 1)
         {
             gps = GPS_buffer;
-            start_ptr = strchr(gps, ',');       // find start of latitude field
+            start_ptr = strlschr(gps, ',');     // find start of latitude field
             end_ptr = strchr(++start_ptr, ','); // find end of field...
             latitude_ = atof(start_ptr);        // Convert char to float & store in variable
 
