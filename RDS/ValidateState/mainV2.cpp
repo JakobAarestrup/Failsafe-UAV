@@ -239,8 +239,8 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         euler = telemetry.attitude_euler(); // returns struct with euler angles
 
         LogData(GPSDATA, IMUDATA1, altitude, position, euler, Client); // Sends sensor data to log file
-        Roll = IMUDATA2.roll;                                          // +IMUDATA1) / 2  // returns
-        Pitch = IMUDATA2.pitch;
+        Roll = IMUDATA1.roll;                                          // +IMUDATA1) / 2  // returns
+        Pitch = IMUDATA1.pitch;
         /* if{mavdsk register =1)
         exit();
         } */
