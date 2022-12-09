@@ -125,7 +125,7 @@ void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry
     float YawSYS = euler.yaw_deg;
 
     /*START logging*/
-    printf("Logging data called..\n");
+    // printf("Logging data called..\n");
     /*RDS sensors*/
     std::string GPSBaro = "Longitude: " + std::to_string(longitudeRDS) + " " + GPSData.NS[0] + " Latitude: " + std::to_string(latitudeRDS) + " " + GPSData.EW[0] + " Satellites: " + std::to_string(SatellitesRDS) + " Altitude: " + std::to_string(altitudeRDS);
     Logger(GPSBaro);
