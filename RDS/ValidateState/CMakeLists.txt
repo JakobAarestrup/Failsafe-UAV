@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15.2)
 
 # Specify your project's name
-project(RDSV2)
+project(RDSV3)
 
 # Specify at least C++11, better C++17
 set(CMAKE_CXX_STANDARD 17)
@@ -17,7 +17,7 @@ find_package(Threads REQUIRED)
 
 # Specify your app's executable name, and list of source files used to create it.
 # change first and last line in add_executable to the desired configuration for RDS with or without GPS
-add_executable(RDSV2
+add_executable(RDSV3
     mainV2.cpp
     NEO7/Neo7.cpp
     IMU/IMU.cpp
@@ -32,7 +32,7 @@ add_executable(RDSV2
 
 find_library(WIRINGPI_LIBRARIES NAMES wiringPi)
 # Specify your app's executable name and a list of linked libraries
-target_link_libraries(RDSV2
+target_link_libraries(RDSV3
 PRIVATE Threads::Threads
 MAVSDK::mavsdk
 
