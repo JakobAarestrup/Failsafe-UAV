@@ -151,7 +151,7 @@ void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry
     Client.UDP_COM(SYS);
 }
 
-void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G1, IMU &IMU1, IMU &IMU2, UDP &Client)
+void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G1, IMU &IMU1, UDP &Client) // IMU &IMU1,
 {
     int loops = 1;
     int startofloop;
@@ -160,7 +160,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
     Telemetry::EulerAngle euler;
 
     Orientation IMUDATA1;
-    Orientation IMUDATA2;
+    // Orientation IMUDATA2;
     GPSPosition GPSDATA;
 
     int altitude = 0;
@@ -192,7 +192,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
 
         /*Get Data from Sensors*/
         IMUDATA1 = IMU1.getOrientation();
-        IMUDATA2 = IMU2.getOrientation(); // returns IMU Class Struct
+        // IMUDATA2 = IMU2.getOrientation(); // returns IMU Class Struct
         GPSDATA = G1.getGPSPosition();    // returns GPS Class Struc
         altitude = Barometer.getHeight(); // returns altitude
 
@@ -200,9 +200,9 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         position = telemetry.position();    // returns struct with values from baro and GPS
         euler = telemetry.attitude_euler(); // returns struct with euler angles
 
-        LogData(GPSDATA, IMUDATA2, altitude, position, euler, Client); // Sends sensor data to log file
-        Roll = (IMUDATA2.roll + IMUDATA1.roll) / 2;                    // returns
-        Pitch = (IMUDATA2.pitch + IMUDATA1.pitch) / 2;                 // returns
+        LogData(GPSDATA, IMUDATA1, altitude, position, euler, Client); // Sends sensor data to log file
+        Roll = IMUDATA1.roll;                                          //(IMUDATA2.roll + IMUDATA1.roll) / 2;                    // returns
+        Pitch = IMUDATA1.pitch;                                        //(IMUDATA2.pitch + IMUDATA1.pitch) / 2;                 // returns
 
         State.FreeFall(altitude, position.relative_altitude_m, critical);          // Checks error for free fall (acceleration)
         State.AxisControl(Roll, euler.roll_deg, Pitch, euler.pitch_deg, critical); // Checks for error for roll, pitch, and yaw
@@ -230,7 +230,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
 
         /*Get Data from Sensors*/
         // IMUDATA1 = IMU1.getOrientation();
-        IMUDATA2 = IMU2.getOrientation(); // returns IMU Class Struct
+        IMUDATA1 = IMU1.getOrientation(); // returns IMU Class Struct
         GPSDATA = G1.getGPSPosition();    // returns GPS Class Struc
         altitude = Barometer.getHeight(); // returns altitude
 
@@ -238,7 +238,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         position = telemetry.position();    // returns struct with values from baro and GPS
         euler = telemetry.attitude_euler(); // returns struct with euler angles
 
-        LogData(GPSDATA, IMUDATA2, altitude, position, euler, Client); // Sends sensor data to log file
+        LogData(GPSDATA, IMUDATA1, altitude, position, euler, Client); // Sends sensor data to log file
         Roll = IMUDATA2.roll;                                          // +IMUDATA1) / 2  // returns
         Pitch = IMUDATA2.pitch;
         /* if{mavdsk register =1)
@@ -247,19 +247,21 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
     }
 }
 
-void updateIMUValues(IMU &IMU1, IMU &IMU2)
+void updateIMUValues(IMU &IMU2) // IMU &IMU1,
 {
     while (1)
     {
 
         /*Gets Data from first IMU*/
+        /*
         IMU1.readIMU(1);
         IMU1.ConvertACCData();
         IMU1.ConvertMagData();
         IMU1.ComplementaryFilter();
+        * /
 
-        /*Gets Data from second IMU*/
-        IMU2.readIMU(2);
+            /*Gets Data from second IMU*/
+        IMU2.readIMU(1);
         IMU2.ConvertACCData();
         IMU2.ConvertMagData();
         IMU2.ComplementaryFilter();
@@ -308,7 +310,7 @@ int main(int argc, char **argv)
     I2C I1;
 
     IMU IMU1;
-    IMU IMU2;
+    // IMU IMU2;
     BAR B1;
     B1.calibrateBAR(); // 30 seconds from calibration wait time for barometer
 
@@ -325,8 +327,8 @@ int main(int argc, char **argv)
      * @brief Calibration..
      *
      */
+    // IMU1.calibrateGyro(1);
     IMU1.calibrateGyro(1);
-    IMU2.calibrateGyro(2);
 
     /**
      * @brief MAVLINK connection.
@@ -371,8 +373,8 @@ int main(int argc, char **argv)
 
     std::vector<std::thread> threads;
 
-    threads.push_back(std::thread(mainloop, std::ref(State), std::ref(B1), std::ref(telemetry), std::ref(G1), std::ref(IMU1), std::ref(IMU2), std::ref(Client)));
-    threads.push_back(std::thread(updateIMUValues, std::ref(IMU1), std::ref(IMU2)));
+    threads.push_back(std::thread(mainloop, std::ref(State), std::ref(B1), std::ref(telemetry), std::ref(G1), std::ref(IMU1), std::ref(Client))); // std::ref(IMU2),
+    threads.push_back(std::thread(updateIMUValues, std::ref(IMU1)));
 
     for (auto &th : threads)
     {
