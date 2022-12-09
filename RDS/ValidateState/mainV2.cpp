@@ -163,10 +163,11 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
     // Orientation IMUDATA2;
     GPSPosition GPSDATA;
 
-    int altitude = 0;
-    int critical = 0;
+    float altitude = 0;
     float Roll = 0;
     float Pitch = 0;
+
+    int critical = 0;
 
     G1.readGPS(); // reads NMEA message
     G1.convertData();
