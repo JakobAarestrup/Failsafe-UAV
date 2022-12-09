@@ -14,6 +14,8 @@ struct GPSPosition
 {
     double longitude, latitude;
     int SV;
+    char NS[1];
+    char EW[1];
 };
 
 class GPS

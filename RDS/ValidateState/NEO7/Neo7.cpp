@@ -68,6 +68,8 @@ int GPS::configAll()
     printf("Configuration is done! \n");
 
     serialClose(serialPort_);
+
+    return serialPort_;
 }
 
 void GPS::readGPS() // reads GPS serial data
@@ -205,8 +207,12 @@ void GPS::convertData() // converts GPS serial data to decimal degrees
 
 GPSPosition GPS::getGPSPosition() const
 {
+    char NS[1];
+    char EW[1];
+    getNorthSouth(NS);
+    getEastWest(EW);
 
-    return {longitude_, latitude_, SV_};
+    return {longitude_, latitude_, SV_, NS, EW};
 }
 
 int GPS::getSV() const // returns amount of satellites
