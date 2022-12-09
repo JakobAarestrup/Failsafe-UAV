@@ -58,7 +58,9 @@ int GPS::configAll(int serial)
 
     /*BAUDRATE */
     write(serial, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
-    seroaæClose(serial);
+    serialClose(serial);
+
+    printf("Configuration is part 1 done! \n");
 
     int serial2;
 
@@ -79,7 +81,8 @@ int GPS::configAll(int serial)
     write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
     write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
 
-    printf("Configuration is part 1 done! \n");
+    printf("Configuration is part 2 done! \n");
+
     while (count < 10000)
     {
         count++;
