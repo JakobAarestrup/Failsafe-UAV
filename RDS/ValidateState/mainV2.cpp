@@ -153,7 +153,7 @@ void LogData(Orientation IMUData, GPSPosition GPSData, float altitude, Telemetry
 
 void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G1, IMU &IMU1, IMU &IMU2, UDP &Client)
 {
-    /*  int loops = 1; */
+    int loops = 1;
     int startofloop;
 
     Telemetry::Position position;
@@ -167,6 +167,10 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
     int critical = 0;
     float Roll = 0;
     float Pitch = 0;
+
+    G1.readGPS(); // reads NMEA message
+    G1.convertData();
+    GPSDATA = G1.getGPSPosition();
 
     while (critical > 0)
     {
@@ -197,12 +201,12 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         euler = telemetry.attitude_euler(); // returns struct with euler angles
 
         LogData(GPSDATA, IMUDATA2, altitude, position, euler, Client); // Sends sensor data to log file
-        Roll = (IMUDATA2.roll + IMUDATA1.roll) / 2                     // returns
-               Pitch = (IMUDATA2.pitch + IMUDATA1.pitch) / 2           // returns
+        Roll = (IMUDATA2.roll + IMUDATA1.roll) / 2;                    // returns
+        Pitch = (IMUDATA2.pitch + IMUDATA1.pitch) / 2;                 // returns
 
-                                                           State.FreeFall(altitude, position.relative_altitude_m, critical); // Checks error for free fall (acceleration)
-        State.AxisControl(Roll, euler.roll_deg, Pitch, euler.pitch_deg, critical);                                           // Checks for error for roll, pitch, and yaw
-        State.HeightControl(altitude, position.relative_altitude_m, critical);                                               // Checks for error for height
+        State.FreeFall(altitude, position.relative_altitude_m, critical);          // Checks error for free fall (acceleration)
+        State.AxisControl(Roll, euler.roll_deg, Pitch, euler.pitch_deg, critical); // Checks for error for roll, pitch, and yaw
+        State.HeightControl(altitude, position.relative_altitude_m, critical);     // Checks for error for height
         // State.RouteControl(critical); // checks velocity and point and polygon
 
         printf("Loop Time %d\n", mymillis() - startofloop);
@@ -243,7 +247,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
     }
 }
 
-void updateIMUValues(ValidateState &State, IMU &IMU1, IMU &IMU2)
+void updateIMUValues(IMU &IMU1, IMU &IMU2)
 {
     while (1)
     {
@@ -368,7 +372,7 @@ int main(int argc, char **argv)
     std::vector<std::thread> threads;
 
     threads.push_back(std::thread(mainloop, std::ref(State), std::ref(B1), std::ref(telemetry), std::ref(G1), std::ref(IMU1), std::ref(IMU2), std::ref(Client)));
-    threads.push_back(std::thread(updateIMUValues, std::ref(State), std::ref(IMU1), std::ref(IMU2)));
+    threads.push_back(std::thread(updateIMUValues, std::ref(IMU1), std::ref(IMU2)));
 
     for (auto &th : threads)
     {

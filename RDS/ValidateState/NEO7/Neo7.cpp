@@ -207,12 +207,12 @@ void GPS::convertData() // converts GPS serial data to decimal degrees
 
 GPSPosition GPS::getGPSPosition() const
 {
-    char NS[1];
-    char EW[1];
-    getNorthSouth(NS);
-    getEastWest(EW);
+    char NSE[1];
+    char EWE[1];
+    getNorthSouth(NSE);
+    getEastWest(EWE);
 
-    return {longitude_, latitude_, SV_, NS[0], EW[0]};
+    return {longitude_, latitude_, SV_, NSE[0], EWE[0]};
 }
 
 int GPS::getSV() const // returns amount of satellites
