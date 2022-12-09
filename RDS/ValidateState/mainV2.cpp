@@ -193,7 +193,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         /*Get Data from Sensors*/
         IMUDATA1 = IMU1.getOrientation();
         // IMUDATA2 = IMU2.getOrientation(); // returns IMU Class Struct
-        GPSDATA = G1.getGPSPosition();    // returns GPS Class Struc
+        // GPSDATA = G1.getGPSPosition();    // returns GPS Class Struc
         altitude = Barometer.getHeight(); // returns altitude
 
         /*MAVLINK*/
