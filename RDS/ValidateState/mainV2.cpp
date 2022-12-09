@@ -258,9 +258,9 @@ void updateIMUValues(IMU &IMU2) // IMU &IMU1,
         IMU1.ConvertACCData();
         IMU1.ConvertMagData();
         IMU1.ComplementaryFilter();
-        * /
+        */
 
-            /*Gets Data from second IMU*/
+        /*Gets Data from second IMU*/
         IMU2.readIMU(1);
         IMU2.ConvertACCData();
         IMU2.ConvertMagData();
