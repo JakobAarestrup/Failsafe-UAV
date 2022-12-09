@@ -97,8 +97,8 @@ int ValidateState::AxisControl(float RollRDS, float RollSYS, float PitchRDS, flo
     // Handler til hvis det ikke er et tal?
     /* float Roll = (RollRDS + RollSYS) / 2;
     float Pitch = (PitchRDS + PitchSYS) / 2; */
-    float PitchSYS = 0;
-    float RollSYS = 0;
+    float PitchSYSS = PitchSYS;
+    float RollSYSS = RollSYS;
     float Roll = RollRDS;
     float Pitch = PitchRDS;
 
