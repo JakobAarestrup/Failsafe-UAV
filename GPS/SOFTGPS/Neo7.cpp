@@ -85,7 +85,7 @@ int GPS::configAll(int serial)
         count++;
         printf("%d", count);
     }
-    serialClose(serial);
+    serialClose(serial2);
     return serial;
 }
 
