@@ -90,30 +90,32 @@ void ValidateState::configValidateState(char maxHeight[], char maxAcceleration[]
  * @brief Checks for critical failure for orientation
  *
  */
-int ValidateState::AxisControl(int critical)
+int ValidateState::AxisControl(float RollRDS, float RollSYS, float PitchRDS, float PitchSYS, int critical)
 {
     float errorOrientation = (maxOrientation_ * 0.66666666);
 
     // Handler til hvis det ikke er et tal?
-    /* StateRoll_ = (StateRoll_ + RollSYS_) / 2;
-    StatePitch_ = (StatePitch_ + PitchSYS_) / 2; */
+    /* float Roll = (RollRDS + RollSYS) / 2;
+    float Pitch = (PitchRDS + PitchSYS) / 2; */
+    float Roll = RollRDS;
+    float Pitch = PitchRDS;
 
     if (state_ == 1)
         printf("Error State\n");
     else
         printf("Normal State \n");
 
-    if ((StateRoll_ > 45) | (StateRoll_ > 45))
+    if ((Roll > maxOrientation_) | (Pitch > maxOrientation_))
     {
         landDrone();
         critical = 1;
     }
-    else if (((StateRoll_ < errorOrientation) & (state_ == 1)) | ((StatePitch_ < errorOrientation) & (state_ == 1)))
+    else if (((Roll < errorOrientation) & (state_ == 1)) | ((Pitch < errorOrientation) & (state_ == 1)))
     {
         state_ = 0;
         printf("Changing state... to Normal\n");
     }
-    else if ((StateRoll_ > errorOrientation) | (StatePitch_ > errorOrientation))
+    else if ((Roll > errorOrientation) | (Pitch > errorOrientation))
     {
         state_ = 1;
         printf("Changing state... to Error_State Axis\n");
@@ -159,7 +161,7 @@ int ValidateState::RouteControl(int critical)
  * @brief Checks if drone is flying too high.
  *
  */
-int ValidateState::HeightControl(int critical, float altitudeRDS, float altitudeSYS)
+int ValidateState::HeightControl(float altitudeRDS, float altitudeSYS, int critical)
 {
     float errorHeight = (maxHeight_ * 0.66666666);
 
@@ -187,7 +189,7 @@ int ValidateState::HeightControl(int critical, float altitudeRDS, float altitude
     return critical;
 }
 
-int ValidateState::FreeFall(int critical, float altitudeRDS, float altitudeSYS)
+int ValidateState::FreeFall(float altitudeRDS, float altitudeSYS, int critical)
 {
     float altitude = (altitudeRDS + altitudeSYS) / 2;
     int time = mymillis();
