@@ -20,7 +20,7 @@ public:
     void ConvertMagData();
     void ComplementaryFilter();
 
-    Orientation getOrientation() const;
+    Orientation getOrientation();
     float getRoll() const;
     float getPitch() const;
     float getYaw() const;
@@ -48,6 +48,6 @@ private:
     float CompRoll_;
     float CompPitch_;
     float CompYaw_;
-    std::mutex m;
+    std::mutex m_;
     // int fall_;
 };
