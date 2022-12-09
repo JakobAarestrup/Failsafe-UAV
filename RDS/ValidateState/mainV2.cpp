@@ -203,13 +203,11 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         LogData(GPSDATA, IMUDATA1, altitude, position, euler, Client); // Sends sensor data to log file
         Roll = IMUDATA1.roll;                                          //(IMUDATA2.roll + IMUDATA1.roll) / 2;                    // returns
         Pitch = IMUDATA1.pitch;                                        //(IMUDATA2.pitch + IMUDATA1.pitch) / 2;                 // returns
-
+        std::cout << "Loop Time: " << mymillis() - startofloop << endl;
         State.FreeFall(altitude, position.relative_altitude_m, critical);          // Checks error for free fall (acceleration)
         State.AxisControl(Roll, euler.roll_deg, Pitch, euler.pitch_deg, critical); // Checks for error for roll, pitch, and yaw
         State.HeightControl(altitude, position.relative_altitude_m, critical);     // Checks for error for height
         // State.RouteControl(critical); // checks velocity and point and polygon
-
-        printf("Loop Time %d\n", mymillis() - startofloop);
     }
 
     while (1)
