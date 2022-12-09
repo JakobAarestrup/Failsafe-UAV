@@ -330,7 +330,7 @@ return 0;
 }
 */
 
-Orientation IMU::getOrientation() const
+Orientation IMU::getOrientation()
 {
 
     float roll, pitch, yaw;
