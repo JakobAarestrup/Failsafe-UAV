@@ -342,7 +342,7 @@ Orientation IMU::getOrientation() const
         yaw = getYaw();
     }
 
-    return { roll, pitch, yaw }
+    return {roll, pitch, yaw};
 }
 
 float IMU::getRoll() const
