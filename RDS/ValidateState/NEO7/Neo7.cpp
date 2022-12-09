@@ -205,14 +205,15 @@ void GPS::convertData() // converts GPS serial data to decimal degrees
 
 /* GET FUNCTIONS */
 
-GPSPosition GPS::getGPSPosition() const
+GPSPosition GPS::getGPSPosition()
 {
-    char NSE[1];
-    char EWE[1];
-    getNorthSouth(NSE);
-    getEastWest(EWE);
+    char NS[1];
+    char EW[1];
 
-    return {longitude_, latitude_, SV_, NSE[0], EWE[0]};
+    getNorthSouth(NS);
+    getEastWest(EW);
+
+    return {longitude_, latitude_, SV_, NS, EW};
 }
 
 int GPS::getSV() const // returns amount of satellites

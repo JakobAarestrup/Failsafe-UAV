@@ -25,9 +25,9 @@ public:
     ~GPS();               // destructor
     int openUART(int fd); // open UART serial port
     int configAll();
-    void readGPS();                     // reads GPS serial data
-    void convertData();                 // converts GPS data
-    GPSPosition getGPSPosition() const; // gets GPS position
+    void readGPS();               // reads GPS serial data
+    void convertData();           // converts GPS data
+    GPSPosition getGPSPosition(); // gets GPS position
 
     int getSV() const;             // returns amount of satellites
     double getLongitude() const;   // returns longitude

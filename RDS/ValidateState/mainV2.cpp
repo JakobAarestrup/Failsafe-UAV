@@ -104,7 +104,7 @@ inline void Logger(std::string logMessage)
  *
  */
 
-void LogData(Orientation IMUData, GPSPosition GPSData, float altitude, Telemetry::Position position, Telemetry::EulerAngle euler, UDP Client)
+void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry::Position position, Telemetry::EulerAngle euler, UDP Client)
 {
     /*Values from RDS*/
     float altitudeRDS = altitude;
