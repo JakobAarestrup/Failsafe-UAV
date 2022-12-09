@@ -141,7 +141,7 @@ void GPS::readGPS() // reads GPS serial data
         if (GGA_Received == 1)
         {
             gps = GPS_buffer;
-            start_ptr = strlschr(gps, ',');     // find start of latitude field
+            start_ptr = strchr(gps, ',');       // find start of latitude field
             end_ptr = strchr(++start_ptr, ','); // find end of field...
             latitude_ = atof(start_ptr);        // Convert char to float & store in variable
 
