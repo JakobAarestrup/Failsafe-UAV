@@ -23,8 +23,21 @@ while (True):
 
     clientMsg = "{}, ".format(message)
     clientIP = "Client IP Address:{}".format(address)
-    
-    print(clientMsg)
+
+    # get current date and time
+    now = datetime.now()
+    current_time = now.strftime("%Y-%m-%d-%H%M")
+    current_clock = now.strftime("%H:%M:%S")
+  
+    # convert datetime obj to string
+    str_current_datetime = str(current_time)
+
+    # create a file object along with extension
+    file_name = "C:/Users/Rasmus/Documents/GUI/Logs/ServerLOG_" + str_current_datetime + ".txt"
+    file = open(file_name, 'w')
+    file.write(current_clock + clientMsg)
+    file.close()
+    print("Log file created: ", file.name)
     #print(clientIP)
 
     # Sending a reply to client
