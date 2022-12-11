@@ -109,11 +109,11 @@ int ValidateState::axisControl(float rollRDS, float rollSYS, float pitchRDS, flo
     // Handler til hvis det ikke er et tal?
     /* float Roll = (RollRDS + RollSYS) / 2;
     float Pitch = (PitchRDS + PitchSYS) / 2; */
-    float PitchSYSS = PitchSYS;
-    float RollSYSS = RollSYS;
+    float PitchSYSS = pitchSYS;
+    float RollSYSS = rollSYS;
     printf("%f , %f", PitchSYSS, RollSYSS);
-    float Roll = RollRDS;
-    float Pitch = PitchRDS;
+    float Roll = rollRDS;
+    float Pitch = pitchRDS;
 
     if (state_ == 1)
         printf("Error State\n");

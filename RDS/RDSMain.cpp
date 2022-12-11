@@ -146,7 +146,7 @@ inline void Logger(std::string logMessage)
  * @param q is the quaternion data from the drone
  * @param Client is the UDP client member
  */
-void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry::Position position, float RollSYS, float PitchSYS, float YawSYS, UDP Client)
+void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry::Position position, float rollSYS, float pitchSYS, float yawSYS, UDP Client)
 {
     /*Values from RDS*/
     float altitudeRDS = altitude;
@@ -154,9 +154,9 @@ void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry
     float latitudeRDS = GPSData.latitude;
     float SatellitesRDS = GPSData.SV;
 
-    float RollRDS = IMUData.roll;
-    float PitchRDS = IMUData.pitch;
-    float YawRDS = IMUData.yaw;
+    float rollRDS = IMUData.roll;
+    float pitchRDS = IMUData.pitch;
+    float yawRDS = IMUData.yaw;
 
     /*Values over MAVLINK*/
     float altitudeSYS = position.relative_altitude_m;
@@ -167,12 +167,12 @@ void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry
     std::string GPSBaro = "Longitude: " + std::to_string(longitudeRDS) + " " + GPSData.NS[0] + " Latitude: " + std::to_string(latitudeRDS) + " " + GPSData.EW[0] + " Satellites: " + std::to_string(SatellitesRDS) + " Altitude: " + std::to_string(altitudeRDS);
     Logger(GPSBaro);
 
-    std::string IMU = "Roll: " + std::to_string(RollRDS) + " Pitch: " + std::to_string(PitchRDS) + " Yaw: " + std::to_string(YawRDS);
+    std::string IMU = "Roll: " + std::to_string(rollRDS) + " Pitch: " + std::to_string(pitchRDS) + " Yaw: " + std::to_string(yawRDS);
     Logger(IMU);
 
     std::string GPSBaroSYS = "LongitudeSYS: " + std::to_string(longitudeSYS) + " " + GPSData.NS[0] + " LatitudeSYS: " + std::to_string(latitudeSYS) + " " + GPSData.EW[0] + " AltitudeSYS: " + std::to_string(altitudeSYS);
     Logger(GPSBaroSYS);
-    std::string IMUSYS = "RollSYS: " + std::to_string(RollSYS) + " PitchSYS: " + std::to_string(PitchSYS) + " YawSYS: " + std::to_string(YawSYS);
+    std::string IMUSYS = "RollSYS: " + std::to_string(rollSYS) + " PitchSYS: " + std::to_string(pitchSYS) + " YawSYS: " + std::to_string(yawSYS);
     Logger(IMUSYS);
 
     std::string RDSData = GPSBaro + IMU;
@@ -208,8 +208,8 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
     GPSPosition GPSDATA;
 
     float altitude = 0;
-    float Roll = 0;
-    float Pitch = 0;
+    float roll = 0;
+    float pitch = 0;
     float q_Roll = 0;
     float q_Pitch = 0;
     float q_Yaw = 0;
@@ -250,14 +250,14 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         quaternionToEuler(q, q_Roll, q_Pitch, q_Yaw); // get quaternions in degrees
 
         /*logging Data*/
-        LogData(GPSDATA, IMUDATA1, altitude, q_Roll, q_Pitch, q_Yaw, Client); // Sends sensor data to log file
+        LogData(GPSDATA, IMUDATA1, altitude, position, q_Roll, q_Pitch, q_Yaw, Client); // Sends sensor data to log file
         /*Analyse State*/
-        Roll = IMUDATA1.roll; //(IMUDATA2.roll + IMUDATA1.roll) / 2;                    // returns
-        Pitch = IMUDATA1.pitch;
+        roll = IMUDATA1.roll; //(IMUDATA2.roll + IMUDATA1.roll) / 2;                    // returns
+        pitch = IMUDATA1.pitch;
         //(IMUDATA2.pitch + IMUDATA1.pitch) / 2;                 // returns
         std::cout << "Loop Time: " << mymillis() - startofloop << std::endl;
         State.freeFall(altitude, position.relative_altitude_m, critical);      // Checks error for free fall (acceleration)
-        State.axisControl(Roll, q_Roll, Pitch, q_Pitch, critical);             // Checks for error for roll, pitch, and yaw
+        State.axisControl(roll, q_Roll, pitch, q_Pitch, critical);             // Checks for error for roll, pitch, and yaw
         State.heightControl(altitude, position.relative_altitude_m, critical); // Checks for error for height
         // State.routeControl(critical); // checks velocity and point and polygon
     }
