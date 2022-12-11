@@ -96,12 +96,26 @@ int main(int argc, char **argv)
         return 1;
     }
 
+    /* // Check until vehicle is ready to arm
+    while (telemetry.health_all_ok() != true)
+    {
+        std::cout << "Telemetry is not okay\n";
+        sleep_for(seconds(1));
+    } */
+
+    const Action::Result land_result = action.land();
+    if (land_result != Action::Result::Success)
+    {
+        std::cerr << "Land failed: " << land_result << '\n';
+        return 1;
+    }
+
     float relative_alt;
     float longitude;
     float latitude;
-    float roll;
-    float pitch;
-    float yaw;
+    double roll;
+    double pitch;
+    double yaw;
     // telemetry.attitude_euler(Telemetry::EulerAngler euler);  // Set up callback to monitor altitude while the vehicle is in flight
 
     /* telemetry.subscribe_attitude_euler([](Telemetry::EulerAngle euler){
