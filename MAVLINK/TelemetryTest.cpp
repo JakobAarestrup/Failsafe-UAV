@@ -89,7 +89,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    const auto set_rate_result1 = telemetry.set_rate_attitude_euler(10.0);
+    const auto set_rate_result1 = telemetry.set_rate_attitude_quaternion(10.0);
     if (set_rate_result1 != Telemetry::Result::Success)
     {
         std::cerr << "Setting rate failed: " << set_rate_result1 << '\n';
@@ -133,15 +133,15 @@ int main(int argc, char **argv)
                   << "Latitude: " << longitude << std::endl
                   << "Longitude: " << latitude << '\n';
 
-        const Telemetry::Euler euler = telemetry.attitude_euler();
-        roll = euler.roll_deg;
+        const Telemetry::Quaternion quaternion = telemetry.attitude_quaternion();
+        roll = quaternion.x;
         if (std::isnan(roll))
         {
             roll = 0.0f; // or any other default value
         }
-        pitch = euler.pitch_deg;
-        yaw = euler.yaw_deg;
-        std::cout << "Euler:     (" << roll << ", " << pitch << ", " << yaw << ")" << std::endl;
+        pitch = quaternion.y;
+        yaw = quaternion.z;
+        std::cout << "Angles:     (" << roll << ", " << pitch << ", " << yaw << ")" << std::endl;
         sleep_for(seconds(1));
     }
 
