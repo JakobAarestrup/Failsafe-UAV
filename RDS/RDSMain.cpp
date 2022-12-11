@@ -287,14 +287,13 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         altitude = Barometer.getHeight(); // returns altitude
 
         /*MAVLINK*/
-        position = telemetry.position();     // returns struct with values from baro and GPS
-        q = telemetry.attitude_quaternion(); // returns struct with euler angles
+        position = telemetry.position();              // returns struct with values from baro and GPS
+        q = telemetry.attitude_quaternion();          // returns struct with euler angles
+        quaternionToEuler(q, q_Roll, q_Pitch, q_Yaw); // get quaternions in degrees
 
-        LogData(GPSDATA, IMUDATA1, altitude, position, euler, Client); // Sends sensor data to log fil
-        std::cout << "Loop Time: " << mymillis() - startofloop << std::endl;
-        /* if{mavdsk register =1)
-        exit();
-        } */
+        /*logging Data*/
+        LogData(GPSDATA, IMUDATA1, altitude, position, q_Roll, q_Pitch, q_Yaw, Client); // Sends sensor data to log file
+        // State.routeControl(critical); // checks velocity and point and polygon
     }
 }
 
