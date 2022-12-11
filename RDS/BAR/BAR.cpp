@@ -13,18 +13,18 @@
 I2C B1; /// I2C class member
 
 /**
- * Constructor for the BAR class
+ * @brief Construct a new BAR::BAR object
+ *
  */
 BAR::BAR()
 {
 }
 
 /**
- * destructor for the BAR class
+ * Destructor for the BAR class
  */
 BAR::~BAR()
 {
-    /*delete [] height_AGL_, height_AMSL_, initial_pressure_, initial_AMSL_, pressure_; // Delete private variables*/
 }
 
 /**
