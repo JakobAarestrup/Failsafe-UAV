@@ -15,7 +15,7 @@ find_package(MAVSDK REQUIRED)
 
 # Specify your app's executable name, and list of source files used to create it.
 add_executable(Tele
-    TelemetryTest.cpp
+    GetEuler.cpp
     # ... any other source files
 )
 
