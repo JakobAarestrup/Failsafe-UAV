@@ -367,7 +367,7 @@ return 0;
 /**
  * @brief Function places roll, pitch and yaw in struct
  *
- * @return Orientation struct that contains roll, pitch and yaw
+ * @return Orientation
  */
 Orientation IMU::getOrientation()
 {

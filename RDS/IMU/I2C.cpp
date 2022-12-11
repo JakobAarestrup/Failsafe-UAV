@@ -89,7 +89,7 @@ void I2C::writeI2C(int ADDR, int reg, int length, unsigned char *data)
  * @param reg  is the register to be read from
  * @param length is the length of the data to be read
  * @param HandleI2C is the handler for what type of register that is read from
- * @return float dataI2C_ is the returned I2C data
+ * @return float dataI2C_
  */
 float I2C::readI2C(int ADDR, int reg, int length, int HandleI2C)
 {

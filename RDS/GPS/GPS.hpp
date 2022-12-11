@@ -10,6 +10,10 @@
 #include <wiringPi.h>
 #include <wiringSerial.h>
 
+/**
+ * @brief Struct that contains the GPS data
+ *
+ */
 struct GPSPosition
 {
     double longitude, latitude;
@@ -35,12 +39,20 @@ public:
     void getNorthSouth(char NS[]); // returns either a north pole or south pole
     void getEastWest(char EW[]);   // returns either a East pole or West pole
 
-private:     // Coordinates from the GPS
-    int SV_; // amount of satellites
-    double longitude_;
-    double latitude_;
+private:
+    /// @brief Amount of satellites
+    int SV_;
+    /// @brief East West array
     char EW_[10];
+    /// @brief North South array
     char NS_[10];
+
+    /// @brief Longitude
+    double longitude_;
+    /// @brief Latitude
+    double latitude_;
+    /// @brief Serial port file descriptor
+
     int serialPort_;
-    char GPS_Data_;
+    /// @brief Data from the GPS
 };

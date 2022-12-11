@@ -27,6 +27,12 @@ using namespace mavsdk;
 using std::chrono::seconds;
 using std::this_thread::sleep_for;
 
+/**
+ * @brief Function connects to drone via MAVLink
+ *
+ * @param mavsdk
+ * @return std::shared_ptr<System>
+ */
 std::shared_ptr<System> get_system(Mavsdk &mavsdk)
 {
     std::cout << "Waiting to discover system...\n";
@@ -59,6 +65,11 @@ std::shared_ptr<System> get_system(Mavsdk &mavsdk)
     return fut.get();
 }
 
+/**
+ * @brief Function that tells time passed since boot
+ *
+ * @return int time since boot
+ */
 int mymillis()
 {
     struct timeval tv;
@@ -67,10 +78,10 @@ int mymillis()
 }
 
 /**
- * @brief Gets current date
+ * @brief Function gets current date
  *
  * @param str string value
- * @return std::string returns current date
+ * @return std::string
  */
 inline std::string getCurrentDateTime(std::string str)
 {
@@ -86,7 +97,7 @@ inline std::string getCurrentDateTime(std::string str)
 };
 
 /**
- * @brief Prints inserted string to log file.
+ * @brief Function prints inserted string to log file.
  *
  * @param logMsg string value printed to log file
  */
@@ -100,10 +111,15 @@ inline void Logger(std::string logMessage)
 }
 
 /**
- * @brief logs all read data from the available sensors.
+ * @brief Function logs all read data from the available sensors.
  *
+ * @param GPSData is the data from the GPS
+ * @param IMUData is the data from the IMU
+ * @param altitude is the altitude from the Barometer
+ * @param position is the position data from the drone
+ * @param euler is the euler data from the drone
+ * @param Client is the UDP client member
  */
-
 void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry::Position position, Telemetry::EulerAngle euler, UDP Client)
 {
     /*Values from RDS*/
@@ -151,6 +167,16 @@ void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry
     Client.UDP_COM(SYS);
 }
 
+/**
+ * @brief Function runs the main loop of RDS
+ *
+ * @param State is the current state of RDS
+ * @param Barometer is the Barometer object
+ * @param telemetry is the telemetry object from the drone
+ * @param G1 is the GPS object
+ * @param IMU1 is the IMU object
+ * @param Client is the UDP client object
+ */
 void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G1, IMU &IMU1, UDP &Client) // IMU &IMU1,
 {
     int loops = 1;
@@ -205,10 +231,10 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         Roll = IMUDATA1.roll;                                          //(IMUDATA2.roll + IMUDATA1.roll) / 2;                    // returns
         Pitch = IMUDATA1.pitch;                                        //(IMUDATA2.pitch + IMUDATA1.pitch) / 2;                 // returns
         std::cout << "Loop Time: " << mymillis() - startofloop << std::endl;
-        State.FreeFall(altitude, position.relative_altitude_m, critical);          // Checks error for free fall (acceleration)
-        State.AxisControl(Roll, euler.roll_deg, Pitch, euler.pitch_deg, critical); // Checks for error for roll, pitch, and yaw
-        State.HeightControl(altitude, position.relative_altitude_m, critical);     // Checks for error for height
-        // State.RouteControl(critical); // checks velocity and point and polygon
+        State.freeFall(altitude, position.relative_altitude_m, critical);          // Checks error for free fall (acceleration)
+        State.axisControl(Roll, euler.roll_deg, Pitch, euler.pitch_deg, critical); // Checks for error for roll, pitch, and yaw
+        State.heightControl(altitude, position.relative_altitude_m, critical);     // Checks for error for height
+        // State.routeControl(critical); // checks velocity and point and polygon
     }
 
     while (1)
@@ -246,6 +272,11 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
     }
 }
 
+/**
+ * @brief Function updates the values from the IMU
+ *
+ * @param IMU2 is the IMU object
+ */
 void updateIMUValues(IMU &IMU2) // IMU &IMU1,
 {
     while (1)
@@ -254,21 +285,28 @@ void updateIMUValues(IMU &IMU2) // IMU &IMU1,
         /*Gets Data from first IMU*/
         /*
         IMU1.readIMU(1);
-        IMU1.ConvertACCData();
-        IMU1.ConvertMagData();
-        IMU1.ComplementaryFilter();
+        IMU1.convertAccData();
+        IMU1.convertMagData();
+        IMU1.complementaryFilter();
         */
 
         /*Gets Data from second IMU*/
         IMU2.readIMU(1);
-        IMU2.ConvertACCData();
-        IMU2.ConvertMagData();
-        IMU2.ComplementaryFilter();
+        IMU2.convertAccData();
+        IMU2.convertMagData();
+        IMU2.complementaryFilter();
 
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
     }
 }
 
+/**
+ * @brief Main code
+ *
+ * @param argc Input argument for setting limit values
+ * @param argv Input argument for setting limit values
+ * @return int 0
+ */
 int main(int argc, char **argv)
 {
 
@@ -278,7 +316,7 @@ int main(int argc, char **argv)
 
     if (argc < 3) // minimum arguments 2
     {
-        State.Usage(argv[0]);
+        State.usage(argv[0]);
         return 1;
     }
 
@@ -315,24 +353,15 @@ int main(int argc, char **argv)
 
     Client.initUDP(); // raspberry pi zero w should get wifi by this time
 
-    /**
-     * @brief  Configuration of Sensors
-     *
-     */
+    /// @brief Configuration of Sensors
     G1.configAll();     // configs the GPS
     I1.initializeI2C(); // Initialize IMU2 right now but will do both
 
-    /**
-     * @brief Calibration..
-     *
-     */
+    /// @brief Calibration
     // IMU1.calibrateGyro(1);
     IMU1.calibrateGyro(1);
 
-    /**
-     * @brief MAVLINK connection.
-     *
-     */
+    /// @brief MAVLINK connection.
     Mavsdk mavsdk;
     ConnectionResult connection_result = mavsdk.add_any_connection(argv[1]);
 
@@ -348,7 +377,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    // Instantiate plugins.
+    /// @brief Instantiate plugins
     auto telemetry = Telemetry{system};
     auto action = Action{system};
 
