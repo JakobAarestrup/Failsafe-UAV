@@ -89,12 +89,12 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    /* const auto set_rate_result1 = telemetry.set_rate_attitude_euler(1.0);
+    const auto set_rate_result1 = telemetry.set_rate_attitude_euler_angle(1.0);
     if (set_rate_result1 != Telemetry::Result::Success)
     {
         std::cerr << "Setting rate failed: " << set_rate_result1 << '\n';
         return 1;
-    } */
+    }
 
     const Action::Result land_result = action.land();
     if (land_result != Action::Result::Success)
@@ -125,9 +125,7 @@ int main(int argc, char **argv)
         std::cout << "Altitude: " << relative_alt << " m" << std::endl
                   << "Latitude: " << longitude << std::endl
                   << "Longitude: " << latitude << '\n';
-        Telemetry::EulerAngle euler_angles(45.0f, 30.0f, 15.0f);
-        telemetry.attitude_euler(euler_angles);
-        Telemetry::EulerAngle euler = telemetry.attitude_euler();
+        Telemetry::EulerAngle euler = telemetry.attitude_euler_angle();
         roll = euler.roll_deg;
         pitch = euler.pitch_deg;
         yaw = euler.yaw_deg;
