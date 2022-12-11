@@ -100,7 +100,7 @@ void ValidateState::configValidateState(char maxHeight[], char maxAcceleration[]
  * @param PitchRDS is pitch from RDS's IMU
  * @param PitchSYS is pitch from the drone
  * @param critical int critital is used as handler
- * @return int critital is used as handler
+ * @return int critital
  */
 int ValidateState::axisControl(float RollRDS, float RollSYS, float PitchRDS, float PitchSYS, int critical)
 {
@@ -142,7 +142,7 @@ int ValidateState::axisControl(float RollRDS, float RollSYS, float PitchRDS, flo
  * @brief Checks if the drone is following the correct path
  *
  * @param critical int critital is used as handler
- * @return int critital is used as handler
+ * @return int critital
  */
 int ValidateState::routeControl(int critical)
 {
@@ -180,7 +180,7 @@ int ValidateState::routeControl(int critical)
  * @param altitudeRDS is the altitude from RDS's barometer
  * @param altitudeSYS is the altitude from the drone's barometer
  * @param critical critital is used as handler
- * @return int critital is used as handler
+ * @return int critical
  */
 int ValidateState::heightControl(float altitudeRDS, float altitudeSYS, int critical)
 {
@@ -216,7 +216,7 @@ int ValidateState::heightControl(float altitudeRDS, float altitudeSYS, int criti
  * @param altitudeRDS is the altitude from RDS's barometer
  * @param altitudeSYS is the altitude from the drone's barometer
  * @param critical critital is used as handler
- * @return int critital is used as handler
+ * @return int critital
  */
 int ValidateState::freeFall(float altitudeRDS, float altitudeSYS, int critical)
 {

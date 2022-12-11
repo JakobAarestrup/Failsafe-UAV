@@ -3,18 +3,29 @@
 #include <fcntl.h>
 #include <termios.h>
 
-GPS::GPS() // default constructor
+/**
+ * @brief Construct a new GPS::GPS object
+ *
+ */
+GPS::GPS()
 {
-    // printf("Constructor called \n");
 }
 
+/**
+ * @brief Destroy the GPS::GPS object
+ *
+ */
 GPS::~GPS() // destructor
 {
-    // delete[] longitude_, latitude_; // delete
-    // printf("Destructor called \n");
 }
 
-int GPS::openUART(int fd) // open UART serial port
+/**
+ * @brief Funtion opens the UART serial port to the GPS
+ *
+ * @param fd is the used file descriptor
+ * @return int fd
+ */
+int GPS::openUART(int fd)
 {
     fd = open("/dev/ttySOFT0", O_RDWR);
     if (fd < 0)
@@ -25,6 +36,11 @@ int GPS::openUART(int fd) // open UART serial port
     return fd;
 }
 
+/**
+ * @brief Function configures the GPS to work with 4800 baudrate and return the desired messages
+ *
+ * @return int serialPort_
+ */
 int GPS::configAll()
 {
     /*OPEN UART*/
@@ -72,7 +88,11 @@ int GPS::configAll()
     return serialPort_;
 }
 
-void GPS::readGPS() // reads GPS serial data
+/**
+ * @brief Function reads serial data from the GPS
+ *
+ */
+void GPS::readGPS()
 {
 
     /*VARIABLES*/
@@ -158,7 +178,11 @@ void GPS::readGPS() // reads GPS serial data
     close(serialPort_);
 }
 
-void GPS::convertData() // converts GPS serial data to decimal degrees
+/**
+ * @brief Function converts the GPS serial data to decimal degrees
+ *
+ */
+void GPS::convertData()
 {
     char NS[1];
     char EW[1];
@@ -203,8 +227,11 @@ void GPS::convertData() // converts GPS serial data to decimal degrees
     }
 }
 
-/* GET FUNCTIONS */
-
+/**
+ * @brief Function to get the GPS position
+ *
+ * @return GPSPosition
+ */
 GPSPosition GPS::getGPSPosition()
 {
     char NS[1];
@@ -216,22 +243,42 @@ GPSPosition GPS::getGPSPosition()
     return {longitude_, latitude_, SV_, NS[0], EW[0]};
 }
 
-int GPS::getSV() const // returns amount of satellites
+/**
+ * @brief Function to get the amount of connected satellites
+ *
+ * @return int SV_
+ */
+int GPS::getSV() const
 {
     return SV_;
 }
 
-double GPS::getLongitude() const // returns longitude
+/**
+ * @brief Function to get the longitude from the GPS
+ *
+ * @return double longitude_
+ */
+double GPS::getLongitude() const
 {
     return longitude_;
 }
 
-double GPS::getLatitude() const // returns latitude
+/**
+ * @brief Function to get the latitude from the GPS
+ *
+ * @return double latitude_
+ */
+double GPS::getLatitude() const
 {
     return latitude_;
 }
 
-void GPS::getNorthSouth(char NS[]) // returns either a East pole or West pole
+/**
+ * @brief Function fills the North South array with the input
+ *
+ * @param NS is the North South array input
+ */
+void GPS::getNorthSouth(char NS[])
 {
     int strLength = strlen(NS_); // finds length of the array
     for (int i = 0; i < strLength; i++)
@@ -241,7 +288,12 @@ void GPS::getNorthSouth(char NS[]) // returns either a East pole or West pole
     NS[strLength] = '\0'; // adds NULL character at end
 }
 
-void GPS::getEastWest(char EW[]) // returns either a East pole or West pole
+/**
+ * @brief Function fills the East West array with the input
+ *
+ * @param NS is the East West array input
+ */
+void GPS::getEastWest(char EW[])
 {
     int strLength = strlen(EW_); // finds length of the array
     for (int i = 0; i < strLength; i++)
