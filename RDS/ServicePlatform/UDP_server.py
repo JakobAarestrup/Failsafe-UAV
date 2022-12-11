@@ -34,8 +34,8 @@ while (True):
 
     clientMsg = "{}, ".format(message)
     clientIP = "Client IP Address:{}".format(address)
-
     file = open(file_name, 'w')
+    current_clock = now.strftime("%H:%M:%S")
     file.write(current_clock + clientMsg)
     file.close()
     print("Log file created: ", file.name)
