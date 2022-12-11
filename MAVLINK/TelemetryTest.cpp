@@ -134,13 +134,13 @@ int main(int argc, char **argv)
                   << "Longitude: " << latitude << '\n';
 
         const Telemetry::Quaternion quaternion = telemetry.attitude_quaternion();
-        roll = quaternion.x;
+        roll = quaternion.x * 100;
         if (std::isnan(roll))
         {
             roll = 0.0f; // or any other default value
         }
-        pitch = quaternion.y;
-        yaw = quaternion.z;
+        pitch = quaternion.y * 100;
+        yaw = quaternion.z * 100;
         std::cout << "Angles:     (" << roll << ", " << pitch << ", " << yaw << ")" << std::endl;
         sleep_for(seconds(1));
     }
