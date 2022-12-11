@@ -90,7 +90,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    const auto set_rate_result1 = telemetry.set_rate_attitude_quarternion(1.0);
+    const auto set_rate_result1 = telemetry.set_rate_attitude_quaternion(1.0);
     if (set_rate_result1 != Telemetry::Result::Success)
     {
         std::cerr << "Setting rate failed: " << set_rate_result1 << '\n';
@@ -126,7 +126,7 @@ int main(int argc, char **argv)
         std::cout << "Altitude: " << relative_alt << " m" << std::endl
                   << "Latitude: " << longitude << std::endl
                   << "Longitude: " << latitude << '\n';
-        Telemetry::Quarternion q = telemetry.attitude_quarternion();
+        Telemetry::Quaternion q = telemetry.attitude_quaternion();
 
         roll = atan2(2 * (q.w * q.x + q.y * q.z), 1 - 2 * (q.x * q.x + q.y * q.y));
         pitch = asin(2 * (q.w * q.y - q.z * q.x));
