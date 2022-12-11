@@ -126,7 +126,7 @@ int main(int argc, char **argv)
                   << "Latitude: " << longitude << std::endl
                   << "Longitude: " << latitude << '\n';
         Telemetry::EulerAngle euler_angles(45.0f, 30.0f, 15.0f);
-        telemetry.set_attitude_euler(euler_angles);
+        telemetry.attitude_euler(euler_angles);
         Telemetry::EulerAngle euler = telemetry.attitude_euler();
         roll = euler.roll_deg;
         pitch = euler.pitch_deg;
