@@ -96,13 +96,6 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    // Check until vehicle is ready to arm
-    while (telemetry.health_all_ok() != true)
-    {
-        std::cout << "Vehicle is getting ready to arm\n";
-        sleep_for(seconds(1));
-    }
-
     const Action::Result land_result = action.land();
     if (land_result != Action::Result::Success)
     {
