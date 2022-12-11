@@ -1,6 +1,4 @@
-
 import threading
-import _thread
 import os
 import sys #Imports sys, used to end the program later
 import tkinter
@@ -14,7 +12,7 @@ from functools import partial
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, 
 NavigationToolbar2Tk)
-#from tkintermapview import TkinterMapView
+from tkintermapview import TkinterMapView
 from mpl_toolkits.mplot3d import Axes3D
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from math import sin, cos, tan, asin, acos, atan2, fabs, sqrt
@@ -213,9 +211,6 @@ def terminalExecute():
     sys.exit() #Ends the script
     
 
-# This flag will be used to stop the repeatable process
-stop_flag = False
-
 # This function will be the target of the thread
 def live_logging():
     global stop_flag
@@ -272,18 +267,16 @@ root = tkinter.Tk()
 root.geometry(f"{800}x{660}")
 root.title("RDS Terminal.py")
 
-# =============================================================================
-# # create map widget
-# map_widget = TkinterMapView(root, width=400, height=300, corner_radius=0)
-# map_widget.place(relx=0.5, rely=0.5, anchor=tkinter.NW)
-#   
-# # google normal tile server
-# map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=15)
-# # set current widget position and zoom
-# map_widget.set_position(55, 9.5)  # Danmark
-# map_widget.set_marker(55, 9.5)
-# 
-# =============================================================================
+# create map widget
+map_widget = TkinterMapView(root, width=400, height=300, corner_radius=0)
+map_widget.place(relx=0.5, rely=0.5, anchor=tkinter.NW)
+  
+# google normal tile server
+map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=15)
+# set current widget position and zoom
+map_widget.set_position(55, 9.5)  # Danmark
+map_widget.set_marker(55, 9.5)
+
 
 text=Text(root, width=50, height=18.4)
 
@@ -331,6 +324,8 @@ exit_window.place(x=240,y=290)
 # Get a list of all files in the specified folder
 file_path = "C:/Users/Rasmus/Documents/GUI/Logfile.txt" 
     
+# This flag will be used to stop the repeatable process
+stop_flag = False
 
 roll = 0
 pitch = 0
