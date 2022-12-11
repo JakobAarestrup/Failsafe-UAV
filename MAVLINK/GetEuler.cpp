@@ -43,8 +43,8 @@ int main(int argc, char **argv)
     auto telemetry = std::make_shared<Telemetry>(mavsdk);
 
     // Subscribe to euler angles
-    telemetry->subscribe_euler_angle_async([](Telemetry::EulerAngle euler_angle)
-                                           {
+    telemetry->subscribe_attitude_euler_angle_async([](Telemetry::EulerAngle euler_angle)
+                                                    {
     // Print out euler angles
     std::cout << "Euler Angles: roll = " << euler_angle.roll_deg << ", pitch = " << euler_angle.pitch_deg
               << ", yaw = " << euler_angle.yaw_deg << std::endl; });
