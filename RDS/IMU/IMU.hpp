@@ -9,16 +9,16 @@ struct Orientation
 class IMU
 {
 public:
-    IMU();  // Constructor
-    ~IMU(); // Destructor
+    IMU();
+    ~IMU();
     void calibrateGyro(int IMU);
     void readIMU(int IMU);
     void readACC(int IMU);
     void readGYRO(int IMU);
     void readMAG(int IMU);
-    void ConvertACCData();
-    void ConvertMagData();
-    void ComplementaryFilter();
+    void convertAccData();
+    void convertMagData();
+    void complementaryFilter();
 
     Orientation getOrientation();
     float getRoll() const;
@@ -26,28 +26,48 @@ public:
     float getYaw() const;
 
 private:
+    /// @brief Accelerometer calibrated x-axis in deg/s
     float accCalibX_;
+    /// @brief Accelerometer calibrated y-axis in deg/s
     float accCalibY_;
+    /// @brief Accelerometer calibrated z-axis in deg/s
     float accCalibZ_;
 
-    float gyroCalibX_; ///< Gyroscope calibrated x-axis in deg/s
-    float gyroCalibY_; ///< Gyroscope calibrated y-axis in deg/s
-    float gyroCalibZ_; ///< Gyroscope calibrated x-axis in deg/s
+    /// @brief Gyroscope calibrated x-axis in deg/s
+    float gyroCalibX_;
+    /// @brief Gyroscope calibrated y-axis in deg/s
+    float gyroCalibY_;
+    /// @brief Gyroscope calibrated z-axis in deg/s
+    float gyroCalibZ_;
 
+    /// @brief Gyroscope drift in x-axis in
     float gx_drift;
+    /// @brief Gyroscope drift in y-axis in
     float gy_drift;
+    /// @brief Gyroscope drift in z-axis in
     float gz_drift;
 
+    /// @brief Magnetometer calibrated x-axis in deg/s
     float magCalibX_;
+    /// @brief Magnetometer calibrated y-axis in deg/s
     float magCalibY_;
 
-    float XL_Roll_ = 0.0;  // Accelerometer X-axis
-    float XL_Pitch_ = 0.0; // Accelerometer Y-axis
-    float MAG_Yaw_;
+    /// @brief Accelerometer roll
+    float xlRoll_ = 0.0;
+    /// @brief Accelerometer pitch
+    float xlPitch_ = 0.0;
+    /// @brief Magnetometer yaw
+    float magYaw_;
 
-    float CompRoll_;
-    float CompPitch_;
-    float CompYaw_;
+    /// @brief Compensated roll
+    float compRoll_;
+    /// @brief Compensated pitch
+    float compPitch_;
+    /// @brief Compensated yaw
+    float compYaw_;
+
+    /// @brief Mutex object m_
     std::mutex m_;
+
     // int fall_;
 };

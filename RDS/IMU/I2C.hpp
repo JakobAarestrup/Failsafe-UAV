@@ -2,13 +2,13 @@
 class I2C
 {
 public:
-    I2C();  // Constructor
-    ~I2C(); // Destructor
+    I2C();
+    ~I2C();
     void initializeI2C();
-    void writeI2C(int ADDR, int reg, int length, unsigned char *data); // Write to I2C device register
-    float readI2C(int ADDR, int reg, int length, int HandleI2C);       // Read from I2C device register
+    void writeI2C(int ADDR, int reg, int length, unsigned char *data);
+    float readI2C(int ADDR, int reg, int length, int HandleI2C);
+
 private:
-    float I2CData_; // I2C device data
-    unsigned char *Buffer1_;
-    unsigned char *Buffer2_;
+    /// @brief Read I2C data is set in this private variable
+    float dataI2C_;
 };

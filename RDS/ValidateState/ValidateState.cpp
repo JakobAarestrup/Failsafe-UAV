@@ -1,4 +1,4 @@
-#include "ValidateStateV2.hpp"
+#include "ValidateState.hpp"
 
 /**
  * @brief Construct a Validate State object
@@ -18,10 +18,11 @@ ValidateState::~ValidateState()
 }
 
 /**
- * @brief Configuration arguments for RDS.exe
+ * @brief Function prints configuration arguments in RDS
  *
+ * @param bin_name
  */
-void ValidateState::Usage(const std::string &bin_name)
+void ValidateState::usage(const std::string &bin_name)
 {
     std::cerr << "Usage : " << bin_name << " <serial> <max_height> <max_acceleration> <max_orientation> <max_distance>\n\n"
               << "Serial format should be :\n"
@@ -36,9 +37,14 @@ void ValidateState::Usage(const std::string &bin_name)
               << " - Enter 0s for default values.."
               << " - Example for Serial and Critical Values : serial:///dev/ttyS0:57600 200 10 30 30\n";
 }
+
 /**
- * @brief configures the state of the Validate State
+ * @brief Function configures the limit values of ValidateState
  *
+ * @param maxHeight is the maximum height before error
+ * @param maxAcceleration is the maximum acceleration before error
+ * @param maxOrientation is the maximum orientation shift before error
+ * @param maxDistance is the maximum distance from polygon before error
  */
 void ValidateState::configValidateState(char maxHeight[], char maxAcceleration[], char maxOrientation[], char maxDistance[])
 {
@@ -87,10 +93,16 @@ void ValidateState::configValidateState(char maxHeight[], char maxAcceleration[]
 }
 
 /**
- * @brief Checks for critical failure for orientation
+ * @brief Function checks for critical failure for orientation
  *
+ * @param RollRDS is roll from RDS's IMU
+ * @param RollSYS is roll from the drone
+ * @param PitchRDS is pitch from RDS's IMU
+ * @param PitchSYS is pitch from the drone
+ * @param critical int critital is used as handler
+ * @return int critital is used as handler
  */
-int ValidateState::AxisControl(float RollRDS, float RollSYS, float PitchRDS, float PitchSYS, int critical)
+int ValidateState::axisControl(float RollRDS, float RollSYS, float PitchRDS, float PitchSYS, int critical)
 {
     float errorOrientation = (maxOrientation_ * 0.66666666);
 
@@ -129,8 +141,10 @@ int ValidateState::AxisControl(float RollRDS, float RollSYS, float PitchRDS, flo
 /**
  * @brief Checks if the drone is following the correct path
  *
+ * @param critical int critital is used as handler
+ * @return int critital is used as handler
  */
-int ValidateState::RouteControl(int critical)
+int ValidateState::routeControl(int critical)
 {
     /* if (state_ == 1)
         printf("Error_State\n");
@@ -161,10 +175,14 @@ int ValidateState::RouteControl(int critical)
 }
 
 /**
- * @brief Checks if drone is flying too high.
+ * @brief Function checks if drone is flying too high.
  *
+ * @param altitudeRDS is the altitude from RDS's barometer
+ * @param altitudeSYS is the altitude from the drone's barometer
+ * @param critical critital is used as handler
+ * @return int critital is used as handler
  */
-int ValidateState::HeightControl(float altitudeRDS, float altitudeSYS, int critical)
+int ValidateState::heightControl(float altitudeRDS, float altitudeSYS, int critical)
 {
     float errorHeight = (maxHeight_ * 0.66666666);
 
@@ -192,7 +210,15 @@ int ValidateState::HeightControl(float altitudeRDS, float altitudeSYS, int criti
     return critical;
 }
 
-int ValidateState::FreeFall(float altitudeRDS, float altitudeSYS, int critical)
+/**
+ * @brief Function checks if the drone is in a free fall
+ *
+ * @param altitudeRDS is the altitude from RDS's barometer
+ * @param altitudeSYS is the altitude from the drone's barometer
+ * @param critical critital is used as handler
+ * @return int critital is used as handler
+ */
+int ValidateState::freeFall(float altitudeRDS, float altitudeSYS, int critical)
 {
     float altitude = (altitudeRDS + altitudeSYS) / 2;
     int time = mymillis();
@@ -206,14 +232,14 @@ int ValidateState::FreeFall(float altitudeRDS, float altitudeSYS, int critical)
     else
         printf("Normal State \n");
 
-    if (acceleration < maxAcceleration_ && FF_IMU_ == 1)
+    if (acceleration < maxFallSpeed_ && ff_IMU_ == 1)
     {
         landDrone(); // Maybe parachute() function here
         critical = 1;
         printf("Closing in on ERROR!!! Changing state... FreeFall to ERROR\n");
     }
 
-    else if ((acceleration < maxAcceleration_) | (FF_IMU_ == 1)) // In Critical State and under 200 m
+    else if ((acceleration < maxFallSpeed_) | (ff_IMU_ == 1)) // In Critical State and under 200 m
     {
         state_ = 0;
         printf("Changing state... to Normal\n");
@@ -225,6 +251,10 @@ int ValidateState::FreeFall(float altitudeRDS, float altitudeSYS, int critical)
     return critical;
 }
 
+/**
+ * @brief Function tells the drone to land via MAVLink and logs this in the log
+ *
+ */
 void ValidateState::landDrone()
 {
     /*MAVLINK MESSAGE TO LAND*/
@@ -238,6 +268,11 @@ void ValidateState::landDrone()
     // Logger("Landing drone immediately!\n");
 }
 
+/**
+ * @brief Function that returns the time since startup
+ *
+ * @return int time since startup
+ */
 int ValidateState::mymillis()
 {
     struct timeval tv;

@@ -7,30 +7,51 @@
 #include "LSM6DSOX.hpp"
 #include <wiringPi.h>
 
-// Definitions
+/**
+ * @brief Math constants used for calculations
+ *
+ */
+/// Pi constant
 #define PI 3.14159265358979323846
+/// Radians to degrees constant
 #define RAD_TO_DEG 57.29578
-#define DT 0.02 // [s/loop] loop period. 200ms
-#define AA 0.97 // complementary filter constant
+/// [s/loop] loop period. 200ms
+#define DT 0.02
+/// Complementary filter constant
+#define AA 0.97
+/// Accelerometer sensitivity constant
 #define XL_Sensitivity 0.061
+/// Gyroscope sensitivity constant
 #define G_Sensitivity 70
+/// Magnetometer sensitivity constant
 #define MG_Sensitivity 6842
+/// Gyroscope drift constant
 #define gyroDrift 0.07
 
+/**
+ * @brief I2C class member
+ *
+ */
 I2C I1;
 
-// Constructor
+/**
+ * @brief Construct a new IMU::IMU object
+ *
+ */
 IMU::IMU()
 {
 }
 
-// Destructor
+/**
+ * @brief Destroy the IMU::IMU object
+ *
+ */
 IMU::~IMU()
 {
 }
 
 /**
- * @brief Calibrates gyro from starting position
+ * @brief Function calibrates gyroscope from starting position
  *
  * @param IMU handler for choosing IMU sensor.
  */
@@ -72,7 +93,7 @@ void IMU::calibrateGyro(int IMU)
 }
 
 /**
- * @brief Reads data of the three sensors and subtracting offsets.
+ * @brief Function reads data of the three sensors and subtracting offsets.
  *
  * @param IMU handler for choosing IMU sensor.
  */
@@ -84,6 +105,11 @@ void IMU::readIMU(int IMU)
     readMAG(IMU);
 }
 
+/**
+ * @brief Function reads values from the accelerometer
+ *
+ * @param IMU handler for choosing IMU sensor.
+ */
 void IMU::readACC(int IMU)
 {
     float ax, ay, az;
@@ -119,7 +145,7 @@ void IMU::readACC(int IMU)
     az = (az * XL_Sensitivity) / 1000;
 
     /**
-     * @brief Calibration right here..
+     * @brief Calibration could be implemented here
      *
      */
     accCalibX_ = ax;
@@ -127,14 +153,16 @@ void IMU::readACC(int IMU)
     accCalibZ_ = az;
 }
 
+/**
+ * @brief Function reads values from the gyroscope
+ *
+ * @param IMU handler for choosing IMU sensor.
+ */
 void IMU::readGYRO(int IMU)
 {
     float gx, gy, gz;
 
-    /**
-     * @brief handler for IMU sensor
-     *
-     */
+    /// @brief handler for IMU sensor
     if (IMU == 1)
     {
         gx = I1.readI2C(LSM6DSOX_ADDR1, LSM6DSOX_OUT_X_L_G, 1, 1);
@@ -153,19 +181,13 @@ void IMU::readGYRO(int IMU)
         return;
     }
 
-    /**
-     * @brief Convert 16 bit register from mdeg/s/LSB to deg/s
-     *
-     */
+    ///@brief Convert 16 bit register from mdeg/s/LSB to deg/s
     gx = (gx * G_Sensitivity) / 1000;
     gy = (gy * G_Sensitivity) / 1000;
     gz = (gz * G_Sensitivity) / 1000;
 
-    /**
-     * @brief hardcoded offset or calibration offset
-     *
-     */
     /*
+    /// @brief hardcoded offset or calibration offset
     //hardcoded offset
     if (gx > 0)
     {
@@ -183,20 +205,23 @@ void IMU::readGYRO(int IMU)
     }
     */
     /* Calibration offset */
+
     gyroCalibX_ = gx - gx_drift; // Gyroscope X-angle in deg/s
     gyroCalibY_ = gy - gy_drift; // Gyroscope Y-angle in deg/s
     gyroCalibZ_ = gz - gz_drift; // Gyroscope Z-angle in deg/s
 }
 
+/**
+ * @brief Function reads values from the magnetometer
+ *
+ * @param IMU handler for choosing IMU sensor.
+ */
 void IMU::readMAG(int IMU)
 {
     float mx, my, mz;
     float bx, by, bz;
 
-    /**
-     * @brief handler for IMU sensor
-     *
-     */
+    /// @brief handler for IMU sensor
     if (IMU == 1)
     {
         mx = I1.readI2C(LIS3MDL_ADDR1, LIS3MDL_OUT_X_L, 1, 1);
@@ -215,18 +240,12 @@ void IMU::readMAG(int IMU)
         return;
     }
 
-    /**
-     * @brief Convert 16 bit register from LSB/guass to uT (micro Tesla)
-     *
-     */
+    /// @brief Convert 16 bit register from LSB/guass to uT (micro Tesla)
     mx = (mx / MG_Sensitivity) * 100;
     my = (my / MG_Sensitivity) * 100;
     mz = (mz / MG_Sensitivity) * 100;
 
-    /**
-     * @brief hardcoded offsets. b = Hard-Iron distortion and A = Soft-Iron distortion.
-     *
-     */
+    /// @brief hardcoded offsets. b = Hard-Iron distortion and A = Soft-Iron distortion.
     if (IMU == 1)
     {
         bx = 30.046034;
@@ -263,44 +282,59 @@ void IMU::readMAG(int IMU)
     }
 }
 
-void IMU::ConvertACCData()
+/**
+ * @brief Function converts accelerometer data to roll and pitch
+ *
+ */
+void IMU::convertAccData()
 {
     /*  gyroXangle_ = PI*(rate_gyr_x_ / (DT*1000));
    gyroYangle_ = PI*(rate_gyr_y_ / (DT*1000));
    gyroZangle_ = PI*(rate_gyr_z_ / (DT*1000));  */
-    XL_Roll_ = atan2(accCalibY_, accCalibZ_) * 180 / PI;
-    XL_Pitch_ = atan2(-accCalibX_, sqrt(accCalibY_ * accCalibY_ + accCalibZ_ * accCalibZ_)) * -180 / PI;
-}
-
-void IMU::ConvertMagData()
-{
-    MAG_Yaw_ = (atan2(magCalibY_, magCalibX_) * 180 / PI); // minus magnetic_decline
-    if (MAG_Yaw_ < 0)                                      // correct yaw if under 0 degrees
-    {
-        MAG_Yaw_ += 360;
-        // printf("magYaw: %f\n\n", MAG_Yaw_);
-    }
-    // printf("YAW: %f\n", MAG_Yaw_);
-}
-
-void IMU::ComplementaryFilter()
-{
-    /* printf("XL_Roll_ %f XL_Pitch_%f\n", XL_Roll_, XL_Pitch_);
-    printf("YAW: %f\n", MAG_Yaw_); */
-    /*Complementary Filter*/
-    {
-        std::scoped_lock<std::mutex> lock(m_);
-        CompRoll_ = AA * (CompRoll_ + gyroCalibY_ * DT) + (1 - AA) * XL_Roll_;    // 97% Gyro 3% Accelerometer
-        CompPitch_ = AA * (CompPitch_ + gyroCalibX_ * DT) + (1 - AA) * XL_Pitch_; // 97% Gyro 3% Accelerometer
-        CompYaw_ = 0.5 * (CompYaw_ + gyroCalibZ_ * DT) + (1 - 0.5) * MAG_Yaw_;    // 50% Gyro 50% Magnometer
-    }
-    // printf("Roll_filtered: %f, Pitch filtered: %f, GyroZangle: %f\n", CompRoll_, CompPitch_, CompYaw_);
+    xlRoll_ = atan2(accCalibY_, accCalibZ_) * 180 / PI;
+    xlPitch_ = atan2(-accCalibX_, sqrt(accCalibY_ * accCalibY_ + accCalibZ_ * accCalibZ_)) * -180 / PI;
 }
 
 /**
- * @brief Free fall function
+ * @brief Function converts magnetometer data to yaw
+ *
  */
-/* int IMU::freeFall(int IMU)
+void IMU::convertMagData()
+{
+    magYaw_ = (atan2(magCalibY_, magCalibX_) * 180 / PI); // minus magnetic_decline
+    if (magYaw_ < 0)                                      // correct yaw if under 0 degrees
+    {
+        magYaw_ += 360;
+        // printf("magYaw: %f\n\n", magYaw_);
+    }
+    // printf("YAW: %f\n", magYaw_);
+}
+
+/**
+ * @brief Complimentary filter for roll, pitch and yaw
+ *
+ */
+void IMU::complementaryFilter()
+{
+    /* printf("xlRoll_ %f xlPitch_%f\n", xlRoll_, xlPitch_);
+    printf("YAW: %f\n", magYaw_); */
+    /*Complementary Filter*/
+    {
+        std::scoped_lock<std::mutex> lock(m_);
+        compRoll_ = AA * (compRoll_ + gyroCalibY_ * DT) + (1 - AA) * xlRoll_;    // 97% Gyro 3% Accelerometer
+        compPitch_ = AA * (compPitch_ + gyroCalibX_ * DT) + (1 - AA) * xlPitch_; // 97% Gyro 3% Accelerometer
+        compYaw_ = 0.5 * (compYaw_ + gyroCalibZ_ * DT) + (1 - 0.5) * magYaw_;    // 50% Gyro 50% Magnometer
+    }
+    // printf("Roll_filtered: %f, Pitch filtered: %f, GyroZangle: %f\n", compRoll_, compPitch_, compYaw_);
+}
+
+/**
+ * @brief Function that checks for free fall via IMU
+ *
+ * @param IMU handler for choosing IMU sensor.
+ * @return int freeFall
+ */
+/*int IMU::freeFall(int IMU)
 {
  int freeFall = 0;
 
@@ -330,6 +364,11 @@ return 0;
 }
 */
 
+/**
+ * @brief Function places roll, pitch and yaw in struct
+ *
+ * @return Orientation struct that contains roll, pitch and yaw
+ */
 Orientation IMU::getOrientation()
 {
 
@@ -345,17 +384,32 @@ Orientation IMU::getOrientation()
     return {roll, pitch, yaw};
 }
 
+/**
+ * @brief Function returns compensated roll
+ *
+ * @return float compRoll_
+ */
 float IMU::getRoll() const
 {
-    return CompRoll_;
+    return compRoll_;
 }
 
+/**
+ * @brief Function returns compensated pitch
+ *
+ * @return float compPitch_
+ */
 float IMU::getPitch() const
 {
-    return CompPitch_;
+    return compPitch_;
 }
 
+/**
+ * @brief Function returns compensated yaw
+ *
+ * @return float compYaw_
+ */
 float IMU::getYaw() const
 {
-    return CompYaw_;
+    return compYaw_;
 }

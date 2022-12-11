@@ -3,14 +3,21 @@
 /**
  * Math constants used for barometric formula
  */
-#define p_0 101325     // Pressure at sea level
-#define mbar_to_Pa 100 // Conversion rate
-#define T_s 288.15     // Temperature at sea level in Kelvin
-#define R 287.052      // Specific gas constant in J/K*kg
-#define T_G 0.0065     // Temperature gradient in K/m
-#define g 9.807        // Gravitational constant in m/s^2
+/// Pressure at sea level
+#define p_0 101325
+/// Conversion rate
+#define mbar_to_Pa 100
+/// Temperature at sea level in Kelvin
+#define T_s 288.15
+/// Specific gas constant in J/K*kg
+#define R 287.052
+/// Temperature gradient in K/m
+#define T_G 0.0065
+/// Gravitational constant in m/s^2
+#define g 9.807
 
-I2C B1; /// I2C class member
+/// I2C class member
+I2C B1;
 
 /**
  * @brief Construct a new BAR::BAR object
@@ -21,14 +28,16 @@ BAR::BAR()
 }
 
 /**
- * Destructor for the BAR class
+ * @brief Destroy the BAR::BAR object
+ *
  */
 BAR::~BAR()
 {
 }
 
 /**
- *  Function calculates the initial above mean sea level altitude
+ * @brief Function calculates the initial above mean sea level altitude
+ *
  */
 void BAR::initialAMSL()
 {
@@ -40,7 +49,8 @@ void BAR::initialAMSL()
 }
 
 /**
- * Function converts the bar data into height above ground level
+ * @brief Function converts the bar data into height above ground level
+ *
  */
 void BAR::convertToAGL()
 {
@@ -53,7 +63,9 @@ void BAR::convertToAGL()
 }
 
 /**
- * Function returns height above ground level
+ * @brief Function returns height above ground level
+ *
+ * @return float height_AGL_
  */
 float BAR::getHeight()
 {
@@ -62,7 +74,9 @@ float BAR::getHeight()
 }
 
 /**
- * Function returns BAR calibration private variable
+ * @brief Function returns BAR calibration private variable
+ *
+ * @return int calibration_
  */
 int BAR::getCalibration()
 {
@@ -70,7 +84,8 @@ int BAR::getCalibration()
 }
 
 /**
- * Power on and prepare for general usage. This method reads coefficients stored in PROM and calibrates the Barometer
+ * @brief Function prepares for general usage. This method reads coefficients stored in PROM and calibrates the Barometer
+ *
  */
 void BAR::calibrateBAR()
 {
@@ -99,7 +114,8 @@ void BAR::calibrateBAR()
 }
 
 /**
- * Function that reads the pressure value from the barometer
+ * @brief Function that reads the pressure value from the barometer
+ *
  */
 void BAR::readPressure()
 {
@@ -111,7 +127,8 @@ void BAR::readPressure()
 }
 
 /**
- * Function reads the temperature value from the barometer
+ * @brief Function reads the temperature value from the barometer
+ *
  */
 void BAR::readTemperature()
 {
@@ -123,7 +140,8 @@ void BAR::readTemperature()
 }
 
 /**
- * Function does temperature and pressure calculations and perform compensation. More info about these calculations is available in the datasheet.
+ * @brief Function does temperature and pressure calculations and perform compensation. More info about these calculations is available in the datasheet.
+ *
  */
 void BAR::calculatePressureAndTemperature()
 {
@@ -162,7 +180,8 @@ void BAR::calculatePressureAndTemperature()
 }
 
 /**
- * Function updates the pressure and temperature and does compensation by calling other functions in BAR
+ * @brief Function updates the pressure and temperature and does compensation by calling other functions in BAR
+ *
  */
 void BAR::update()
 {
