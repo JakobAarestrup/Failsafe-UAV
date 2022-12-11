@@ -299,7 +299,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
  *
  * @param IMU2 is the IMU object
  */
-void updateIMUValues(IMU &IMU2) // IMU &IMU1,
+void updateIMUValues(IMU &IMU1) // IMU &IMU1,
 {
     while (1)
     {
