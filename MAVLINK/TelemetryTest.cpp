@@ -55,6 +55,27 @@ std::shared_ptr<System> get_system(Mavsdk &mavsdk)
     return fut.get();
 }
 
+// Function to convert a quaternion to roll, pitch, and yaw
+void quatToEuler(const Quaternion &q, double &roll, double &pitch, double &yaw)
+{
+    // Compute roll
+    double sinr_cosp = 2 * (q.w * q.x + q.y * q.z);
+    double cosr_cosp = 1 - 2 * (q.x * q.x + q.y * q.y);
+    roll = std::atan2(sinr_cosp, cosr_cosp);
+
+    // Compute pitch
+    double sinp = 2 * (q.w * q.y - q.z * q.x);
+    if (std::abs(sinp) >= 1)
+        pitch = std::copysign(M_PI / 2, sinp); // use 90 degrees if out of range
+    else
+        pitch = std::asin(sinp);
+
+    // Compute yaw
+    double siny_cosp = 2 * (q.w * q.z + q.x * q.y);
+    double cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z);
+    yaw = std::atan2(siny_cosp, cosy_cosp);
+}
+
 int main(int argc, char **argv)
 {
     if (argc != 2)
@@ -109,7 +130,8 @@ int main(int argc, char **argv)
     float latitude;
     double roll;
     double pitch;
-    float yaw;
+    double yaw;
+
     // telemetry.attitude_euler(Telemetry::EulerAngler euler);  // Set up callback to monitor altitude while the vehicle is in flight
 
     /* telemetry.subscribe_attitude_euler([](Telemetry::EulerAngle euler){
@@ -127,11 +149,17 @@ int main(int argc, char **argv)
                   << "Latitude: " << longitude << std::endl
                   << "Longitude: " << latitude << '\n';
         Telemetry::Quaternion q = telemetry.attitude_quaternion();
+        quatToEuler(q, roll, pitch, yaw);
 
-        roll = atan2(2 * (q.w * q.x + q.y * q.z), 1 - 2 * (q.x * q.x + q.y * q.y));
-        pitch = asin(2 * (q.w * q.y - q.z * q.x));
-        yaw = atan2(2 * (q.w * q.z + q.x * q.y), 1 - 2 * (q.y * q.y + q.z * q.z));
-        std::cout << "Angles: (" << roll << ", " << pitch << ", " << yaw << ")" << std::endl;
+        // Convert angles to degrees
+        roll = roll * 180 / M_PI;
+        pitch = pitch * 180 / M_PI;
+        yaw = yaw * 180 / M_PI;
+        /*    roll = atan2(2 * (q.w * q.x + q.y * q.z), 1 - 2 * (q.x * q.x + q.y * q.y));
+       pitch = asin(2 * (q.w * q.y - q.z * q.x));
+       yaw = atan2(2 * (q.w * q.z + q.x * q.y), 1 - 2 * (q.y * q.y + q.z * q.z)); */
+        std::cout
+            << "Angles: (" << roll << ", " << pitch << ", " << yaw << ")" << std::endl;
         sleep_for(seconds(1));
     }
 
