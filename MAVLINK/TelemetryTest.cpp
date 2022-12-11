@@ -89,7 +89,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    const auto set_rate_result1 = telemetry.set_rate_camera_attitude_euler(1.0);
+    const auto set_rate_result1 = telemetry.set_rate_camera_attitude(1.0);
     if (set_rate_result1 != Telemetry::Result::Success)
     {
         std::cerr << "Setting rate failed: " << set_rate_result1 << '\n';
