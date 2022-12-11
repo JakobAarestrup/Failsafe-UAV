@@ -102,7 +102,7 @@ void ValidateState::configValidateState(char maxHeight[], char maxAcceleration[]
  * @param critical int critital is used as handler
  * @return int critital
  */
-int ValidateState::axisControl(float RollRDS, float RollSYS, float PitchRDS, float PitchSYS, int critical)
+int ValidateState::axisControl(float rollRDS, float rollSYS, float pitchRDS, float pitchSYS, int critical)
 {
     float errorOrientation = (maxOrientation_ * 0.66666666);
 

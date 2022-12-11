@@ -17,7 +17,7 @@ public:
   void configValidateState(char maxHeight[], char maxAcceleration[], char maxOrientation[], char maxDistance[]);
 
   int mymillis();
-  int axisControl(float RollRDS, float RollSYS, float PitchRDS, float PitchSYS, int critical);
+  int axisControl(float rollRDS, float rollSYS, float pitchRDS, float pitchSYS, int critical);
   int routeControl(int critical);
   int heightControl(float altitudeRDS, float altitudeSYS, int critical);
   int freeFall(float altitudeRDS, float altitudeSYS, int critical);
