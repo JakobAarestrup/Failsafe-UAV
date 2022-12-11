@@ -154,7 +154,7 @@ int main(int argc, char **argv)
         // Convert angles to degrees
         roll = roll * 180 / M_PI;
         pitch = pitch * 180 / M_PI;
-        yaw = yaw * 180 / M_PI;
+        yaw = (yaw * 180 / M_PI) + 180;
         /*    roll = atan2(2 * (q.w * q.x + q.y * q.z), 1 - 2 * (q.x * q.x + q.y * q.y));
        pitch = asin(2 * (q.w * q.y - q.z * q.x));
        yaw = atan2(2 * (q.w * q.z + q.x * q.y), 1 - 2 * (q.y * q.y + q.z * q.z)); */
