@@ -15,15 +15,15 @@ UDPServerSocket.bind((localIP, localPort))
 print("UDP server up and listening")
 
 # get current date and time
-    now = datetime.now()
-    current_time = now.strftime("%Y-%m-%d-%H%M")
-    current_clock = now.strftime("%H:%M:%S")
+now = datetime.now()
+current_time = now.strftime("%Y-%m-%d-%H%M")
+current_clock = now.strftime("%H:%M:%S")
   
-    # convert datetime obj to string
-    str_current_datetime = str(current_time)
+# convert datetime obj to string
+str_current_datetime = str(current_time)
 
-    # create a file object along with extension
-    file_name = "C:/Users/Rasmus/Documents/GUI/Logs/ServerLOG_" + str_current_datetime + ".txt"
+# create a file object along with extension
+file_name = "C:/Users/Rasmus/Documents/GUI/Logs/ServerLOG_" + str_current_datetime + ".txt"
 
 # Listen for incoming datagrams
 while (True):
