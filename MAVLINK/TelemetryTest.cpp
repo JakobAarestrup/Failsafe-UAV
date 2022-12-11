@@ -133,7 +133,7 @@ int main(int argc, char **argv)
                   << "Latitude: " << longitude << std::endl
                   << "Longitude: " << latitude << '\n';
 
-        const Telemetry::EulerAngle euler = telemetry.attitude_euler();
+        const Telemetry::Euler euler = telemetry.attitude_euler();
         roll = euler.roll_deg;
         if (std::isnan(roll))
         {
