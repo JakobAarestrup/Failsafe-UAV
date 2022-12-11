@@ -89,18 +89,11 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    const auto set_rate_result1 = telemetry.set_rate_attitude_quaternion(10.0);
+    /* const auto set_rate_result1 = telemetry.set_rate_attitude_euler(1.0);
     if (set_rate_result1 != Telemetry::Result::Success)
     {
         std::cerr << "Setting rate failed: " << set_rate_result1 << '\n';
         return 1;
-    }
-
-    /* // Check until vehicle is ready to arm
-    while (telemetry.health_all_ok() != true)
-    {
-        std::cout << "Telemetry is not okay\n";
-        sleep_for(seconds(1));
     } */
 
     const Action::Result land_result = action.land();
@@ -115,7 +108,7 @@ int main(int argc, char **argv)
     float latitude;
     double roll;
     double pitch;
-    double yaw;
+    float yaw;
     // telemetry.attitude_euler(Telemetry::EulerAngler euler);  // Set up callback to monitor altitude while the vehicle is in flight
 
     /* telemetry.subscribe_attitude_euler([](Telemetry::EulerAngle euler){
@@ -132,16 +125,13 @@ int main(int argc, char **argv)
         std::cout << "Altitude: " << relative_alt << " m" << std::endl
                   << "Latitude: " << longitude << std::endl
                   << "Longitude: " << latitude << '\n';
-
-        Telemetry::Quaternion quaternion = telemetry->attitude_quaternion();
-        roll = quaternion.x * 100;
-        if (std::isnan(roll))
-        {
-            roll = 0.0f; // or any other default value
-        }
-        pitch = quaternion.y * 100;
-        yaw = quaternion.z * 100;
-        std::cout << "Angles:     (" << roll << ", " << pitch << ", " << yaw << ")" << std::endl;
+        Telemetry::EulerAngle euler_angles(45.0f, 30.0f, 15.0f);
+        telemetry.set_attitude_euler(euler_angles);
+        Telemetry::EulerAngle euler = telemetry.attitude_euler();
+        roll = euler.roll_deg;
+        pitch = euler.pitch_deg;
+        yaw = euler.yaw_deg;
+        std::cout << "Euler:     (" << roll << ", " << pitch << ", " << yaw << ")" << std::endl;
         sleep_for(seconds(1));
     }
 
