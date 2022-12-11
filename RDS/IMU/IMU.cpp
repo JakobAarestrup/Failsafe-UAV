@@ -186,8 +186,6 @@ void IMU::readGYRO(int IMU)
     gy = (gy * G_Sensitivity) / 1000;
     gz = (gz * G_Sensitivity) / 1000;
 
-    /*
-
     /* Calibration offset */
 
     gyroCalibX_ = gx - gx_drift_; // Gyroscope X-angle in deg/s
