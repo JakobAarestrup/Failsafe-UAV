@@ -138,12 +138,6 @@ int main(int argc, char **argv)
     double pitch;
     double yaw;
 
-    // telemetry.attitude_euler(Telemetry::EulerAngler euler);  // Set up callback to monitor altitude while the vehicle is in flight
-
-    /* telemetry.subscribe_attitude_euler([](Telemetry::EulerAngle euler){
-
-       std::cout << "Euler:     (" << euler.roll_deg << ", " << euler.pitch_deg << ", " << euler.yaw_deg << ")" << std::endl;}); */
-
     while (1)
     {
         const Telemetry::Position position = telemetry.position();
@@ -157,13 +151,6 @@ int main(int argc, char **argv)
         Telemetry::Quaternion q = telemetry.attitude_quaternion();
         quaternionToEuler(q, roll, pitch, yaw);
 
-        // Convert angles to degrees
-        roll = roll * 180 / M_PI;
-        pitch = pitch * 180 / M_PI;
-        yaw = (yaw * 180 / M_PI) + 180;
-        /*    roll = atan2(2 * (q.w * q.x + q.y * q.z), 1 - 2 * (q.x * q.x + q.y * q.y));
-       pitch = asin(2 * (q.w * q.y - q.z * q.x));
-       yaw = atan2(2 * (q.w * q.z + q.x * q.y), 1 - 2 * (q.y * q.y + q.z * q.z)); */
         std::cout
             << "Angles: (" << roll << ", " << pitch << ", " << yaw << ")" << std::endl;
         sleep_for(seconds(1));
