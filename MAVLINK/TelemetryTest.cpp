@@ -7,6 +7,7 @@
 #include <future>
 #include <memory>
 #include <thread>
+#include <cmath>
 
 using namespace mavsdk;
 using std::chrono::seconds;
@@ -89,7 +90,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    const auto set_rate_result1 = telemetry.set_rate_attitude_euler_angle(1.0);
+    const auto set_rate_result1 = telemetry.set_rate_attitude_quarternion(1.0);
     if (set_rate_result1 != Telemetry::Result::Success)
     {
         std::cerr << "Setting rate failed: " << set_rate_result1 << '\n';
@@ -125,11 +126,12 @@ int main(int argc, char **argv)
         std::cout << "Altitude: " << relative_alt << " m" << std::endl
                   << "Latitude: " << longitude << std::endl
                   << "Longitude: " << latitude << '\n';
-        Telemetry::EulerAngle euler = telemetry.attitude_euler_angle();
-        roll = euler.roll_deg;
-        pitch = euler.pitch_deg;
-        yaw = euler.yaw_deg;
-        std::cout << "Euler:     (" << roll << ", " << pitch << ", " << yaw << ")" << std::endl;
+        Telemetry::Quarternion q = telemetry.attitude_quarternion();
+
+        roll = atan2(2 * (q.w * q.x + q.y * q.z), 1 - 2 * (q.x * q.x + q.y * q.y));
+        pitch = asin(2 * (q.w * q.y - q.z * q.x));
+        yaw = atan2(2 * (q.w * q.z + q.x * q.y), 1 - 2 * (q.y * q.y + q.z * q.z));
+        std::cout << "Angles: (" << roll << ", " << pitch << ", " << yaw << ")" << std::endl;
         sleep_for(seconds(1));
     }
 
