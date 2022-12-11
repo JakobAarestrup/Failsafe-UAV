@@ -9,6 +9,8 @@
 #include <thread>
 
 using namespace mavsdk;
+using std::chrono::seconds;
+using std::this_thread::sleep_for;
 
 void usage(const std::string &bin_name)
 {
