@@ -1,6 +1,8 @@
 #include "BAR.hpp"
 
-/*Math constants*/
+/**
+ * Math constants used for barometric formula
+ */
 #define p_0 101325     // Pressure at sea level
 #define mbar_to_Pa 100 // Conversion rate
 #define T_s 288.15     // Temperature at sea level in Kelvin
@@ -8,20 +10,26 @@
 #define T_G 0.0065     // Temperature gradient in K/m
 #define g 9.807        // Gravitational constant in m/s^2
 
-I2C B1;
+I2C B1; /// I2C class member
 
-// Constructor
+/**
+ * Constructor for the BAR class
+ */
 BAR::BAR()
 {
 }
 
-// Destructor
+/**
+ * destructor for the BAR class
+ */
 BAR::~BAR()
 {
     /*delete [] height_AGL_, height_AMSL_, initial_pressure_, initial_AMSL_, pressure_; // Delete private variables*/
 }
 
-// Calibrates the barometer data
+/**
+ *  Function calculates the initial above mean sea level altitude
+ */
 void BAR::initialAMSL()
 {
     initial_AMSL_ = (T_s / T_G) * (1 - pow((pres_ / p_0), T_G * (R / g))); // Using barometric formula.
@@ -31,7 +39,9 @@ void BAR::initialAMSL()
     }
 }
 
-// Converts the bar data into height
+/**
+ * Function converts the bar data into height above ground level
+ */
 void BAR::convertToAGL()
 {
     height_AMSL_ = (T_s / T_G) * (1 - pow((pres_ / p_0), T_G * (R / g))); // Using barometric formula.
@@ -42,19 +52,26 @@ void BAR::convertToAGL()
     }
 }
 
-// Returns height above ground level
+/**
+ * Function returns height above ground level
+ */
 float BAR::getHeight()
 {
     convertToAGL();
     return height_AGL_; // Return height
 }
 
+/**
+ * Function returns BAR calibration private variable
+ */
 int BAR::getCalibration()
 {
     return calibration_;
 }
 
-// Power on and prepare for general usage. This method reads coefficients stored in PROM.
+/**
+ * Power on and prepare for general usage. This method reads coefficients stored in PROM and calibrates the Barometer
+ */
 void BAR::calibrateBAR()
 {
 
@@ -81,7 +98,9 @@ void BAR::calibrateBAR()
     }
 }
 
-// Read pressure value
+/**
+ * Function that reads the pressure value from the barometer
+ */
 void BAR::readPressure()
 {
     // Initiate the process of pressure measurement
@@ -91,7 +110,9 @@ void BAR::readPressure()
     D1_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3, 3);
 }
 
-// Read temperature value
+/**
+ * Function reads the temperature value from the barometer
+ */
 void BAR::readTemperature()
 {
     // Initiate the process of temperature measurement
@@ -101,7 +122,9 @@ void BAR::readTemperature()
     D2_ = B1.readI2C(MS5611_DEFAULT_ADDRESS, MS5611_RA_ADC, 3, 3);
 }
 
-// Calculate temperature and pressure calculations and perform compensation. More info about these calculations is available in the datasheet.
+/**
+ * Function does temperature and pressure calculations and perform compensation. More info about these calculations is available in the datasheet.
+ */
 void BAR::calculatePressureAndTemperature()
 {
     float dT = D2_ - C5_ * pow(2, 8);
@@ -138,8 +161,8 @@ void BAR::calculatePressureAndTemperature()
     temp_ = temp_ / 100;
 }
 
-/** Perform pressure and temperature reading and calculation at once.
- *  Contains sleeps, better perform operations separately.
+/**
+ * Function updates the pressure and temperature and does compensation by calling other functions in BAR
  */
 void BAR::update()
 {
