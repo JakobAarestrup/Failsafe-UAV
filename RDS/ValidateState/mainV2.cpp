@@ -260,11 +260,11 @@ void updateIMUValues(IMU &IMU2) // IMU &IMU1,
         */
 
         /*Gets Data from second IMU*/
-        IMU2.readIMU(1);
+        /* IMU2.readIMU(1);
         IMU2.ConvertACCData();
         IMU2.ConvertMagData();
         IMU2.ComplementaryFilter();
-
+        */
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
     }
 }
