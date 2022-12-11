@@ -65,6 +65,27 @@ std::shared_ptr<System> get_system(Mavsdk &mavsdk)
     return fut.get();
 }
 
+void quaternionToEuler(const Telemetry::Quaternion &q, double &roll, double &pitch, double &yaw)
+{
+    // Compute roll
+    double sinr_cosp = 2 * (q.w * q.x + q.y * q.z);
+    double cosr_cosp = 1 - 2 * (q.x * q.x + q.y * q.y);
+    roll = std::atan2(sinr_cosp, cosr_cosp);
+
+    // Compute pitch
+    double sinp = 2 * (q.w * q.y - q.z * q.x);
+
+    if (std::abs(sinp) >= 1)
+        pitch = std::copysign(M_PI / 2, sinp); // use 90 degrees if out of range
+    else
+        pitch = std::asin(sinp);
+
+    // Compute yaw
+    double siny_cosp = 2 * (q.w * q.z + q.x * q.y);
+    double cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z);
+    yaw = std::atan2(siny_cosp, cosy_cosp);
+}
+
 /**
  * @brief Function that tells time passed since boot
  *
@@ -120,7 +141,7 @@ inline void Logger(std::string logMessage)
  * @param euler is the euler data from the drone
  * @param Client is the UDP client member
  */
-void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry::Position position, Telemetry::EulerAngle euler, UDP Client)
+void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry::Position position, Telemetry::Quaternion q, UDP Client)
 {
     /*Values from RDS*/
     float altitudeRDS = altitude;
@@ -136,9 +157,9 @@ void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry
     float altitudeSYS = position.relative_altitude_m;
     float longitudeSYS = position.longitude_deg;
     float latitudeSYS = position.latitude_deg;
-    float RollSYS = euler.roll_deg;
-    float PitchSYS = euler.pitch_deg;
-    float YawSYS = euler.yaw_deg;
+    double RollSYS, PitchSYS, YawSYS;
+
+    quaternionToEuler(q, RollSYS, PitchSYS, YawSYS);
 
     /*START logging*/
     // printf("Logging data called..\n");
@@ -183,7 +204,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
     int startofloop;
 
     Telemetry::Position position;
-    Telemetry::EulerAngle euler;
+    Telemetry::Quaternion q;
 
     Orientation IMUDATA1;
     // Orientation IMUDATA2;
@@ -224,8 +245,8 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         altitude = Barometer.getHeight(); // returns altitude
 
         /*MAVLINK*/
-        position = telemetry.position();    // returns struct with values from baro and GPS
-        euler = telemetry.attitude_euler(); // returns struct with euler angles
+        position = telemetry.position();     // returns struct with values from baro and GPS
+        q = telemetry.attitude_quaternion(); // returns struct with euler angles
 
         LogData(GPSDATA, IMUDATA1, altitude, position, euler, Client); // Sends sensor data to log file
         Roll = IMUDATA1.roll;                                          //(IMUDATA2.roll + IMUDATA1.roll) / 2;                    // returns
@@ -389,10 +410,10 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    const auto set_rate_euler = telemetry.set_rate_attitude_euler(2.0);
-    if (set_rate_euler != Telemetry::Result::Success)
+    const auto set_rate_result1 = telemetry.set_rate_attitude_quaternion(2.0);
+    if (set_rate_result1 != Telemetry::Result::Success)
     {
-        std::cerr << "Setting rate failed: " << set_rate_euler << '\n';
+        std::cerr << "Setting rate failed: " << set_rate_result1 << '\n';
         return 1;
     }
 
