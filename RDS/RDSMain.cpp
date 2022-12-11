@@ -248,9 +248,9 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         position = telemetry.position();     // returns struct with values from baro and GPS
         q = telemetry.attitude_quaternion(); // returns struct with euler angles
 
-        LogData(GPSDATA, IMUDATA1, altitude, position, euler, Client); // Sends sensor data to log file
-        Roll = IMUDATA1.roll;                                          //(IMUDATA2.roll + IMUDATA1.roll) / 2;                    // returns
-        Pitch = IMUDATA1.pitch;                                        //(IMUDATA2.pitch + IMUDATA1.pitch) / 2;                 // returns
+        LogData(GPSDATA, IMUDATA1, altitude, position, q, Client); // Sends sensor data to log file
+        Roll = IMUDATA1.roll;                                      //(IMUDATA2.roll + IMUDATA1.roll) / 2;                    // returns
+        Pitch = IMUDATA1.pitch;                                    //(IMUDATA2.pitch + IMUDATA1.pitch) / 2;                 // returns
         std::cout << "Loop Time: " << mymillis() - startofloop << std::endl;
         State.freeFall(altitude, position.relative_altitude_m, critical);          // Checks error for free fall (acceleration)
         State.axisControl(Roll, euler.roll_deg, Pitch, euler.pitch_deg, critical); // Checks for error for roll, pitch, and yaw
