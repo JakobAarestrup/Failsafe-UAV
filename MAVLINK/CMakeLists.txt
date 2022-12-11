@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15.2)
 
 # Specify your project's name
-project(TelePasta)
+project(TeleTest)
 
 # Specify at least C++11, better C++17
 set(CMAKE_CXX_STANDARD 17)
@@ -15,7 +15,7 @@ find_package(MAVSDK REQUIRED)
 
 # Specify your app's executable name, and list of source files used to create it.
 add_executable(Tele
-    GetMAVLinkdata.cpp
+    TelemetryTest.cpp
     # ... any other source files
 )
 
