@@ -41,11 +41,11 @@ private:
     float gyroCalibZ_;
 
     /// @brief Gyroscope drift in x-axis in
-    float gx_drift;
+    float gx_drift_;
     /// @brief Gyroscope drift in y-axis in
-    float gy_drift;
+    float gy_drift_;
     /// @brief Gyroscope drift in z-axis in
-    float gz_drift;
+    float gz_drift_;
 
     /// @brief Magnetometer calibrated x-axis in deg/s
     float magCalibX_;

@@ -87,9 +87,9 @@ void IMU::calibrateGyro(int IMU)
      * @brief Convert 16 bit register from mdeg/s/LSB to deg/s
      *
      */
-    gx_drift = ((gx_TOTAL * G_Sensitivity) / 1000) / N;
-    gy_drift = ((gy_TOTAL * G_Sensitivity) / 1000) / N;
-    gz_drift = ((gz_TOTAL * G_Sensitivity) / 1000) / N;
+    gx_drift_ = ((gx_TOTAL * G_Sensitivity) / 1000) / N;
+    gy_drift_ = ((gy_TOTAL * G_Sensitivity) / 1000) / N;
+    gz_drift_ = ((gz_TOTAL * G_Sensitivity) / 1000) / N;
 }
 
 /**
@@ -187,28 +187,12 @@ void IMU::readGYRO(int IMU)
     gz = (gz * G_Sensitivity) / 1000;
 
     /*
-    /// @brief hardcoded offset or calibration offset
-    //hardcoded offset
-    if (gx > 0)
-    {
-       gyroCalibX_ = gx - gyroDrift;   // Gyroscope X-angle in deg/s
-    }
 
-    if (gy > 0)
-    {
-       gyroCalibY_ = gy - gyroDrift;   // Gyroscope Y-angle in deg/s
-    }
-
-    if (gz > 0)
-    {
-       gyroCalibZ_ = gz - gyroDrift;   // Gyroscope Z-angle in deg/s
-    }
-    */
     /* Calibration offset */
 
-    gyroCalibX_ = gx - gx_drift; // Gyroscope X-angle in deg/s
-    gyroCalibY_ = gy - gy_drift; // Gyroscope Y-angle in deg/s
-    gyroCalibZ_ = gz - gz_drift; // Gyroscope Z-angle in deg/s
+    gyroCalibX_ = gx - gx_drift_; // Gyroscope X-angle in deg/s
+    gyroCalibY_ = gy - gy_drift_; // Gyroscope Y-angle in deg/s
+    gyroCalibZ_ = gz - gz_drift_; // Gyroscope Z-angle in deg/s
 }
 
 /**

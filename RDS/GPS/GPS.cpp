@@ -211,13 +211,13 @@ void GPS::convertData()
         else if ((strcmp(NS, "N") == 0) & (strcmp(EW, "W") == 0))
         {
 
-            latitude_ = lat_Deg + (lat_Sec);
-            longitude_ = lon_Deg + (lon_Sec) * -1;
+            latitude_ = lat_Deg + lat_Sec;
+            longitude_ = (lon_Deg + lon_Sec) * -1;
         }
         else if ((strcmp(NS, "S") == 0) & (strcmp(EW, "W") == 0))
         {
-            latitude_ = lat_Deg + (lat_Sec) * -1;
-            longitude_ = lon_Deg + (lon_Sec) * -1;
+            latitude_ = (lat_Deg + lat_Sec) * -1;
+            longitude_ = (lon_Deg + lon_Sec) * -1;
         }
         else
         {
