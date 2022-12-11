@@ -89,14 +89,12 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    telemetry->set_rate_attitude(10.0);
-
-    /*  const auto set_rate_result1 = telemetry.set_rate_attitude(1.0);
-     if (set_rate_result1 != Telemetry::Result::Success)
-     {
-         std::cerr << "Setting rate failed: " << set_rate_result1 << '\n';
-         return 1;
-     } */
+    const auto set_rate_result1 = telemetry.set_rate_attitude_euler(10.0);
+    if (set_rate_result1 != Telemetry::Result::Success)
+    {
+        std::cerr << "Setting rate failed: " << set_rate_result1 << '\n';
+        return 1;
+    }
 
     /* // Check until vehicle is ready to arm
     while (telemetry.health_all_ok() != true)
@@ -137,6 +135,10 @@ int main(int argc, char **argv)
 
         const Telemetry::EulerAngle euler = telemetry.attitude_euler();
         roll = euler.roll_deg;
+        if (std::isnan(roll))
+        {
+            roll = 0.0f; // or any other default value
+        }
         pitch = euler.pitch_deg;
         yaw = euler.yaw_deg;
         std::cout << "Euler:     (" << roll << ", " << pitch << ", " << yaw << ")" << std::endl;
