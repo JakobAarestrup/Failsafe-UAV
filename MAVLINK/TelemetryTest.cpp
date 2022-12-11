@@ -56,7 +56,7 @@ std::shared_ptr<System> get_system(Mavsdk &mavsdk)
 }
 
 // Function to convert a quaternion to roll, pitch, and yaw
-void quatToEuler(const Quaternion &q, double &roll, double &pitch, double &yaw)
+void quatToEuler(const Telemetry::Quaternion &q, double &roll, double &pitch, double &yaw)
 {
     // Compute roll
     double sinr_cosp = 2 * (q.w * q.x + q.y * q.z);
