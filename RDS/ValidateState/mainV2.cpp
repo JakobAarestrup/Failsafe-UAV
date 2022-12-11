@@ -59,7 +59,7 @@ std::shared_ptr<System> get_system(Mavsdk &mavsdk)
     return fut.get();
 }
 
-void quatToEuler(const Telemetry::Quaternion &q, double &roll, double &pitch, double &yaw)
+void quaternionToEuler(const Telemetry::Quaternion &q, double &roll, double &pitch, double &yaw)
 {
     // Compute roll
     double sinr_cosp = 2 * (q.w * q.x + q.y * q.z);
@@ -125,7 +125,7 @@ inline void Logger(std::string logMessage)
  *
  */
 
-void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry::Position position, Telemetry::EulerAngle euler, UDP Client)
+void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry::Position position, Telemetry::Quarternion q, UDP Client)
 {
     /*Values from RDS*/
     float altitudeRDS = altitude;
@@ -141,9 +141,8 @@ void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry
     float altitudeSYS = position.relative_altitude_m;
     float longitudeSYS = position.longitude_deg;
     float latitudeSYS = position.latitude_deg;
-    float RollSYS = euler.roll_deg;
-    float PitchSYS = euler.pitch_deg;
-    float YawSYS = euler.yaw_deg;
+    double RollSYS, PitchSYS, YawSYS;
+    quaternionToEuler(q, RollSYS, PitchSYS, YawSYS);
 
     /*START logging*/
     // printf("Logging data called..\n");
@@ -184,7 +183,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
     // Orientation IMUDATA2;
     GPSPosition GPSDATA;
 
-    float altitude = 0;
+    double altitude = 0;
     float Roll = 0;
     float Pitch = 0;
 

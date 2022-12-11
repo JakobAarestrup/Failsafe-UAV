@@ -15,7 +15,6 @@ public:
 
   void usage(const std::string &bin_name);
   void configValidateState(char maxHeight[], char maxAcceleration[], char maxOrientation[], char maxDistance[]);
-  void landDrone();
 
   int mymillis();
   int axisControl(float RollRDS, float RollSYS, float PitchRDS, float PitchSYS, int critical);

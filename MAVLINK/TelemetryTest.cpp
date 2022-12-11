@@ -56,7 +56,7 @@ std::shared_ptr<System> get_system(Mavsdk &mavsdk)
 }
 
 // Function to convert a quaternion to roll, pitch, and yaw
-void quatToEuler(const Telemetry::Quaternion &q, double &roll, double &pitch, double &yaw)
+void quaternionToEuler(const Telemetry::Quaternion &q, double &roll, double &pitch, double &yaw)
 {
     // Compute roll
     double sinr_cosp = 2 * (q.w * q.x + q.y * q.z);
@@ -150,7 +150,7 @@ int main(int argc, char **argv)
                   << "Latitude: " << longitude << std::endl
                   << "Longitude: " << latitude << '\n';
         Telemetry::Quaternion q = telemetry.attitude_quaternion();
-        quatToEuler(q, roll, pitch, yaw);
+        quaternionToEuler(q, roll, pitch, yaw);
 
         // Convert angles to degrees
         roll = roll * 180 / M_PI;
