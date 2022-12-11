@@ -106,14 +106,14 @@ int ValidateState::axisControl(float rollRDS, float rollSYS, float pitchRDS, flo
 {
     float errorOrientation = (maxOrientation_ * 0.66666666);
 
-    // Handler til hvis det ikke er et tal?
-    /* float Roll = (RollRDS + RollSYS) / 2;
-    float Pitch = (PitchRDS + PitchSYS) / 2; */
-    float PitchSYSS = pitchSYS;
+    float Roll = (rollRDS + rollSYS) / 2;
+    float Pitch = (pitchRDS + pitchSYS) / 2;
+
+    /* float PitchSYSS = pitchSYS;
     float RollSYSS = rollSYS;
     printf("%f , %f", PitchSYSS, RollSYSS);
     float Roll = rollRDS;
-    float Pitch = pitchRDS;
+    float Pitch = pitchRDS; */
 
     if (state_ == 1)
         printf("Error State\n");
