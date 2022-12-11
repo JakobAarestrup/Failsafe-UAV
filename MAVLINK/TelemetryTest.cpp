@@ -133,7 +133,7 @@ int main(int argc, char **argv)
                   << "Latitude: " << longitude << std::endl
                   << "Longitude: " << latitude << '\n';
 
-        const Telemetry::Quaternion quaternion = telemetry.attitude_quaternion();
+        Telemetry::Quaternion quaternion = telemetry->attitude_quaternion();
         roll = quaternion.x * 100;
         if (std::isnan(roll))
         {
