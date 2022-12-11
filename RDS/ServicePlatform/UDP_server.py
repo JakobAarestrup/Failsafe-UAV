@@ -1,4 +1,6 @@
 import socket
+import logging
+from datetime import datetime
 
 localIP = ""
 localPort = 42069
@@ -16,7 +18,7 @@ print("UDP server up and listening")
 
 # get current date and time
 now = datetime.now()
-current_time = now.strftime("%Y-%m-%d-%H%M")
+current_time = now.strftime("%Y-%m-%d-%H")
 current_clock = now.strftime("%H:%M:%S")
   
 # convert datetime obj to string
