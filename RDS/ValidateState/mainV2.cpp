@@ -252,18 +252,20 @@ void updateIMUValues(IMU &IMU2) // IMU &IMU1,
     {
 
         /*Gets Data from first IMU*/
-        /*
+
         IMU1.readIMU(1);
         IMU1.ConvertACCData();
         IMU1.ConvertMagData();
         IMU1.ComplementaryFilter();
-        */
+        // IMU1.freeFall(1);
 
         /*Gets Data from second IMU*/
-        /* IMU2.readIMU(1);
+        /*
+        IMU2.readIMU(1);
         IMU2.ConvertACCData();
         IMU2.ConvertMagData();
         IMU2.ComplementaryFilter();
+        IMU2.freeFall(2)
         */
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
     }
