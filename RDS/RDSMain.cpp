@@ -84,6 +84,11 @@ void quaternionToEuler(const Telemetry::Quaternion &q, double &roll, double &pit
     double siny_cosp = 2 * (q.w * q.z + q.x * q.y);
     double cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z);
     yaw = std::atan2(siny_cosp, cosy_cosp);
+
+    // Convert angles to degrees
+    roll = roll * 180 / M_PI;
+    pitch = pitch * 180 / M_PI;
+    yaw = (yaw * 180 / M_PI) + 180;
 }
 
 /**
@@ -138,7 +143,7 @@ inline void Logger(std::string logMessage)
  * @param IMUData is the data from the IMU
  * @param altitude is the altitude from the Barometer
  * @param position is the position data from the drone
- * @param euler is the euler data from the drone
+ * @param q is the quaternion data from the drone
  * @param Client is the UDP client member
  */
 void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry::Position position, Telemetry::Quaternion q, UDP Client)
@@ -161,8 +166,6 @@ void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry
 
     quaternionToEuler(q, RollSYS, PitchSYS, YawSYS);
 
-    /*START logging*/
-    // printf("Logging data called..\n");
     /*RDS sensors*/
     std::string GPSBaro = "Longitude: " + std::to_string(longitudeRDS) + " " + GPSData.NS[0] + " Latitude: " + std::to_string(latitudeRDS) + " " + GPSData.EW[0] + " Satellites: " + std::to_string(SatellitesRDS) + " Altitude: " + std::to_string(altitudeRDS);
     Logger(GPSBaro);
@@ -174,9 +177,6 @@ void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry
     Logger(GPSBaroSYS);
     std::string IMUSYS = "RollSYS: " + std::to_string(RollSYS) + " PitchSYS: " + std::to_string(PitchSYS) + " YawSYS: " + std::to_string(YawSYS);
     Logger(IMUSYS);
-
-    // UDP SEND PART
-    // char receivedServerMSG[1024];
 
     std::string RDSData = GPSBaro + IMU;
     std::string SYSData = GPSBaroSYS + IMUSYS;
@@ -236,7 +236,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
             GPSDATA = G1.getGPSPosition();
             loops = 1;
         }
-        // loops++;
+        loops++;
 
         /*Get Data from Sensors*/
         IMUDATA1 = IMU1.getOrientation();
@@ -260,6 +260,8 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
 
     while (1)
     {
+        startofloop = mymillis();
+
         /*Reads data from Barometer and GPS if fifth loop*/
         Barometer.readPressure();
         Barometer.readTemperature();
@@ -272,21 +274,20 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
             GPSDATA = G1.getGPSPosition();
             loops = 1;
         }
-        // loops++;
+        loops++;
 
         /*Get Data from Sensors*/
-        // IMUDATA1 = IMU1.getOrientation();
-        IMUDATA1 = IMU1.getOrientation(); // returns IMU Class Struct
-        GPSDATA = G1.getGPSPosition();    // returns GPS Class Struc
+        IMUDATA1 = IMU1.getOrientation();
+        // IMUDATA2 = IMU2.getOrientation(); // returns IMU Class Struct
+        // GPSDATA = G1.getGPSPosition();    // returns GPS Class Struc
         altitude = Barometer.getHeight(); // returns altitude
 
         /*MAVLINK*/
-        position = telemetry.position();    // returns struct with values from baro and GPS
-        euler = telemetry.attitude_euler(); // returns struct with euler angles
+        position = telemetry.position();     // returns struct with values from baro and GPS
+        q = telemetry.attitude_quaternion(); // returns struct with euler angles
 
-        LogData(GPSDATA, IMUDATA1, altitude, position, euler, Client); // Sends sensor data to log file
-        Roll = IMUDATA1.roll;                                          // +IMUDATA1) / 2  // returns
-        Pitch = IMUDATA1.pitch;
+        LogData(GPSDATA, IMUDATA1, altitude, position, euler, Client); // Sends sensor data to log fil
+        std::cout << "Loop Time: " << mymillis() - startofloop << std::endl;
         /* if{mavdsk register =1)
         exit();
         } */
@@ -304,20 +305,19 @@ void updateIMUValues(IMU &IMU2) // IMU &IMU1,
     {
 
         /*Gets Data from first IMU*/
-        /*
+
         IMU1.readIMU(1);
         IMU1.convertAccData();
         IMU1.convertMagData();
         IMU1.complementaryFilter();
-        IMU1.freeFall()
-        */
+        // IMU1.freeFall(1)
 
         /*Gets Data from second IMU*/
-        IMU2.readIMU(1);
-        IMU2.convertAccData();
-        IMU2.convertMagData();
-        IMU2.complementaryFilter();
-        // IMU2.freeFall()
+        /*  IMU2.readIMU(1);
+         IMU2.convertAccData();
+         IMU2.convertMagData();
+         IMU2.complementaryFilter();
+         // IMU2.freeFall(2) */
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
     }
 }
@@ -424,7 +424,7 @@ int main(int argc, char **argv)
     std::vector<std::thread> threads;
 
     threads.push_back(std::thread(mainloop, std::ref(State), std::ref(B1), std::ref(telemetry), std::ref(G1), std::ref(IMU1), std::ref(Client))); // std::ref(IMU2),
-    threads.push_back(std::thread(updateIMUValues, std::ref(IMU1)));
+    threads.push_back(std::thread(updateIMUValues, std::ref(IMU1)));                                                                              //,std::ref(IMU2))
 
     for (auto &th : threads)
     {

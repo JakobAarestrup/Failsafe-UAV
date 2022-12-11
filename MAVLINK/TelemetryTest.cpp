@@ -75,6 +75,11 @@ void quaternionToEuler(const Telemetry::Quaternion &q, double &roll, double &pit
     double siny_cosp = 2 * (q.w * q.z + q.x * q.y);
     double cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z);
     yaw = std::atan2(siny_cosp, cosy_cosp);
+
+    // Convert angles to degrees
+    roll = roll * 180 / M_PI;
+    pitch = pitch * 180 / M_PI;
+    yaw = (yaw * 180 / M_PI) + 180;
 }
 
 int main(int argc, char **argv)
