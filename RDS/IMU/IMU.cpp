@@ -15,7 +15,7 @@
 #define PI 3.14159265358979323846
 /// Radians to degrees constant
 #define RAD_TO_DEG 57.29578
-/// [s/loop] loop period. 200ms
+/// [s/loop] loop period. 20ms
 #define DT 0.02
 /// Complementary filter constant
 #define AA 0.97

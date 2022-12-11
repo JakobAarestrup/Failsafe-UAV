@@ -65,6 +65,7 @@ void quatToEuler(const Telemetry::Quaternion &q, double &roll, double &pitch, do
 
     // Compute pitch
     double sinp = 2 * (q.w * q.y - q.z * q.x);
+
     if (std::abs(sinp) >= 1)
         pitch = std::copysign(M_PI / 2, sinp); // use 90 degrees if out of range
     else

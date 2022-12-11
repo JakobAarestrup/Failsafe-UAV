@@ -122,7 +122,7 @@ int ValidateState::axisControl(float RollRDS, float RollSYS, float PitchRDS, flo
 
     if ((Roll > maxOrientation_) | (Pitch > maxOrientation_))
     {
-        landDrone();
+
         critical = 1;
     }
     else if (((Roll < errorOrientation) & (state_ == 1)) | ((Pitch < errorOrientation) & (state_ == 1)))
@@ -153,7 +153,7 @@ int ValidateState::routeControl(int critical)
 
     /*   if(altitudeSYS_ > 300 | altitudeRDS_ > 300)
       {
-          landDrone();
+
           critical = 1;
       }
 
@@ -193,7 +193,7 @@ int ValidateState::heightControl(float altitudeRDS, float altitudeSYS, int criti
 
     if ((altitudeSYS > maxHeight_) | (altitudeRDS > maxHeight_))
     {
-        landDrone();
+
         critical = 1;
     }
     else if (((altitudeSYS < errorHeight) & (state_ == 1)) | ((altitudeRDS < errorHeight) & (state_ == 1))) // In Error_State State and under 200 m
@@ -234,7 +234,7 @@ int ValidateState::freeFall(float altitudeRDS, float altitudeSYS, int critical)
 
     if (acceleration < maxFallSpeed_ && ff_IMU_ == 1)
     {
-        landDrone(); // Maybe parachute() function here
+        // Maybe parachute() function here
         critical = 1;
         printf("Closing in on ERROR!!! Changing state... FreeFall to ERROR\n");
     }
@@ -249,23 +249,6 @@ int ValidateState::freeFall(float altitudeRDS, float altitudeSYS, int critical)
     timeRef_ = time;
     velocityRef_ = velocity;
     return critical;
-}
-
-/**
- * @brief Function tells the drone to land via MAVLink and logs this in the log
- *
- */
-void ValidateState::landDrone()
-{
-    /*MAVLINK MESSAGE TO LAND*/
-    /* if (fail == 3)
-    {
-        char criticalValue = "Altitude...."
-    }
-
-    logger("Critical Value Detected for " + +" Switching to Critical State...\n"); */
-
-    // Logger("Landing drone immediately!\n");
 }
 
 /**

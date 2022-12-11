@@ -59,6 +59,27 @@ std::shared_ptr<System> get_system(Mavsdk &mavsdk)
     return fut.get();
 }
 
+void quatToEuler(const Telemetry::Quaternion &q, double &roll, double &pitch, double &yaw)
+{
+    // Compute roll
+    double sinr_cosp = 2 * (q.w * q.x + q.y * q.z);
+    double cosr_cosp = 1 - 2 * (q.x * q.x + q.y * q.y);
+    roll = std::atan2(sinr_cosp, cosr_cosp);
+
+    // Compute pitch
+    double sinp = 2 * (q.w * q.y - q.z * q.x);
+
+    if (std::abs(sinp) >= 1)
+        pitch = std::copysign(M_PI / 2, sinp); // use 90 degrees if out of range
+    else
+        pitch = std::asin(sinp);
+
+    // Compute yaw
+    double siny_cosp = 2 * (q.w * q.z + q.x * q.y);
+    double cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z);
+    yaw = std::atan2(siny_cosp, cosy_cosp);
+}
+
 int mymillis()
 {
     struct timeval tv;
@@ -157,7 +178,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
     int startofloop;
 
     Telemetry::Position position;
-    Telemetry::EulerAngle euler;
+    Telemetry::Quaternion q;
 
     Orientation IMUDATA1;
     // Orientation IMUDATA2;
@@ -209,6 +230,12 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         State.AxisControl(Roll, euler.roll_deg, Pitch, euler.pitch_deg, critical); // Checks for error for roll, pitch, and yaw
         State.HeightControl(altitude, position.relative_altitude_m, critical);     // Checks for error for height
         // State.RouteControl(critical); // checks velocity and point and polygon
+    }
+
+    const Action::Result land_result = action.land();
+    if (land_result != Action::Result::Success)
+    {
+        std::cerr << "Land failed: " << land_result << '\n';
     }
 
     while (1)
@@ -265,7 +292,7 @@ void updateIMUValues(IMU &IMU2) // IMU &IMU1,
         IMU2.ConvertMagData();
         IMU2.ComplementaryFilter();
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(20));
+        std::this_thread::sleep_for(std::chrono::milliseconds(5));
     }
 }
 
@@ -282,16 +309,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    for (int i = 0; i < argc; ++i)
-    {
-        std::cout << argv[i] << " plads: " << i << std::endl;
-    }
-    std::cout << "\n";
-    std::cout << argv[1] << "\n";
-    std::cout << argv[4] << "\n"
-              << std::endl;
-
-    if ((strcmp(argv[1], argv[4]) == 0)) // if you write 20 on serial it
+    if ((strcmp(argv[1], argv[4]) == 0))
     {
         State.configValidateState(argv[2], argv[3], NONE, NONE);
     }
@@ -336,13 +354,28 @@ int main(int argc, char **argv)
     Mavsdk mavsdk;
     ConnectionResult connection_result = mavsdk.add_any_connection(argv[1]);
 
-    if (connection_result != ConnectionResult::Success)
+    int connection = 0;
+    int count = 0;
+
+    while (connection < 0)
     {
-        std::cerr << "Connection failed: " << connection_result << '\n';
-        return 1;
+        count++;
+        if (connection_result != ConnectionResult::Success)
+        {
+            std::cerr << "Connection failed: " << connection_result << '\n';
+            connection = 1;
+        }
+
+        if (count == 5)
+        {
+            return 1;
+        }
+
+        sleep(1);
     }
 
     auto system = get_system(mavsdk);
+
     if (!system)
     {
         return 1;
@@ -359,10 +392,10 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    const auto set_rate_euler = telemetry.set_rate_attitude_euler(2.0);
-    if (set_rate_euler != Telemetry::Result::Success)
+    const auto set_rate_result1 = telemetry.set_rate_attitude_quaternion(1.0);
+    if (set_rate_result1 != Telemetry::Result::Success)
     {
-        std::cerr << "Setting rate failed: " << set_rate_euler << '\n';
+        std::cerr << "Setting rate failed: " << set_rate_result1 << '\n';
         return 1;
     }
 
