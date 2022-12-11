@@ -38,20 +38,20 @@
 #define LSM6DSOX_OUT_TEMP_H 0x21 ///< Unused
 
 // Gyro output registers
-#define LSM6DSOX_OUT_X_L_G 0x22 // First half of x-coordinates from Gyro
-#define LSM6DSOX_OUT_X_H_G 0x23 // Second half of x-coordinates from Gyro
-#define LSM6DSOX_OUT_Y_L_G 0x24 // First half of y-coordinates from Gyro
-#define LSM6DSOX_OUT_Y_H_G 0x25 // Second half of y-coordinates from Gyro
-#define LSM6DSOX_OUT_Z_L_G 0x26 // First half of z-coordinates from Gyro
-#define LSM6DSOX_OUT_Z_H_G 0x27 // Second half of z-coordinates from Gyro
+#define LSM6DSOX_OUT_X_L_G 0x22 /// First half of x-coordinates from Gyro
+#define LSM6DSOX_OUT_X_H_G 0x23 /// Second half of x-coordinates from Gyro
+#define LSM6DSOX_OUT_Y_L_G 0x24 /// First half of y-coordinates from Gyro
+#define LSM6DSOX_OUT_Y_H_G 0x25 /// Second half of y-coordinates from Gyro
+#define LSM6DSOX_OUT_Z_L_G 0x26 /// First half of z-coordinates from Gyro
+#define LSM6DSOX_OUT_Z_H_G 0x27 /// Second half of z-coordinates from Gyro
 
 // Accelerometer output registers
-#define LSM6DSOX_OUT_X_L_A 0x28 // First half of x-coordinates from Accelerometer
-#define LSM6DSOX_OUT_X_H_A 0x29 // Second half of x-coordinates from Accelerometer
-#define LSM6DSOX_OUT_Y_L_A 0x2A // First half of y-coordinates from Accelerometer
-#define LSM6DSOX_OUT_Y_H_A 0x2B // Second half of y-coordinates from Accelerometer
-#define LSM6DSOX_OUT_Z_L_A 0x2C // First half of z-coordinates from Accelerometer
-#define LSM6DSOX_OUT_Z_H_A 0x2D // Second half of z-coordinates from Accelerometer
+#define LSM6DSOX_OUT_X_L_A 0x28 /// First half of x-coordinates from Accelerometer
+#define LSM6DSOX_OUT_X_H_A 0x29 /// Second half of x-coordinates from Accelerometer
+#define LSM6DSOX_OUT_Y_L_A 0x2A /// First half of y-coordinates from Accelerometer
+#define LSM6DSOX_OUT_Y_H_A 0x2B /// Second half of y-coordinates from Accelerometer
+#define LSM6DSOX_OUT_Z_L_A 0x2C /// First half of z-coordinates from Accelerometer
+#define LSM6DSOX_OUT_Z_H_A 0x2D /// Second half of z-coordinates from Accelerometer
 
 #define lSM6DSOX_EMB_FUNC_STATUS_MAINPAGE 0x35 ///< Unused
 #define lSM6DSOX_FSM_STATUS_A_MAINPAGE 0x36    ///< Unused

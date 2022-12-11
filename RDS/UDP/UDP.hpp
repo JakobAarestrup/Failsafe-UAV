@@ -1,5 +1,3 @@
-#define MAXLINE 1024
-
 class UDP
 {
 public:
@@ -9,9 +7,10 @@ public:
     void UDP_COM(const char *message);
 
 private:
+    /// @brief Socket descriptor for the UDP connection
     int socket_desc_;
-    int n_;
+    /// @brief Length of message
     unsigned int *len_;
-    char buffer_[MAXLINE];
+    /// @brief Hardcoded IP address of UDP server
     const char *IP = "172.20.10.4";
 };

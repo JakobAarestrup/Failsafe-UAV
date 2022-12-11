@@ -12,18 +12,26 @@ extern "C"
 #include <linux/i2c-dev.h>
 }
 
-// Constructor
+/**
+ * @brief Construct a new I2C::I2C object
+ *
+ */
 I2C::I2C()
 {
 }
 
-// Destructor
+/**
+ * @brief Destroy the I2C::I2C object
+ *
+ */
 I2C::~I2C()
 {
-    // delete [] I2C_Data_,I2C_File_,Write_File_; // Delete private variables
 }
 
-// Open i2c communication
+/**
+ * @brief Function initializes the I2C communication and sets registers of accelerometer, gyroscope, magnetometer and the free fall functionality
+ *
+ */
 void I2C::initializeI2C()
 {
     // First IMU:
@@ -61,26 +69,41 @@ void I2C::initializeI2C()
      I2Cdev::writeByte(LSM6DSOX_ADDR2, lSM6DSOX_FREE_FALL, 0b00110111);   // 0x33 - Set FF threshold (FF_THS[2:0] = 500mg) */
 }
 
-// Write to I2C device register
+/**
+ * @brief Function writes to I2C device register
+ *
+ * @param ADDR is the I2C address of the device
+ * @param reg  is the register to be written to
+ * @param length is the length of the data sent
+ * @param data is the data that is written to the I2C device
+ */
 void I2C::writeI2C(int ADDR, int reg, int length, unsigned char *data)
 {
     I2Cdev::writeBytes(ADDR, reg, length, data);
 }
 
-// Read from i2c device register
+/**
+ * @brief Function reads from I2C device
+ *
+ * @param ADDR is the I2C address of the device
+ * @param reg  is the register to be read from
+ * @param length is the length of the data to be read
+ * @param HandleI2C is the handler for what type of register that is read from
+ * @return float dataI2C_ is the returned I2C data
+ */
 float I2C::readI2C(int ADDR, int reg, int length, int HandleI2C)
 {
     if (HandleI2C == 3) // 24-bit read from Barometer
     {
         uint8_t buff[3];
         I2Cdev::readBytes(ADDR, reg, length, buff);
-        I2CData_ = (buff[0] << 16) | (buff[1] << 8) | buff[2]; // Konvertering af int til float
+        dataI2C_ = (buff[0] << 16) | (buff[1] << 8) | buff[2]; // Conversion of int to float
     }
     else if (HandleI2C == 2) // 16-bit read for Barometer calibration
     {
         uint8_t buff[2];
         I2Cdev::readBytes(ADDR, reg, length, buff);
-        I2CData_ = buff[0] << 8 | buff[1]; // Konvertering af int til float
+        dataI2C_ = buff[0] << 8 | buff[1]; // Conversion of int to float
     }
     else if (HandleI2C == 1) // 16-bit read from IMU
     {
@@ -88,21 +111,21 @@ float I2C::readI2C(int ADDR, int reg, int length, int HandleI2C)
         uint8_t nbuff;
         I2Cdev::readBytes(ADDR, reg, length, &buff);
         I2Cdev::readBytes(ADDR, reg + 1, length, &nbuff);
-        I2CData_ = (buff | nbuff << 8);
+        dataI2C_ = (buff | nbuff << 8);
 
-        if (I2CData_ < 0x8000) // two's complement read from 16 bit register
+        if (dataI2C_ < 0x8000) // two's complement read from 16 bit register
         {
         }
         else
         {
-            I2CData_ = I2CData_ - 0xFFFF;
+            dataI2C_ = dataI2C_ - 0xFFFF;
         }
     }
     else // 8-bit read
     {
         uint8_t buff;
         I2Cdev::readBytes(ADDR, reg, length, &buff);
-        I2CData_ = buff; // Convertering af int til float
+        dataI2C_ = buff; // Conversion of int to float
     }
-    return I2CData_;
+    return dataI2C_;
 }

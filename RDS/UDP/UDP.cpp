@@ -4,17 +4,29 @@
 #include <arpa/inet.h> //inet_addr
 #include <string.h>	   //strlen
 
-#define MAXLINE 1024
+/// Struct with settings for UDP server
 struct sockaddr_in server;
 
+/**
+ * @brief Construct a new UDP::UDP object
+ *
+ */
 UDP::UDP()
 {
 }
 
+/**
+ * @brief Destroy the UDP::UDP object
+ *
+ */
 UDP::~UDP()
 {
 }
 
+/**
+ * @brief Function initializes the UDP connection and connects to server
+ *
+ */
 void UDP::initUDP()
 {
 
@@ -36,29 +48,18 @@ void UDP::initUDP()
 	puts("Connected");
 }
 
+/**
+ * @brief Function sends data to UDP server
+ *
+ * @param message - message to send
+ */
 void UDP::UDP_COM(const char *message)
 {
-	// Send some data
+	// Send data
 	if (send(socket_desc_, message, strlen(message), 0) < 0)
 	{
 		puts("Send failed");
 		return;
 	}
 	puts("Data Send\n");
-
-	/* // Receive message
-	if ((n_ = recvfrom(socket_desc_, (char *)buffer_, MAXLINE, MSG_WAITALL, (struct sockaddr *)&server, len_)) <= 0)
-	{
-		puts("Receive failed");
-		return;
-	}
-
-	buffer_[n_] = '\0';
-
-	int strLength = strlen(buffer_); // finds length of the array
-	for (int i = 0; i < strLength; i++)
-	{
-		receiveMsg[i] = buffer_[i]; // copies UserInput in reverse to TempInput
-	}
-	receiveMsg[strLength] = '\0'; // adds NULL character at end */
 }
