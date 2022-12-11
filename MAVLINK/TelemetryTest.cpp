@@ -89,10 +89,24 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    const auto set_rate_result1 = telemetry.set_rate_camera_attitude(1.0);
+    const auto set_rate_result1 = telemetry.set_rate_attitude(1.0);
     if (set_rate_result1 != Telemetry::Result::Success)
     {
         std::cerr << "Setting rate failed: " << set_rate_result1 << '\n';
+        return 1;
+    }
+
+    // Check until vehicle is ready to arm
+    while (telemetry.health_all_ok() != true)
+    {
+        std::cout << "Vehicle is getting ready to arm\n";
+        sleep_for(seconds(1));
+    }
+
+    const Action::Result land_result = action.land();
+    if (land_result != Action::Result::Success)
+    {
+        std::cerr << "Land failed: " << land_result << '\n';
         return 1;
     }
 
