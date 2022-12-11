@@ -7,4 +7,4 @@ This project was developed as part of the bachelor thesis written by Rasmus Holm
 <img src="https://github.com/JakobAarestrup/Failsafe-UAV/blob/main/au_segl.png?raw=true width=300"/>
 </div>
 
-The main software can be found in the [RDS folder](/JakobAarestrup/Failsafe-UAV/tree/main/RDS)
+The main software can be found in the [RDS folder](https://github.com/JakobAarestrup/Failsafe-UAV/tree/main/RDS)
