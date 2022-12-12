@@ -237,7 +237,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
               GPSDATA = G1.getGPSPosition();
               loops = 1;
           } */
-        loops++;
+        // loops++;
 
         // Get Data from Sensors
         IMUDATA1 = IMU1.getOrientation();
@@ -251,16 +251,16 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         quaternionToEuler(q, q_Roll, q_Pitch, q_Yaw); // get quaternions in degrees
         printf("q_Roll: %f, q_Pitch: %f, q_Yaw: %f\n", q_Roll, q_Pitch, q_Yaw);
         // logging Data
-        /*  LogData(GPSDATA, IMUDATA1, altitude, position, q_Roll, q_Pitch, q_Yaw, Client); // Sends sensor data to log file
-         // Analyse State
-         roll = IMUDATA1.roll; //(IMUDATA2.roll + IMUDATA1.roll) / 2;                    // returns
-         pitch = IMUDATA1.pitch;
-         //(IMUDATA2.pitch + IMUDATA1.pitch) / 2;                 // returns
+        LogData(GPSDATA, IMUDATA1, altitude, position, q_Roll, q_Pitch, q_Yaw, Client); // Sends sensor data to log file
+        // Analyse State
+        roll = IMUDATA1.roll; //(IMUDATA2.roll + IMUDATA1.roll) / 2;                    // returns
+        pitch = IMUDATA1.pitch;
+        //(IMUDATA2.pitch + IMUDATA1.pitch) / 2;                 // returns
 
-         // State.freeFall(altitude, position.relative_altitude_m, critical);      // Checks error for free fall (acceleration)
-         State.axisControl(roll, q_Roll, pitch, q_Pitch, critical);             // Checks for error for roll, pitch, and yaw
-         State.heightControl(altitude, position.relative_altitude_m, critical); // Checks for error for height
-         // State.routeControl(critical); // checks velocity and point and polygon */
+        // State.freeFall(altitude, position.relative_altitude_m, critical);      // Checks error for free fall (acceleration)
+        State.axisControl(roll, q_Roll, pitch, q_Pitch, critical);             // Checks for error for roll, pitch, and yaw
+        State.heightControl(altitude, position.relative_altitude_m, critical); // Checks for error for height
+                                                                               // State.routeControl(critical); // checks velocity and point and polygon */
         std::cout << "Loop Time: " << mymillis() - startofloop << std::endl;
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }
