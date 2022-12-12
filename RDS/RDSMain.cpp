@@ -325,7 +325,7 @@ void updateIMUValues(IMU &IMU1) // IMU &IMU1,
         IMU1.convertMagData();
         IMU1.complementaryFilter();
         // IMU1.freeFall(1)
-        std::this_thread::sleep_for(std::chrono::milliseconds(20));
+        std::this_thread::sleep_for(std::chrono::milliseconds(5));
 
         /*Gets Data from second IMU*/
         /*  IMU2.readIMU(1);
