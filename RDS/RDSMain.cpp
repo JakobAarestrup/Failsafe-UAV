@@ -265,8 +265,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
     const Action::Result land_result = action.land();
     if (land_result != Action::Result::Success)
     {
-        std::cerr << "Land failed: " << land_result << '\n';
-        return 1;
+        std::cerr << "Couldn't land drone: " << land_result << '\n';
     }
 
     while (1)
