@@ -106,8 +106,8 @@ int ValidateState::axisControl(float rollRDS, float rollSYS, float pitchRDS, flo
 {
     float errorOrientation = (maxOrientation_ * 0.66666666);
 
-    float Roll = ((rollRDS + rollSYS) * (rollRDS + rollSYS)) / 2;
-    float Pitch = ((pitchRDS + pitchSYS) * (pitchRDS + pitchSYS)) / 2;
+    float Roll = sqrt(((rollRDS + rollSYS) * (rollRDS + rollSYS))) / 2;
+    float Pitch = sqrt(((pitchRDS + pitchSYS) * (pitchRDS + pitchSYS))) / 2;
     printf("Roll: %f, pitch: %f\n", Roll, Pitch);
     printf("Max orientation: %f\n", maxOrientation_);
 
@@ -118,6 +118,7 @@ int ValidateState::axisControl(float rollRDS, float rollSYS, float pitchRDS, flo
 
     if ((Roll > maxOrientation_) | (Pitch > maxOrientation_))
     {
+        printf("Critical error\n");
         critical = 1;
     }
     else if (((Roll < errorOrientation) & (state_ == 1)) | ((Pitch < errorOrientation) & (state_ == 1)))
@@ -188,7 +189,7 @@ int ValidateState::heightControl(float altitudeRDS, float altitudeSYS, int criti
 
     if ((altitudeSYS > maxHeight_) | (altitudeRDS > maxHeight_))
     {
-
+        printf("Critical error\n");
         critical = 1;
     }
     else if (((altitudeSYS < errorHeight) & (state_ == 1)) | ((altitudeRDS < errorHeight) & (state_ == 1))) // In Error_State State and under 200 m
@@ -215,7 +216,7 @@ int ValidateState::heightControl(float altitudeRDS, float altitudeSYS, int criti
  */
 int ValidateState::freeFall(float altitudeRDS, float altitudeSYS, int critical)
 {
-    float altitude = ((altitudeRDS + altitudeSYS) * (altitudeRDS + altitudeSYS)) / 2;
+    float altitude = sqrt(((altitudeRDS + altitudeSYS) * (altitudeRDS + altitudeSYS))) / 2;
     int time = mymillis();
 
     float distance = altitude - altitudeRef_;
