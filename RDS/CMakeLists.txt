@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 
 # Enable strict handling of warnings
-add_definitions("-Wall -Wextra -Werror")
+#add_definitions("-Wall -Wextra -Werror")
 
 # Finds MAVSDK when installed system wide.
 find_package(MAVSDK REQUIRED)
