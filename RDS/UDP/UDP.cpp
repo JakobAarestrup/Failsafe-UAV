@@ -61,5 +61,5 @@ void UDP::UDP_COM(const char *message)
 		puts("Send failed");
 		return;
 	}
-	puts("Data Send\n");
+	// puts("Data Send\n");
 }
