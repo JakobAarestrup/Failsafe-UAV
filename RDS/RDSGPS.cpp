@@ -182,7 +182,7 @@ void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, UDP Clien
  * @param Client is the UDP client object
  */
 
-void mainloop(ValidateState &State, BAR &Barometer, GPS &G1, IMU &IMU1, UDP &Client) // Action &action) // IMU &IMU1,
+void mainloop(ValidateState &State, BAR &Barometer, GPS &G1, IMU &IMU1, UDP &Client) // IMU &IMU1,
 {
     int loops = 1;
     int startofloop;
@@ -248,6 +248,8 @@ void mainloop(ValidateState &State, BAR &Barometer, GPS &G1, IMU &IMU1, UDP &Cli
                                                                    // State.routeControl(critical); // checks velocity and point and polygon */
         std::cout << "Loop Time: " << mymillis() - startofloop << std::endl;
     }
+    Logger("Critical Failure Detected\n");
+    Client.UDP_COM("Critical Failure Detected\n");
 
     while (1)
     {
@@ -379,8 +381,8 @@ int main(int argc, char **argv)
 
     std::vector<std::thread> threads;
 
-    threads.push_back(std::thread(mainloop, std::ref(State), std::ref(B1), std::ref(G1), std::ref(IMU1), std::ref(Client), std::ref(action))); // std::ref(IMU2),
-    threads.push_back(std::thread(updateIMUValues, std::ref(IMU1)));                                                                           //,std::ref(IMU2))
+    threads.push_back(std::thread(mainloop, std::ref(State), std::ref(B1), std::ref(G1), std::ref(IMU1), std::ref(Client))); // std::ref(IMU2),
+    threads.push_back(std::thread(updateIMUValues, std::ref(IMU1)));                                                         //,std::ref(IMU2))
 
     for (auto &th : threads)
     {

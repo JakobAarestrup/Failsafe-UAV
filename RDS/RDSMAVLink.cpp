@@ -267,6 +267,8 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, IMU &I
         std::cerr << "Couldn't land drone: " << land_result << '\n';
     }
 
+    Logger("Critical Failure Detected\n");
+    Client.UDP_COM("Critical Failure Detected\n");
     while (1)
     {
         startofloop = mymillis();
@@ -297,7 +299,6 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, IMU &I
         quaternionToEuler(q, q_Roll, q_Pitch, q_Yaw); // get quaternions in degrees
         //  logging Data
         LogData(IMUDATA1, altitude, position, q_Roll, q_Pitch, q_Yaw, Client); // Sends sensor data to log file
-        printf("Critical Failure Detected\n");
     }
 }
 
