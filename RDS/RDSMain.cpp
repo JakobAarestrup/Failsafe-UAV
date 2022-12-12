@@ -238,7 +238,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
               loops = 1;
           } */
         // loops++;
-
+        GPSDATA = G1.getGPSPosition();
         // Get Data from Sensors
         IMUDATA1 = IMU1.getOrientation();
         // IMUDATA2 = IMU2.getOrientation(); // returns IMU Class Struct
@@ -264,48 +264,49 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         std::cout << "Loop Time: " << mymillis() - startofloop << std::endl;
     }
 
-    /*     const Action::Result land_result = action.land();
-        if (land_result != Action::Result::Success)
+    const Action::Result land_result = action.land();
+    if (land_result != Action::Result::Success)
+    {
+        std::cerr << "Couldn't land drone: " << land_result << '\n';
+    }
+    /*
+
+    while (1)
+    {
+        startofloop = mymillis();
+
+        // Reads data from Barometer and GPS if fifth loop
+        Barometer.readPressure();
+        Barometer.readTemperature();
+        Barometer.calculatePressureAndTemperature();
+
+        if (loops == 5)
         {
-            std::cerr << "Couldn't land drone: " << land_result << '\n';
+            G1.readGPS(); // reads NMEA message
+            G1.convertData();
+            GPSDATA = G1.getGPSPosition();
+            loops = 1;
         }
+        loops++;
 
-        while (1)
-        {
-            startofloop = mymillis();
+        // logging Data
+        LogData(GPSDATA, IMUDATA1, altitude, position, q_Roll, q_Pitch, q_Yaw, Client); // Sends sensor data to log file
 
-            // Reads data from Barometer and GPS if fifth loop
-            Barometer.readPressure();
-            Barometer.readTemperature();
-            Barometer.calculatePressureAndTemperature();
+        // Get Data from Sensors
+        IMUDATA1 = IMU1.getOrientation();
+        // IMUDATA2 = IMU2.getOrientation(); // returns IMU Class Struct
+        // GPSDATA = G1.getGPSPosition();    // returns GPS Class Struc
+        altitude = Barometer.getHeight(); // returns altitude
 
-            if (loops == 5)
-            {
-                G1.readGPS(); // reads NMEA message
-                G1.convertData();
-                GPSDATA = G1.getGPSPosition();
-                loops = 1;
-            }
-            loops++;
+        // MAVLINK
+        position = telemetry.position();              // returns struct with values from baro and GPS
+        q = telemetry.attitude_quaternion();          // returns struct with euler angles
+        quaternionToEuler(q, q_Roll, q_Pitch, q_Yaw); // get quaternions in degrees
 
-            // logging Data
-            LogData(GPSDATA, IMUDATA1, altitude, position, q_Roll, q_Pitch, q_Yaw, Client); // Sends sensor data to log file
-
-            // Get Data from Sensors
-            IMUDATA1 = IMU1.getOrientation();
-            // IMUDATA2 = IMU2.getOrientation(); // returns IMU Class Struct
-            // GPSDATA = G1.getGPSPosition();    // returns GPS Class Struc
-            altitude = Barometer.getHeight(); // returns altitude
-
-            // MAVLINK
-            position = telemetry.position();              // returns struct with values from baro and GPS
-            q = telemetry.attitude_quaternion();          // returns struct with euler angles
-            quaternionToEuler(q, q_Roll, q_Pitch, q_Yaw); // get quaternions in degrees
-
-            // logging Data
-            LogData(GPSDATA, IMUDATA1, altitude, position, q_Roll, q_Pitch, q_Yaw, Client); // Sends sensor data to log file
-            // State.routeControl(critical); // checks velocity and point and polygon
-        } */
+        // logging Data
+        LogData(GPSDATA, IMUDATA1, altitude, position, q_Roll, q_Pitch, q_Yaw, Client); // Sends sensor data to log file
+        // State.routeControl(critical); // checks velocity and point and polygon
+    } */
 }
 
 /**
