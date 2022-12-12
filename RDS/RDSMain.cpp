@@ -256,7 +256,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         pitch = IMUDATA1.pitch;
         //(IMUDATA2.pitch + IMUDATA1.pitch) / 2;                 // returns
         std::cout << "Loop Time: " << mymillis() - startofloop << std::endl;
-        State.freeFall(altitude, position.relative_altitude_m, critical);      // Checks error for free fall (acceleration)
+        // State.freeFall(altitude, position.relative_altitude_m, critical);      // Checks error for free fall (acceleration)
         State.axisControl(roll, q_Roll, pitch, q_Pitch, critical);             // Checks for error for roll, pitch, and yaw
         State.heightControl(altitude, position.relative_altitude_m, critical); // Checks for error for height
         // State.routeControl(critical); // checks velocity and point and polygon
@@ -314,6 +314,7 @@ void updateIMUValues(IMU &IMU1) // IMU &IMU1,
         IMU1.convertMagData();
         IMU1.complementaryFilter();
         // IMU1.freeFall(1)
+        std::this_thread::sleep_for(std::chrono::milliseconds(20));
 
         /*Gets Data from second IMU*/
         /*  IMU2.readIMU(1);
@@ -321,7 +322,6 @@ void updateIMUValues(IMU &IMU1) // IMU &IMU1,
          IMU2.convertMagData();
          IMU2.complementaryFilter();
          // IMU2.freeFall(2) */
-        std::this_thread::sleep_for(std::chrono::milliseconds(20));
     }
 }
 
@@ -425,15 +425,15 @@ int main(int argc, char **argv)
      * @brief starting two threads to do main loop and get the IMU data
      */
 
-    /*  std::vector<std::thread> threads;
+    std::vector<std::thread> threads;
 
-     threads.push_back(std::thread(mainloop, std::ref(State), std::ref(B1), std::ref(telemetry), std::ref(G1), std::ref(IMU1), std::ref(Client))); // std::ref(IMU2),
-     threads.push_back(std::thread(updateIMUValues, std::ref(IMU1)));                                                                              //,std::ref(IMU2))
+    threads.push_back(std::thread(mainloop, std::ref(State), std::ref(B1), std::ref(telemetry), std::ref(G1), std::ref(IMU1), std::ref(Client))); // std::ref(IMU2),
+    threads.push_back(std::thread(updateIMUValues, std::ref(IMU1)));                                                                              //,std::ref(IMU2))
 
-     for (auto &th : threads)
-     {
-         th.join();
-     } */
+    for (auto &th : threads)
+    {
+        th.join();
+    }
     printf("SUPPORT");
     return 0;
 }
