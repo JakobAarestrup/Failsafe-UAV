@@ -167,12 +167,12 @@ void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry
     std::string GPSBaro = "Longitude: " + std::to_string(longitudeRDS) + " " + GPSData.NS[0] + " Latitude: " + std::to_string(latitudeRDS) + " " + GPSData.EW[0] + " Satellites: " + std::to_string(SatellitesRDS) + " Altitude: " + std::to_string(altitudeRDS);
     Logger(GPSBaro);
 
-    std::string IMU = "Roll: " + std::to_string(rollRDS) + " Pitch: " + std::to_string(pitchRDS) + " Yaw: " + std::to_string(yawRDS);
+    std::string IMU = " Roll: " + std::to_string(rollRDS) + " Pitch: " + std::to_string(pitchRDS) + " Yaw: " + std::to_string(yawRDS);
     Logger(IMU);
 
     std::string GPSBaroSYS = "LongitudeSYS: " + std::to_string(longitudeSYS) + " " + GPSData.NS[0] + " LatitudeSYS: " + std::to_string(latitudeSYS) + " " + GPSData.EW[0] + " AltitudeSYS: " + std::to_string(altitudeSYS);
     Logger(GPSBaroSYS);
-    std::string IMUSYS = "RollSYS: " + std::to_string(rollSYS) + " PitchSYS: " + std::to_string(pitchSYS) + " YawSYS: " + std::to_string(yawSYS);
+    std::string IMUSYS = " RollSYS: " + std::to_string(rollSYS) + " PitchSYS: " + std::to_string(pitchSYS) + " YawSYS: " + std::to_string(yawSYS);
     Logger(IMUSYS);
 
     std::string RDSData = GPSBaro + IMU;
