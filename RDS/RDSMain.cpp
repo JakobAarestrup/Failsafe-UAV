@@ -221,7 +221,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
     G1.convertData();
     GPSDATA = G1.getGPSPosition(); */
     // GPSDATA = G1.getGPSPosition();
-    while (critical < 1)
+    while (critical < 0)
     {
         startofloop = mymillis();
 
@@ -260,7 +260,8 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         State.axisControl(roll, q_Roll, pitch, q_Pitch, critical);             // Checks for error for roll, pitch, and yaw
         State.heightControl(altitude, position.relative_altitude_m, critical); // Checks for error for height
                                                                                // State.routeControl(critical); // checks velocity and point and polygon */
-        std::cout << "Loop Time: " << mymillis() - startofloop << std::endl;
+
+        std::cout << "Loop Time: " << mymillis() - startofloop << " Critical: " << critical << std::endl;
     }
 
     const Action::Result land_result = action.land();
