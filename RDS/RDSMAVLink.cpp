@@ -194,9 +194,9 @@ void LogData(Orientation IMUData, float altitude, Telemetry::Position position, 
  * @param Client is the UDP client object
  */
 
-void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G1, IMU &IMU1, UDP &Client) // Action &action) // IMU &IMU1,
+void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G1, IMU &IMU1, UDP &Client, Action &action) // Action &action) // IMU &IMU1,
 {
-    int loops = 1;
+
     int startofloop;
 
     Telemetry::Position position;
@@ -204,7 +204,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
 
     Orientation IMUDATA1;
     // Orientation IMUDATA2;
-    GPSPosition GPSDATA;
+    // GPSPosition GPSDATA;
 
     float altitude = 0;
     float roll = 0;
@@ -381,7 +381,7 @@ int main(int argc, char **argv)
     Client.initUDP(); // raspberry pi zero w should get wifi by this time
 
     /// @brief Configuration of Sensors
-    G1.configAll();     // configs the GPS
+    // G1.configAll();     // configs the GPS
     I1.initializeI2C(); // Initialize IMU2 right now but will do both
 
     /// @brief Calibration
