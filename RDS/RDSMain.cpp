@@ -262,7 +262,6 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         State.heightControl(altitude, position.relative_altitude_m, critical); // Checks for error for height
                                                                                // State.routeControl(critical); // checks velocity and point and polygon */
         std::cout << "Loop Time: " << mymillis() - startofloop << std::endl;
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }
 
     /*     const Action::Result land_result = action.land();
