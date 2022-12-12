@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15.2)
 
 # Specify your project's name
-project(RDSMAIN)
+project(RDSMAV)
 
 # Specify at least C++11, better C++17
 set(CMAKE_CXX_STANDARD 17)
@@ -17,8 +17,8 @@ find_package(Threads REQUIRED)
 
 # Specify your app's executable name, and list of source files used to create it.
 # change first and last line in add_executable to the desired configuration for RDS with or without GPS
-add_executable(RDSMAIN
-    RDSMain.cpp
+add_executable(RDSMAV
+    RDSMAVLink.cpp
     GPS/GPS.cpp
     IMU/IMU.cpp
     IMU/I2C.cpp
@@ -32,7 +32,7 @@ add_executable(RDSMAIN
 
 find_library(WIRINGPI_LIBRARIES NAMES wiringPi)
 # Specify your app's executable name and a list of linked libraries
-target_link_libraries(RDSMAIN
+target_link_libraries(RDSMAV
 PRIVATE Threads::Threads
 MAVSDK::mavsdk
 
