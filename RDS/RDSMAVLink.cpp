@@ -258,7 +258,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, IMU &I
         State.axisControl(roll, q_Roll, pitch, q_Pitch, critical);             // Checks for error for roll, pitch, and yaw
         State.heightControl(altitude, position.relative_altitude_m, critical); // Checks for error for height
                                                                                // State.routeControl(critical); // checks velocity and point and polygon */
-        std::cout << "Loop Time: " << mymillis() - startofloop << std::endl;
+        std::cout << "Loop Time: " << mymillis() - startofloop << " Critical: " << critical << std::endl;
     }
 
     const Action::Result land_result = action.land();
