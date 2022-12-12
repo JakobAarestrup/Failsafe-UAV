@@ -306,13 +306,13 @@ LogData(GPSDATA, IMUDATA1, altitude, position, q_Roll, q_Pitch, q_Yaw, Client); 
 // State.routeControl(critical); // checks velocity and point and polygon
 }
 }
-* /
+*/
 
-    /**
-     * @brief Function updates the values from the IMU
-     *
-     * @param IMU2 is the IMU object
-     */
+/**
+ * @brief Function updates the values from the IMU
+ *
+ * @param IMU2 is the IMU object
+ */
 void updateIMUValues(IMU &IMU1) // IMU &IMU1,
 {
     while (1)
