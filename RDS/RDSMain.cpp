@@ -198,7 +198,7 @@ void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry
 
 void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G1, IMU &IMU1, UDP &Client, Action &action) // IMU &IMU1,
 {
-    int loops = 1;
+    // int loops = 1;
     int startofloop;
 
     Telemetry::Position position;
