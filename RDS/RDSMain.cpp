@@ -249,8 +249,8 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         position = telemetry.position();              // returns struct with values from baro and GPS
         q = telemetry.attitude_quaternion();          // returns struct with euler angles
         quaternionToEuler(q, q_Roll, q_Pitch, q_Yaw); // get quaternions in degrees
-        printf("q_Roll: %f, q_Pitch: %f, q_Yaw: %f\n", q_Roll, q_Pitch, q_Yaw);
-        // logging Data
+        // printf("q_Roll: %f, q_Pitch: %f, q_Yaw: %f\n", q_Roll, q_Pitch, q_Yaw);
+        //  logging Data
         LogData(GPSDATA, IMUDATA1, altitude, position, q_Roll, q_Pitch, q_Yaw, Client); // Sends sensor data to log file
         // Analyse State
         roll = IMUDATA1.roll; //(IMUDATA2.roll + IMUDATA1.roll) / 2;                    // returns
