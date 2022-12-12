@@ -111,7 +111,7 @@ int ValidateState::axisControl(float rollRDS, float rollSYS, float pitchRDS, flo
 
     float PitchSYSS = pitchSYS;
     float RollSYSS = rollSYS;
-    printf("%f , %f", PitchSYSS, RollSYSS);
+    // printf("%f , %f", PitchSYSS, RollSYSS);
     float Roll = rollRDS;
     float Pitch = pitchRDS;
 
