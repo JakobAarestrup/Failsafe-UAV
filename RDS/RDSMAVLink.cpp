@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/time.h>
@@ -146,13 +147,10 @@ inline void Logger(std::string logMessage)
  * @param q is the quaternion data from the drone
  * @param Client is the UDP client member
  */
-void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry::Position position, float rollSYS, float pitchSYS, float yawSYS, UDP Client)
+void LogData(Orientation IMUData, float altitude, Telemetry::Position position, float rollSYS, float pitchSYS, float yawSYS, UDP Client)
 {
     /*Values from RDS*/
     float altitudeRDS = altitude;
-    float longitudeRDS = GPSData.longitude;
-    float latitudeRDS = GPSData.latitude;
-    float SatellitesRDS = GPSData.SV;
 
     float rollRDS = IMUData.roll;
     float pitchRDS = IMUData.pitch;
@@ -164,13 +162,13 @@ void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry
     float latitudeSYS = position.latitude_deg;
 
     /*RDS sensors*/
-    std::string GPSBaro = "Longitude: " + std::to_string(longitudeRDS) + " " + GPSData.NS[0] + " Latitude: " + std::to_string(latitudeRDS) + " " + GPSData.EW[0] + " Satellites: " + std::to_string(SatellitesRDS) + " Altitude: " + std::to_string(altitudeRDS);
+    std::string GPSBaro = "Longitude: " + "0" + " " + "N" + " Latitude: " + "0" + " " + "E" + " Satellites: " + "0" + " Altitude: " + std::to_string(altitudeRDS);
     Logger(GPSBaro);
 
     std::string IMU = " Roll: " + std::to_string(rollRDS) + " Pitch: " + std::to_string(pitchRDS) + " Yaw: " + std::to_string(yawRDS);
     Logger(IMU);
 
-    std::string GPSBaroSYS = "LongitudeSYS: " + std::to_string(longitudeSYS) + " " + GPSData.NS[0] + " LatitudeSYS: " + std::to_string(latitudeSYS) + " " + GPSData.EW[0] + " AltitudeSYS: " + std::to_string(altitudeSYS);
+    std::string GPSBaroSYS = "LongitudeSYS: " + std::to_string(longitudeSYS) + " " + "N" + " LatitudeSYS: " + std::to_string(latitudeSYS) + " " + "E" + " AltitudeSYS: " + std::to_string(altitudeSYS);
     Logger(GPSBaroSYS);
     std::string IMUSYS = " RollSYS: " + std::to_string(rollSYS) + " PitchSYS: " + std::to_string(pitchSYS) + " YawSYS: " + std::to_string(yawSYS);
     Logger(IMUSYS);
@@ -250,7 +248,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         q = telemetry.attitude_quaternion();          // returns struct with euler angles
         quaternionToEuler(q, q_Roll, q_Pitch, q_Yaw); // get quaternions in degrees
         //  logging Data
-        LogData(GPSDATA, IMUDATA1, altitude, position, q_Roll, q_Pitch, q_Yaw, Client); // Sends sensor data to log file
+        LogData(IMUDATA1, altitude, position, q_Roll, q_Pitch, q_Yaw, Client); // Sends sensor data to log file
         // Analyse State
         roll = IMUDATA1.roll; //(IMUDATA2.roll + IMUDATA1.roll) / 2;                    // returns
         pitch = IMUDATA1.pitch;
@@ -278,28 +276,27 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         Barometer.readTemperature();
         Barometer.calculatePressureAndTemperature();
 
-        if (loops == 5)
+        /* if (loops == 5)
         {
             G1.readGPS(); // reads NMEA message
             G1.convertData();
             GPSDATA = G1.getGPSPosition();
             loops = 1;
         }
-        loops++;
-
-        // Get Data from Sensors
+        loops++; */
+        // GPSDATA = G1.getGPSPosition();
+        //  Get Data from Sensors
         IMUDATA1 = IMU1.getOrientation();
         // IMUDATA2 = IMU2.getOrientation(); // returns IMU Class Struct
-        // GPSDATA = G1.getGPSPosition();    // returns GPS Class Struc
-        altitude = Barometer.getHeight(); // returns altitude
+
+        altitude = Barometer.getHeight(); // returns altitude */
 
         // MAVLINK
         position = telemetry.position();              // returns struct with values from baro and GPS
         q = telemetry.attitude_quaternion();          // returns struct with euler angles
         quaternionToEuler(q, q_Roll, q_Pitch, q_Yaw); // get quaternions in degrees
-        // State.routeControl(critical); // checks velocity and point and polygon
-        // logging Data
-        LogData(GPSDATA, IMUDATA1, altitude, position, q_Roll, q_Pitch, q_Yaw, Client); // Sends sensor data to log file
+        //  logging Data
+        LogData(IMUDATA1, altitude, position, q_Roll, q_Pitch, q_Yaw, Client); // Sends sensor data to log file
     }
 }
 
