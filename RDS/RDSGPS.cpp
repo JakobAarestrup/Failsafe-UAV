@@ -143,10 +143,9 @@ inline void Logger(std::string logMessage)
  * @param IMUData is the data from the IMU
  * @param altitude is the altitude from the Barometer
  * @param position is the position data from the drone
- * @param q is the quaternion data from the drone
  * @param Client is the UDP client member
  */
-void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry::Position position, float rollSYS, float pitchSYS, float yawSYS, UDP Client)
+void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, UDP Client)
 {
     /*Values from RDS*/
     float altitudeRDS = altitude;
@@ -158,11 +157,6 @@ void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry
     float pitchRDS = IMUData.pitch;
     float yawRDS = IMUData.yaw;
 
-    /*Values over MAVLINK*/
-    float altitudeSYS = position.relative_altitude_m;
-    float longitudeSYS = position.longitude_deg;
-    float latitudeSYS = position.latitude_deg;
-
     /*RDS sensors*/
     std::string GPSBaro = "Longitude: " + std::to_string(longitudeRDS) + " " + GPSData.NS[0] + " Latitude: " + std::to_string(latitudeRDS) + " " + GPSData.EW[0] + " Satellites: " + std::to_string(SatellitesRDS) + " Altitude: " + std::to_string(altitudeRDS);
     Logger(GPSBaro);
@@ -170,19 +164,11 @@ void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry
     std::string IMU = " Roll: " + std::to_string(rollRDS) + " Pitch: " + std::to_string(pitchRDS) + " Yaw: " + std::to_string(yawRDS);
     Logger(IMU);
 
-    std::string GPSBaroSYS = "LongitudeSYS: " + std::to_string(longitudeSYS) + " " + GPSData.NS[0] + " LatitudeSYS: " + std::to_string(latitudeSYS) + " " + GPSData.EW[0] + " AltitudeSYS: " + std::to_string(altitudeSYS);
-    Logger(GPSBaroSYS);
-    std::string IMUSYS = " RollSYS: " + std::to_string(rollSYS) + " PitchSYS: " + std::to_string(pitchSYS) + " YawSYS: " + std::to_string(yawSYS);
-    Logger(IMUSYS);
-
     std::string RDSData = GPSBaro + IMU;
-    std::string SYSData = GPSBaroSYS + IMUSYS;
 
     const char *RDS = RDSData.c_str();
-    const char *SYS = SYSData.c_str();
 
     Client.UDP_COM(RDS);
-    Client.UDP_COM(SYS);
 }
 
 /**
@@ -196,13 +182,13 @@ void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry
  * @param Client is the UDP client object
  */
 
-void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G1, IMU &IMU1, UDP &Client) // Action &action) // IMU &IMU1,
+void mainloop(ValidateState &State, BAR &Barometer, GPS &G1, IMU &IMU1, UDP &Client) // Action &action) // IMU &IMU1,
 {
     int loops = 1;
     int startofloop;
 
-    Telemetry::Position position;
-    Telemetry::Quaternion q;
+    /* Telemetry::Position position;
+    Telemetry::Quaternion q; */
 
     Orientation IMUDATA1;
     // Orientation IMUDATA2;
@@ -245,10 +231,10 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
 
         altitude = Barometer.getHeight(); // returns altitude */
 
-        // MAVLINK
-        position = telemetry.position();              // returns struct with values from baro and GPS
-        q = telemetry.attitude_quaternion();          // returns struct with euler angles
-        quaternionToEuler(q, q_Roll, q_Pitch, q_Yaw); // get quaternions in degrees
+        /*  // MAVLINK
+         position = telemetry.position();              // returns struct with values from baro and GPS
+         q = telemetry.attitude_quaternion();          // returns struct with euler angles
+         quaternionToEuler(q, q_Roll, q_Pitch, q_Yaw); // get quaternions in degrees */
         //  logging Data
         LogData(GPSDATA, IMUDATA1, altitude, position, q_Roll, q_Pitch, q_Yaw, Client); // Sends sensor data to log file
         // Analyse State
@@ -257,16 +243,10 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         //(IMUDATA2.pitch + IMUDATA1.pitch) / 2;                 // returns
 
         // State.freeFall(altitude, position.relative_altitude_m, critical);      // Checks error for free fall (acceleration)
-        State.axisControl(roll, q_Roll, pitch, q_Pitch, critical);             // Checks for error for roll, pitch, and yaw
-        State.heightControl(altitude, position.relative_altitude_m, critical); // Checks for error for height
-                                                                               // State.routeControl(critical); // checks velocity and point and polygon */
+        State.axisControl(roll, q_Roll, pitch, q_Pitch, critical); // Checks for error for roll, pitch, and yaw
+        State.heightControl(altitude, 0.f, critical);              // Checks for error for height
+                                                                   // State.routeControl(critical); // checks velocity and point and polygon */
         std::cout << "Loop Time: " << mymillis() - startofloop << std::endl;
-    }
-
-    const Action::Result land_result = action.land();
-    if (land_result != Action::Result::Success)
-    {
-        std::cerr << "Couldn't land drone: " << land_result << '\n';
     }
 
     while (1)
@@ -293,10 +273,10 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         // GPSDATA = G1.getGPSPosition();    // returns GPS Class Struc
         altitude = Barometer.getHeight(); // returns altitude
 
-        // MAVLINK
+        /* // MAVLINK
         position = telemetry.position();              // returns struct with values from baro and GPS
         q = telemetry.attitude_quaternion();          // returns struct with euler angles
-        quaternionToEuler(q, q_Roll, q_Pitch, q_Yaw); // get quaternions in degrees
+        quaternionToEuler(q, q_Roll, q_Pitch, q_Yaw); // get quaternions in degrees */
 
         // logging Data
         LogData(GPSDATA, IMUDATA1, altitude, position, q_Roll, q_Pitch, q_Yaw, Client); // Sends sensor data to log file
@@ -393,49 +373,14 @@ int main(int argc, char **argv)
     // IMU1.calibrateGyro(1);
     IMU1.calibrateGyro(1);
 
-    /// @brief MAVLINK connection.
-    Mavsdk mavsdk;
-    ConnectionResult connection_result = mavsdk.add_any_connection(argv[1]);
-
-    if (connection_result != ConnectionResult::Success)
-    {
-        std::cerr << "Connection failed: " << connection_result << '\n';
-        return 1;
-    }
-
-    auto system = get_system(mavsdk);
-    if (!system)
-    {
-        return 1;
-    }
-
-    /// @brief Instantiate plugins
-    auto telemetry = Telemetry{system};
-    auto action = Action{system};
-
-    // We want to listen to the altitude of the drone at 1 Hz.
-    const auto set_rate_result = telemetry.set_rate_position(2.0);
-    if (set_rate_result != Telemetry::Result::Success)
-    {
-        std::cerr << "Setting rate failed: " << set_rate_result << '\n';
-        return 1;
-    }
-
-    const auto set_rate_result1 = telemetry.set_rate_attitude_quaternion(2.0);
-    if (set_rate_result1 != Telemetry::Result::Success)
-    {
-        std::cerr << "Setting rate failed: " << set_rate_result1 << '\n';
-        return 1;
-    }
-
     /**
      * @brief starting two threads to do main loop and get the IMU data
      */
 
     std::vector<std::thread> threads;
 
-    threads.push_back(std::thread(mainloop, std::ref(State), std::ref(B1), std::ref(telemetry), std::ref(G1), std::ref(IMU1), std::ref(Client), std::ref(action))); // std::ref(IMU2),
-    threads.push_back(std::thread(updateIMUValues, std::ref(IMU1)));                                                                                                //,std::ref(IMU2))
+    threads.push_back(std::thread(mainloop, std::ref(State), std::ref(B1), std::ref(G1), std::ref(IMU1), std::ref(Client), std::ref(action))); // std::ref(IMU2),
+    threads.push_back(std::thread(updateIMUValues, std::ref(IMU1)));                                                                           //,std::ref(IMU2))
 
     for (auto &th : threads)
     {

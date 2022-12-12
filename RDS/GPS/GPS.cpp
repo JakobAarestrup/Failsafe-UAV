@@ -97,12 +97,12 @@ void GPS::readGPS()
 {
 
     /*VARIABLES*/
-    char buff[255], GGA_Check[3];
-    char GPS_buffer[255];
+    char buff[100], GGA_Check[3];
     unsigned char GGA_Flag = 0;
     unsigned char GGA_Index = 0;
     unsigned char GGA_Received = 0;
     char *start_ptr, *end_ptr, *jump_ptr, *gps;
+    char GPS_Data_;
     // int i = 0;
     //  configAll();
 
@@ -110,9 +110,11 @@ void GPS::readGPS()
     serialPort_ = openUART(serialPort_);
     for (int i = 0; i < 200; i++)
     {
-        read(serialPort_, buff, 255);
 
-        if (buff[0] == '$') // check for start of NMEA message
+        GPS_Data_ = serialGetchar(serialPort_); /* receive character serially */
+        // printf("%c", GPS_Data_);
+        //     read(serialPort_, &GPS_Data, 1);
+        if (GPS_Data_ == '$') // check for start of NMEA message
         {
             GGA_Flag = 0;
             GGA_Index = 0;
@@ -120,9 +122,9 @@ void GPS::readGPS()
 
         else if (GGA_Flag == 1)
         {
-            GPS_buffer[GGA_Index++] = buff[0];
+            buff[GGA_Index++] = GPS_Data_;
 
-            if (buff[0] == '\r')
+            if (GPS_Data_ == '\r')
             {
                 GGA_Received = 1;
             }
@@ -138,12 +140,12 @@ void GPS::readGPS()
         {
             GGA_Check[0] = GGA_Check[1];
             GGA_Check[1] = GGA_Check[2];
-            GGA_Check[2] = buff[0];
+            GGA_Check[2] = GPS_Data_;
         }
 
         if (GGA_Received == 1)
         {
-            gps = GPS_buffer;
+            gps = buff;
             start_ptr = strchr(gps, ',');       // find start of latitude field
             end_ptr = strchr(++start_ptr, ','); // find end of field...
             latitude_ = atof(start_ptr);        // Convert char to float & store in variable
@@ -173,10 +175,13 @@ void GPS::readGPS()
             end_ptr = strchr(++start_ptr, ','); // find end of field...
             *end_ptr = '\0';                    // and zero terminate
             SV_ = atoi(start_ptr);              // Convert char to int & store in variable
+
+            printf("latitude: %f %s longitude: %f %s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
+            //   end = 1;
             i = 200;
         }
     }
-    close(serialPort_);
+    serialClose(serialPort_);
 }
 
 /**
