@@ -162,7 +162,7 @@ void LogData(Orientation IMUData, float altitude, Telemetry::Position position, 
     float latitudeSYS = position.latitude_deg;
 
     /*RDS sensors*/
-    std::string GPSBaro = "Longitude: 0, N, Latitude: 0, E, Satellites: 0, Altitude: " + std::to_string(altitudeRDS);
+    std::string GPSBaro = "Longitude: 0 , N, Latitude: 0 , E, Satellites: 0 , Altitude: " + std::to_string(altitudeRDS);
     Logger(GPSBaro);
 
     std::string IMU = " Roll: " + std::to_string(rollRDS) + " Pitch: " + std::to_string(pitchRDS) + " Yaw: " + std::to_string(yawRDS);
@@ -269,6 +269,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, IMU &I
 
     Logger("Critical Failure Detected\n");
     Client.UDP_COM("Critical Failure Detected\n");
+
     while (1)
     {
         startofloop = mymillis();
