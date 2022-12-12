@@ -255,9 +255,9 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, IMU &I
         //(IMUDATA2.pitch + IMUDATA1.pitch) / 2;                 // returns
 
         // State.freeFall(altitude, position.relative_altitude_m, critical);      // Checks error for free fall (acceleration)
-        State.axisControl(roll, q_Roll, pitch, q_Pitch, critical);             // Checks for error for roll, pitch, and yaw
-        State.heightControl(altitude, position.relative_altitude_m, critical); // Checks for error for height
-                                                                               // State.routeControl(critical); // checks velocity and point and polygon */
+        critical = State.axisControl(roll, q_Roll, pitch, q_Pitch, critical);             // Checks for error for roll, pitch, and yaw
+        critical = State.heightControl(altitude, position.relative_altitude_m, critical); // Checks for error for height
+                                                                                          // State.routeControl(critical); // checks velocity and point and polygon */
         std::cout << "Loop Time: " << mymillis() - startofloop << " Critical: " << critical << std::endl;
     }
 

@@ -244,6 +244,7 @@ int ValidateState::freeFall(float altitudeRDS, float altitudeSYS, int critical)
     altitudeRef_ = altitude;
     timeRef_ = time;
     velocityRef_ = velocity;
+
     return critical;
 }
 
