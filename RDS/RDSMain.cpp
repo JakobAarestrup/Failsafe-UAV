@@ -440,7 +440,7 @@ int main(int argc, char **argv)
     std::vector<std::thread> threads;
 
     threads.push_back(std::thread(mainloop, std::ref(State), std::ref(B1), std::ref(telemetry), std::ref(G1), std::ref(IMU1), std::ref(Client), std::ref(action))); // std::ref(IMU2),
-    threads.push_back(std::thread(updateIMUValues, std::ref(IMU1)));                                                                                                //,std::ref(IMU2))
+    // threads.push_back(std::thread(updateIMUValues, std::ref(IMU1)));                                                                                                //,std::ref(IMU2))
 
     for (auto &th : threads)
     {
