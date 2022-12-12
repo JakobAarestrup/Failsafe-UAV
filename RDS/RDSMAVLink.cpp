@@ -162,10 +162,10 @@ void LogData(Orientation IMUData, float altitude, Telemetry::Position position, 
     float latitudeSYS = position.latitude_deg;
 
     /*RDS sensors*/
-    std::string GPSBaro = "Longitude: 0 N Latitude: 0 E Satellites: 0 Altitude: " + std::to_string(altitudeRDS);
+    std::string GPSBaro = "Longitude: 0 N Latitude: 0 E Satellites: 0 Altitude: " + std::to_string(altitudeRDS) + " ";
     Logger(GPSBaro);
 
-    std::string IMU = " Roll: " + std::to_string(rollRDS) + " Pitch: " + std::to_string(pitchRDS) + " Yaw: " + std::to_string(yawRDS);
+    std::string IMU = " Roll: " + std::to_string(rollRDS) + " Pitch: " + std::to_string(pitchRDS) + " Yaw: " + std::to_string(yawRDS) + " ";
     Logger(IMU);
 
     std::string GPSBaroSYS = "LongitudeSYS: " + std::to_string(longitudeSYS) + " " + "N" + " LatitudeSYS: " + std::to_string(latitudeSYS) + " " + "E" + " AltitudeSYS: " + std::to_string(altitudeSYS);
