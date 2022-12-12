@@ -200,21 +200,23 @@ def live_logging():
     if not stop_flag:
         last_line = read_last_line(file_path)
         tokens = last_line.split()
+        
+        if tokens[1] == "Longitude:":
+            longitude = float(tokens[2])
+        
+            latitude = float(tokens[5])
+            satellites = float(tokens[8])
 
-        if tokens[0] == "Longitude:":
-            longitude = float(tokens[1])
-            latitude = float(tokens[4])
-            satellites = float(tokens[7])
-
-            altitude = float(tokens[9])
-            roll = float(tokens[11])
-            pitch = float(tokens[13])
-            yaw = float(tokens[15])
+            altitude = float(tokens[10])
+            roll = float(tokens[12])
+            pitch = float(tokens[14])
+            yaw = float(tokens[16])
 
             height_plot = plot_Height(altitude)
             Ori_plot = Orientation3D(roll, pitch, yaw)
             positionUpdater(latitude,longitude)
-            root.after(200, live_logging)
+            
+        root.after(200, live_logging)
 
 
 # This function will be called when the "Start" button is clicked
@@ -293,7 +295,7 @@ exit_window = Button(master=root, command=terminalExecute, height=2, width=10, t
 exit_window.place(x=240, y=290)
 
 # Get a list of all files in the specified folder
-file_path = "C:/Users/Jakob/Desktop/LOG/Logfile.txt"
+file_path = "C:/Users/Rasmus/Documents/GUI/Logs/ServerLOG_2022-12-12-15.txt"
 
 # This flag will be used to stop the repeatable process
 stop_flag = False
