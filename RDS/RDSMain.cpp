@@ -196,7 +196,7 @@ void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry
  * @param Client is the UDP client object
  */
 
-void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G1, IMU &IMU1, UDP &Client) // Action &action) // IMU &IMU1,
+void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G1, IMU &IMU1, UDP &Client, Action &action) // Action &action) // IMU &IMU1,
 {
     int loops = 1;
     int startofloop;
@@ -300,6 +300,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         // State.routeControl(critical); // checks velocity and point and polygon
         // logging Data
         LogData(GPSDATA, IMUDATA1, altitude, position, q_Roll, q_Pitch, q_Yaw, Client); // Sends sensor data to log file
+        printf("Critical Failure Detected\n");
     }
 }
 

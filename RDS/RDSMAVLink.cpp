@@ -297,6 +297,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, IMU &I
         quaternionToEuler(q, q_Roll, q_Pitch, q_Yaw); // get quaternions in degrees
         //  logging Data
         LogData(IMUDATA1, altitude, position, q_Roll, q_Pitch, q_Yaw, Client); // Sends sensor data to log file
+        printf("Critical Failure Detected\n");
     }
 }
 
