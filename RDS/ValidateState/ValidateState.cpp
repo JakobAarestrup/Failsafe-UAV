@@ -104,7 +104,7 @@ void ValidateState::configValidateState(char maxHeight[], char maxAcceleration[]
  */
 int ValidateState::axisControl(float rollRDS, float rollSYS, float pitchRDS, float pitchSYS, int critical)
 {
-    float errorOrientation = (maxOrientation_ * 0.66666666);
+    // float errorOrientation = (maxOrientation_ * 0.66666666);
 
     float Roll = sqrt(((rollRDS + rollSYS) * (rollRDS + rollSYS))) / 2;
     float Pitch = sqrt(((pitchRDS + pitchSYS) * (pitchRDS + pitchSYS))) / 2;
@@ -178,7 +178,7 @@ int ValidateState::routeControl(int critical)
  */
 int ValidateState::heightControl(float altitudeRDS, float altitudeSYS, int critical)
 {
-    float errorHeight = (maxHeight_ * 0.66666666);
+    // float errorHeight = (maxHeight_ * 0.66666666);
 
     float altitude = sqrt(((altitudeRDS + altitudeSYS) * (altitudeRDS + altitudeSYS))) / 2;
 
