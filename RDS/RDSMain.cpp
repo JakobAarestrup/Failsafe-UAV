@@ -434,6 +434,5 @@ int main(int argc, char **argv)
     {
         th.join();
     }
-    printf("SUPPORT");
     return 0;
 }
