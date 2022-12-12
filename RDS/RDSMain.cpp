@@ -401,15 +401,17 @@ int main(int argc, char **argv)
     {
         return 1;
     }
+    printf("SUPPORT");
 
     /// @brief Instantiate plugins
     auto telemetry = Telemetry{system};
     auto action = Action{system};
 
-    const auto set_rate_position = telemetry.set_rate_position(2.0);
-    if (set_rate_position != Telemetry::Result::Success)
+    // We want to listen to the altitude of the drone at 1 Hz.
+    const auto set_rate_result = telemetry.set_rate_position(2.0);
+    if (set_rate_result != Telemetry::Result::Success)
     {
-        std::cerr << "Setting rate failed: " << set_rate_position << '\n';
+        std::cerr << "Setting rate failed: " << set_rate_result << '\n';
         return 1;
     }
 
