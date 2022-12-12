@@ -115,10 +115,10 @@ int ValidateState::axisControl(float rollRDS, float rollSYS, float pitchRDS, flo
     float Roll = rollRDS;
     float Pitch = pitchRDS;
 
-    if (state_ == 1)
-        printf("Error State\n");
-    else
-        printf("Normal State \n");
+    /*  if (state_ == 1)
+         printf("Error State\n");
+     else
+         printf("Normal State \n"); */
 
     if ((Roll > maxOrientation_) | (Pitch > maxOrientation_))
     {
@@ -186,10 +186,10 @@ int ValidateState::heightControl(float altitudeRDS, float altitudeSYS, int criti
 {
     float errorHeight = (maxHeight_ * 0.66666666);
 
-    if (state_ == 1)
-        printf("Error_State\n");
-    else
-        printf("Normal State \n");
+    /*  if (state_ == 1)
+         printf("Error_State\n");
+     else
+         printf("Normal State \n"); */
 
     if ((altitudeSYS > maxHeight_) | (altitudeRDS > maxHeight_))
     {
@@ -227,10 +227,10 @@ int ValidateState::freeFall(float altitudeRDS, float altitudeSYS, int critical)
     float velocity = distance / (time - timeRef_);
     float acceleration = (velocity - velocityRef_ / time - timeRef_);
 
-    if (state_ == 1)
+    /* if (state_ == 1)
         printf("Error State\n");
     else
-        printf("Normal State \n");
+        printf("Normal State \n"); */
 
     if (acceleration < maxFallSpeed_ && ff_IMU_ == 1)
     {
