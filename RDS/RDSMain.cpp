@@ -401,7 +401,6 @@ int main(int argc, char **argv)
     {
         return 1;
     }
-    printf("SUPPORT");
 
     /// @brief Instantiate plugins
     auto telemetry = Telemetry{system};
@@ -426,15 +425,15 @@ int main(int argc, char **argv)
      * @brief starting two threads to do main loop and get the IMU data
      */
 
-    std::vector<std::thread> threads;
+    /*  std::vector<std::thread> threads;
 
-    threads.push_back(std::thread(mainloop, std::ref(State), std::ref(B1), std::ref(telemetry), std::ref(G1), std::ref(IMU1), std::ref(Client))); // std::ref(IMU2),
-    threads.push_back(std::thread(updateIMUValues, std::ref(IMU1)));                                                                              //,std::ref(IMU2))
+     threads.push_back(std::thread(mainloop, std::ref(State), std::ref(B1), std::ref(telemetry), std::ref(G1), std::ref(IMU1), std::ref(Client))); // std::ref(IMU2),
+     threads.push_back(std::thread(updateIMUValues, std::ref(IMU1)));                                                                              //,std::ref(IMU2))
 
-    for (auto &th : threads)
-    {
-        th.join();
-    }
-
+     for (auto &th : threads)
+     {
+         th.join();
+     } */
+    printf("SUPPORT");
     return 0;
 }
