@@ -19,7 +19,7 @@ find_package(Threads REQUIRED)
 # change first and last line in add_executable to the desired configuration for RDS with or without GPS
 add_executable(RDSMAIN
     RDSMain.cpp
-    GPS/Neo7.cpp
+    GPS/GPS.cpp
     IMU/IMU.cpp
     IMU/I2C.cpp
     IMU/I2Cdev.cpp
