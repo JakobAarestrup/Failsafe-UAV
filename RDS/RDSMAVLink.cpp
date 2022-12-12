@@ -194,7 +194,7 @@ void LogData(Orientation IMUData, float altitude, Telemetry::Position position, 
  * @param Client is the UDP client object
  */
 
-void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G1, IMU &IMU1, UDP &Client, Action &action) // Action &action) // IMU &IMU1,
+void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, IMU &IMU1, UDP &Client, Action &action) // Action &action) // IMU &IMU1,
 {
 
     int startofloop;
