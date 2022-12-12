@@ -108,8 +108,6 @@ int ValidateState::axisControl(float rollRDS, float rollSYS, float pitchRDS, flo
 
     float Roll = sqrt(((rollRDS + rollSYS) * (rollRDS + rollSYS))) / 2;
     float Pitch = sqrt(((pitchRDS + pitchSYS) * (pitchRDS + pitchSYS))) / 2;
-    printf("Roll: %f, pitch: %f\n", Roll, Pitch);
-    printf("Max orientation: %f\n", maxOrientation_);
 
     /*  if (state_ == 1)
          printf("Error State\n");
@@ -121,16 +119,16 @@ int ValidateState::axisControl(float rollRDS, float rollSYS, float pitchRDS, flo
         printf("Critical error\n");
         critical = 1;
     }
-    else if (((Roll < errorOrientation) & (state_ == 1)) | ((Pitch < errorOrientation) & (state_ == 1)))
-    {
-        state_ = 0;
-        printf("Changing state... to Normal\n");
-    }
-    else if ((Roll > errorOrientation) | (Pitch > errorOrientation))
-    {
-        state_ = 1;
-        printf("Changing state... to Error_State Axis\n");
-    }
+    /*  else if (((Roll < errorOrientation) & (state_ == 1)) | ((Pitch < errorOrientation) & (state_ == 1)))
+     {
+         state_ = 0;
+         printf("Changing state... to Normal\n");
+     }
+     else if ((Roll > errorOrientation) | (Pitch > errorOrientation))
+     {
+         state_ = 1;
+         printf("Changing state... to Error_State Axis\n");
+     } */
     return critical;
 }
 
@@ -182,27 +180,24 @@ int ValidateState::heightControl(float altitudeRDS, float altitudeSYS, int criti
 {
     float errorHeight = (maxHeight_ * 0.66666666);
 
-    /*  if (state_ == 1)
-         printf("Error_State\n");
-     else
-         printf("Normal State \n"); */
+    float altitude = sqrt(((altitudeRDS + altitudeSYS) * (altitudeRDS + altitudeSYS))) / 2;
 
-    if ((altitudeSYS > maxHeight_) | (altitudeRDS > maxHeight_))
+    if ((altitude > maxHeight_))
     {
         printf("Critical error\n");
         critical = 1;
     }
-    else if (((altitudeSYS < errorHeight) & (state_ == 1)) | ((altitudeRDS < errorHeight) & (state_ == 1))) // In Error_State State and under 200 m
-    {
-        state_ = 0;
-        printf("Changing state... to Normal\n");
-    }
-    else if ((altitudeSYS > errorHeight) | (altitudeRDS > errorHeight))
-    {
-        // printf("Altitude from pixhawk: %f , Error_Height: %f\n", altitudeSYS_, errorHeight);
-        state_ = 1;
-        printf("Closing in on ERROR!!! Changing state... Height to Error_State\n");
-    }
+    /*  else if (((altitudeSYS < errorHeight) & (state_ == 1)) | ((altitudeRDS < errorHeight) & (state_ == 1))) // In Error_State State and under 200 m
+     {
+         state_ = 0;
+         printf("Changing state... to Normal\n");
+     }
+     else if ((altitudeSYS > errorHeight) | (altitudeRDS > errorHeight))
+     {
+         // printf("Altitude from pixhawk: %f , Error_Height: %f\n", altitudeSYS_, errorHeight);
+         state_ = 1;
+         printf("Closing in on ERROR!!! Changing state... Height to Error_State\n");
+     } */
     return critical;
 }
 
@@ -232,14 +227,13 @@ int ValidateState::freeFall(float altitudeRDS, float altitudeSYS, int critical)
     {
         // Maybe parachute() function here
         critical = 1;
-        printf("Closing in on ERROR!!! Changing state... FreeFall to ERROR\n");
     }
 
-    else if ((acceleration < maxFallSpeed_) | (ff_IMU_ == 1)) // In Critical State and under 200 m
+    /* else if ((acceleration < maxFallSpeed_) | (ff_IMU_ == 1)) // In error State and under 200 m
     {
         state_ = 0;
         printf("Changing state... to Normal\n");
-    }
+    } */
 
     altitudeRef_ = altitude;
     timeRef_ = time;
