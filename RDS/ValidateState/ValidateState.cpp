@@ -109,6 +109,7 @@ int ValidateState::axisControl(float rollRDS, float rollSYS, float pitchRDS, flo
     float Roll = ((rollRDS + rollSYS) * (rollRDS + rollSYS)) / 2;
     float Pitch = ((pitchRDS + pitchSYS) * (pitchRDS + pitchSYS)) / 2;
     printf("Roll: %f, pitch: %f", Roll, Pitch);
+    printf("Max orientation: %f", maxOrientation_);
 
     /*  if (state_ == 1)
          printf("Error State\n");
@@ -117,7 +118,6 @@ int ValidateState::axisControl(float rollRDS, float rollSYS, float pitchRDS, flo
 
     if ((Roll > maxOrientation_) | (Pitch > maxOrientation_))
     {
-
         critical = 1;
     }
     else if (((Roll < errorOrientation) & (state_ == 1)) | ((Pitch < errorOrientation) & (state_ == 1)))
