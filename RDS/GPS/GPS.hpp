@@ -41,18 +41,18 @@ public:
 
 private:
     /// @brief Amount of satellites
-    int SV_;
+    int SV_ = 0;
     /// @brief East West array
-    char EW_[10];
+    char EW_[10] = {0};
     /// @brief North South array
-    char NS_[10];
+    char NS_[10] = {0};
 
     /// @brief Longitude
-    double longitude_;
+    double longitude_ = 0;
     /// @brief Latitude
-    double latitude_;
+    double latitude_ = 0;
     /// @brief Serial port file descriptor
 
-    int serialPort_;
+    int serialPort_ = 0;
     /// @brief Data from the GPS
 };
