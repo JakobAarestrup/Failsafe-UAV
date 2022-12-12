@@ -217,15 +217,15 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
 
     int critical = 0;
 
-    /*    G1.readGPS(); // reads NMEA message
-       G1.convertData();
-       GPSDATA = G1.getGPSPosition();
-    */
+    G1.readGPS(); // reads NMEA message
+    G1.convertData();
+    GPSDATA = G1.getGPSPosition();
+
     while (critical < 1)
     {
         startofloop = mymillis();
 
-        /* // Reads data from Barometer and GPS if fifth loop
+        // Reads data from Barometer and GPS if fifth loop
         Barometer.readPressure();
         Barometer.readTemperature();
         Barometer.calculatePressureAndTemperature();
