@@ -198,7 +198,7 @@ void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry
 
 void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G1, IMU &IMU1, UDP &Client, Action &action) // IMU &IMU1,
 {
-    // int loops = 1;
+    int loops = 1;
     int startofloop;
 
     Telemetry::Position position;
@@ -237,9 +237,9 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
             GPSDATA = G1.getGPSPosition();
             loops = 1;
         }
-        // loops++;
-        GPSDATA = G1.getGPSPosition();
-        // Get Data from Sensors
+        loops++;
+        // GPSDATA = G1.getGPSPosition();
+        //  Get Data from Sensors
         IMUDATA1 = IMU1.getOrientation();
         // IMUDATA2 = IMU2.getOrientation(); // returns IMU Class Struct
 
