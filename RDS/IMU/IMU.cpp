@@ -307,7 +307,7 @@ void IMU::complementaryFilter()
         compPitch_ = AA * (compPitch_ + gyroCalibX_ * DT) + (1 - AA) * xlPitch_; // 97% Gyro 3% Accelerometer
         compYaw_ = 0.5 * (compYaw_ + gyroCalibZ_ * DT) + (1 - 0.5) * magYaw_;    // 50% Gyro 50% Magnometer
     }
-    printf("Roll_filtered: %f, Pitch filtered: %f, GyroZangle: %f\n", compRoll_, compPitch_, compYaw_);
+    // printf("Roll_filtered: %f, Pitch filtered: %f, GyroZangle: %f\n", compRoll_, compPitch_, compYaw_);
 }
 
 /**

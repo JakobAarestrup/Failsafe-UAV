@@ -221,7 +221,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
     G1.convertData();
     GPSDATA = G1.getGPSPosition();
 
-    while (critical > 0)
+    while (critical < 0)
     {
         startofloop = mymillis();
 
