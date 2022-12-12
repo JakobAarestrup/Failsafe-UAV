@@ -195,7 +195,7 @@ void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry
  * @param IMU1 is the IMU object
  * @param Client is the UDP client object
  */
-void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G1, IMU &IMU1, UDP &Client) // IMU &IMU1,
+void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G1, IMU &IMU1, UDP &Client, Action &action) // IMU &IMU1,
 {
     int loops = 1;
     int startofloop;
@@ -262,6 +262,13 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         // State.routeControl(critical); // checks velocity and point and polygon
     }
 
+    const Action::Result land_result = action.land();
+    if (land_result != Action::Result::Success)
+    {
+        std::cerr << "Land failed: " << land_result << '\n';
+        return 1;
+    }
+
     while (1)
     {
         startofloop = mymillis();
@@ -279,6 +286,9 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
             loops = 1;
         }
         loops++;
+
+        /*logging Data*/
+        LogData(GPSDATA, IMUDATA1, altitude, position, q_Roll, q_Pitch, q_Yaw, Client); // Sends sensor data to log file
 
         /*Get Data from Sensors*/
         IMUDATA1 = IMU1.getOrientation();
@@ -427,8 +437,8 @@ int main(int argc, char **argv)
 
     std::vector<std::thread> threads;
 
-    threads.push_back(std::thread(mainloop, std::ref(State), std::ref(B1), std::ref(telemetry), std::ref(G1), std::ref(IMU1), std::ref(Client))); // std::ref(IMU2),
-    threads.push_back(std::thread(updateIMUValues, std::ref(IMU1)));                                                                              //,std::ref(IMU2))
+    threads.push_back(std::thread(mainloop, std::ref(State), std::ref(B1), std::ref(telemetry), std::ref(G1), std::ref(IMU1), std::ref(Client), std::ref(action))); // std::ref(IMU2),
+    threads.push_back(std::thread(updateIMUValues, std::ref(IMU1)));                                                                                                //,std::ref(IMU2))
 
     for (auto &th : threads)
     {
