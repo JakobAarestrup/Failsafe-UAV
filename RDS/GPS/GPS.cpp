@@ -93,20 +93,24 @@ int GPS::configAll()
  * @brief Function reads serial data from the GPS
  *
  */
-void GPS::readGPS()
+void GPS::readGPS() // reads GPS serial data
 {
 
     /*VARIABLES*/
-    char buff[100], GGA_Check[3];
+    char buff[255], GGA_Check[3];
+    char GPS_buffer[255];
     unsigned char GGA_Flag = 0;
     unsigned char GGA_Index = 0;
     unsigned char GGA_Received = 0;
     char *start_ptr, *end_ptr, *jump_ptr, *gps;
-    char GPS_Data_;
+    // int i = 0;
+    //  configAll();
+
     /* OPEN UART */
     serialPort_ = openUART(serialPort_);
     for (int i = 0; i < 200; i++)
     {
+
         read(serialPort_, buff, 255);
 
         if (buff[0] == '$') // check for start of NMEA message
