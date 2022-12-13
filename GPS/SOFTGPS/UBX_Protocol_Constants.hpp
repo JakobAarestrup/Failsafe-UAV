@@ -10,7 +10,7 @@ namespace UBX_protocol
 
     /*RATE*/ // Measurement frequency: 10 hz, navigation frequency 10 hz
     // inline constexpr char RATE[] = "\xB5\x62\x06\x08\x06\x00\x64\x00\x01\x00\x01\x00\x7A\x12";
-    inline constexpr char RATE[] = "\xB5\x62\x06\x08\x06\x00\xC8\x00\x0A\x00\x01\x00\xE7\x8E";
+    inline constexpr char RATE[] = "\xB5\x62\x06\x08\x06\x00\xC8\x00\x01\x00\x01\x00\xDE\x6A";
     inline constexpr size_t RATE_Length = 15; // sizeof RATE / sizeof RATE[0]; // length of RATE CFG Message
 
     /*BAUDRATE 4800*/
