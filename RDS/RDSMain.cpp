@@ -387,7 +387,7 @@ int main(int argc, char **argv)
     IMU IMU1;
     // IMU IMU2;
     BAR B1;
-    // B1.calibrateBAR(); // 30 seconds from calibration wait time for barometer
+    B1.calibrateBAR(); // 30 seconds from calibration wait time for barometer
 
     Client.initUDP(); // raspberry pi zero w should get wifi by this time
 

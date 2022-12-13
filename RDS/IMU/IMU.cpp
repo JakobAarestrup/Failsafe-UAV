@@ -58,7 +58,7 @@ IMU::~IMU()
 void IMU::calibrateGyro(int IMU)
 {
     printf("Calibrating gyro...\n");
-    float gx_TOTAL, gy_TOTAL, gz_TOTAL;
+    float gx_TOTAL = 0, gy_TOTAL = 0, gz_TOTAL = 0;
     int i = 0;
     int N = 500; // amount of samples
 
