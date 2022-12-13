@@ -259,7 +259,7 @@ def read_last_line(file_path):
         lines = file.readlines()
         # Return the last line in the file
         last_line = lines[-2]
-        text.insert(END, last_line)
+        text.insert(1.0, last_line)
         return last_line
 
 
@@ -279,6 +279,7 @@ map_widget.set_position(55, 9.5)  # Danmark
 map_widget.set_marker(55, 9.5)
 canvasmap = map_widget.canvas
 
+#
 text = Text(root, width=50, height=18.4)
 
 text.grid(row=0, column=2)
@@ -313,7 +314,7 @@ exit_window = Button(master=root, command=terminalExecute, height=2, width=10, t
 exit_window.place(x=240, y=290)
 
 # Get a list of all files in the specified folder
-file_path = "C:/Users/Rasmus/Documents/GUI/Logs/ServerLOG_2022-12-12-15.txt"
+file_path = "C:/Users/Rasmus/Documents/GUI/Logs/ServerLOG_2022-12-13-14.txt"
 
 # This flag will be used to stop the repeatable process
 stop_flag = False
