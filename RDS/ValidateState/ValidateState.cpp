@@ -53,7 +53,7 @@ void ValidateState::configValidateState(char maxHeight[], char maxAcceleration[]
         return;
     }
 
-    if (atof(maxHeight) != 0)
+    else if (atof(maxHeight) != 0)
     {
         maxHeight_ = atof(maxHeight);
     }
