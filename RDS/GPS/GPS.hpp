@@ -25,9 +25,9 @@ struct GPSPosition
 class GPS
 {
 public:
-    GPS();                // default constructor
-    ~GPS();               // destructor
-    int openUART(int fd); // open UART serial port
+    GPS();          // default constructor
+    ~GPS();         // destructor
+    int openUART(); // open UART serial port
     int configAll();
     void readGPS();               // reads GPS serial data
     void convertData();           // converts GPS data

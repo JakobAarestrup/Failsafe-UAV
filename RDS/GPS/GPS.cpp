@@ -25,7 +25,7 @@ GPS::~GPS() // destructor
  * @param fd is the used file descriptor
  * @return int fd
  */
-int GPS::openUART(int fd)
+int GPS::openUART()
 {
     /*OPEN UART*/
     if ((serialPort_ = serialOpen("/dev/ttyS0", 9600)) < 0) // open serial port with set baudrate
@@ -34,7 +34,8 @@ int GPS::openUART(int fd)
 
         return 1;
     }
-    return fd;
+
+    return serialPort_;
 }
 
 /**
