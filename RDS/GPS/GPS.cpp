@@ -180,7 +180,7 @@ void GPS::readGPS() // reads GPS serial data
             //    end = 1;
             i = 200;
         }
-        // printf("%s", buff);
+        printf("%s", buff);
     }
     close(serialPort_);
 }
