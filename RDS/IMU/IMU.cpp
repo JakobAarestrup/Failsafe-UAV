@@ -63,8 +63,6 @@ IMU::IMU()
     compRoll_ = 0.0;
     compPitch_ = 0.0;
     compYaw_ = 0.0;
-
-    m_;
 }
 
 /**
