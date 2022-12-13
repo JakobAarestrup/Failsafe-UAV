@@ -429,7 +429,6 @@ int main(int argc, char **argv)
     auto telemetry = Telemetry{system};
     auto action = Action{system};
 
-    // We want to listen to the altitude of the drone at 1 Hz.
     const auto set_rate_result = telemetry.set_rate_position(2.0);
     if (set_rate_result != Telemetry::Result::Success)
     {
