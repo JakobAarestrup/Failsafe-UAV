@@ -76,6 +76,14 @@ std::shared_ptr<System> get_system(Mavsdk &mavsdk)
     return fut.get();
 }
 
+/**
+ * @brief Converts quarternions to Euler degrees
+ *
+ * @param q Quaternion struct
+ * @param roll Roll
+ * @param pitch Pitch
+ * @param yaw Yaw
+ */
 void quaternionToEuler(Telemetry::Quaternion &q, float &roll, float &pitch, float &yaw)
 {
     // Compute roll
@@ -154,7 +162,7 @@ inline void Logger(std::string logMessage)
  * @param IMUData is the data from the IMU
  * @param altitude is the altitude from the Barometer
  * @param position is the position data from the drone
- * @param q is the quaternion data from the drone
+ * @param q is the quaternion struct from the drone
  * @param Client is the UDP client member
  */
 void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry::Position position, float rollSYS, float pitchSYS, float yawSYS, UDP Client)
@@ -324,7 +332,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
 /**
  * @brief Function updates the values from the IMU
  *
- * @param IMU2 is the IMU object
+ * @param IMU1 is the IMU object
  */
 void updateIMUValues(IMU &IMU1) // IMU &IMU1,
 {
