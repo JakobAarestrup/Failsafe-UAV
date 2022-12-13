@@ -78,6 +78,7 @@ int GPS::configAll(int serial)
         return 1;
     }
     int count = 0;
+    write(serial, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
     write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
     write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
 
