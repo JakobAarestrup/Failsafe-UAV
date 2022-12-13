@@ -1,3 +1,14 @@
+/**
+ * @file RDSMain.cpp
+ * @author Jakob Peter Aarestrup and Rasmus Holm Lund
+ * @brief Main file for RDS
+ * @version 7
+ * @date 2022-12-13
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
+
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/time.h>
