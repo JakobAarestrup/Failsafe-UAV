@@ -13,6 +13,8 @@ struct sockaddr_in server;
  */
 UDP::UDP()
 {
+	socket_desc_ = 0;
+	*IP = "172.20.10.4";
 }
 
 /**
