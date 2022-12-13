@@ -172,7 +172,7 @@ void GPS::readGPS() // reads GPS serial data
             *end_ptr = '\0';                    // and zero terminate
             SV_ = atoi(start_ptr);              // Convert char to int & store in variable
 
-            // printf("latitude: %f %s longitude: %f %s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
+            printf("latitude: %f %s longitude: %f %s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
             //    end = 1;
             i = 200;
         }
