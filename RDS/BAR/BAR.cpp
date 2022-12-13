@@ -23,9 +23,9 @@ I2C B1;
  * @brief Construct a new BAR::BAR object
  *
  */
-BAR::BAR()
+/* BAR::BAR()
 {
-}
+} */
 
 /**
  * @brief Destroy the BAR::BAR object
