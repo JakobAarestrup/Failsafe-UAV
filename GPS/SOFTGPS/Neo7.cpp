@@ -16,7 +16,7 @@ GPS::~GPS() // destructor
 
 int GPS::openUART(int fd) // open UART serial port
 {
-    fd = open("/dev/ttyAMA", O_RDWR);
+    fd = open("/dev/ttySOFT0", O_RDWR);
     if (fd < 0)
     {
         perror("Error opening serial port");
