@@ -95,7 +95,7 @@ int GPS::configAll()
  */
 void GPS::readGPS() // reads GPS serial data
 {
-
+    printf("Reading GPS DATA\n");
     /*VARIABLES*/
     char buff[255], GGA_Check[3];
     char GPS_buffer[255];
