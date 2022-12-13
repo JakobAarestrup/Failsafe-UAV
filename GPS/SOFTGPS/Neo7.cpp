@@ -16,7 +16,7 @@ GPS::~GPS() // destructor
 
 int GPS::openUART(int fd) // open UART serial port
 {
-    fd = open("/dev/ttySOFT0", O_RDWR);
+    fd = open("/dev/ttyAMA", O_RDWR);
     if (fd < 0)
     {
         perror("Error opening serial port");
@@ -28,7 +28,7 @@ int GPS::openUART(int fd) // open UART serial port
 int GPS::configAll(int serial)
 {
     /*OPEN UART*/
-    if ((serial = serialOpen("/dev/ttyS0", 9600)) < 0) // open serial port with set baudrate
+    if ((serial = serialOpen("/dev/ttyAMA1", 9600)) < 0) // open serial port with set baudrate
     {
         fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
 
@@ -65,7 +65,7 @@ int GPS::configAll(int serial)
     int serial2;
 
     /* /*OPEN UART*/
-    if ((serial2 = serialOpen("/dev/ttyS0", 4800)) < 0) // open serial port with set baudrate
+    if ((serial2 = serialOpen("/dev/ttyAMA1", 4800)) < 0) // open serial port with set baudrate
     {
         fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
 
