@@ -57,10 +57,6 @@ int GPS::configAll(int serial2)
     /*  write(serial, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
      serialClose(serial); */
 
-    printf("Configuration is part 1 done! \n");
-
-    int serial2;
-
     /* /*OPEN UART*/
     if ((serial2 = serialOpen("/dev/ttyAMA1", 4800)) < 0) // open serial port with set baudrate
     {
@@ -76,13 +72,13 @@ int GPS::configAll(int serial2)
     }
     int count = 0;
     /*Update Rate*/
-    write(serial, UBX_protocol::RATE, UBX_protocol::RATE_Length); // Measurement frequency: 10 hz, navigation frequency 10 hz
+    write(serial2, UBX_protocol::RATE, UBX_protocol::RATE_Length); // Measurement frequency: 10 hz, navigation frequency 10 hz
 
-    write(serial, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
-    write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
-    write(serial, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
+    write(serial2, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
+    write(serial2, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
+    write(serial2, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
 
-    printf("Configuration is part 2 done! \n");
+    printf("Configuration is part 1 done! \n");
 
     while (count < 10000)
     {

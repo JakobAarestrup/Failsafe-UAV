@@ -38,12 +38,12 @@ int main()
 
   printf("STARTING LOOP\n");
   /* STARTING LOOP*/
-  while (1)
+  /* while (1)
   {
     /* NEO1.readGPS();     // reads NMEA message
     NEO1.convertData(); // converts to decimal degrees format
-    usleep(500000); */
-  }
-
+    usleep(500000);
+}
+*/
   return 0;
 }
