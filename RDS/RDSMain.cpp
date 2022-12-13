@@ -217,10 +217,11 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
 
     int critical = 0;
 
-    /* G1.readGPS(); // reads NMEA message
+    G1.readGPS(); // reads NMEA message
     G1.convertData();
-    GPSDATA = G1.getGPSPosition(); */
-    // GPSDATA = G1.getGPSPosition();
+    GPSDATA = G1.getGPSPosition();
+    GPSDATA = G1.getGPSPosition();
+    printf("Starting main loop...\n");
     while (critical < 0)
     {
         startofloop = mymillis();
