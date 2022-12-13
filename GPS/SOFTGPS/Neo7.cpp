@@ -16,7 +16,7 @@ GPS::~GPS() // destructor
 
 int GPS::openUART(int fd) // open UART serial port
 {
-    if ((fd = serialOpen("/dev/ttyAMA1", 4800)) < 0) // open serial port with set baudrate
+    if ((fd = serialOpen("/dev/ttyAMA1", 9600)) < 0) // open serial port with set baudrate
     {
         fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
 
@@ -25,10 +25,10 @@ int GPS::openUART(int fd) // open UART serial port
     return fd;
 }
 
-int GPS::configAll(int serial2)
+int GPS::configAll(int serial)
 {
     /*OPEN UART*/
-    /* if ((serial = serialOpen("/dev/ttyAMA1", 9600)) < 0) // open serial port with set baudrate
+    if ((serial = serialOpen("/dev/ttyAMA1", 4800)) < 0) // open serial port with set baudrate
     {
         fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
 
@@ -39,26 +39,27 @@ int GPS::configAll(int serial2)
     {
         fprintf(stdout, "Unable to start wiringPi: %s\n", strerror(errno)); // error handling
         return 1;
-    } */
+    }
 
     /* CONFIGURATION */
 
     /*NMEA Config*/
-    // write(serial, UBX_protocol::NMEA_CFG, UBX_protocol::NMEA_CFG_Length); // disable SBAS QZSS GLONASS BeiDou Galileo
+    write(serial, UBX_protocol::NMEA_CFG, UBX_protocol::NMEA_CFG_Length); // disable SBAS QZSS GLONASS BeiDou Galileo
 
     /*  /*NMEA messages*/
-    /*  write(serial, UBX_protocol::GLL, UBX_protocol::GP_Length); // disable GPGLL
-     write(serial, UBX_protocol::GSA, UBX_protocol::GP_Length); // disable GSA
-     write(serial, UBX_protocol::GSV, UBX_protocol::GP_Length); // disable GPGSV
-     write(serial, UBX_protocol::RMC, UBX_protocol::GP_Length); // disable RMC
-     write(serial, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG */
+    write(serial, UBX_protocol::GLL, UBX_protocol::GP_Length); // disable GPGLL
+    write(serial, UBX_protocol::GSA, UBX_protocol::GP_Length); // disable GSA
+    write(serial, UBX_protocol::GSV, UBX_protocol::GP_Length); // disable GPGSV
+    write(serial, UBX_protocol::RMC, UBX_protocol::GP_Length); // disable RMC
+    write(serial, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG
 
     /*BAUDRATE */
-    /*  write(serial, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
-     serialClose(serial); */
+    write(serial, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
+    serialClose(serial);
 
+    int serial2;
     /* /*OPEN UART*/
-    if ((serial2 = serialOpen("/dev/ttyAMA1", 4800)) < 0) // open serial port with set baudrate
+    if ((serial2 = serialOpen("/dev/ttyAMA1", 9600)) < 0) // open serial port with set baudrate
     {
         fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
 
