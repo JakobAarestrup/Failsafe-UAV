@@ -25,6 +25,22 @@ I2C B1;
  */
 BAR::BAR()
 {
+    /// Initial height above mean sea level when drone is on the ground
+    float initial_AMSL_ = 0;
+    /// Height above mean sea level
+    float height_AMSL_ = 0;
+    /// Height above ground level
+    float height_AGL_ = 0;
+    /// Raw measurement data
+    uint32_t D1_ = 0, D2_ = 0;
+    /// Calibration data
+    uint16_t C1_ = 0, C2_ = 0, C3_ = 0, C4_ = 0, C5_ = 0, C6_ = 0;
+    /// Calculated temperature
+    float temp_ = 0;
+    /// Calculated pressure
+    float pres_ = 0;
+    /// Calibration variable for getHeight()
+    int calibration_ = 0;
 }
 
 /**

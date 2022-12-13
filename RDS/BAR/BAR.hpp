@@ -37,5 +37,5 @@ private:
     /// Calculated pressure
     float pres_;
     /// Calibration variable for getHeight()
-    int calibration_ = 0;
+    int calibration_;
 };
