@@ -26,7 +26,7 @@ I2C B1;
 BAR::BAR()
 {
     /// Initial height above mean sea level when drone is on the ground
-    float initial_AMSL_ = 0;
+
     /// Height above mean sea level
     float height_AMSL_ = 0;
     /// Height above ground level
