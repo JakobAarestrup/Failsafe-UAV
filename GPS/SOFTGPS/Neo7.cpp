@@ -16,11 +16,11 @@ GPS::~GPS() // destructor
 
 int GPS::openUART(int fd) // open UART serial port
 {
-    fd = open("/dev/ttySOFT0", O_RDWR);
-    if (fd < 0)
+    if ((fd = serialOpen("/dev/ttyAMA1", 4800)) < 0) // open serial port with set baudrate
     {
-        perror("Error opening serial port");
-        return -1;
+        fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
+
+        return 1;
     }
     return fd;
 }
