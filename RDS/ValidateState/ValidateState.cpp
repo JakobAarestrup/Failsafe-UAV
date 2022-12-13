@@ -48,41 +48,29 @@ void ValidateState::usage(const std::string &bin_name)
  */
 void ValidateState::configValidateState(char maxHeight[], char maxAcceleration[], char maxOrientation[], char maxDistance[])
 {
-    if ((strcmp(maxHeight, "Default") = 0))
+    if ((strcmp(maxHeight, "Default") == 0))
     {
         return;
     }
 
-    else if (maxHeight != NULL)
+    if (atof(maxHeight) != 0)
     {
-        if (atof(maxHeight) != 0)
-        {
-            maxHeight_ = atof(maxHeight);
-        }
+        maxHeight_ = atof(maxHeight);
     }
 
-    if (maxAcceleration != NULL)
+    if (atof(maxAcceleration) != 0)
     {
-        if (atof(maxAcceleration) != 0)
-        {
-            maxAcceleration_ = atof(maxAcceleration);
-        }
+        maxAcceleration_ = atof(maxAcceleration);
     }
 
-    if (maxOrientation != NULL)
+    if (atof(maxOrientation) != 0)
     {
-        if (atof(maxOrientation) != 0)
-        {
-            maxOrientation_ = atof(maxOrientation);
-        }
+        maxOrientation_ = atof(maxOrientation);
     }
 
-    if (maxDistance != NULL)
+    if (atof(maxDistance) != 0)
     {
-        if (atof(maxDistance) != 0)
-        {
-            maxDistance_ = atof(maxDistance);
-        }
+        maxDistance_ = atof(maxDistance);
     }
 
     std::cout << "\n"
