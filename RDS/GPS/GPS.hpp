@@ -53,4 +53,6 @@ private:
     double latitude_ = 0;
     /// @brief Serial port file descriptor
     int serialPort_ = 0;
+
+    char GPS_data_ = '0';
 };
