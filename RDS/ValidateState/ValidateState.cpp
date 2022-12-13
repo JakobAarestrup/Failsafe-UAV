@@ -102,6 +102,7 @@ int ValidateState::axisControl(float rollRDS, float rollSYS, float pitchRDS, flo
 
     float Roll = sqrt(((rollRDS + rollSYS) * (rollRDS + rollSYS))) / 2;
     float Pitch = sqrt(((pitchRDS + pitchSYS) * (pitchRDS + pitchSYS))) / 2;
+    printf("Roll: %f, Pitch: %f\n", Roll, Pitch);
 
     /*  if (state_ == 1)
          printf("Error State\n");
