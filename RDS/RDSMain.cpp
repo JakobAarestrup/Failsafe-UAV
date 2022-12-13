@@ -167,7 +167,7 @@ void LogData(GPSPosition GPSData, Orientation IMUData, float altitude, Telemetry
     std::string GPSBaro = "Longitude: " + std::to_string(longitudeRDS) + " " + GPSData.NS[0] + " Latitude: " + std::to_string(latitudeRDS) + " " + GPSData.EW[0] + " Satellites: " + std::to_string(SatellitesRDS) + " Altitude: " + std::to_string(altitudeRDS);
     Logger(GPSBaro);
 
-    std::string IMU = " Roll: " + std::to_string(rollRDS) + " Pitch: " + std::to_string(pitchRDS) + " Yaw: " + std::to_string(yawRDS);
+    std::string IMU = " Roll: " + std::to_string(rollRDS) + " Pitch: " + std::to_string(pitchRDS) + " Yaw: " + std::to_string(yawRDS) + " ";
     Logger(IMU);
 
     std::string GPSBaroSYS = "LongitudeSYS: " + std::to_string(longitudeSYS) + " " + GPSData.NS[0] + " LatitudeSYS: " + std::to_string(latitudeSYS) + " " + GPSData.EW[0] + " AltitudeSYS: " + std::to_string(altitudeSYS);
@@ -230,15 +230,15 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         Barometer.readTemperature();
         Barometer.calculatePressureAndTemperature();
 
-        /* if (loops == 5)
+        if (loops == 5)
         {
             G1.readGPS(); // reads NMEA message
             G1.convertData();
             GPSDATA = G1.getGPSPosition();
             loops = 1;
         }
-        loops++; */
-        // GPSDATA = G1.getGPSPosition();
+        loops++;
+        GPSDATA = G1.getGPSPosition();
         //  Get Data from Sensors
         IMUDATA1 = IMU1.getOrientation();
         // IMUDATA2 = IMU2.getOrientation(); // returns IMU Class Struct
@@ -293,7 +293,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
         // Get Data from Sensors
         IMUDATA1 = IMU1.getOrientation();
         // IMUDATA2 = IMU2.getOrientation(); // returns IMU Class Struct
-        // GPSDATA = G1.getGPSPosition();    // returns GPS Class Struc
+        GPSDATA = G1.getGPSPosition();    // returns GPS Class Struc
         altitude = Barometer.getHeight(); // returns altitude
 
         // MAVLINK

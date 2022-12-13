@@ -41,17 +41,27 @@ def angle2dcm(yaw, pitch, roll, input_units='rad', rotation_sequence='321'):
 
 
 def validateLogin():
-    if username.get() == "Jakob" and password.get() == "1234":  # Checks whether username and password are correct
+    if username.get() == "Jakob" and password.get() == "1234" or username.get() == "Rasmus" and password.get() == "1234":  # Checks whether username and password are correct
         root.deiconify()  # Unhides the root window
         login_window.destroy()  # Removes the toplevel window
     else:
         return
 
 
-def positionUpdater(x, y):
+def positionUpdater(x, y, SV):
     position = map_widget.set_position(x, y)
     marker = map_widget.set_marker(x, y)
     zoom = map_widget.set_zoom(16)
+    
+    str_SV = "SV = "+ str(SV)
+    
+    
+    text_widget = canvasmap.create_text(x, y, text=str_SV, font="Arial 14", fill = "red")
+    
+    
+    canvasmap.itemconfig(text_widget, text=str_SV, font="Arial 14",fill = "red")
+    canvasmap.coords(text_widget,350,20)
+
 
 
 def Orientation3D(roll, pitch, yaw):
@@ -115,6 +125,12 @@ def Orientation3D(roll, pitch, yaw):
     YE21 = np.array(YE21).ravel()
     YE31 = np.array(YE31).ravel()
 
+    #Make it without commas
+    roll = int(roll)
+    pitch = int(pitch)
+    yaw = int(yaw)
+    
+    
     str_roll = "Roll = " + str(roll) + "$^\circ$"
     str_Pitch = "Pitch = " + str(pitch) + "$^\circ$"
     str_Yaw = "Yaw = " + str(yaw) + "$^\circ$"
@@ -128,6 +144,7 @@ def Orientation3D(roll, pitch, yaw):
     ax.text(-0.2, -3, -4, str_roll, fontsize=7, bbox=dict(facecolor='blue', alpha=0.75))
     ax.text(0.9, -0.35, -2.35, str_Pitch, fontsize=7, bbox=dict(facecolor='red', alpha=0.75))
     ax.text(-4, -3, -5.875, str_Yaw, fontsize=7, bbox=dict(facecolor='green', alpha=0.75))
+
 
     # add legend
     ax.legend(['Drone', 'Roll', 'Pitch', 'Yaw'], fontsize=7, loc='upper right', frameon=False, ncol=4)
@@ -214,7 +231,7 @@ def live_logging():
 
             height_plot = plot_Height(altitude)
             Ori_plot = Orientation3D(roll, pitch, yaw)
-            positionUpdater(latitude,longitude)
+            positionUpdater(latitude,longitude, satellites)
             
         root.after(200, live_logging)
 
@@ -260,6 +277,7 @@ map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z
 # set current widget position and zoom
 map_widget.set_position(55, 9.5)  # Danmark
 map_widget.set_marker(55, 9.5)
+canvasmap = map_widget.canvas
 
 text = Text(root, width=50, height=18.4)
 
@@ -303,6 +321,7 @@ stop_flag = False
 roll = 0
 pitch = 0
 yaw = 0
+SV = 0
 
 plot_Height(100)
 

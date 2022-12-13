@@ -17,8 +17,8 @@ find_package(Threads REQUIRED)
 
 # Specify your app's executable name, and list of source files used to create it.
 # change first and last line in add_executable to the desired configuration for RDS with or without GPS
-add_executable(RDSMAV
-    RDSMAVLink.cpp
+add_executable(RDSMAIN
+    RDSMain.cpp
     GPS/GPS.cpp
     IMU/IMU.cpp
     IMU/I2C.cpp
@@ -32,7 +32,7 @@ add_executable(RDSMAV
 
 find_library(WIRINGPI_LIBRARIES NAMES wiringPi)
 # Specify your app's executable name and a list of linked libraries
-target_link_libraries(RDSMAV
+target_link_libraries(RDSMAIN
 PRIVATE Threads::Threads
 MAVSDK::mavsdk
 
