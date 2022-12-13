@@ -25,17 +25,15 @@ GPS::~GPS() // destructor
  * @param fd is the used file descriptor
  * @return int fd
  */
-int GPS::openUART()
+int GPS::openUART(int fd) // open UART serial port
 {
-    /*OPEN UART*/
-    if ((serialPort_ = serialOpen("/dev/ttyS0", 9600)) < 0) // open serial port with set baudrate
+    if ((fd = serialOpen("/dev/ttyS0", 9600)) < 0) // open serial port with set baudrate
     {
         fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
 
         return 1;
     }
-
-    return serialPort_;
+    return fd;
 }
 
 /**
@@ -118,7 +116,7 @@ void GPS::readGPS() // reads GPS serial data
         {
             GGA_Flag = 0;
             GGA_Index = 0;
-            printf("HELLO\n");
+            // printf("HELLO\n");
         }
 
         else if (GGA_Flag == 1)
@@ -177,11 +175,11 @@ void GPS::readGPS() // reads GPS serial data
             *end_ptr = '\0';                    // and zero terminate
             SV_ = atoi(start_ptr);              // Convert char to int & store in variable
 
-            printf("latitude: %f %s longitude: %f %s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
-            //    end = 1;
+            // printf("latitude: %f %s longitude: %f %s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
+            //     end = 1;
             i = 200;
         }
-        printf("%s", buff);
+        // printf("%s", buff);
     }
     close(serialPort_);
 }
