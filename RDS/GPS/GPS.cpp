@@ -103,28 +103,24 @@ void GPS::readGPS()
     unsigned char GGA_Received = 0;
     char *start_ptr, *end_ptr, *jump_ptr, *gps;
     char GPS_Data_;
-    // int i = 0;
-    //  configAll();
-
     /* OPEN UART */
     serialPort_ = openUART(serialPort_);
     for (int i = 0; i < 200; i++)
     {
+        read(serialPort_, buff, 255);
 
-        GPS_Data_ = serialGetchar(serialPort_); /* receive character serially */
-        // printf("%c", GPS_Data_);
-        //     read(serialPort_, &GPS_Data, 1);
-        if (GPS_Data_ == '$') // check for start of NMEA message
+        if (buff[0] == '$') // check for start of NMEA message
         {
             GGA_Flag = 0;
             GGA_Index = 0;
+            printf("HELLO\n");
         }
 
         else if (GGA_Flag == 1)
         {
-            buff[GGA_Index++] = GPS_Data_;
+            GPS_buffer[GGA_Index++] = buff[0];
 
-            if (GPS_Data_ == '\r')
+            if (buff[0] == '\r')
             {
                 GGA_Received = 1;
             }
@@ -140,12 +136,12 @@ void GPS::readGPS()
         {
             GGA_Check[0] = GGA_Check[1];
             GGA_Check[1] = GGA_Check[2];
-            GGA_Check[2] = GPS_Data_;
+            GGA_Check[2] = buff[0];
         }
 
         if (GGA_Received == 1)
         {
-            gps = buff;
+            gps = GPS_buffer;
             start_ptr = strchr(gps, ',');       // find start of latitude field
             end_ptr = strchr(++start_ptr, ','); // find end of field...
             latitude_ = atof(start_ptr);        // Convert char to float & store in variable
@@ -177,11 +173,12 @@ void GPS::readGPS()
             SV_ = atoi(start_ptr);              // Convert char to int & store in variable
 
             printf("latitude: %f %s longitude: %f %s Satellites: %d\n\n", latitude_, NS_, longitude_, EW_, SV_);
-            //   end = 1;
+            //    end = 1;
             i = 200;
         }
+        // printf("%s", buff);
     }
-    serialClose(serialPort_);
+    close(serialPort_);
 }
 
 /**
