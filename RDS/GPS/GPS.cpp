@@ -107,7 +107,7 @@ void GPS::readGPS() // reads GPS serial data
     //  configAll();
 
     /* OPEN UART */
-    serialPort = openUART(int serialPort);
+    serialPort = openUART(serialPort);
     for (int i = 0; i < 200; i++)
     {
 
