@@ -388,7 +388,7 @@ int main(int argc, char **argv)
     Client.initUDP(); // raspberry pi zero w should get wifi by this time
 
     /// @brief Configuration of Sensors
-    G1.configAll();     // configs the GPS
+    // G1.configAll();     // configs the GPS
     I1.initializeI2C(); // Initialize IMU2 right now but will do both
 
     /// @brief Calibration
