@@ -129,7 +129,7 @@ void GPS::readGPS() // reads GPS serial data
         {
             GGA_Check[0] = GGA_Check[1];
             GGA_Check[1] = GGA_Check[2];
-            GGA_Check[2] = GPS_data__;
+            GGA_Check[2] = GPS_data_;
         }
 
         if (GGA_Received == 1)
