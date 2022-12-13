@@ -114,6 +114,7 @@ void GPS::readGPS() // reads GPS serial data
         {
             GGA_Flag = 0;
             GGA_Index = 0;
+            printf("HELLO\n");
         }
 
         else if (GGA_Flag == 1)
@@ -176,7 +177,7 @@ void GPS::readGPS() // reads GPS serial data
             //    end = 1;
             i = 200;
         }
-        printf("%s", buff);
+        // printf("%s", buff);
     }
     close(serialPort_);
 }
