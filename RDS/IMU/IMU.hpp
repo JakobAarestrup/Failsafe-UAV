@@ -27,44 +27,44 @@ public:
 
 private:
     /// @brief Accelerometer calibrated x-axis in deg/s
-    float accCalibX_ = 0.0;
+    float accCalibX_;
     /// @brief Accelerometer calibrated y-axis in deg/s
-    float accCalibY_ = 0.0;
+    float accCalibY_;
     /// @brief Accelerometer calibrated z-axis in deg/s
-    float accCalibZ_ = 0.0;
+    float accCalibZ_;
 
     /// @brief Gyroscope calibrated x-axis in deg/s
-    float gyroCalibX_ = 0.0;
+    float gyroCalibX_;
     /// @brief Gyroscope calibrated y-axis in deg/s
-    float gyroCalibY_ = 0.0;
+    float gyroCalibY_;
     /// @brief Gyroscope calibrated z-axis in deg/s
-    float gyroCalibZ_ = 0.0;
+    float gyroCalibZ_;
 
     /// @brief Gyroscope drift in x-axis in
-    float gx_drift_ = 0.0;
+    float gx_drift_;
     /// @brief Gyroscope drift in y-axis in
-    float gy_drift_ = 0.0;
+    float gy_drift_;
     /// @brief Gyroscope drift in z-axis in
-    float gz_drift_ = 0.0;
+    float gz_drift_;
 
     /// @brief Magnetometer calibrated x-axis in deg/s
-    float magCalibX_ = 0.0;
+    float magCalibX_;
     /// @brief Magnetometer calibrated y-axis in deg/s
-    float magCalibY_ = 0.0;
+    float magCalibY_;
 
     /// @brief Accelerometer roll
-    float xlRoll_ = 0.0;
+    float xlRoll_;
     /// @brief Accelerometer pitch
-    float xlPitch_ = 0.0;
+    float xlPitch_;
     /// @brief Magnetometer yaw
-    float magYaw_ = 0.0;
+    float magYaw_;
 
     /// @brief Compensated roll
-    float compRoll_ = 0.0;
+    float compRoll_;
     /// @brief Compensated pitch
-    float compPitch_ = 0.0;
+    float compPitch_;
     /// @brief Compensated yaw
-    float compYaw_ = 0.0;
+    float compYaw_;
 
     /// @brief Mutex object m_
     std::mutex m_;

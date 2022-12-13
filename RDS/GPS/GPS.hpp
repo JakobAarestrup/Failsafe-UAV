@@ -43,16 +43,15 @@ private:
     /// @brief Amount of satellites
     int SV_ = 0;
     /// @brief East West array
-    char EW_[10] = {0};
+    char EW_[10];
     /// @brief North South array
-    char NS_[10] = {0};
-
+    char NS_[10];
     /// @brief Longitude
-    double longitude_ = 0;
+    double longitude_;
     /// @brief Latitude
-    double latitude_ = 0;
+    double latitude_;
     /// @brief Serial port file descriptor
-    int serialPort_ = 0;
-
-    char GPS_data_ = '0';
+    int serialPort_;
+    /// @brief 1 char in the NMEA message
+    char GPS_data_;
 };

@@ -40,6 +40,31 @@ I2C I1;
  */
 IMU::IMU()
 {
+
+    accCalibX_ = 0.0;
+    accCalibY_ = 0.0;
+    accCalibZ_ = 0.0;
+
+    gyroCalibX_ = 0.0;
+    gyroCalibY_ = 0.0;
+    gyroCalibZ_ = 0.0;
+
+    gx_drift_ = 0.0;
+    gy_drift_ = 0.0;
+    gz_drift_ = 0.0;
+
+    magCalibX_ = 0.0;
+    magCalibY_ = 0.0;
+
+    xlRoll_ = 0.0;
+    xlPitch_ = 0.0;
+    magYaw_ = 0.0;
+
+    compRoll_ = 0.0;
+    compPitch_ = 0.0;
+    compYaw_ = 0.0;
+
+    m_;
 }
 
 /**

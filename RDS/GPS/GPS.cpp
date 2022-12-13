@@ -9,6 +9,13 @@
  */
 GPS::GPS()
 {
+    SV_ = 0;
+    EW_[10] = {0};
+    NS_[10] = {0};
+    longitude_ = 0;
+    latitude_ = 0;
+    serialPort_ = 0;
+    GPS_data_ = '0';
 }
 
 /**
