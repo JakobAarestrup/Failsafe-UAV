@@ -23,9 +23,9 @@ I2C B1;
  * @brief Construct a new BAR::BAR object
  *
  */
-/* BAR::BAR()
+BAR::BAR() : initial_AMSL_(0)
 {
-} */
+}
 
 /**
  * @brief Destroy the BAR::BAR object
