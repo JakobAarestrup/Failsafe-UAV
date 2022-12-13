@@ -10,8 +10,8 @@
 GPS::GPS()
 {
     SV_ = 0;
-    EW_;
-    NS_;
+    EW_ = {};
+    NS_ = {};
     longitude_ = 0;
     latitude_ = 0;
     serialPort_ = 0;
