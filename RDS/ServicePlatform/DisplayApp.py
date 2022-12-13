@@ -266,7 +266,7 @@ def read_last_line(file_path):
 # Main window
 root = tkinter.Tk()
 root.geometry(f"{800}x{660}")
-root.title("RDS Terminal.py")
+root.title("Display App.py")
 
 # create map widget
 map_widget = TkinterMapView(root, width=400, height=300, corner_radius=0)
