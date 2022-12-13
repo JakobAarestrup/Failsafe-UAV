@@ -224,7 +224,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
     GPSDATA = G1.getGPSPosition();
     printf("Starting main loop...\n");
 
-    while (critical < 0)
+    while (critical < 1)
     {
         startofloop = mymillis();
 
@@ -241,6 +241,7 @@ void mainloop(ValidateState &State, BAR &Barometer, Telemetry &telemetry, GPS &G
             loops = 1;
         }
         loops++;
+
         GPSDATA = G1.getGPSPosition();
         //  Get Data from Sensors
         IMUDATA1 = IMU1.getOrientation();

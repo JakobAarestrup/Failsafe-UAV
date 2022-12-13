@@ -44,7 +44,7 @@ int GPS::openUART(int fd) // open UART serial port
 int GPS::configAll()
 {
     /*OPEN UART*/
-    if ((serialPort_ = serialOpen("/dev/ttyAMA1", 4800)) < 0) // open serial port with set baudrate
+    if ((serialPort_ = serialOpen("/dev/ttyS0", 9600)) < 0) // open serial port with set baudrate
     {
         fprintf(stderr, "Unable to open serial device: %s\n", strerror(errno)); // error handling
 
@@ -72,15 +72,6 @@ int GPS::configAll()
     write(serialPort_, UBX_protocol::RMC, UBX_protocol::GP_Length); // disable RMC
     write(serialPort_, UBX_protocol::VTG, UBX_protocol::GP_Length); // disable VTG
 
-    /*BAUDRATE */
-    write(serialPort_, UBX_protocol::BAUD, UBX_protocol::BAUD_Length);
-
-    write(serialPort_, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
-    write(serialPort_, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
-    write(serialPort_, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
-    write(serialPort_, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
-    write(serialPort_, UBX_protocol::SAFE, UBX_protocol::SAFE_Length);
-
     printf("Configuration is done! \n");
 
     serialClose(serialPort_);
@@ -94,17 +85,15 @@ int GPS::configAll()
  */
 void GPS::readGPS() // reads GPS serial data
 {
-    printf("Reading GPS DATA\n");
+    // printf("Reading GPS DATA\n");
     /*VARIABLES*/
-    char buff[255], GGA_Check[3];
+    char buff[255], GGA_Check[3] = {'0', '0', '0'};
     char GPS_buffer[255];
     unsigned char GGA_Flag = 0;
     unsigned char GGA_Index = 0;
     unsigned char GGA_Received = 0;
     char *start_ptr, *end_ptr, *jump_ptr, *gps;
     int serialPort = 0;
-    // int i = 0;
-    //  configAll();
 
     /* OPEN UART */
     serialPort = openUART(serialPort);
