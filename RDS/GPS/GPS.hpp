@@ -40,8 +40,6 @@ public:
     void getEastWest(char EW[]);   // returns either a East pole or West pole
 
 private:
-    /// @brief Amount of satellites
-    int SV_ = 0;
     /// @brief East West array
     char EW_[10];
     /// @brief North South array
@@ -54,4 +52,6 @@ private:
     int serialPort_;
     /// @brief 1 char in the NMEA message
     char GPS_data_;
+    /// @brief Amount of satellites
+    int SV_;
 };
