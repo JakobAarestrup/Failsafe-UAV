@@ -7,11 +7,9 @@
  * @brief Construct a new GPS::GPS object
  *
  */
-GPS::GPS()
+GPS::GPS() : EW_{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, NS_ = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 {
     SV_ = 0;
-    EW_[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    NS_[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     longitude_ = 0;
     latitude_ = 0;
     serialPort_ = 0;
