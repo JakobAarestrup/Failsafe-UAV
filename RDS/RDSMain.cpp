@@ -358,16 +358,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    for (int i = 0; i < argc; ++i)
-    {
-        std::cout << argv[i] << " plads: " << i << std::endl;
-    }
-    std::cout << "\n";
-    std::cout << argv[1] << "\n";
-    std::cout << argv[4] << "\n"
-              << std::endl;
-
-    if ((strcmp(argv[1], argv[4]) == 0)) // if you write 20 on serial it
+    if ((strcmp(argv[1], argv[4]) == 0))
     {
         State.configValidateState(argv[2], argv[3], NONE, NONE);
     }

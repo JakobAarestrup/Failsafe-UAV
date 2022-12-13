@@ -50,6 +50,12 @@ void ValidateState::configValidateState(char maxHeight[], char maxAcceleration[]
 {
     if ((strcmp(maxHeight, "Default") == 0))
     {
+
+        std::cout << "\n"
+                  << maxHeight_ << "\n";
+        std::cout << maxAcceleration_ << "\n";
+        std::cout << maxOrientation_ << "\n";
+        std::cout << maxDistance_ << "\n";
         return;
     }
 
