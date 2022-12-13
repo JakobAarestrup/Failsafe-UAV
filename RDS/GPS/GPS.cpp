@@ -106,11 +106,11 @@ void GPS::readGPS() // reads GPS serial data
     //  configAll();
 
     /* OPEN UART */
-    serialPort_ = openUART();
+    serialPort = openUART(int serialPort);
     for (int i = 0; i < 200; i++)
     {
 
-        read(serialPort_, buff, 255);
+        read(serialPort, buff, 255);
 
         if (buff[0] == '$') // check for start of NMEA message
         {
@@ -181,7 +181,7 @@ void GPS::readGPS() // reads GPS serial data
         }
         // printf("%s", buff);
     }
-    close(serialPort_);
+    close(serialPort);
 }
 
 /**
