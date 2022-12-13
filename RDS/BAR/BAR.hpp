@@ -9,8 +9,8 @@
 class BAR
 {
 public:
-    BAR();
-    ~BAR();
+    BAR() : initial_AMSL_, height_AMSL_
+            ~BAR();
     void convertToAGL();
     void initialAMSL();
     void calibrateBAR();
