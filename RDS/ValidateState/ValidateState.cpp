@@ -48,7 +48,7 @@ void ValidateState::usage(const std::string &bin_name)
  */
 void ValidateState::configValidateState(char maxHeight[], char maxAcceleration[], char maxOrientation[], char maxDistance[])
 {
-    if ((strcmp(maxHeight, "Default") == 0))
+    if ((strcmp(maxHeight, "Default") = 0))
     {
         return;
     }
