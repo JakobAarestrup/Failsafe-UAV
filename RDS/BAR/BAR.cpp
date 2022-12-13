@@ -23,8 +23,10 @@ I2C B1;
  * @brief Construct a new BAR::BAR object
  *
  */
-BAR::BAR() : initial_AMSL_(0)
+BAR::BAR() : height_AMSL_(0), D1_(0), D2_(0), C1_(0), C2_(0), C3_(0), C4_(0), C5_(0), C6_(0), temp(0), calibration_(0)
 {
+
+    initial_AMSL_ = 0;
 }
 
 /**
