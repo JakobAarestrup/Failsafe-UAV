@@ -9,7 +9,7 @@
 class BAR
 {
 public:
-    BAR() : initial_AMSL_(0) {}
+    BAR();
     ~BAR();
     void convertToAGL();
     void initialAMSL();
