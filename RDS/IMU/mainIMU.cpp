@@ -45,7 +45,7 @@ int main()
 
         IMU1.readIMU(1);
 
-        IMU1.convertACCData();
+        IMU1.convertAccData();
         IMU1.convertMagData();
 
         IMU1.complementaryFilter();
