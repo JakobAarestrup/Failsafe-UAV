@@ -26,7 +26,6 @@ int main()
     I2C I1;
     // I2C I2;
     IMU IMU1;
-    IMU IMU2;
 
     int startofloop = mymillis();
     struct timeval tvBegin, tvEnd, tvDiff;
@@ -36,20 +35,20 @@ int main()
     // I2.initializeI2C();
 
     /*Not used atm*/
-    IMU2.calibrateGyro(1);
-    // IMU2.calibrateGyro();
+    IMU1.calibrateGyro(1);
+    // IMU1.calibrateGyro();
 
     // Main loop
     while (1)
     {
         startofloop = mymillis();
 
-        IMU2.readIMU(1);
+        IMU1.readIMU(1);
 
-        IMU2.ConvertACCData();
-        IMU2.ConvertMagData();
+        IMU1.convertACCData();
+        IMU1.convertMagData();
 
-        IMU2.ComplementaryFilter();
+        IMU1.complementaryFilter();
 
         /* IMU1.readIMU();
 
